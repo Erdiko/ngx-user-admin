@@ -1,5 +1,5 @@
 {
-  "name": "@erdiko/ng-user-admin",
+  "name": "@erdiko/user-admin",
   "version": "1.1.1",
   "description": "AngularJS based User Admin components for use with the Erdiko User Admin",
   "scripts": {
