@@ -1,5 +1,5 @@
 {
-  "name": "@erdiko/user-admin",
+  "name": "@erdiko/ng-user-admin",
   "version": "1.1.1",
   "description": "AngularJS based User Admin components for use with the Erdiko User Admin",
   "scripts": {
@@ -14,7 +14,7 @@
     "tsc:w": "tsc -w",
     "build": "rm -rf lib && tsc -p src && tsc",
     "prepublish": "npm run ngc-build",
-    "ngc-build": "rm -rf lib && rm -rf \"src/node_modules\" \"src/*.ngsummary*\" \"src/*.map\" \"src/*ngfactory*\" \"src/*.js\" && \"node_modules/.bin/ngc\" -p tsconfig-aot.json"
+    "ngc-build": "rm -rf lib && rm -rf \"src/node_modules\" && \"node_modules/.bin/ngc\" -p tsconfig-aot.json"
   },
   "main": "./index.js",
   "types": "./index.d.ts",
