@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild }     from '@angular/core';
 import { Router, ActivatedRoute }           from '@angular/router';
 import { Observable, Subscription }         from "rxjs";
 
+import { ModalDirective }           from 'ng2-bootstrap';
+
 import { UsersService }             from './users.service';
 import { User }                     from './user.model';
 
@@ -115,7 +117,6 @@ import { User }                     from './user.model';
     </div>
 </div>
 
-<!--
 <div bsModal #confirmDeleteModal="bs-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
@@ -143,12 +144,11 @@ import { User }                     from './user.model';
     </div>
   </div>
 </div>
--->
   `
 })
 export class UserListComponent implements OnInit {
 
-    //@ViewChild('confirmDeleteModal') public confirmDeleteModal:ModalDirective;
+    @ViewChild('confirmDeleteModal') public confirmDeleteModal:ModalDirective;
 
     public wait: any;
 
@@ -165,7 +165,7 @@ export class UserListComponent implements OnInit {
     public sortDir: string;
 
     public error: any;
-    private selectedUser: any;
+    public selectedUser: any;
         
     constructor(
            private usersService: UsersService,
@@ -268,15 +268,15 @@ export class UserListComponent implements OnInit {
 
     clickDelete(idx: any) {
         this.selectedUser = idx;
-        //this.confirmDeleteModal.show();
+        this.confirmDeleteModal.show();
     }
 
     cancelDelete() {
-        //this.confirmDeleteModal.hide();
+        this.confirmDeleteModal.hide();
     }
 
     confirmDelete(idx: any) {
-        //this.confirmDeleteModal.hide();
+        this.confirmDeleteModal.hide();
         this.wait = true;
         this.usersService.deleteUser(this.selectedUser)
             .then(res => this._handleResponse(res))
