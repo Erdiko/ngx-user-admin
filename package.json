@@ -14,7 +14,7 @@
     "tsc:w": "tsc -w",
     "build": "rm -rf lib && tsc -p src && tsc",
     "prepublish": "npm run ngc-build",
-    "ngc-build": "rm -rf lib && rm -rf \"src/node_modules\" && \"node_modules/.bin/ngc\" -p tsconfig-aot.json"
+    "ngc-build": "rm -rf lib && rm -rf \"src/node_modules\" \"src/*.ngsummary*\" \"src/*.map\" \"src/*ngfactory*\" \"src/*.js\" && \"node_modules/.bin/ngc\" -p tsconfig-aot.json"
   },
   "main": "./index.js",
   "types": "./index.d.ts",
@@ -28,7 +28,10 @@
     "url": "https://github.com/saarmstrong/ng-user-admin/issues"
   },
   "homepage": "https://github.com/saarmstrong/ng-user-admin#readme",
-  "dependencies": {},
+  "dependencies": {
+    "moment": "^2.18.1",
+    "ng2-bootstrap": "^1.6.0"
+  },
   "devDependencies": {
     "@angular/common": "~2.4.0",
     "@angular/compiler": "~2.4.0",

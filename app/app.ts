@@ -6,7 +6,14 @@ import { UserAdminModule } from '../index';
 @Component({
     selector: 'my-app',
     template: `
-     <app-user-list></app-user-list>
+     <div class="container">
+         <div class="row">
+             <div class="col-xs-12">
+                 <h3>User List Component</h3>
+                 <app-user-list></app-user-list>
+             </div>
+         </div>
+     </div>
   `,
 })
 export class AppComponent {

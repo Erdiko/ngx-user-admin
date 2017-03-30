@@ -56,6 +56,7 @@ import { User }                     from './user.model';
             <tbody *ngIf="!wait && error"> 
                 <tr>
                     <td colspan="7" align="center">
+                        <alert type="warning">{{ error }}</alert>
                     </td>
                 </tr>
             </tbody> 
@@ -63,6 +64,7 @@ import { User }                     from './user.model';
             <tbody *ngIf="!wait && !error && users && users.length < 1"> 
                 <tr>
                     <td colspan="7" align="center">
+                        <alert type="warning">Sorry, no users were found. Please try again.</alert>
                     </td>
                 </tr>
             </tbody> 
@@ -112,9 +114,41 @@ import { User }                     from './user.model';
 
     </div>
 </div>
+
+<!--
+<div bsModal #confirmDeleteModal="bs-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Delete?</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="cancelDelete()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+            <div class="col-xs-12">
+                <p>Are you sure you want to delete this user?</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6">
+                <button type="button" class="btn btn-warning" (click)="cancelDelete()">Cancel</button>
+            </div>
+            <div class="col-xs-6">
+                <button type="button" class="btn btn-danger" (click)="confirmDelete(selectedUser)">Confirm</button>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+-->
   `
 })
 export class UserListComponent implements OnInit {
+
+    //@ViewChild('confirmDeleteModal') public confirmDeleteModal:ModalDirective;
 
     public wait: any;
 
@@ -133,18 +167,44 @@ export class UserListComponent implements OnInit {
     public error: any;
     private selectedUser: any;
         
-    constructor(private usersService: UsersService) {
+    constructor(
+           private usersService: UsersService,
+           private route: ActivatedRoute,
+           private router: Router) {
 
+        // init the wait state (and indication animation) to 'off'
+        this.wait = false;
+
+        // default the sort col and direction
+        this.sortCol = 'id';
+        this.sortDir = 'desc';
+
+        // subscribe to the service to get data
+        this.users$ = this.usersService.users$.subscribe(
+            users$ => this.users = users$
+        );
+
+        this.total$ = this.usersService.total$.subscribe(
+            total$ => this.total = total$
+        );
+
+        // listen for the total when it gets updated, update more stuff
+        this.usersService.total$.subscribe(
+            () => this._listUpdated()
+        );
+
+        this.selectedUser = false;
     }
     
     // on init get a list of the users
     ngOnInit() {
-
+        this._getUsers();
     }
 
     // unsub all the things
     ngOnDestroy() {
-
+        this.users$.unsubscribe();
+        this.total$.unsubscribe();
     }
 
     // update the user list by making another request to the users service
