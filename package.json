@@ -1,6 +1,6 @@
 {
-  "name": "@erdiko/ng-user-admin",
-  "version": "1.1.1",
+  "name": "@erdiko/user-admin",
+  "version": "1.1.2",
   "description": "AngularJS based User Admin components for use with the Erdiko User Admin",
   "scripts": {
     "start": "npm run build && concurrently \"tsc -w\" \"lite-server\" ",
