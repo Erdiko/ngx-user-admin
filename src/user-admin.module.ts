@@ -5,7 +5,7 @@ import { HttpModule }               from '@angular/http';
 
 import { RouterModule, Routes }     from '@angular/router';
 
-import { Ng2BootstrapModule } from 'ngx-bootstrap';
+import { Ng2BootstrapModule }       from 'ngx-bootstrap';
 
 import { AuthService }              from './auth.service';
 import { UsersService }             from './users.service';

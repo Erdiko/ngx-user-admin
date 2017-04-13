@@ -11,13 +11,13 @@
     "suppressImplicitAnyIndexErrors": true,
     "declaration": true,
     "outDir": "./lib",
-    "rootDirs": ["src", "./node_modules/"]
+    "rootDir": "./src"
   },
   "include": [
     "src/**/*"
   ],
   "angularCompilerOptions": {
     "genDir": "./lib",
-    "skipMetadataEmit" : false
+    "skipMetadataEmit" : true
   }
 }

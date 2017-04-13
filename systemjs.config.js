@@ -32,7 +32,7 @@
 
             // ng2-bootstrap
             'moment': 'npm:moment/moment.js',
-            'ngx-bootstrap': 'node_modules/ngx-bootstrap'
+            'ngx-bootstrap': 'npm:ngx-bootstrap/bundles/ngx-bootstrap.umd.js'
 
         },
         // packages tells the System loader how to load when no filename and/or no extension
@@ -45,7 +45,6 @@
                 main: './Rx.js',
                 defaultExtension: 'js'
             },
-            'ngx-bootstrap':              { format: 'cjs', main: 'bundles/ngx-bootstrap.umd.js', defaultExtension: 'js' },
             lib: {
                 defaultExtension: 'js'
             },
