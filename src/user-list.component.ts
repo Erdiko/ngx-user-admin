@@ -8,7 +8,7 @@ import { UsersService }             from './users.service';
 import { User }                     from './user.model';
 
 @Component({
-  selector: 'app-user-list',
+  selector: 'erdiko-user-list',
   template: `
 <div class="row">
     <div class="col-xs-4">

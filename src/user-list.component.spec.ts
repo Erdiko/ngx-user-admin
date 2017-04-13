@@ -35,7 +35,6 @@ import { User }                 from './user.model';
 
 import { UserListComponent }    from './user-list.component';
 
-/*
 describe('UserListComponent', () => {
     let component: UserListComponent;
     let fixture: ComponentFixture<UserListComponent>;
@@ -548,4 +547,3 @@ describe('UserListComponent', () => {
     });
 
 });
-*/

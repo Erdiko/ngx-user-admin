@@ -10,7 +10,13 @@ import { UserAdminModule } from '../index';
          <div class="row">
              <div class="col-xs-12">
                  <h3>User List Component</h3>
-                 <app-user-list></app-user-list>
+                 <erdiko-user-list></erdiko-user-list>
+             </div>
+         </div>
+         <div class="row">
+             <div class="col-xs-12">
+                 <h3>User Event Log Component</h3>
+                 <erdiko-users-event-log></erdiko-users-event-log>
              </div>
          </div>
      </div>

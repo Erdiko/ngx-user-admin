@@ -11,6 +11,8 @@ import { AuthService }              from './auth.service';
 import { UsersService }             from './users.service';
 
 import { UserListComponent }        from './user-list.component';
+import { UserEventLogComponent }    from './user-event-log.component';
+import { UsersEventLogComponent }   from './users-event-log.component';
 
 const loginRoutes: Routes = [
 ];
@@ -24,10 +26,14 @@ const loginRoutes: Routes = [
         Ng2BootstrapModule.forRoot()
     ],
     declarations: [ 
-        UserListComponent
+        UserListComponent,
+        UserEventLogComponent,
+        UsersEventLogComponent
     ],
     exports: [ 
         UserListComponent,
+        UserEventLogComponent,
+        UsersEventLogComponent,
     ],
     providers: [
         AuthService,

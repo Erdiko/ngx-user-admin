@@ -1,6 +1,6 @@
 {
   "name": "@erdiko/user-admin",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "AngularJS based User Admin components for use with the Erdiko User Admin",
   "scripts": {
     "start": "npm run cleanup && npm run build && concurrently \"ngc -w\" \"lite-server\" ",
@@ -8,8 +8,8 @@
     "lint": "tslint ./app/**/*.ts -t verbose",
     "lite": "lite-server",
     "pree2e": "webdriver-manager update",
-    "test": "npm run build && concurrently \"ngc -w\" \"karma start karma.conf.js\"",
-    "test-once": "npm run build && karma start karma.conf.js --single-run",
+    "test": "npm run cleanup && npm run build && concurrently \"ngc -w\" \"karma start karma.conf.js\"",
+    "test-once": "npm run cleanup && npm run build && karma start karma.conf.js --single-run",
 
     "cleanup": "rm -rf src/node_modules src/*metadata* src/*ngfactory* src/*.map src/*ngsummary* *ngsummary*",
 
