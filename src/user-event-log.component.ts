@@ -10,7 +10,7 @@ import { UserListComponent }        from './user-list.component';
 import { Subscription }             from "rxjs";
 
 @Component({
-  selector: 'app-user-event-log',
+  selector: 'erdiko-user-event-log',
   template: `
 <div class="row">
     <div class="col-xs-12">
