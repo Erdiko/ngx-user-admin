@@ -11,6 +11,11 @@ lib
 src/**/*.js
 
 ## ngc compiler files
-src/*.ngfactory.ts
-src/*.ngsummary.json
+*.ngfactory.ts
+*.ngsummary.json
+*.metadata.json
+*.map.js
+*.js  # or /src/**/*.js
+/lib
+
 .DS_Store
