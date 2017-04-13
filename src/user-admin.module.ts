@@ -5,9 +5,7 @@ import { HttpModule }               from '@angular/http';
 
 import { RouterModule, Routes }     from '@angular/router';
 
-import { AlertModule,
-         ModalModule,
-         TabsModule }               from 'ng2-bootstrap';
+import { Ng2BootstrapModule } from 'ngx-bootstrap';
 
 import { AuthService }              from './auth.service';
 import { UsersService }             from './users.service';
@@ -23,9 +21,7 @@ const loginRoutes: Routes = [
         HttpModule,
         RouterModule.forRoot(loginRoutes),
 
-        AlertModule.forRoot(),
-        ModalModule.forRoot(),
-        TabsModule.forRoot()
+        Ng2BootstrapModule.forRoot()
     ],
     declarations: [ 
         UserListComponent

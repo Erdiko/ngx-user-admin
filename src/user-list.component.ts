@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild }     from '@angular/core';
 import { Router, ActivatedRoute }           from '@angular/router';
 import { Observable, Subscription }         from "rxjs";
 
-import { ModalDirective }           from 'ng2-bootstrap';
+import { ModalDirective }           from 'ngx-bootstrap';
 
 import { UsersService }             from './users.service';
 import { User }                     from './user.model';
