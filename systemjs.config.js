@@ -31,7 +31,8 @@
             'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.js',
 
             // ng2-bootstrap
-            'moment': 'npm:moment/moment.js'
+            'moment': 'npm:moment/moment.js',
+            'ngx-bootstrap': 'node_modules/ngx-bootstrap'
 
         },
         // packages tells the System loader how to load when no filename and/or no extension
@@ -44,6 +45,7 @@
                 main: './Rx.js',
                 defaultExtension: 'js'
             },
+            'ngx-bootstrap':              { format: 'cjs', main: 'bundles/ngx-bootstrap.umd.js', defaultExtension: 'js' },
             lib: {
                 defaultExtension: 'js'
             },
