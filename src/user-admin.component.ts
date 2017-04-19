@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 
 @Component({
-    selector: 'user-admin',
+    selector: 'erdiko-user-admin',
     styles: [`
 
     `],
