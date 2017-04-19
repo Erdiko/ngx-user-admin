@@ -1,24 +1,20 @@
 {
-  "name": "@erdiko/user-admin",
-  "version": "1.1.5",
-  "description": "AngularJS based User Admin components for use with the Erdiko User Admin",
+  "name": "@erdiko/ngx-user-admin",
+  "version": "0.0.1",
+  "description": "Erdiko Angular User Admin",
   "scripts": {
-    "start": "npm run cleanup && npm run build && concurrently \"ngc -w\" \"lite-server\" ",
+    "start": "npm run build && concurrently \"tsc -w\" \"lite-server\" ",
     "e2e": "npm run build && concurrently \"http-server -s\" \"protractor protractor.config.js\" --kill-others --success first",
     "lint": "tslint ./app/**/*.ts -t verbose",
     "lite": "lite-server",
     "pree2e": "webdriver-manager update",
-    "test": "npm run cleanup && npm run build && concurrently \"ngc -w\" \"karma start karma.conf.js\"",
-    "test-once": "npm run cleanup && npm run build && karma start karma.conf.js --single-run",
-
-    "cleanup": "rm -rf src/node_modules src/*metadata* src/*ngfactory* src/*.map src/*ngsummary* *ngsummary*",
-
-    "ngc": "ngc",
-    "ngc:w": "ngc -w",
-    "build": "rm -rf lib && ngc -p src && ngc",
-
+    "test": "npm run build && concurrently \"tsc -w\" \"karma start karma.conf.js\"",
+    "test-once": "npm run build && karma start karma.conf.js --single-run",
+    "tsc": "tsc",
+    "tsc:w": "tsc -w",
+    "build": "rm -rf lib && tsc -p src && tsc",
     "prepublish": "npm run ngc-build",
-    "ngc-build": "npm run cleanup && rm -rf lib && rm -rf \"src/node_modules\" && \"node_modules/.bin/ngc\" -p tsconfig-aot.json"
+    "ngc-build": "rm -rf lib && rm -rf \"src/node_modules\" && \"node_modules/.bin/ngc\" -p tsconfig-aot.json"
   },
   "main": "./index.js",
   "types": "./index.d.ts",
@@ -26,25 +22,29 @@
     "type": "git",
     "url": "git+https://github.com/saarmstrong/ng-user-admin.git"
   },
-  "author": "Andy Armstrong",
-  "license": "ISC",
+  "author": "Robert Nadler",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/saarmstrong/ng-user-admin/issues"
   },
   "homepage": "https://github.com/saarmstrong/ng-user-admin#readme",
   "dependencies": {
+     "@angular/common": "^2.4.1",
+    "@angular/compiler": "^2.4.1",
+    "@angular/core": "^2.3.1",
+    "@angular/forms": "^2.3.1",
+    "@angular/http": "^2.3.1",
+    "@angular/platform-browser": "^2.3.1",
+    "@angular/platform-browser-dynamic": "^2.3.1",
+    "@angular/router": "^3.3.1",
+    "core-js": "^2.4.1",
+    "rxjs": "^5.0.1",
+    "ts-helpers": "^1.1.1",
+    "zone.js": "^0.7.2"
   },
   "devDependencies": {
-    "@angular/common": "~2.4.0",
-    "@angular/compiler": "^2.4.10",
     "@angular/compiler-cli": "^2.4.10",
-    "@angular/core": "~2.4.0",
-    "@angular/forms": "~2.4.0",
-    "@angular/http": "~2.4.0",
-    "@angular/platform-browser": "~2.4.0",
-    "@angular/platform-browser-dynamic": "~2.4.0",
     "@angular/platform-server": "^2.4.10",
-    "@angular/router": "~3.4.0",
     "@types/es6-shim": "^0.31.32",
     "@types/jasmine": "^2.5.46",
     "@types/node": "^6.0.65",
@@ -65,14 +65,9 @@
     "protractor": "~4.0.14",
     "reflect-metadata": "^0.1.8",
     "rimraf": "^2.5.4",
-    "rxjs": "5.0.1",
     "systemjs": "0.19.40",
     "tslint": "^4.0.2",
     "typescript": "^2.0.10",
-    "webdriver-manager": "10.2.10",
-    "zone.js": "^0.7.4",
-    "bootstrap": "^3.3.7",
-    "moment": "^2.18.1",
-    "ngx-bootstrap": "^1.6.6"
+    "webdriver-manager": "10.2.10"
   }
 }
