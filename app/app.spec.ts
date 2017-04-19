@@ -3,7 +3,7 @@ import { By, BrowserModule } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { FormsModule } from "@angular/forms";
 import { AppComponent } from './app';
-import { PasswordStrengthBarModule } from '../index'
+import { UserAdminModule } from '../index'
 
 describe('App', function () {
     let comp: AppComponent;
@@ -11,7 +11,7 @@ describe('App', function () {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [ BrowserModule, FormsModule, PasswordStrengthBarModule ],
+            imports: [ BrowserModule, FormsModule, UserAdminModule ],
             declarations: [ AppComponent ]
         }).compileComponents();
     }));

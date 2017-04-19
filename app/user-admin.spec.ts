@@ -1,6 +1,6 @@
-import { PasswordStrengthBarComponent } from '../index'
+import { UserAdminComponent } from '../index'
 
-let psb: PasswordStrengthBarComponent;
+let psb: UserAdminComponent;
 
 function testPassword(password: string, index: number, color: string) {
     let c = psb.getStrengthIndexAndColor(password);
@@ -8,10 +8,10 @@ function testPassword(password: string, index: number, color: string) {
     expect(c.col).toBe(color);
 }
 
-describe('PasswordStrengthBarComponent', () => {
+describe('UserAdminComponent', () => {
 
     beforeEach(() => {
-        psb = new PasswordStrengthBarComponent();
+        psb = new UserAdminComponent();
     });
 
     it('Should expect weak bar', () => {
