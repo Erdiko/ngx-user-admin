@@ -16,14 +16,14 @@ import { UserListComponent }        from './user-list.component';
 import { UserEventLogComponent }    from './user-event-log.component';
 import { UsersEventLogComponent }   from './users-event-log.component';
 
-const loginRoutes: Routes = [
+const routes: Routes = [
 ];
 
 @NgModule({
     imports: [ 
         BrowserModule,
         HttpModule,
-        RouterModule.forRoot(loginRoutes),
+        RouterModule.forRoot(routes),
 
         AlertModule,
         ModalModule,

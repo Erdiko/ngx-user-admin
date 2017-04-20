@@ -3,19 +3,10 @@
   "version": "0.0.1",
   "description": "Erdiko Angular User Admin",
   "scripts": {
-    "start": "npm run build && concurrently \"tsc -w\" \"lite-server\" ",
-    "e2e": "npm run build && concurrently \"http-server -s\" \"protractor protractor.config.js\" --kill-others --success first",
-    "lint": "tslint ./app/**/*.ts -t verbose",
-    "lite": "lite-server",
-    "pree2e": "webdriver-manager update",
-    "cleanup": "rm -rf src/node_modules src/*metadata* src/*ngfactory* src/*.map src/*.js src/*ngsummary* *ngsummary*",
-    "test": "npm run build && concurrently \"tsc -w\" \"karma start karma.conf.js\"",
-    "test-once": "npm run build && karma start karma.conf.js --single-run",
-    "tsc": "tsc",
-    "tsc:w": "tsc -w",
-    "build": "rm -rf lib && npm run cleanup && tsc -p src && tsc",
-    "prepublish": "npm run ngc-build",
-    "ngc-build": "rm -rf lib && npm run cleanup && \"node_modules/.bin/ngc\" -p tsconfig-aot.json"
+    "transpile": "ngc",
+    "package": "rollup -c",
+    "minify": "uglifyjs dist/bundles/amazing.umd.js --screw-ie8 --compress --mangle --comments --output dist/bundles/amazing.umd.min.js",
+    "build": "npm run transpile && npm run package && npm run minify"
   },
   "types": "./index.d.ts",
   "repository": {
@@ -28,10 +19,10 @@
     "url": "https://github.com/saarmstrong/ng-user-admin/issues"
   },
   "homepage": "https://github.com/saarmstrong/ng-user-admin#readme",
-  "dependencies": { },
+  "dependencies": {},
   "devDependencies": {
     "@angular/common": "~2.4.0",
-    "@angular/compiler": "~2.4.0",
+    "@angular/compiler": "^2.4.10",
     "@angular/compiler-cli": "^2.4.10",
     "@angular/core": "~2.4.0",
     "@angular/forms": "~2.4.0",
@@ -57,15 +48,17 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "lite-server": "^2.2.2",
     "lodash": "^4.16.4",
+    "ngx-bootstrap": "^1.6.6",
     "protractor": "~4.0.14",
     "reflect-metadata": "^0.1.8",
     "rimraf": "^2.5.4",
+    "rollup": "^0.41.6",
     "rxjs": "5.0.1",
     "systemjs": "0.19.40",
     "tslint": "^4.0.2",
-    "typescript": "^2.0.10",
+    "typescript": "^2.2.2",
+    "uglify-js": "^2.8.22",
     "webdriver-manager": "10.2.10",
-    "zone.js": "^0.7.4",
-    "ngx-bootstrap": "^1.6.6"
+    "zone.js": "^0.7.4"
   }
 }
