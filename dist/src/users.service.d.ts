@@ -1,8 +1,10 @@
 import { Http } from '@angular/http';
 import { Observable, Subscription } from "rxjs";
+import { AuthService } from "./auth.service";
 import { User } from "./user.model";
 export declare class UsersService {
     private http;
+    private authService;
     private _users$;
     private _total$;
     private _events$;
@@ -17,7 +19,7 @@ export declare class UsersService {
     private userEventUrl;
     private authToken;
     private _baseUrl;
-    constructor(http: Http);
+    constructor(http: Http, authService: AuthService);
     readonly users$: Observable<any>;
     readonly total$: Observable<any>;
     readonly events$: Observable<any>;

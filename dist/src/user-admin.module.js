@@ -9,6 +9,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { AlertModule, ModalModule, TabsModule } from 'ngx-bootstrap';
+import { AuthService } from './auth.service';
 import { UsersService } from './users.service';
 import { UserListComponent } from './user-list.component';
 import { UserEventLogComponent } from './user-event-log.component';
@@ -40,6 +41,7 @@ UserAdminModule = __decorate([
             UsersEventLogComponent
         ],
         providers: [
+            AuthService,
             UsersService
         ]
     })
