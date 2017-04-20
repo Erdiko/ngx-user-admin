@@ -11,6 +11,11 @@ import { User }                     from './user.model';
   selector: 'erdiko-user-list',
   template: `
 <div class="row">
+    <div class="col-xs-4">
+        <button class="btn btn-info btn-sm" routerLink="/user/">Create a New User</button>
+    </div>
+</div>
+<div class="row">
     <div class="col-xs-12">
         <br />
     </div>
