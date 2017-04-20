@@ -28,23 +28,18 @@
     "url": "https://github.com/saarmstrong/ng-user-admin/issues"
   },
   "homepage": "https://github.com/saarmstrong/ng-user-admin#readme",
-  "dependencies": {
-     "@angular/common": "^2.4.1",
-    "@angular/compiler": "^2.4.1",
-    "@angular/core": "^2.3.1",
-    "@angular/forms": "^2.3.1",
-    "@angular/http": "^2.3.1",
-    "@angular/platform-browser": "^2.3.1",
-    "@angular/platform-browser-dynamic": "^2.3.1",
-    "@angular/router": "^3.3.1",
-    "core-js": "^2.4.1",
-    "rxjs": "^5.0.1",
-    "ts-helpers": "^1.1.1",
-    "zone.js": "^0.7.2"
-  },
+  "dependencies": { },
   "devDependencies": {
+    "@angular/common": "~2.4.0",
+    "@angular/compiler": "~2.4.0",
     "@angular/compiler-cli": "^2.4.10",
+    "@angular/core": "~2.4.0",
+    "@angular/forms": "~2.4.0",
+    "@angular/http": "~2.4.0",
+    "@angular/platform-browser": "~2.4.0",
+    "@angular/platform-browser-dynamic": "~2.4.0",
     "@angular/platform-server": "^2.4.10",
+    "@angular/router": "~3.4.0",
     "@types/es6-shim": "^0.31.32",
     "@types/jasmine": "^2.5.46",
     "@types/node": "^6.0.65",
@@ -65,9 +60,11 @@
     "protractor": "~4.0.14",
     "reflect-metadata": "^0.1.8",
     "rimraf": "^2.5.4",
+    "rxjs": "5.0.1",
     "systemjs": "0.19.40",
     "tslint": "^4.0.2",
     "typescript": "^2.0.10",
-    "webdriver-manager": "10.2.10"
+    "webdriver-manager": "10.2.10",
+    "zone.js": "^0.7.4"
   }
 }
