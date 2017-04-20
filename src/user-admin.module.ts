@@ -37,7 +37,7 @@ const loginRoutes: Routes = [
     ],
     providers: [
         AuthService,
-        UsersService,
+        UsersService
     ],
 })
 export class UserAdminModule {}
