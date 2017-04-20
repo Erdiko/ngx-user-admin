@@ -4,8 +4,10 @@ export default {
   sourceMap: false,
   format: 'umd',
   moduleName: 'ng.ngx-user-admin',
+  external: ['@angular/http'],
   globals: {
     '@angular/core': 'ng.core',
+    '@angular/http' : 'vendor._angular_http',
     'rxjs/Observable': 'Rx',
     'rxjs/ReplaySubject': 'Rx',
     'rxjs/add/operator/map': 'Rx.Observable.prototype',

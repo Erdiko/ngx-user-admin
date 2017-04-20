@@ -2,8 +2,8 @@ import { OnInit } from '@angular/core';
 import { UsersService } from './users.service';
 import { ActivatedRoute } from '@angular/router';
 export declare class UserEventLogComponent implements OnInit {
-    private usersService;
     private route;
+    private usersService;
     wait: boolean;
     events: Event[];
     eventsTotal: number;

@@ -1,4 +1,4 @@
-import { Component, OnInit }        from '@angular/core';
+import { Component, OnInit, Inject }        from '@angular/core';
 
 import { UsersService }             from './users.service';
 import { User }                     from './user.model';
@@ -102,6 +102,7 @@ import { Subscription }             from 'rxjs';
 })
 export class UsersEventLogComponent implements OnInit {
 
+  private usersService: UsersService;
   public wait: boolean;
   public events: Event[];
   public eventsTotal: number;
@@ -118,8 +119,11 @@ export class UsersEventLogComponent implements OnInit {
   private eventsTotal$: Subscription;
 
   constructor(
-    private usersService: UsersService
-  ) {
+    @Inject(UsersService) usersService: UsersService
+    ) {
+
+    this.usersService = usersService;
+
     this.userID = null
     this.pageSize = 10;
     this.currentPage = 1;

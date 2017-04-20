@@ -4,10 +4,10 @@ import { ModalDirective } from 'ngx-bootstrap';
 import { UsersService } from './users.service';
 import { User } from './user.model';
 export declare class UserListComponent implements OnInit {
-    private usersService;
     private route;
     private router;
     confirmDeleteModal: ModalDirective;
+    private usersService;
     wait: any;
     private users$;
     private total$;

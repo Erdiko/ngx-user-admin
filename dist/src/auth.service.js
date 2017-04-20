@@ -4,8 +4,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-import { Injectable } from '@angular/core';
-import { Headers, RequestOptions } from '@angular/http';
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+import { Injectable, Inject } from '@angular/core';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 var AuthService = (function () {
@@ -74,7 +77,8 @@ var AuthService = (function () {
     return AuthService;
 }());
 AuthService = __decorate([
-    Injectable()
+    Injectable(),
+    __param(0, Inject(Http))
 ], AuthService);
 export { AuthService };
 //# sourceMappingURL=auth.service.js.map

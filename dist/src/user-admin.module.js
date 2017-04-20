@@ -15,12 +15,18 @@ import { UserListComponent } from './user-list.component';
 import { UserEventLogComponent } from './user-event-log.component';
 import { UsersEventLogComponent } from './users-event-log.component';
 var routes = [];
-var UserAdminModule = (function () {
+var UserAdminModule = UserAdminModule_1 = (function () {
     function UserAdminModule() {
     }
+    UserAdminModule.forRoot = function () {
+        return {
+            ngModule: UserAdminModule_1,
+            providers: [AuthService, UsersService]
+        };
+    };
     return UserAdminModule;
 }());
-UserAdminModule = __decorate([
+UserAdminModule = UserAdminModule_1 = __decorate([
     NgModule({
         imports: [
             BrowserModule,
@@ -39,12 +45,9 @@ UserAdminModule = __decorate([
             UserListComponent,
             UserEventLogComponent,
             UsersEventLogComponent
-        ],
-        providers: [
-            AuthService,
-            UsersService
         ]
     })
 ], UserAdminModule);
 export { UserAdminModule };
+var UserAdminModule_1;
 //# sourceMappingURL=user-admin.module.js.map

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders }             from '@angular/core';
 
 import { BrowserModule }            from '@angular/platform-browser';
 import { HttpModule }               from '@angular/http';
@@ -44,4 +44,11 @@ const routes: Routes = [
         UsersService
     ]
 })
-export class UserAdminModule {}
+export class UserAdminModule {
+    static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: UserAdminModule,
+            providers: [AuthService, UsersService]
+        }
+    }
+}

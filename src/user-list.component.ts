@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild }     from '@angular/core';
+import { Component, OnInit, ViewChild, Inject }     from '@angular/core';
 import { Router, ActivatedRoute }           from '@angular/router';
 import { Observable, Subscription }         from "rxjs";
 
@@ -150,6 +150,7 @@ export class UserListComponent implements OnInit {
 
     @ViewChild('confirmDeleteModal') public confirmDeleteModal:ModalDirective;
 
+    private usersService: UsersService;
     public wait: any;
 
     private users$: Subscription;
@@ -168,9 +169,11 @@ export class UserListComponent implements OnInit {
     public selectedUser: any;
         
     constructor(
-           private usersService: UsersService,
+           @Inject(UsersService) usersService: UsersService,
            private route: ActivatedRoute,
            private router: Router) {
+
+        this.usersService = usersService;
 
         // init the wait state (and indication animation) to 'off'
         this.wait = false;

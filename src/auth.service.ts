@@ -1,4 +1,4 @@
-import { Injectable }                                                   from '@angular/core';
+import { Injectable, Inject }                                           from '@angular/core';
 import { Http, Response, Headers, RequestOptions, URLSearchParams }     from '@angular/http';
 
 import { Observable }                                                   from 'rxjs';
@@ -19,7 +19,7 @@ export class AuthService {
      *
      *
      */
-    constructor(private http: Http) {
+    constructor(@Inject(Http) private http: Http) {
         let currentUser = {'token': false};
         //currentUser = JSON.parse(localStorage.getItem('currentUser'));
         this.token = currentUser && currentUser.token;

@@ -1,4 +1,4 @@
-import { Injectable }                                                   from '@angular/core';
+import { Injectable, Inject }                                           from '@angular/core';
 import { Http, Response, Headers, RequestOptions, URLSearchParams }     from '@angular/http';
 
 import { BehaviorSubject, Observable, Subscription }                    from "rxjs";
@@ -30,8 +30,8 @@ export class UsersService {
     private _baseUrl: string;
 
     constructor(
-        private http: Http,
-        private authService: AuthService) {
+        @Inject(Http) private http: Http,
+        @Inject(AuthService) private authService: AuthService) {
 
         this.dataStore = {};
 
