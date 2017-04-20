@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "description": "Erdiko Angular User Admin",
   "scripts": {
-    "transpile": "ngc",
+    "transpile": "ngc -p tsconfig.json",
     "package": "rollup -c",
-    "minify": "uglifyjs dist/bundles/amazing.umd.js --screw-ie8 --compress --mangle --comments --output dist/bundles/amazing.umd.min.js",
+    "minify": "uglifyjs dist/bundles/ngx-user-admin.umd.js --screw-ie8 --compress --mangle --comments --output dist/bundles/ngx-user-admin.umd.min.js",
     "build": "npm run transpile && npm run package && npm run minify"
   },
   "types": "./index.d.ts",
@@ -31,7 +31,6 @@
     "@angular/platform-browser-dynamic": "~2.4.0",
     "@angular/platform-server": "^2.4.10",
     "@angular/router": "~3.4.0",
-    "@types/es6-shim": "^0.31.32",
     "@types/jasmine": "^2.5.46",
     "@types/node": "^6.0.65",
     "@types/selenium-webdriver": "^2.53.42",
@@ -56,6 +55,7 @@
     "rxjs": "5.0.1",
     "systemjs": "0.19.40",
     "tslint": "^4.0.2",
+    "typescript": "^2.2.2",
     "uglify-js": "^2.8.22",
     "webdriver-manager": "10.2.10",
     "zone.js": "^0.7.4"

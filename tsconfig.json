@@ -28,6 +28,12 @@
   "files": [
     "index.ts"
   ],
+  "exclude": [
+    "node_modules",
+    "node_modules/typescript",
+    "node_modules/typings",
+    "node_modules/@types"
+  ],
   "angularCompilerOptions": {
     "strictMetadataEmit": true
   }

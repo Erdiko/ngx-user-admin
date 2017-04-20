@@ -1,5 +1,5 @@
-export { UserAdminModule }      from './lib/user-admin.module';
+export { UserAdminModule }      from './src/user-admin.module';
 
-export { UsersService }         from './lib/users.service';
+export { UsersService }         from './src/users.service';
 
-export { UserListComponent }    from './lib/user-list.component';
+export { UserListComponent }    from './src/user-list.component';
