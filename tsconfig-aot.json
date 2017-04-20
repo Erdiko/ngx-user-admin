@@ -10,10 +10,14 @@
     "noImplicitAny": true,
     "suppressImplicitAnyIndexErrors": true,
     "declaration": true,
-    "outDir": "./lib",
-    "rootDir": "./src"
-  },
-  "include": [
-    "src/**/*"
-  ]
+     "outDir": "./lib",
+     "rootDir": "./src"
+   },
+   "include": [
+     "src/**/*"
+   ],
+   "angularCompilerOptions": {
+     "genDir": "./lib",
+     "skipMetadataEmit" : true
+   }
 }

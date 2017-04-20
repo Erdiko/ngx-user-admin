@@ -8,15 +8,15 @@
     "lint": "tslint ./app/**/*.ts -t verbose",
     "lite": "lite-server",
     "pree2e": "webdriver-manager update",
+    "cleanup": "rm -rf src/node_modules src/*metadata* src/*ngfactory* src/*.map src/*.js src/*ngsummary* *ngsummary*",
     "test": "npm run build && concurrently \"tsc -w\" \"karma start karma.conf.js\"",
     "test-once": "npm run build && karma start karma.conf.js --single-run",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
-    "build": "rm -rf lib && tsc -p src && tsc",
+    "build": "rm -rf lib && npm run cleanup && tsc -p src && tsc",
     "prepublish": "npm run ngc-build",
-    "ngc-build": "rm -rf lib && rm -rf \"src/node_modules\" && \"node_modules/.bin/ngc\" -p tsconfig-aot.json"
+    "ngc-build": "rm -rf lib && npm run cleanup && \"node_modules/.bin/ngc\" -p tsconfig-aot.json"
   },
-  "main": "./index.js",
   "types": "./index.d.ts",
   "repository": {
     "type": "git",
