@@ -5,7 +5,9 @@ import { HttpModule }               from '@angular/http';
 
 import { RouterModule, Routes }     from '@angular/router';
 
-import { Ng2BootstrapModule }       from 'ngx-bootstrap';
+import { AlertModule,
+         ModalModule,
+         TabsModule }               from 'ngx-bootstrap';
 
 import { AuthService }              from './auth.service';
 import { UsersService }             from './users.service';
@@ -23,7 +25,9 @@ const loginRoutes: Routes = [
         HttpModule,
         RouterModule.forRoot(loginRoutes),
 
-        Ng2BootstrapModule.forRoot()
+        AlertModule,
+        ModalModule,
+        TabsModule
     ],
     declarations: [ 
         UserListComponent,
@@ -38,6 +42,6 @@ const loginRoutes: Routes = [
     providers: [
         AuthService,
         UsersService
-    ],
+    ]
 })
 export class UserAdminModule {}

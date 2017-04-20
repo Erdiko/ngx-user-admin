@@ -1,13 +1,19 @@
-import { Component, NgModule }  from '@angular/core'
-import { FormsModule }          from '@angular/forms';
-import { BrowserModule }        from '@angular/platform-browser';
-import { UserAdminModule }      from '../index';
+import { Component, NgModule } from '@angular/core'
+import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { UserAdminModule } from '../index';
 
 @Component({
     selector: 'my-app',
     template: `
-    <h3>NG User Admin Test</h3>
-    <erdiko-user-admin></erdiko-user-admin>
+     <div class="container">
+         <div class="row">
+             <div class="col-xs-12">
+                 <h3>User List Component</h3>
+                 <erdiko-user-list></erdiko-user-list>
+             </div>
+         </div>
+     </div>
   `,
 })
 export class AppComponent {
