@@ -37,7 +37,7 @@ const routes: Routes = [
     exports: [ 
         UserListComponent,
         UserEventLogComponent,
-        UsersEventLogComponent,
+        UsersEventLogComponent
     ],
     providers: [
         AuthService,
