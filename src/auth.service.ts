@@ -21,14 +21,9 @@ export class AuthService {
      */
     constructor(@Inject(Http) private http: Http) {
         let currentUser = {'token': false};
-        //currentUser = JSON.parse(localStorage.getItem('currentUser'));
         this.token = currentUser && currentUser.token;
 
-        // hack to help with local development
         this._baseUrl = "";
-        if(window.location && "localhost" == window.location.hostname) {
-            this._baseUrl = "http://docker.local:8088";
-        }
     }
 
     /**
