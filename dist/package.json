@@ -1,6 +1,6 @@
 {
   "name": "@erdiko/ngx-user-admin",
-  "version": "1.0.0",
+  "version": "1.1.6",
   "description": "An amazing module for Angular.",
   "main": "bundles/ngx-user-admin.umd.js",
   "module": "index.js",
@@ -11,8 +11,16 @@
     "angular 2",
     "angular4"
   ],
-  "author": "Your name",
-  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saarmstrong/ng-user-admin.git"
+  },
+  "author": "Andy Armstrong",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/saarmstrong/ng-user-admin/issues"
+  },
+  "homepage": "https://github.com/saarmstrong/ng-user-admin#readme",
   "peerDependencies": {
     "@angular/core": "^2.4.0 || ^4.0.0",
     "rxjs": "^5.0.1",

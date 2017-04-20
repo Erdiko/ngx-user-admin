@@ -8,12 +8,15 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AlertModule, ModalModule, TabsModule } from 'ngx-bootstrap';
 import { AuthService } from './auth.service';
 import { UsersService } from './users.service';
 import { UserListComponent } from './user-list.component';
 import { UserEventLogComponent } from './user-event-log.component';
 import { UsersEventLogComponent } from './users-event-log.component';
+import { PasswordComponent } from './password.component';
+import { UserEditComponent } from './user-edit.component';
 var routes = [];
 var UserAdminModule = UserAdminModule_1 = (function () {
     function UserAdminModule() {
@@ -32,6 +35,8 @@ UserAdminModule = UserAdminModule_1 = __decorate([
             BrowserModule,
             HttpModule,
             RouterModule.forRoot(routes),
+            FormsModule,
+            ReactiveFormsModule,
             AlertModule,
             ModalModule,
             TabsModule
@@ -39,12 +44,15 @@ UserAdminModule = UserAdminModule_1 = __decorate([
         declarations: [
             UserListComponent,
             UserEventLogComponent,
-            UsersEventLogComponent
+            UsersEventLogComponent,
+            UserEditComponent,
+            PasswordComponent
         ],
         exports: [
             UserListComponent,
             UserEventLogComponent,
-            UsersEventLogComponent
+            UsersEventLogComponent,
+            UserEditComponent
         ]
     })
 ], UserAdminModule);

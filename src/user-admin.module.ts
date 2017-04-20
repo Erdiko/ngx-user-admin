@@ -5,6 +5,9 @@ import { HttpModule }               from '@angular/http';
 
 import { RouterModule, Routes }     from '@angular/router';
 
+import { FormsModule,
+          ReactiveFormsModule }  from '@angular/forms';
+
 import { AlertModule,
          ModalModule,
          TabsModule }               from 'ngx-bootstrap';
@@ -16,6 +19,9 @@ import { UserListComponent }        from './user-list.component';
 import { UserEventLogComponent }    from './user-event-log.component';
 import { UsersEventLogComponent }   from './users-event-log.component';
 
+import { PasswordComponent }       from './password.component';
+import { UserEditComponent }       from './user-edit.component';
+
 const routes: Routes = [
 ];
 
@@ -24,6 +30,8 @@ const routes: Routes = [
         BrowserModule,
         HttpModule,
         RouterModule.forRoot(routes),
+        FormsModule,
+        ReactiveFormsModule,
 
         AlertModule,
         ModalModule,
@@ -32,12 +40,15 @@ const routes: Routes = [
     declarations: [ 
         UserListComponent,
         UserEventLogComponent,
-        UsersEventLogComponent
+        UsersEventLogComponent,
+        UserEditComponent,
+        PasswordComponent
     ],
     exports: [ 
         UserListComponent,
         UserEventLogComponent,
-        UsersEventLogComponent
+        UsersEventLogComponent,
+        UserEditComponent
     ],
     providers: [
         AuthService,
