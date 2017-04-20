@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject }        from '@angular/core';
+import { Component, OnInit, Inject, Input, Output }        from '@angular/core';
 
 import { UsersService }             from './users.service';
 import { User }                     from './user.model';
@@ -108,7 +108,9 @@ import { Subscription }             from "rxjs";
 
 export class UserEventLogComponent implements OnInit {
 
-  private usersService: UsersService;
+  @Input() inputUserId: string;
+
+  public usersService: UsersService;
   public wait: boolean;
   public events: Event[];
   public eventsTotal: number;
@@ -125,9 +127,7 @@ export class UserEventLogComponent implements OnInit {
   private eventsTotal$: Subscription;
 
   constructor(
-    @Inject(UsersService) usersService: UsersService,
-    private route: ActivatedRoute
-  ) {
+  @Inject(UsersService) usersService: UsersService) {
 
     this.usersService = usersService;
 
@@ -242,13 +242,7 @@ export class UserEventLogComponent implements OnInit {
   }
   
   ngOnInit() {  
-
-    this.route.data.forEach((data: { user: any }) => {
-        if(undefined !== data.user && data.user) {
-            this.userID = data.user.id;
-        }
-    });
-
+    this.userID = this.inputUserId;
     this._getEvents();
   }
 

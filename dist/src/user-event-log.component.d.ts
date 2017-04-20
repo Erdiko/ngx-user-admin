@@ -1,9 +1,8 @@
 import { OnInit } from '@angular/core';
 import { UsersService } from './users.service';
-import { ActivatedRoute } from '@angular/router';
 export declare class UserEventLogComponent implements OnInit {
-    private route;
-    private usersService;
+    inputUserId: string;
+    usersService: UsersService;
     wait: boolean;
     events: Event[];
     eventsTotal: number;
@@ -15,7 +14,7 @@ export declare class UserEventLogComponent implements OnInit {
     pages: number[];
     private events$;
     private eventsTotal$;
-    constructor(usersService: UsersService, route: ActivatedRoute);
+    constructor(usersService: UsersService);
     /**
      * Sorts event log specified by the parameter
      * @param {string} column - instruction specifying which column to sort

@@ -439,9 +439,8 @@ var __param$3 = (undefined && undefined.__param) || function (paramIndex, decora
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 exports.UserEventLogComponent = (function () {
-    function UserEventLogComponent(usersService, route) {
+    function UserEventLogComponent(usersService) {
         var _this = this;
-        this.route = route;
         this.usersService = usersService;
         this.userID = null;
         this.pageSize = 10;
@@ -525,12 +524,7 @@ exports.UserEventLogComponent = (function () {
         return Math.ceil(this.eventsTotal / this.pageSize);
     };
     UserEventLogComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.route.data.forEach(function (data) {
-            if (undefined !== data.user && data.user) {
-                _this.userID = data.user.id;
-            }
-        });
+        this.userID = this.inputUserId;
         this._getEvents();
     };
     UserEventLogComponent.prototype.ngOnDestroy = function () {
@@ -539,6 +533,9 @@ exports.UserEventLogComponent = (function () {
     };
     return UserEventLogComponent;
 }());
+__decorate$4([
+    _angular_core.Input()
+], exports.UserEventLogComponent.prototype, "inputUserId", void 0);
 exports.UserEventLogComponent = __decorate$4([
     _angular_core.Component({
         selector: 'erdiko-user-event-log',
