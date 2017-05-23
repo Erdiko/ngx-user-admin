@@ -1,6 +1,6 @@
 {
-  "name": "@erdiko/ngx-user-admin",
-  "version": "0.0.1",
+  "name": "ngx-user-admin",
+  "version": "1.1.6",
   "description": "Erdiko Angular User Admin",
   "scripts": {
     "transpile": "ngc -p tsconfig.json",
