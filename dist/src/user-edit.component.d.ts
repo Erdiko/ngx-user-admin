@@ -25,6 +25,8 @@ export declare class UserEditComponent implements OnInit {
     constructor(usersService: UsersService, route: ActivatedRoute, router: Router);
     ngOnInit(): void;
     private _initForms();
+    isUserFormValid(): boolean;
+    isPassFormValid(): boolean;
     onSubmit({value, valid}: {
         value: any;
         valid: boolean;

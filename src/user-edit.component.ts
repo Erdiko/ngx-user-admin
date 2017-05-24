@@ -112,7 +112,7 @@ import { AlertComponent, TabsModule } from 'ngx-bootstrap';
                                     <button type="cancel" class="btn btn-warning" routerLink="/list/">Cancel</button>
                                 </div>
                                 <div class="col-xs-offset-2 col-xs-4">
-                                    <button type="submit" class="btn btn-success" (click)="onSubmit(userForm)" [disabled]="!userForm.valid || wait || (!user.id && !passwordForm.valid)">
+                                    <button type="submit" class="btn btn-success" (click)="onSubmit(userForm)" [disabled]="!isUserFormValid()">
                                         Save
                                         <i *ngIf="wait" class="fa fa-refresh fa-spin fa-fw"></i> 
                                     </button>
@@ -135,7 +135,7 @@ import { AlertComponent, TabsModule } from 'ngx-bootstrap';
                                 <button type="cancel" class="btn btn-warning" routerLink="/list/">Cancel</button>
                             </div>
                             <div class="col-xs-offset-2 col-xs-4">
-                                <button type="submit" class="btn btn-success" (click)="onSubmitChangepass(passwordForm)" [disabled]="!passwordForm.valid || passWait">
+                                <button type="submit" class="btn btn-success" (click)="onSubmitChangepass(passwordForm)" [disabled]="!isPassFormValid()">
                                     Save
                                     <i *ngIf="passWait" class="fa fa-refresh fa-spin fa-fw"></i> 
                                 </button>
@@ -232,6 +232,42 @@ export class UserEditComponent implements OnInit {
             this.userForm.controls['role'].setValue(this.user.role.id);
         }
 
+    }
+
+    isUserFormValid() {
+
+        if(this.wait) {
+            return false;
+        }
+
+        if(!this.user.id) {
+            if(!this.passwordForm.valid) {
+                return false;
+            } else {
+                if(this.passwordForm.controls['password'].value !== this.passwordForm.controls['confirm'].value) {
+                    return false;
+                }
+            }
+        }
+
+        return (this.userForm.valid && !this.wait);
+    }
+
+    isPassFormValid() {
+
+        if(this.passWait) {
+            return false;
+        }
+
+        if(!this.passwordForm.valid) {
+            return false;
+        } else {
+            if(this.passwordForm.controls['password'].value !== this.passwordForm.controls['confirm'].value) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     onSubmit({ value, valid }: { value: any, valid: boolean }) {
