@@ -121,8 +121,7 @@ var UsersService = (function () {
         var options = this._getHeaderOptions();
         return this.http.get(url, options)
             .toPromise()
-            .then(function (response) { return response.json().body.user; })
-            .catch(this.handleError);
+            .then(function (response) { return response.json().body.user; });
     };
     /**
      * Update a specific user
@@ -134,8 +133,7 @@ var UsersService = (function () {
         var url = this._baseUrl + this.updateUrl;
         return this.http.post(url, body, options)
             .toPromise()
-            .then(function (response) { return response.json().body; })
-            .catch(this.handleError);
+            .then(function (response) { return response.json().body; });
     };
     /**
      * Create a new user

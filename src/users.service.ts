@@ -129,13 +129,14 @@ export class UsersService {
      * Get a specific user, returns a promise
      *
      */
-    getUser(id: string) {
+     getUser(id: string) {
+
         let url = this._baseUrl + this.userUrl + '?id=' + id;
         let options = this._getHeaderOptions();
         return this.http.get(url, options)
                    .toPromise()
-                   .then(response => response.json().body.user as User)
-                   .catch(this.handleError);
+                   .then(response => response.json().body.user as User);
+
     }
 
     /**
@@ -150,8 +151,7 @@ export class UsersService {
         let url = this._baseUrl + this.updateUrl;
         return this.http.post(url, body, options)
                    .toPromise()
-                   .then(response => response.json().body)
-                   .catch(this.handleError);
+                   .then(response => response.json().body);
     }
 
     /**

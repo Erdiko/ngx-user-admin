@@ -6,12 +6,12 @@ import { UsersService } from './users.service';
 import { User } from "./user.model";
 import { PasswordComponent } from './password.component';
 export declare class UserEditComponent implements OnInit {
-    private messageService;
-    private route;
-    private router;
-    private fb;
     passwordComponent: PasswordComponent;
-    private usersService;
+    usersService: UsersService;
+    messageService: MessageService;
+    route: ActivatedRoute;
+    router: Router;
+    fb: FormBuilder;
     wait: any;
     passWait: any;
     private title;
@@ -22,7 +22,7 @@ export declare class UserEditComponent implements OnInit {
     passError: string;
     passMsg: string;
     user: User;
-    constructor(usersService: UsersService, messageService: MessageService, route: ActivatedRoute, router: Router, fb: FormBuilder);
+    constructor(usersService: UsersService, route: ActivatedRoute, router: Router);
     ngOnInit(): void;
     private _initForms();
     onSubmit({value, valid}: {

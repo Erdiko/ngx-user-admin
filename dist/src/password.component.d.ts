@@ -1,6 +1,6 @@
 import { FormGroup } from '@angular/forms';
 export declare class PasswordComponent {
-    passwordInput: FormGroup;
+    passwordForm: FormGroup;
     constructor();
     ngOnInit(): void;
 }

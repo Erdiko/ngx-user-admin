@@ -51,8 +51,7 @@ UserAdminModule = UserAdminModule_1 = __decorate([
         exports: [
             UserListComponent,
             UserEventLogComponent,
-            UsersEventLogComponent,
-            UserEditComponent
+            UsersEventLogComponent
         ]
     })
 ], UserAdminModule);
