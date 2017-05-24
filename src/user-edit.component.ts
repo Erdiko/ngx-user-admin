@@ -149,9 +149,10 @@ import { AlertComponent, TabsModule } from 'ngx-bootstrap';
     </div>
 </div>
 
-<div class="row">
+<div class="row" *ngIf="user.id">
     <div class="col-xs-12">
         <br/>
+        <erdiko-user-event-log [inputUserId]="user.id"></erdiko-user-event-log>
     </div>
 </div>
 `  
