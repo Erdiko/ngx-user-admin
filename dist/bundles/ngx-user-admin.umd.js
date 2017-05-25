@@ -312,6 +312,71 @@ var __decorate$3 = (undefined && undefined.__decorate) || function (decorators, 
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var MessageService = (function () {
+    function MessageService() {
+        this.messageUpdate = new rxjs.Subject();
+        this.messages = {
+            'login': {
+                'success': "You have Successfully logged in",
+                'no-password': "Username or Password is invalid",
+                'no-access': "You need to login to gain access",
+                'error': "An error occurred. Please try again"
+            },
+            'logout': {
+                'success': "You have Successfully logged out",
+                'error': "You have been logged out unexpectedly"
+            },
+            'create-user': {
+                'success': "User was successfully created",
+                'error': "An error occurred. Please try again"
+            },
+            'edit-user': {
+                'success': "User record was successfully updated",
+                'error': "An error occurred. Please try again"
+            },
+            'edit-password': {
+                'success': "User password successfully updated",
+                'error': "An error occurred. Please try again"
+            },
+            'delete-user': {
+                'success': "User successfully deleted",
+                'error': "An error occured. Please try again"
+            }
+        };
+    }
+    MessageService.prototype.setMessageType = function (result) {
+        switch (result) {
+            case 'success':
+                return 'success';
+            case 'warning':
+                return 'warning';
+            default:
+                return 'danger';
+        }
+    };
+    MessageService.prototype.sendMessage = function (action, result) {
+        var messageType = this.setMessageType(result);
+        var message = this.messages[action][result];
+        this.messageUpdate.next({ body: message, type: messageType });
+    };
+    MessageService.prototype.getMessage = function () {
+        return this.messageUpdate.asObservable();
+    };
+    MessageService.prototype.clearMessage = function () {
+        this.messageUpdate.next(null);
+    };
+    return MessageService;
+}());
+MessageService = __decorate$3([
+    _angular_core.Injectable()
+], MessageService);
+
+var __decorate$4 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
 var __param$2 = (undefined && undefined.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
@@ -416,10 +481,10 @@ exports.UserListComponent = (function () {
     };
     return UserListComponent;
 }());
-__decorate$3([
+__decorate$4([
     _angular_core.ViewChild('confirmDeleteModal')
 ], exports.UserListComponent.prototype, "confirmDeleteModal", void 0);
-exports.UserListComponent = __decorate$3([
+exports.UserListComponent = __decorate$4([
     _angular_core.Component({
         selector: 'erdiko-user-list',
         template: "\n<div class=\"row\">\n    <div class=\"col-xs-4\">\n        <button class=\"btn btn-info btn-sm\" routerLink=\"/user/\">Create a New User</button>\n    </div>\n</div>\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <br />\n    </div>\n</div>\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <table class=\"table table-bordered table-hover\"> \n            <thead> \n                <tr> \n                    <th (click)=\"sort('id')\">\n                        ID \n                        <i *ngIf=\"sortCol == 'id'\" class=\"fa\" [ngClass]=\"{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}\" aria-hidden=\"true\"></i>\n                    </th> \n                    <th (click)=\"sort('name')\">\n                        User Name\n                        <i *ngIf=\"sortCol == 'name'\" class=\"fa\" [ngClass]=\"{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}\" aria-hidden=\"true\"></i>\n                    </th> \n                    <th>\n                        Role\n                    </th> \n                    <th>\n                        Last Login\n                    </th> \n                    <th>\n                        Joined\n                    </th> \n                    <th>Edit</th> \n                    <th>Delete</th> \n                </tr> \n            </thead> \n\n            <tbody *ngIf=\"wait\"> \n                <tr>\n                    <td colspan=\"7\" align=\"center\">\n                        <i class=\"fa fa-refresh fa-spin fa-2x fa-fw\"></i> \n                    </td>\n                </tr>\n            </tbody> \n\n            <tbody *ngIf=\"!wait && error\"> \n                <tr>\n                    <td colspan=\"7\" align=\"center\">\n                        <alert type=\"warning\">{{ error }}</alert>\n                    </td>\n                </tr>\n            </tbody> \n\n            <tbody *ngIf=\"!wait && !error && users && users.length < 1\"> \n                <tr>\n                    <td colspan=\"7\" align=\"center\">\n                        <alert type=\"warning\">Sorry, no users were found. Please try again.</alert>\n                    </td>\n                </tr>\n            </tbody> \n\n            <tbody *ngIf=\"!wait && !error && users && users.length > 0\"> \n                <tr class=\"user_row\" *ngFor=\"let user of users; let index = index\"> \n                    <th class=\"user_id\" scope=\"row\">{{ user.id }}</th> \n                    <td class=\"user_name\">{{ user.name }}</td> \n                    <td class=\"user_role_name\">{{ user.role.name }}</td> \n                    <td class=\"user_last_login\">{{ user.last_login }}</td> \n                    <td class=\"user_joined\">{{ user.joined }}</td> \n                    <td class=\"user_edit\"><a routerLink=\"/user/{{ user.id }}\">Edit</a></td>\n                    <td class=\"user_delete\"><button type=\"button\" class=\"btn btn-danger\" (click)=\"clickDelete(user.id)\">Delete</button></td> \n                </tr> \n            </tbody> \n        </table>\n    </div>\n</div>\n<div class=\"row paging\" *ngIf=\"total\">\n    <div class=\"col-xs-4\">\n\n        <nav aria-label=\"Page navigation\">\n          <ul class=\"pagination pagination-sm\">\n\n            <li *ngIf=\"(currentPage > 1)\">\n              <a (click)=\"clickPrev()\" aria-label=\"Previous\">\n                <span aria-hidden=\"true\">&laquo;</span>\n              </a>\n            </li>\n\n            <li \n                *ngFor=\"let page of pages; let index = index\"\n                 [ngClass]=\"{'active': (page == currentPage)}\"\n                 [attr.id]=\"'page'+(index + 1)\"\n                >\n                <a (click)=\"clickPage(page)\">{{ page }}</a>\n            </li>\n\n            <li *ngIf=\"(currentPage < getPageCount())\">\n              <a (click)=\"clickNext()\" aria-label=\"Next\">\n                <span aria-hidden=\"true\">&raquo;</span>\n              </a>\n            </li>\n\n          </ul>\n        </nav>\n\n    </div>\n</div>\n\n<div bsModal #confirmDeleteModal=\"bs-modal\" class=\"modal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"mySmallModalLabel\" aria-hidden=\"true\">\n  <div class=\"modal-dialog modal-sm\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h4 class=\"modal-title pull-left\">Delete?</h4>\n        <button type=\"button\" class=\"close pull-right\" aria-label=\"Close\" (click)=\"cancelDelete()\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body\">\n        <div class=\"row\">\n            <div class=\"col-xs-12\">\n                <p>Are you sure you want to delete this user?</p>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"col-xs-6\">\n                <button type=\"button\" class=\"btn btn-warning\" (click)=\"cancelDelete()\">Cancel</button>\n            </div>\n            <div class=\"col-xs-6\">\n                <button type=\"button\" class=\"btn btn-danger\" (click)=\"confirmDelete(selectedUser)\">Confirm</button>\n            </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n  "
@@ -427,7 +492,7 @@ exports.UserListComponent = __decorate$3([
     __param$2(0, _angular_core.Inject(UsersService))
 ], exports.UserListComponent);
 
-var __decorate$4 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+var __decorate$5 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
@@ -531,10 +596,10 @@ exports.UserEventLogComponent = (function () {
     };
     return UserEventLogComponent;
 }());
-__decorate$4([
+__decorate$5([
     _angular_core.Input()
 ], exports.UserEventLogComponent.prototype, "inputUserId", void 0);
-exports.UserEventLogComponent = __decorate$4([
+exports.UserEventLogComponent = __decorate$5([
     _angular_core.Component({
         selector: 'erdiko-user-event-log',
         template: "\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <div class=\"panel panel-default\">\n            <div class=\"panel-heading\">\n                <span>User Event Log</span>\n            </div>\n            <div class=\"panel-body\">\n\n                <table class=\"table table-bordered table-hover\">\n                    <thead>\n\n                        <tr>\n                            <th (click)=\"sort('id')\">\n                                ID\n                                <i class=\"fa\" [ngClass]=\"{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}\" aria-hidden=\"true\"></i>\n                            </th>\n                            <th>\n                                Event Log\n                            </th>\n                            <th>\n                                Event Data\n                            </th>\n                            <th (click)=\"sort('created_at')\">\n                                Created At\n                                <i class=\"fa\" [ngClass]=\"{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}\" aria-hidden=\"true\"></i>\n                            </th>\n                        </tr>\n                    </thead>\n\n                    <tbody *ngIf=\"wait\"> \n                        <tr>\n                            <td colspan=\"7\" align=\"center\">\n                                <i class=\"fa fa-refresh fa-spin fa-2x fa-fw\"></i> \n                            </td>\n                        </tr>\n                    </tbody>\n\n                    <tbody *ngIf=\"!wait && events.length <= 0\">\n                        <tr>\n                            <td colspan=\"7\" align=\"center\">\n                                <alert type=\"warning\">Sorry, no user events were found.</alert>\n                            </td>\n                        </tr>\n                    </tbody>\n\n                    <tbody *ngIf=\"!wait && events.length > 0\">\n                        <tr class=\"user-events\" *ngFor=\"let event of events\">\n                            <td> {{event.id}} </td>\n                            <td> {{event.event}} </td>\n                            <td> {{event.event_data|json}} </td>\n                            <td> {{event.created_at}} </td>\n                        </tr>\n                    </tbody>\n\n                </table>\n            </div>\n        </div>\n\n        <div class=\"row paging\" *ngIf=\"eventsTotal\">\n            <div class=\"col-xs-4\">\n\n                <nav aria-label=\"Page navigation\">\n                <ul class=\"pagination pagination-sm\">\n\n                    <li *ngIf=\"(currentPage > 1)\">\n                    <a (click)=\"clickPrev()\" aria-label=\"Previous\">\n                        <span aria-hidden=\"true\">&laquo;</span>\n                    </a>\n                    </li>\n\n                    <li \n                        *ngFor=\"let page of pages\"\n                        [ngClass]=\"{'active': (page == currentPage)}\"\n                        >\n                        <a (click)=\"clickPage(page)\">{{ page }}</a>\n                    </li>\n\n                    <li *ngIf=\"(currentPage < getPageCount())\">\n                    <a (click)=\"clickNext()\" aria-label=\"Next\">\n                        <span aria-hidden=\"true\">&raquo;</span>\n                    </a>\n                    </li>\n\n                </ul>\n                </nav>\n\n            </div>\n        </div>\n    </div>\n</div>\n  ",
@@ -543,7 +608,7 @@ exports.UserEventLogComponent = __decorate$4([
     __param$3(0, _angular_core.Inject(UsersService))
 ], exports.UserEventLogComponent);
 
-var __decorate$5 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+var __decorate$6 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
@@ -652,7 +717,7 @@ exports.UsersEventLogComponent = (function () {
     };
     return UsersEventLogComponent;
 }());
-exports.UsersEventLogComponent = __decorate$5([
+exports.UsersEventLogComponent = __decorate$6([
     _angular_core.Component({
         selector: 'erdiko-users-event-log',
         template: "\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <br />\n    </div>\n</div>\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <table class=\"table table-bordered table-hover\"> \n            <thead>\n                <tr>\n                    <th (click)=\"sort('id')\">\n                        ID\n                        <i class=\"fa\" [ngClass]=\"{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}\" aria-hidden=\"true\"></i>\n                    </th>\n                    <th (click)=\"sort('user_id')\">\n                        User ID\n                        <i class=\"fa\" [ngClass]=\"{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}\" aria-hidden=\"true\"></i>\n                    </th>\n                    <th>\n                        Event Log\n                    </th>\n                    <th>\n                        Event Data\n                    </th>\n                    <th (click)=\"sort('created_at')\">\n                        Created At\n                        <i class=\"fa\" [ngClass]=\"{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}\" aria-hidden=\"true\"></i>\n                    </th>\n                </tr>\n            </thead>\n\n            <tbody *ngIf=\"wait\"> \n                <tr>\n                    <td colspan=\"7\" align=\"center\">\n                        <i class=\"fa fa-refresh fa-spin fa-2x fa-fw\"></i> \n                    </td>\n                </tr>\n            </tbody>\n\n            <tbody *ngIf=\"!wait && events.length <= 0\">\n                <tr>\n                    <td colspan=\"7\" align=\"center\">\n                        <alert type=\"warning\">Sorry, no user events were found.</alert>\n                    </td>\n                </tr>\n            </tbody>\n\n            <tbody *ngIf=\"!wait && events.length > 0\">\n                <tr class=\"users-events\" *ngFor=\"let event of events\">\n                    <td> {{event.id}} </td>\n                    <td> {{event.user_id}} </td>\n                    <td> {{event.event}} </td>\n                    <td> {{event.event_data|json}} </td>\n                    <td> {{event.created_at}} </td>\n                </tr>\n            </tbody>\n        </table>\n    </div>\n</div>\n<div class=\"row paging\" *ngIf=\"eventsTotal\">\n    <div class=\"col-xs-4\">\n\n        <nav aria-label=\"Page navigation\">\n          <ul class=\"pagination pagination-sm\">\n\n            <li *ngIf=\"(currentPage > 1)\">\n              <a (click)=\"clickPrev()\" aria-label=\"Previous\">\n                <span aria-hidden=\"true\">&laquo;</span>\n              </a>\n            </li>\n\n            <li \n                *ngFor=\"let page of pages\"\n                 [ngClass]=\"{'active': (page == currentPage)}\"\n                >\n                <a (click)=\"clickPage(page)\">{{ page }}</a>\n            </li>\n\n            <li *ngIf=\"(currentPage < getPageCount())\">\n              <a (click)=\"clickNext()\" aria-label=\"Next\">\n                <span aria-hidden=\"true\">&raquo;</span>\n              </a>\n            </li>\n\n          </ul>\n        </nav>\n\n    </div>\n</div>\n  ",
@@ -661,7 +726,7 @@ exports.UsersEventLogComponent = __decorate$5([
     __param$4(0, _angular_core.Inject(UsersService))
 ], exports.UsersEventLogComponent);
 
-var __decorate$6 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+var __decorate$7 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
@@ -673,10 +738,10 @@ var PasswordComponent = (function () {
     PasswordComponent.prototype.ngOnInit = function () { };
     return PasswordComponent;
 }());
-__decorate$6([
+__decorate$7([
     _angular_core.Input()
 ], PasswordComponent.prototype, "passwordForm", void 0);
-PasswordComponent = __decorate$6([
+PasswordComponent = __decorate$7([
     _angular_core.Component({
         selector: 'erdiko-password',
         template: "\n<form \n        id=\"user-password-change\" \n        class=\"form-horizontal\"\n        novalidate \n        (ngSubmit)=\"onSubmitChangepass(passwordForm)\" \n        [formGroup]=\"passwordForm\"\n    >\n\n    <div class=\"form-group\">\n        <p class=\"col-xs-12\">Passwords must contain at least 1 alpha & 1 numeric character, with a minimum length of 5 characters</p>\n        <label for=\"password\" class=\"col-xs-2 control-label\">New Password</label>\n        <div class=\"col-xs-10\">\n            <input  type=\"password\" \n                    class=\"form-control\" \n                    name=\"password\" \n                    formControlName=\"password\"\n                    required>\n            <div class=\"text-danger\" *ngIf=\"passwordForm.get('password').hasError('required') && passwordForm.get('password').touched\">\n            Password is required\n            </div>\n        </div>\n    </div>\n    <div class=\"form-group\" [formGroup] = \"passwordForm\">\n        <label for=\"password\" class=\"col-xs-2 control-label\">Confirm Password</label>\n        <div class=\"col-xs-10\">\n\n            <input  type=\"password\" \n                    class=\"form-control\" \n                    name=\"confirm\" \n                    formControlName=\"confirm\"\n                    required>\n\n            <div class=\"text-danger\" *ngIf=\"passwordForm.get('confirm').hasError('required') && passwordForm.get('confirm').touched\">\n            Password Confirm is required\n            </div>\n        </div>\n    </div>\n</form>\n  "
@@ -689,7 +754,7 @@ var User = (function () {
     return User;
 }());
 
-var __decorate$7 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+var __decorate$8 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
@@ -699,11 +764,12 @@ var __param$5 = (undefined && undefined.__param) || function (paramIndex, decora
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 exports.UserEditComponent = (function () {
-    function UserEditComponent(usersService, route, router) {
+    function UserEditComponent(usersService, route, router, messageService) {
         // init the wait state (and indication animation) to 'off'
         this.wait = false;
         this.passWait = false;
         this.usersService = usersService;
+        this.messageService = messageService;
         this.route = route;
         this.router = router;
         this.fb = new _angular_forms.FormBuilder();
@@ -793,11 +859,11 @@ exports.UserEditComponent = (function () {
         this.wait = false;
         if (true == res.success) {
             //this.msg = "User record was successfully updated."
-            //this.messageService.sendMessage("edit-user", "success");
+            this.messageService.sendMessage("edit-user", "success");
             if ("create" === res.method) {
                 // navigate to Edit User for the new user
                 this.router.navigate(['/user/' + res.user.id]);
-                //this.messageService.sendMessage("create-user", "success");
+                this.messageService.sendMessage("create-user", "success");
             }
         }
         else {
@@ -834,17 +900,19 @@ exports.UserEditComponent = (function () {
     };
     return UserEditComponent;
 }());
-__decorate$7([
+__decorate$8([
     _angular_core.ViewChild(PasswordComponent)
 ], exports.UserEditComponent.prototype, "passwordComponent", void 0);
-exports.UserEditComponent = __decorate$7([
+exports.UserEditComponent = __decorate$8([
     _angular_core.Component({
         selector: 'erdiko-user-edit',
+        providers: [MessageService],
         template: "\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <button class=\"btn btn-info btn-sm\" routerLink=\"/list/\">\n            <i class=\"fa fa-chevron-left\" aria-hidden=\"true\"></i> Back to User List\n        </button>\n    </div>\n</div>\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <br/>\n    </div>\n</div>\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <div id=\"id-title\" *ngIf=\"user.id\">\n            User {{ user.id }}\n        </div>\n        <div class=\"panel panel-default\" id=\"edit-update\">\n            <tabset>\n                <tab [heading]=\"createEditHeader()\">\n                    <div class=\"panel-body\">\n                        <alert *ngIf=\"msg\" type=\"success\">{{ msg }}</alert>\n                        <alert *ngIf=\"error\" type=\"danger\">{{ error }}</alert>\n\n                            <form \n                                    id=\"user-edit\" \n                                    class=\"form-horizontal\"\n                                    novalidate \n                                    (ngSubmit)=\"onSubmit(userForm)\" \n                                    [formGroup]=\"userForm\"\n                                >\n\n                                <div class=\"form-group\" *ngIf=\"user && user.id\">\n                                    <label for=\"name\" class=\"col-xs-2 control-label\">ID</label>\n                                    <div class=\"col-xs-10\">\n                                        <p>{{ user.id }}</p>\n                                    </div>\n                                </div>\n                                <div class=\"form-group\" *ngIf=\"user && user.created_at\">\n                                    <label for=\"name\" class=\"col-xs-2 control-label\">Joined</label>\n                                    <div class=\"col-xs-10\">\n                                        <p *ngIf=\"!user.created_at\">n/a</p>\n                                        <p>{{ user.created_at }}</p>\n                                    </div>\n                                </div>\n                                <div class=\"form-group\" *ngIf=\"user.id\">\n                                    <label for=\"name\" class=\"col-xs-2 control-label\">Last Login</label>\n                                    <div class=\"col-xs-10\">\n                                        <p *ngIf=\"!user.last_login\">n/a</p>\n                                        <p>{{ user.last_login }}</p>\n                                    </div>\n                                </div>\n                                <div class=\"form-group\">\n                                    <label for=\"name\" class=\"col-xs-2 control-label\">Name</label>\n                                    <div class=\"col-xs-10\">\n                                        <input type=\"text\" class=\"form-control\" name=\"name\" formControlName=\"name\" placeholder=\"Name\">\n                                        <div class=\"text-danger\" *ngIf=\"userForm.get('name').hasError('required') && userForm.get('name').touched\">\n                                        Name is required\n                                        </div>\n                                        <div class=\"text-danger\" *ngIf=\"userForm.get('name').hasError('minlength') && userForm.get('name').touched\">\n                                        Minimum of 2 characters\n                                        </div>\n                                    </div>\n                                </div>\n                                <div class=\"form-group\">\n                                    <label for=\"email\" class=\"col-xs-2 control-label\">Email</label>\n                                    <div class=\"col-xs-10\">\n                                        <input type=\"email\" class=\"form-control\" name=\"email\" \n                                                formControlName=\"email\" placeholder=\"Email\">\n                                        <div class=\"text-danger\" *ngIf=\"userForm.get('email').hasError('required') && userForm.get('email').touched\">\n                                        Email is required\n                                        </div>\n                                        <div class=\"text-danger\" *ngIf=\"userForm.get('email').hasError('pattern') && userForm.get('email').touched\">\n                                        A Valid email is required\n                                        </div>\n                                    </div>\n                                </div>\n                                <div class=\"form-group\">\n                                    <label for=\"role\" class=\"col-xs-2 control-label\">Role</label>\n                                    <div class=\"col-xs-10\" id=\"select-role\">\n                                            <select class=\"form-control\" name=\"role\" formControlName=\"role\">\n                                                <option value=\"2\">Admin</option>\n                                                <option value=\"1\">User</option>\n                                            </select>\n                                        <div class=\"text-danger\" *ngIf=\"userForm.get('role').hasError('required') && userForm.get('role').touched\">\n                                        Role is required\n                                        </div>\n                                    </div>\n                                </div>\n\n                            </form>\n\n                            <!--show password input if creating user-->\n                            <erdiko-password *ngIf=\"!user.id\" [passwordForm]=\"passwordForm\"></erdiko-password>\n\n                            <div class=\"form-group\">\n                                <div class=\"col-xs-offset-2 col-xs-4\">\n                                    <button type=\"cancel\" class=\"btn btn-warning\" routerLink=\"/list/\">Cancel</button>\n                                </div>\n                                <div class=\"col-xs-offset-2 col-xs-4\">\n                                    <button type=\"submit\" class=\"btn btn-success\" (click)=\"onSubmit(userForm)\" [disabled]=\"!isUserFormValid()\">\n                                        Save\n                                        <i *ngIf=\"wait\" class=\"fa fa-refresh fa-spin fa-fw\"></i> \n                                    </button>\n                                </div>\n                            </div>\n                    </div>\n                </tab>\n\n                <tab heading=\"Update Password\" *ngIf=\"user.id\">\n\n                    <div class=\"panel-body\">\n\n                        <alert *ngIf=\"passMsg\" type=\"success\">{{ passMsg }}</alert>\n                        <alert *ngIf=\"passError\" type=\"danger\">{{ passError }}</alert>\n\n                        <erdiko-password [passwordForm]=\"passwordForm\"></erdiko-password>\n\n                        <div class=\"form-group\">\n                            <div class=\"col-xs-offset-2 col-xs-4\">\n                                <button type=\"cancel\" class=\"btn btn-warning\" routerLink=\"/list/\">Cancel</button>\n                            </div>\n                            <div class=\"col-xs-offset-2 col-xs-4\">\n                                <button type=\"submit\" class=\"btn btn-success\" (click)=\"onSubmitChangepass(passwordForm)\" [disabled]=\"!isPassFormValid()\">\n                                    Save\n                                    <i *ngIf=\"passWait\" class=\"fa fa-refresh fa-spin fa-fw\"></i> \n                                </button>\n                            </div>\n                        </div>\n\n                    </div>\n                </tab>\n            </tabset>\n        </div>\n    </div>\n</div>\n\n<div class=\"row\" *ngIf=\"user.id\">\n    <div class=\"col-xs-12\">\n        <br/>\n        <erdiko-user-event-log [inputUserId]=\"user.id\"></erdiko-user-event-log>\n    </div>\n</div>\n"
     }),
     __param$5(0, _angular_core.Inject(UsersService)),
     __param$5(1, _angular_core.Inject(_angular_router.ActivatedRoute)),
-    __param$5(2, _angular_core.Inject(_angular_router.Router))
+    __param$5(2, _angular_core.Inject(_angular_router.Router)),
+    __param$5(3, _angular_core.Inject(MessageService))
 ], exports.UserEditComponent);
 
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
@@ -860,7 +928,7 @@ exports.UserAdminModule = UserAdminModule_1 = (function () {
     UserAdminModule.forRoot = function () {
         return {
             ngModule: UserAdminModule_1,
-            providers: [AuthService, UsersService]
+            providers: [AuthService, UsersService, MessageService]
         };
     };
     return UserAdminModule;
@@ -888,7 +956,8 @@ exports.UserAdminModule = UserAdminModule_1 = __decorate([
             exports.UserListComponent,
             exports.UserEventLogComponent,
             exports.UsersEventLogComponent
-        ]
+        ],
+        providers: [MessageService]
     })
 ], exports.UserAdminModule);
 var UserAdminModule_1;

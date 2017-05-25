@@ -11,6 +11,7 @@ import { AlertComponent, TabsModule } from 'ngx-bootstrap';
 
 @Component({
   selector: 'erdiko-user-edit',
+  providers: [MessageService],
   template: `
 <div class="row">
     <div class="col-xs-12">
@@ -162,10 +163,10 @@ export class UserEditComponent implements OnInit {
     @ViewChild(PasswordComponent) passwordComponent: PasswordComponent
 
     public usersService: UsersService;
-    public messageService: MessageService;
     public route: ActivatedRoute;
     public router: Router;
     public fb: FormBuilder;
+    public messageService: MessageService;
 
     public wait: any;
 
@@ -187,14 +188,15 @@ export class UserEditComponent implements OnInit {
     constructor(
            @Inject(UsersService) usersService: UsersService,
            @Inject(ActivatedRoute) route: ActivatedRoute,
-           @Inject(Router) router: Router
-        ) { 
+           @Inject(Router) router: Router,
+           @Inject(MessageService) messageService: MessageService) { 
 
         // init the wait state (and indication animation) to 'off'
         this.wait       = false;
         this.passWait   = false;
 
         this.usersService   = usersService;
+        this.messageService = messageService;
         this.route          = route;
         this.router         = router;
 
@@ -303,12 +305,12 @@ export class UserEditComponent implements OnInit {
         this.wait = false;
         if(true == res.success) {
             //this.msg = "User record was successfully updated."
-            //this.messageService.sendMessage("edit-user", "success");
+            this.messageService.sendMessage("edit-user", "success");
 
             if("create" === res.method) {
                 // navigate to Edit User for the new user
                 this.router.navigate(['/user/' + res.user.id]);
-                //this.messageService.sendMessage("create-user", "success");
+                this.messageService.sendMessage("create-user", "success");
             }
 
         } else {

@@ -12,6 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AlertModule, ModalModule, TabsModule } from 'ngx-bootstrap';
 import { AuthService } from './auth.service';
 import { UsersService } from './users.service';
+import { MessageService } from './message.service';
 import { UserListComponent } from './user-list.component';
 import { UserEventLogComponent } from './user-event-log.component';
 import { UsersEventLogComponent } from './users-event-log.component';
@@ -24,7 +25,7 @@ var UserAdminModule = UserAdminModule_1 = (function () {
     UserAdminModule.forRoot = function () {
         return {
             ngModule: UserAdminModule_1,
-            providers: [AuthService, UsersService]
+            providers: [AuthService, UsersService, MessageService]
         };
     };
     return UserAdminModule;
@@ -52,7 +53,8 @@ UserAdminModule = UserAdminModule_1 = __decorate([
             UserListComponent,
             UserEventLogComponent,
             UsersEventLogComponent
-        ]
+        ],
+        providers: [MessageService]
     })
 ], UserAdminModule);
 export { UserAdminModule };
