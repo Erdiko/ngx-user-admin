@@ -1,0 +1,26 @@
+{
+  "authentication": {
+    "available_types": [
+    {
+      "name": "jwt_auth",
+      "namespace": "erdiko_authenticate_services",
+      "classname": "JWTAuthentication",
+      "enabled": true
+    },
+    {
+      "name": "erdiko_user",
+      "namespace": "app_service",
+      "classname": "BasicAuthentication",
+      "enabled": true
+    }]
+  },
+  "storage": {
+    "selected": "session",
+    "storage_types": [{
+      "name": "session",
+      "namespace": "erdiko_authenticate_services",
+      "classname": "SessionStorage",
+      "enabled": true
+    }]
+  }
+}

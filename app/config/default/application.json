@@ -1,0 +1,76 @@
+{
+  "site": {
+    "name": "Erdiko",
+    "full_name": "Erdiko Micro Framework",
+    "tagline": "Enterprise Glue (PHP Micro Framework)",
+    "copyright": "Copyright © 2016",
+    "description": "Erdiko wants to make your php development easier. If you need a lightweight MVC framework you have come to the right place. Our goal is to offer a clean framework to create sites optimized for mobile devices, APIs and multiple browsers.",
+    "meta": {
+      "description": "Erdiko MVC micro framework (enterprise glue)"
+    },
+    "debug": 1,
+    "secret_key": "1a3d43693312d1840a9948b1f539faa9"
+  },
+  "theme": {
+    "name": "user-admin",
+    "namespace": "/app/themes/user-admin",
+    "public": "/public/themes/user-admin",
+    "defaults": {
+      "layout": {
+        "columns": 1
+      },
+      "home_url": "/"
+    }
+  },
+  "menu": {
+    "main": [
+    {
+      "href": "/dashboard",
+      "title": "Dashboard"
+    }, {
+      "href": "/users",
+      "title": "Users"
+    }, {
+      "href": "/users/login",
+      "title": "Login"
+    }, {
+      "href": "/users/logout",
+      "title": "Logout"
+    }],
+    "footer": [{
+      "href": "/",
+      "title": "home"
+    }, {
+      "href": "/examples/config",
+      "title": "view config"
+    }, {
+      "href": "/examples/about",
+      "title": "about"
+    }]
+  },
+  "logs": {
+    "name": "default",
+    "path": "/var/logs",
+    "files": [{
+      "default": "system.log",
+      "exception": "exception.log"
+    }]
+  },
+  "cache": {
+    "default": {
+      "type": "File",
+      "class": "\erdiko\core\cache\File",
+      "path": "/var/cache"
+    },
+    "memcached": {
+      "type": "Memcached",
+      "class": "\erdiko\core\cache\Memcached"
+    }
+  },
+  "google": {
+    "analytics": {
+      "tracking_id": ""
+    },
+    "tag_manager": []
+  }
+}

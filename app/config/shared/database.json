@@ -1,0 +1,18 @@
+{
+    "default": "master",
+    "entities": "/entities",
+    "is_dev_mode": 1,
+    "connections": {
+        "master": {
+            "driver": "pdo_mysql",
+            "host": "172.17.0.1",
+            "port": "3301",
+            "database": "user-admin",
+            "username": "root",
+            "password": "psItPs16",
+            "charset": "utf8",
+            "collation": "utf8_unicode_ci",
+            "prefix": ""
+        }
+    }
+}

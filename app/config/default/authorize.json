@@ -1,0 +1,10 @@
+{
+  "validators":{
+    "custom_types": [{
+      "name": "example",
+      "namespace": "app_validators_example",
+      "classname": "ExampleValidator",
+      "enabled": false
+    }]
+  }
+}
