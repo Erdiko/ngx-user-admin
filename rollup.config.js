@@ -1,9 +1,9 @@
 export default {
   entry: 'dist/index.js',
-  dest: 'dist/bundles/ngx-user-admin.umd.js',
+  dest: 'dist/bundles/ng-user-admin.umd.js',
   sourceMap: false,
   format: 'umd',
-  moduleName: 'ng.ngx-user-admin',
+  moduleName: 'ng.ng-user-admin',
   external: ['@angular/http'],
   globals: {
     '@angular/core': 'ng.core',

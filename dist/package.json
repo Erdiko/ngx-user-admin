@@ -1,8 +1,8 @@
 {
-  "name": "@erdiko/ngx-user-admin",
+  "name": "@erdiko/ng-user-admin",
   "version": "1.1.6",
   "description": "An amazing module for Angular.",
-  "main": "bundles/ngx-user-admin.umd.js",
+  "main": "bundles/ng-user-admin.umd.js",
   "module": "index.js",
   "typings": "index.d.ts",
   "keywords": [
