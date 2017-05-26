@@ -54,7 +54,10 @@ UserAdminModule = UserAdminModule_1 = __decorate([
             UserEventLogComponent,
             UsersEventLogComponent
         ],
-        providers: [MessageService]
+        providers: [
+            AuthService,
+            UsersService
+        ]
     })
 ], UserAdminModule);
 export { UserAdminModule };

@@ -107,7 +107,7 @@ export class UsersEventLogComponent implements OnInit {
   public events: Event[];
   public eventsTotal: number;
   
-  public userID: string;
+  public userID: any;
   public pageSize: number;
   public currentPage: number;
   public sortCol: string;
