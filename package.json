@@ -11,14 +11,14 @@
   "types": "./index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/saarmstrong/ng-user-admin.git"
+    "url": "git+https://github.com/Erdiko/ng-user-admin.git"
   },
   "author": "Robert Nadler",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/saarmstrong/ng-user-admin/issues"
+    "url": "https://github.com/Erdiko/ng-user-admin/issues"
   },
-  "homepage": "https://github.com/saarmstrong/ng-user-admin#readme",
+  "homepage": "https://github.com/Erdiko/ng-user-admin#readme",
   "dependencies": {},
   "devDependencies": {
     "@angular/common": "~2.4.0",
