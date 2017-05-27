@@ -52,7 +52,8 @@ const routes: Routes = [
     ],
     providers: [
         AuthService,
-        UsersService
+        UsersService,
+        MessageService
     ]
 })
 export class UserAdminModule {

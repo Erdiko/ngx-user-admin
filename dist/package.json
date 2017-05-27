@@ -1,6 +1,6 @@
 {
   "name": "@erdiko/ng-user-admin",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "An amazing module for Angular.",
   "main": "bundles/ng-user-admin.umd.js",
   "module": "index.js",

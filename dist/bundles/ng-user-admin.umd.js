@@ -959,7 +959,8 @@ exports.UserAdminModule = UserAdminModule_1 = __decorate([
         ],
         providers: [
             AuthService,
-            UsersService
+            UsersService,
+            MessageService
         ]
     })
 ], exports.UserAdminModule);
