@@ -1,13 +1,14 @@
-import { Component, OnDestroy } from '@angular/core';
-import { MessageService }       from '../shared/message.service';
+import { Component, NgModule, OnInit, ViewChild, AfterViewInit, Inject }   from '@angular/core';
 import { Subscription }         from "rxjs";
 import { Router }               from '@angular/router';
 
+import { MessageService }       from './message.service';
+
 @Component({
-  selector: 'app-message',
+  selector: 'erdiko-message',
   templateUrl: './message.component.html'
 })
-export class MessageComponent implements OnDestroy {
+export class MessageComponent {
 
   public messageType: string;
   public message: any;
@@ -25,11 +26,6 @@ export class MessageComponent implements OnDestroy {
 
   close(){
     this.message = null;
-  }
-
-  ngOnDestroy() {
-    //Memory Leak is bad.
-    this.messageSubscription.unsubscribe();
   }
 
 }

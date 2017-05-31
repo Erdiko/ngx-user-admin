@@ -23,6 +23,8 @@ import { UsersEventLogComponent }   from './users-event-log.component';
 import { PasswordComponent }       from './password.component';
 import { UserEditComponent }       from './user-edit.component';
 
+import { MessageComponent }       from './message.component';
+
 const routes: Routes = [
 ];
 
@@ -43,12 +45,15 @@ const routes: Routes = [
         UserEventLogComponent,
         UsersEventLogComponent,
         UserEditComponent,
-        PasswordComponent
+        PasswordComponent,
+        MessageComponent
     ],
     exports: [ 
         UserListComponent,
         UserEventLogComponent,
-        UsersEventLogComponent
+        UsersEventLogComponent,
+        UserEditComponent,
+        MessageComponent
     ],
     providers: [
         AuthService,
