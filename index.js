@@ -5,3 +5,5 @@ exports.UserEventLogComponent   = require('./lib/user-event-log.component').User
 exports.UsersEventLogComponent  = require('./lib/users-event-log.component').UsersEventLogComponent;
 
 exports.UsersEditComponent  = require('./lib/users-event-log.component').UsersEditComponent;
+
+exports.MessageComponent  = require('./lib/message.component').MessageComponent;

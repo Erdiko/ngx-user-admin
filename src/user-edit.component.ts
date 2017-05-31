@@ -11,7 +11,6 @@ import { AlertComponent, TabsModule } from 'ngx-bootstrap';
 
 @Component({
   selector: 'erdiko-user-edit',
-  providers: [MessageService],
   template: `
 <div class="row">
     <div class="col-xs-12">

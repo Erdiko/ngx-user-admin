@@ -12,13 +12,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AlertModule, ModalModule, TabsModule } from 'ngx-bootstrap';
 import { AuthService } from './auth.service';
 import { UsersService } from './users.service';
-//import { MessageService }           from './message.service';
+import { MessageService } from './message.service';
 import { UserListComponent } from './user-list.component';
 import { UserEventLogComponent } from './user-event-log.component';
 import { UsersEventLogComponent } from './users-event-log.component';
 import { PasswordComponent } from './password.component';
 import { UserEditComponent } from './user-edit.component';
-//import { MessageComponent }       from './message.component';
+import { MessageComponent } from './message.component';
 var routes = [];
 var UserAdminModule = UserAdminModule_1 = (function () {
     function UserAdminModule() {
@@ -26,7 +26,7 @@ var UserAdminModule = UserAdminModule_1 = (function () {
     UserAdminModule.forRoot = function () {
         return {
             ngModule: UserAdminModule_1,
-            providers: [AuthService, UsersService]
+            providers: [AuthService, UsersService, MessageService]
         };
     };
     return UserAdminModule;
@@ -48,20 +48,20 @@ UserAdminModule = UserAdminModule_1 = __decorate([
             UserEventLogComponent,
             UsersEventLogComponent,
             UserEditComponent,
-            PasswordComponent
-            //MessageComponent
+            PasswordComponent,
+            MessageComponent
         ],
         exports: [
             UserListComponent,
             UserEventLogComponent,
             UsersEventLogComponent,
-            UserEditComponent
-            //MessageComponent
+            UserEditComponent,
+            MessageComponent
         ],
         providers: [
             AuthService,
-            UsersService
-            // MessageService
+            UsersService,
+            MessageService
         ]
     })
 ], UserAdminModule);

@@ -4,14 +4,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-import { Component } from '@angular/core';
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+import { Component, Inject } from '@angular/core';
+import { MessageService } from './message.service';
 var MessageComponent = (function () {
     function MessageComponent(messageService) {
-        var _this = this;
         this.messageService = messageService;
-        this.messageSubscription = this.messageService
-            .getMessage()
-            .subscribe(function (message) { return _this.message = message; });
     }
     MessageComponent.prototype.close = function () {
         this.message = null;
@@ -21,8 +21,10 @@ var MessageComponent = (function () {
 MessageComponent = __decorate([
     Component({
         selector: 'erdiko-message',
+        providers: [MessageService],
         template: "\n<alert *ngIf=\"message\" [type]=\"message.type\" (click)=\"close()\">{{ message.body }}</alert>\n"
-    })
+    }),
+    __param(0, Inject(MessageService))
 ], MessageComponent);
 export { MessageComponent };
 //# sourceMappingURL=message.component.js.map
