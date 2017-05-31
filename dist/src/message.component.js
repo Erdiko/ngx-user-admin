@@ -6,10 +6,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import { Component } from '@angular/core';
 var MessageComponent = (function () {
-    function MessageComponent(messageService, router) {
+    function MessageComponent(messageService) {
         var _this = this;
         this.messageService = messageService;
-        this.router = router;
         this.messageSubscription = this.messageService
             .getMessage()
             .subscribe(function (message) { return _this.message = message; });
@@ -22,7 +21,7 @@ var MessageComponent = (function () {
 MessageComponent = __decorate([
     Component({
         selector: 'erdiko-message',
-        templateUrl: './message.component.html'
+        template: "\n<alert *ngIf=\"message\" [type]=\"message.type\" (click)=\"close()\">{{ message.body }}</alert>\n"
     })
 ], MessageComponent);
 export { MessageComponent };

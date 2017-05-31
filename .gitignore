@@ -21,3 +21,4 @@ src/**/*.js
 *.map.js
 *.js  # or /src/**/*.js
 /lib
+.rpt2_cache

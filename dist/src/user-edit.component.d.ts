@@ -1,10 +1,10 @@
 import { OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MessageService } from './message.service';
 import { UsersService } from './users.service';
 import { User } from "./user.model";
 import { PasswordComponent } from './password.component';
+import { MessageService } from './message.service';
 export declare class UserEditComponent implements OnInit {
     passwordComponent: PasswordComponent;
     usersService: UsersService;

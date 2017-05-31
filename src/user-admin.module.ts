@@ -14,7 +14,7 @@ import { AlertModule,
 
 import { AuthService }              from './auth.service';
 import { UsersService }             from './users.service';
-import { MessageService }           from './message.service';
+//import { MessageService }           from './message.service';
 
 import { UserListComponent }        from './user-list.component';
 import { UserEventLogComponent }    from './user-event-log.component';
@@ -23,7 +23,7 @@ import { UsersEventLogComponent }   from './users-event-log.component';
 import { PasswordComponent }       from './password.component';
 import { UserEditComponent }       from './user-edit.component';
 
-import { MessageComponent }       from './message.component';
+//import { MessageComponent }       from './message.component';
 
 const routes: Routes = [
 ];
@@ -45,27 +45,27 @@ const routes: Routes = [
         UserEventLogComponent,
         UsersEventLogComponent,
         UserEditComponent,
-        PasswordComponent,
-        MessageComponent
+        PasswordComponent
+        //MessageComponent
     ],
     exports: [ 
         UserListComponent,
         UserEventLogComponent,
         UsersEventLogComponent,
-        UserEditComponent,
-        MessageComponent
+        UserEditComponent
+        //MessageComponent
     ],
     providers: [
         AuthService,
-        UsersService,
-        MessageService
+        UsersService
+        // MessageService
     ]
 })
 export class UserAdminModule {
     static forRoot(): ModuleWithProviders {
         return {
             ngModule: UserAdminModule,
-            providers: [AuthService, UsersService, MessageService]
+            providers: [AuthService, UsersService]
         }
     }
 }
