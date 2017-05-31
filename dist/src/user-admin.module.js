@@ -18,6 +18,7 @@ import { UserEventLogComponent } from './user-event-log.component';
 import { UsersEventLogComponent } from './users-event-log.component';
 import { PasswordComponent } from './password.component';
 import { UserEditComponent } from './user-edit.component';
+import { MessageComponent } from './message.component';
 var routes = [];
 var UserAdminModule = UserAdminModule_1 = (function () {
     function UserAdminModule() {
@@ -47,12 +48,15 @@ UserAdminModule = UserAdminModule_1 = __decorate([
             UserEventLogComponent,
             UsersEventLogComponent,
             UserEditComponent,
-            PasswordComponent
+            PasswordComponent,
+            MessageComponent
         ],
         exports: [
             UserListComponent,
             UserEventLogComponent,
-            UsersEventLogComponent
+            UsersEventLogComponent,
+            UserEditComponent,
+            MessageComponent
         ],
         providers: [
             AuthService,

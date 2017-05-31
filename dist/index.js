@@ -3,4 +3,5 @@ export { UserListComponent } from './src/user-list.component';
 export { UserEventLogComponent } from './src/user-event-log.component';
 export { UsersEventLogComponent } from './src/users-event-log.component';
 export { UserEditComponent } from './src/user-edit.component';
+export { MessageComponent } from './src/message.component';
 //# sourceMappingURL=index.js.map
