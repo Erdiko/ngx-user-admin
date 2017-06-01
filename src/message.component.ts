@@ -2,11 +2,11 @@ import { Component, OnDestroy, Inject }   from '@angular/core';
 import { Subscription }                   from 'rxjs/Subscription';
 import { MessageService }                 from './message.service';
 
+import { tpl } from './message.component.tpl';
+
 @Component({
   selector: 'erdiko-message',
-  template: `
-<alert *ngIf="message" [type]="message.type" dismissOnTimeout="3000" dismissible=true>{{ message.body }}</alert>
-`
+  template: tpl
 })
 export class MessageComponent implements OnDestroy {
 

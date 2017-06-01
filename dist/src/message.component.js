@@ -9,6 +9,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 import { Component, Inject } from '@angular/core';
 import { MessageService } from './message.service';
+import { tpl } from './message.component.tpl';
 var MessageComponent = (function () {
     function MessageComponent(messageService) {
         var _this = this;
@@ -27,7 +28,7 @@ var MessageComponent = (function () {
 MessageComponent = __decorate([
     Component({
         selector: 'erdiko-message',
-        template: "\n<alert *ngIf=\"message\" [type]=\"message.type\" dismissOnTimeout=\"3000\" dismissible=true>{{ message.body }}</alert>\n"
+        template: tpl
     }),
     __param(0, Inject(MessageService))
 ], MessageComponent);
