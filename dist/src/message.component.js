@@ -20,14 +20,14 @@ var MessageComponent = (function () {
         });
     }
     MessageComponent.prototype.ngOnDestroy = function () {
-        //this.subscription.unsubscribe();   
+        this.subscription.unsubscribe();
     };
     return MessageComponent;
 }());
 MessageComponent = __decorate([
     Component({
         selector: 'erdiko-message',
-        template: "\n  <br />\n  <br />\n  <br />\n  <br />\n<alert *ngIf=\"message\" [type]=\"message.type\" dismissOnTimeout=\"3000\" dismissible=true>{{ message.body }}</alert>\n"
+        template: "\n<alert *ngIf=\"message\" [type]=\"message.type\" dismissOnTimeout=\"3000\" dismissible=true>{{ message.body }}</alert>\n"
     }),
     __param(0, Inject(MessageService))
 ], MessageComponent);

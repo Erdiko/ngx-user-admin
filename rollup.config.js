@@ -2,7 +2,7 @@ import angular from 'rollup-plugin-angular';
 import typescript from 'rollup-plugin-typescript2';
 import nodeResolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
-//import { minify as minifyHtml } from 'html-minifier';
+import { minify as minifyHtml } from 'html-minifier';
  
 const htmlminOpts = {
     caseSensitive: true,
@@ -19,7 +19,11 @@ export default {
   external: ['@angular/http'],
 
   plugins: [
-    angular(),
+    angular({
+       preprocessors: {
+          template: template => minifyHtml(template, htmlminOpts)
+       }
+    }),
     commonjs({
       include: 'node_modules/**'
     }),

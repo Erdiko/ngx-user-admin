@@ -9,8 +9,8 @@ import { User }                     from './user.model';
 import { MessageService }           from './message.service';
 
 @Component({
-  selector: 'erdiko-user-list',
-  template: `
+    selector: 'erdiko-user-list',
+    template: `
 <div class="row">
     <div class="col-xs-4">
         <button class="btn btn-info btn-sm" routerLink="/user/">Create a New User</button>

@@ -61978,14 +61978,14 @@ exports.MessageComponent = (function () {
         });
     }
     MessageComponent.prototype.ngOnDestroy = function () {
-        //this.subscription.unsubscribe();   
+        this.subscription.unsubscribe();
     };
     return MessageComponent;
 }());
 exports.MessageComponent = __decorate$11([
     Component({
         selector: 'erdiko-message',
-        template: "\n  <br />\n  <br />\n  <br />\n  <br />\n<alert *ngIf=\"message\" [type]=\"message.type\" dismissOnTimeout=\"3000\" dismissible=true>{{ message.body }}</alert>\n"
+        template: "\n<alert *ngIf=\"message\" [type]=\"message.type\" dismissOnTimeout=\"3000\" dismissible=true>{{ message.body }}</alert>\n"
     }),
     __param$6(0, Inject(MessageService))
 ], exports.MessageComponent);

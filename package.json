@@ -6,7 +6,6 @@
     "transpile": "ngc -p tsconfig.json",
     "package": "rollup -c --silent",
     "minify": "uglifyjs dist/bundles/ng-user-admin.umd.js --screw-ie8 --compress --mangle --comments --output dist/bundles/ng-user-admin.umd.min.js",
-    "html": "cp -R src/*.html dist/",
     "build": "npm run transpile && npm run package && npm run minify"
   },
   "types": "./index.d.ts",
