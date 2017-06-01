@@ -5,67 +5,20 @@ import { Subject, BehaviorSubject, Observable, Subscription }                   
 @Injectable()
 export class MessageService {
 
-  public messages: any;
-  private messageUpdate = new Subject<any>();
+    private dataStore: any;
+    private _message$: BehaviorSubject<any>;
 
-  constructor() {
-    this.messages = {
-      
-              'login': {
-                  'success': "You have Successfully logged in",
-                  'no-password': "Username or Password is invalid",
-                  'no-access': "You need to login to gain access",
-                  'error': "An error occurred. Please try again"
-              },
-              'logout': {
-                  'success': "You have Successfully logged out",
-                  'error': "You have been logged out unexpectedly"
-              },
-              'create-user': {
-                  'success': "User was successfully created",
-                  'error': "An error occurred. Please try again"
-              },
-              'edit-user': {
-                  'success': "User record was successfully updated",
-                  'error': "An error occurred. Please try again"
-              },
-              'edit-password': {
-                  'success': "User password successfully updated",
-                  'error': "An error occurred. Please try again"
-              },
-              'delete-user': {
-                  'success': "User successfully deleted",
-                  'error': "An error occured. Please try again"
-              }
-
-      }
-  }
-
-  setMessageType(result: any){
-    switch(result){
-      case 'success':
-        return 'success';
-      case 'warning':
-        return 'warning';
-      default:
-        return 'danger';
+    constructor() {
+        this._message$ = new BehaviorSubject(false);
     }
-  }
 
-  sendMessage(action: string, result: any) {
-    let messageType = this.setMessageType(result);
+    set message(msg: any) {
+        this.dataStore = msg;
+        this._message$.next(this.dataStore);
+    }
 
-    let message = this.messages[action][result];
-    this.messageUpdate.next({body: message, type: messageType});
-  }
-
-  getMessage() {
-    return this.messageUpdate.asObservable();
-  }
-
-  clearMessage() {
-    this.messageUpdate.next(null);
-  }
-  
+    get message$() {
+        return this._message$.asObservable();
+    }
 
 }
