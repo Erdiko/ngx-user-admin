@@ -17,10 +17,6 @@ export declare class UserEditComponent implements OnInit {
     private title;
     userForm: FormGroup;
     passwordForm: FormGroup;
-    error: string;
-    msg: string;
-    passError: string;
-    passMsg: string;
     user: User;
     constructor(usersService: UsersService, route: ActivatedRoute, router: Router, messageService: MessageService);
     ngOnInit(): void;
@@ -30,12 +26,12 @@ export declare class UserEditComponent implements OnInit {
     onSubmit({value, valid}: {
         value: any;
         valid: boolean;
-    }): Promise<any> | undefined;
+    }): Promise<void> | undefined;
     private _handleResponse(res);
     onSubmitChangepass({value, valid}: {
         value: any;
         valid: boolean;
-    }): Promise<any> | undefined;
+    }): Promise<void> | undefined;
     private _handlePasswordResponse(res);
     private _handleError(error);
     createEditHeader(): string;

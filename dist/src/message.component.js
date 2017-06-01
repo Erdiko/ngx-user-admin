@@ -11,18 +11,23 @@ import { Component, Inject } from '@angular/core';
 import { MessageService } from './message.service';
 var MessageComponent = (function () {
     function MessageComponent(messageService) {
+        var _this = this;
         this.messageService = messageService;
+        this.subscription = this.messageService
+            .getMessage()
+            .subscribe(function (message) {
+            _this.message = message;
+        });
     }
-    MessageComponent.prototype.close = function () {
-        this.message = null;
+    MessageComponent.prototype.ngOnDestroy = function () {
+        //this.subscription.unsubscribe();   
     };
     return MessageComponent;
 }());
 MessageComponent = __decorate([
     Component({
         selector: 'erdiko-message',
-        providers: [MessageService],
-        template: "\n<alert *ngIf=\"message\" [type]=\"message.type\" (click)=\"close()\">{{ message.body }}</alert>\n"
+        template: "\n  <br />\n  <br />\n  <br />\n  <br />\n<alert *ngIf=\"message\" [type]=\"message.type\" dismissOnTimeout=\"3000\" dismissible=true>{{ message.body }}</alert>\n"
     }),
     __param(0, Inject(MessageService))
 ], MessageComponent);

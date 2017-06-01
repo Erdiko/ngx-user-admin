@@ -1,10 +1,6 @@
-import { Observable } from "rxjs";
+import { Observable } from 'rxjs';
 export declare class MessageService {
-    messages: any;
-    private messageUpdate;
-    constructor();
-    setMessageType(result: any): "success" | "warning" | "danger";
-    sendMessage(action: string, result: any): void;
+    private subject;
+    setMessage(msg: any): void;
     getMessage(): Observable<any>;
-    clearMessage(): void;
 }

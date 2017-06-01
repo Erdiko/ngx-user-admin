@@ -1,28 +1,36 @@
-import { Component, NgModule, OnInit, ViewChild, AfterViewInit, Inject }   from '@angular/core';
-import { Subscription }         from "rxjs";
-import { MessageService }       from './message.service';
+import { Component, OnDestroy, Inject }   from '@angular/core';
+import { Subscription }                   from 'rxjs/Subscription';
+import { MessageService }                 from './message.service';
 
 @Component({
   selector: 'erdiko-message',
-  providers: [MessageService],
   template: `
-<alert *ngIf="message" [type]="message.type" (click)="close()">{{ message.body }}</alert>
+  <br />
+  <br />
+  <br />
+  <br />
+<alert *ngIf="message" [type]="message.type" dismissOnTimeout="3000" dismissible=true>{{ message.body }}</alert>
 `
 })
-export class MessageComponent {
+export class MessageComponent implements OnDestroy {
 
-    public messageType: string;
-    public message: any;
-    public messageSubscription: Subscription;
+    private message: any;
+    private subscription: Subscription;
 
-    public messageService: MessageService;
+    private messageService: MessageService;
 
     constructor(@Inject(MessageService) messageService: MessageService) { 
         this.messageService = messageService;
+
+        this.subscription = this.messageService
+                                .getMessage()
+                                .subscribe(message => { 
+                                    this.message = message 
+                                });
     }
 
-    close(){
-        this.message = null;
+    ngOnDestroy() { 
+        //this.subscription.unsubscribe();   
     }
 
 }

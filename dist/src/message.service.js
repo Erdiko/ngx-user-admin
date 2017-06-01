@@ -5,59 +5,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 import { Injectable } from '@angular/core';
-import { Subject } from "rxjs";
+import { Subject } from 'rxjs/Subject';
 var MessageService = (function () {
     function MessageService() {
-        this.messageUpdate = new Subject();
-        this.messages = {
-            'login': {
-                'success': "You have Successfully logged in",
-                'no-password': "Username or Password is invalid",
-                'no-access': "You need to login to gain access",
-                'error': "An error occurred. Please try again"
-            },
-            'logout': {
-                'success': "You have Successfully logged out",
-                'error': "You have been logged out unexpectedly"
-            },
-            'create-user': {
-                'success': "User was successfully created",
-                'error': "An error occurred. Please try again"
-            },
-            'edit-user': {
-                'success': "User record was successfully updated",
-                'error': "An error occurred. Please try again"
-            },
-            'edit-password': {
-                'success': "User password successfully updated",
-                'error': "An error occurred. Please try again"
-            },
-            'delete-user': {
-                'success': "User successfully deleted",
-                'error': "An error occured. Please try again"
-            }
-        };
+        this.subject = new Subject();
     }
-    MessageService.prototype.setMessageType = function (result) {
-        switch (result) {
-            case 'success':
-                return 'success';
-            case 'warning':
-                return 'warning';
-            default:
-                return 'danger';
-        }
-    };
-    MessageService.prototype.sendMessage = function (action, result) {
-        var messageType = this.setMessageType(result);
-        var message = this.messages[action][result];
-        this.messageUpdate.next({ body: message, type: messageType });
+    MessageService.prototype.setMessage = function (msg) {
+        this.subject.next(msg);
     };
     MessageService.prototype.getMessage = function () {
-        return this.messageUpdate.asObservable();
-    };
-    MessageService.prototype.clearMessage = function () {
-        this.messageUpdate.next(null);
+        return this.subject.asObservable();
     };
     return MessageService;
 }());

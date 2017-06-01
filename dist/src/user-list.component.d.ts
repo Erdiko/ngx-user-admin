@@ -3,11 +3,13 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap';
 import { UsersService } from './users.service';
 import { User } from './user.model';
+import { MessageService } from './message.service';
 export declare class UserListComponent implements OnInit {
     private route;
     private router;
     confirmDeleteModal: ModalDirective;
     private usersService;
+    messageService: MessageService;
     wait: any;
     private users$;
     private total$;
@@ -20,7 +22,7 @@ export declare class UserListComponent implements OnInit {
     sortDir: string;
     error: any;
     selectedUser: any;
-    constructor(usersService: UsersService, route: ActivatedRoute, router: Router);
+    constructor(usersService: UsersService, messageService: MessageService, route: ActivatedRoute, router: Router);
     ngOnInit(): void;
     ngOnDestroy(): void;
     private _getUsers();

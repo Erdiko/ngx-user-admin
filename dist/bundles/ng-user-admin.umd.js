@@ -61084,12 +61084,6 @@ var AnimationFrameScheduler_1 = {
 
 var animationFrame_1 = new AnimationFrameScheduler_1.AnimationFrameScheduler(AnimationFrameAction_1.AnimationFrameAction);
 
-/* tslint:disable:no-unused-variable */
-// Subject imported before Observable to bypass circular dependency issue since
-// Subject extends Observable and Observable references Subject in it's
-// definition
-
-var Subject$1 = Subject_1.Subject;
 /* tslint:enable:no-unused-variable */
 
 var Observable$1 = Observable_1.Observable;
@@ -61405,56 +61399,13 @@ var __decorate$5 = (undefined && undefined.__decorate) || function (decorators, 
 };
 var MessageService = (function () {
     function MessageService() {
-        this.messageUpdate = new Subject$1();
-        this.messages = {
-            'login': {
-                'success': "You have Successfully logged in",
-                'no-password': "Username or Password is invalid",
-                'no-access': "You need to login to gain access",
-                'error': "An error occurred. Please try again"
-            },
-            'logout': {
-                'success': "You have Successfully logged out",
-                'error': "You have been logged out unexpectedly"
-            },
-            'create-user': {
-                'success': "User was successfully created",
-                'error': "An error occurred. Please try again"
-            },
-            'edit-user': {
-                'success': "User record was successfully updated",
-                'error': "An error occurred. Please try again"
-            },
-            'edit-password': {
-                'success': "User password successfully updated",
-                'error': "An error occurred. Please try again"
-            },
-            'delete-user': {
-                'success': "User successfully deleted",
-                'error': "An error occured. Please try again"
-            }
-        };
+        this.subject = new Subject_2();
     }
-    MessageService.prototype.setMessageType = function (result) {
-        switch (result) {
-            case 'success':
-                return 'success';
-            case 'warning':
-                return 'warning';
-            default:
-                return 'danger';
-        }
-    };
-    MessageService.prototype.sendMessage = function (action, result) {
-        var messageType = this.setMessageType(result);
-        var message = this.messages[action][result];
-        this.messageUpdate.next({ body: message, type: messageType });
+    MessageService.prototype.setMessage = function (msg) {
+        this.subject.next(msg);
     };
     MessageService.prototype.getMessage = function () {
-        return this.messageUpdate.asObservable();
-    };
-    MessageService.prototype.clearMessage = function () {
-        this.messageUpdate.next(null);
+        return this.subject.asObservable();
     };
     return MessageService;
 }());
@@ -61472,7 +61423,7 @@ var __param$2 = (undefined && undefined.__param) || function (paramIndex, decora
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 exports.UserListComponent = (function () {
-    function UserListComponent(usersService, route, router) {
+    function UserListComponent(usersService, messageService, route, router) {
         var _this = this;
         this.route = route;
         this.router = router;
@@ -61480,6 +61431,7 @@ exports.UserListComponent = (function () {
         this.pagesize = 10;
         this.pages = [];
         this.usersService = usersService;
+        this.messageService = messageService;
         // init the wait state (and indication animation) to 'off'
         this.wait = false;
         // default the sort col and direction
@@ -61561,13 +61513,16 @@ exports.UserListComponent = (function () {
         this.wait = true;
         this.usersService.deleteUser(this.selectedUser)
             .then(function (res) { return _this._handleResponse(res); })
-            .catch(function (error) { return _this.error = error; });
+            .catch(function (error) { return _this.messageService.setMessage({ "type": "danger", "body": error }); });
     };
     UserListComponent.prototype._handleResponse = function (res) {
         this._getUsers();
         this.wait = false;
-        if (false == res.success) {
-            this.error = res.error_message;
+        if (false !== res.success) {
+            this.messageService.setMessage({ "type": "success", "body": "User successfully deleted" });
+        }
+        else {
+            this.messageService.setMessage({ "type": "danger", "body": res.error_message });
         }
     };
     return UserListComponent;
@@ -61580,7 +61535,8 @@ exports.UserListComponent = __decorate$6([
         selector: 'erdiko-user-list',
         template: "\n<div class=\"row\">\n    <div class=\"col-xs-4\">\n        <button class=\"btn btn-info btn-sm\" routerLink=\"/user/\">Create a New User</button>\n    </div>\n</div>\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <br />\n    </div>\n</div>\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <table class=\"table table-bordered table-hover\"> \n            <thead> \n                <tr> \n                    <th (click)=\"sort('id')\">\n                        ID \n                        <i *ngIf=\"sortCol == 'id'\" class=\"fa\" [ngClass]=\"{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}\" aria-hidden=\"true\"></i>\n                    </th> \n                    <th (click)=\"sort('name')\">\n                        User Name\n                        <i *ngIf=\"sortCol == 'name'\" class=\"fa\" [ngClass]=\"{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}\" aria-hidden=\"true\"></i>\n                    </th> \n                    <th>\n                        Role\n                    </th> \n                    <th>\n                        Last Login\n                    </th> \n                    <th>\n                        Joined\n                    </th> \n                    <th>Edit</th> \n                    <th>Delete</th> \n                </tr> \n            </thead> \n\n            <tbody *ngIf=\"wait\"> \n                <tr>\n                    <td colspan=\"7\" align=\"center\">\n                        <i class=\"fa fa-refresh fa-spin fa-2x fa-fw\"></i> \n                    </td>\n                </tr>\n            </tbody> \n\n            <tbody *ngIf=\"!wait && error\"> \n                <tr>\n                    <td colspan=\"7\" align=\"center\">\n                        <alert type=\"warning\">{{ error }}</alert>\n                    </td>\n                </tr>\n            </tbody> \n\n            <tbody *ngIf=\"!wait && !error && users && users.length < 1\"> \n                <tr>\n                    <td colspan=\"7\" align=\"center\">\n                        <alert type=\"warning\">Sorry, no users were found. Please try again.</alert>\n                    </td>\n                </tr>\n            </tbody> \n\n            <tbody *ngIf=\"!wait && !error && users && users.length > 0\"> \n                <tr class=\"user_row\" *ngFor=\"let user of users; let index = index\"> \n                    <th class=\"user_id\" scope=\"row\">{{ user.id }}</th> \n                    <td class=\"user_name\">{{ user.name }}</td> \n                    <td class=\"user_role_name\">{{ user.role.name }}</td> \n                    <td class=\"user_last_login\">{{ user.last_login }}</td> \n                    <td class=\"user_joined\">{{ user.joined }}</td> \n                    <td class=\"user_edit\"><a routerLink=\"/user/{{ user.id }}\">Edit</a></td>\n                    <td class=\"user_delete\"><button type=\"button\" class=\"btn btn-danger\" (click)=\"clickDelete(user.id)\">Delete</button></td> \n                </tr> \n            </tbody> \n        </table>\n    </div>\n</div>\n<div class=\"row paging\" *ngIf=\"total\">\n    <div class=\"col-xs-4\">\n\n        <nav aria-label=\"Page navigation\">\n          <ul class=\"pagination pagination-sm\">\n\n            <li *ngIf=\"(currentPage > 1)\">\n              <a (click)=\"clickPrev()\" aria-label=\"Previous\">\n                <span aria-hidden=\"true\">&laquo;</span>\n              </a>\n            </li>\n\n            <li \n                *ngFor=\"let page of pages; let index = index\"\n                 [ngClass]=\"{'active': (page == currentPage)}\"\n                 [attr.id]=\"'page'+(index + 1)\"\n                >\n                <a (click)=\"clickPage(page)\">{{ page }}</a>\n            </li>\n\n            <li *ngIf=\"(currentPage < getPageCount())\">\n              <a (click)=\"clickNext()\" aria-label=\"Next\">\n                <span aria-hidden=\"true\">&raquo;</span>\n              </a>\n            </li>\n\n          </ul>\n        </nav>\n\n    </div>\n</div>\n\n<div bsModal #confirmDeleteModal=\"bs-modal\" class=\"modal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"mySmallModalLabel\" aria-hidden=\"true\">\n  <div class=\"modal-dialog modal-sm\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h4 class=\"modal-title pull-left\">Delete?</h4>\n        <button type=\"button\" class=\"close pull-right\" aria-label=\"Close\" (click)=\"cancelDelete()\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body\">\n        <div class=\"row\">\n            <div class=\"col-xs-12\">\n                <p>Are you sure you want to delete this user?</p>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"col-xs-6\">\n                <button type=\"button\" class=\"btn btn-warning\" (click)=\"cancelDelete()\">Cancel</button>\n            </div>\n            <div class=\"col-xs-6\">\n                <button type=\"button\" class=\"btn btn-danger\" (click)=\"confirmDelete(selectedUser)\">Confirm</button>\n            </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n"
     }),
-    __param$2(0, Inject(UsersService))
+    __param$2(0, Inject(UsersService)),
+    __param$2(1, Inject(MessageService))
 ], exports.UserListComponent);
 
 var __decorate$7 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
@@ -61925,13 +61881,12 @@ exports.UserEditComponent = (function () {
         var _this = this;
         var value = _a.value, valid = _a.valid;
         this.wait = true;
-        this.msg = this.error = '';
         if (valid) {
             if (this.user.id) {
                 value.id = this.user.id;
                 return this.usersService.updateUser(value)
                     .then(function (res) { return _this._handleResponse(res); })
-                    .catch(function (error) { return _this.error = error; });
+                    .catch(function (error) { return _this._handleError(error); });
             }
             else {
                 var create = {
@@ -61942,18 +61897,18 @@ exports.UserEditComponent = (function () {
                 };
                 return this.usersService.createUser(create)
                     .then(function (res) { return _this._handleResponse(res); })
-                    .catch(function (error) { return _this.error = error; });
+                    .catch(function (error) { return _this._handleError(error); });
             }
         }
     };
     UserEditComponent.prototype._handleResponse = function (res) {
         this.wait = false;
         if (true == res.success) {
-            this.messageService.sendMessage("edit-user", "success");
+            this.messageService.setMessage({ "type": "success", "body": "User record was successfully updated" });
             if ("create" === res.method) {
                 // navigate to Edit User for the new user
                 this.router.navigate(['/user/' + res.user.id]);
-                this.messageService.sendMessage("create-user", "success");
+                this.messageService.setMessage({ "type": "success", "body": "User was successfully created" });
             }
         }
         else {
@@ -61964,25 +61919,24 @@ exports.UserEditComponent = (function () {
         var _this = this;
         var value = _a.value, valid = _a.valid;
         this.passWait = true;
-        this.passMsg = this.passError = '';
         if (valid) {
             return this.usersService.changePassword(this.user.id, value.passwordInput.password)
                 .then(function (res) { return _this._handlePasswordResponse(res); })
-                .catch(function (error) { return _this.passError = error; });
+                .catch(function (error) { return _this._handleError(error); });
         }
     };
     UserEditComponent.prototype._handlePasswordResponse = function (res) {
         this.passWait = false;
         this.passwordForm.reset();
         if (true == res.success) {
-            this.messageService.sendMessage("edit-password", "success");
+            this.messageService.setMessage({ "type": "success", "body": "User password successfully updated" });
         }
         else {
-            this.passError = res.error_message;
+            this.messageService.setMessage({ "type": "danger", "body": res.error });
         }
     };
     UserEditComponent.prototype._handleError = function (error) {
-        this.error = error;
+        this.messageService.setMessage({ "type": "danger", "body": error });
     };
     UserEditComponent.prototype.createEditHeader = function () {
         var panelHeader = this.user.id ? "Edit User" : "Create User";
@@ -61996,7 +61950,7 @@ __decorate$10([
 exports.UserEditComponent = __decorate$10([
     Component({
         selector: 'erdiko-user-edit',
-        template: "\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <button class=\"btn btn-info btn-sm\" routerLink=\"/list/\">\n            <i class=\"fa fa-chevron-left\" aria-hidden=\"true\"></i> Back to User List\n        </button>\n    </div>\n</div>\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <br/>\n    </div>\n</div>\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <div id=\"id-title\" *ngIf=\"user.id\">\n            User {{ user.id }}\n        </div>\n        <div class=\"panel panel-default\" id=\"edit-update\">\n            <tabset>\n                <tab [heading]=\"createEditHeader()\">\n                    <div class=\"panel-body\">\n                        <alert *ngIf=\"msg\" type=\"success\">{{ msg }}</alert>\n                        <alert *ngIf=\"error\" type=\"danger\">{{ error }}</alert>\n\n                            <form \n                                    id=\"user-edit\" \n                                    class=\"form-horizontal\"\n                                    novalidate \n                                    (ngSubmit)=\"onSubmit(userForm)\" \n                                    [formGroup]=\"userForm\"\n                                >\n\n                                <div class=\"form-group\" *ngIf=\"user && user.id\">\n                                    <label for=\"name\" class=\"col-xs-2 control-label\">ID</label>\n                                    <div class=\"col-xs-10\">\n                                        <p>{{ user.id }}</p>\n                                    </div>\n                                </div>\n                                <div class=\"form-group\" *ngIf=\"user && user.created_at\">\n                                    <label for=\"name\" class=\"col-xs-2 control-label\">Joined</label>\n                                    <div class=\"col-xs-10\">\n                                        <p *ngIf=\"!user.created_at\">n/a</p>\n                                        <p>{{ user.created_at }}</p>\n                                    </div>\n                                </div>\n                                <div class=\"form-group\" *ngIf=\"user.id\">\n                                    <label for=\"name\" class=\"col-xs-2 control-label\">Last Login</label>\n                                    <div class=\"col-xs-10\">\n                                        <p *ngIf=\"!user.last_login\">n/a</p>\n                                        <p>{{ user.last_login }}</p>\n                                    </div>\n                                </div>\n                                <div class=\"form-group\">\n                                    <label for=\"name\" class=\"col-xs-2 control-label\">Name</label>\n                                    <div class=\"col-xs-10\">\n                                        <input type=\"text\" class=\"form-control\" name=\"name\" formControlName=\"name\" placeholder=\"Name\">\n                                        <div class=\"text-danger\" *ngIf=\"userForm.get('name').hasError('required') && userForm.get('name').touched\">\n                                        Name is required\n                                        </div>\n                                        <div class=\"text-danger\" *ngIf=\"userForm.get('name').hasError('minlength') && userForm.get('name').touched\">\n                                        Minimum of 2 characters\n                                        </div>\n                                    </div>\n                                </div>\n                                <div class=\"form-group\">\n                                    <label for=\"email\" class=\"col-xs-2 control-label\">Email</label>\n                                    <div class=\"col-xs-10\">\n                                        <input type=\"email\" class=\"form-control\" name=\"email\" \n                                                formControlName=\"email\" placeholder=\"Email\">\n                                        <div class=\"text-danger\" *ngIf=\"userForm.get('email').hasError('required') && userForm.get('email').touched\">\n                                        Email is required\n                                        </div>\n                                        <div class=\"text-danger\" *ngIf=\"userForm.get('email').hasError('pattern') && userForm.get('email').touched\">\n                                        A Valid email is required\n                                        </div>\n                                    </div>\n                                </div>\n                                <div class=\"form-group\">\n                                    <label for=\"role\" class=\"col-xs-2 control-label\">Role</label>\n                                    <div class=\"col-xs-10\" id=\"select-role\">\n                                            <select class=\"form-control\" name=\"role\" formControlName=\"role\">\n                                                <option value=\"2\">Admin</option>\n                                                <option value=\"1\">User</option>\n                                            </select>\n                                        <div class=\"text-danger\" *ngIf=\"userForm.get('role').hasError('required') && userForm.get('role').touched\">\n                                        Role is required\n                                        </div>\n                                    </div>\n                                </div>\n\n                            </form>\n\n                            <!--show password input if creating user-->\n                            <erdiko-password *ngIf=\"!user.id\" [passwordForm]=\"passwordForm\"></erdiko-password>\n\n                            <div class=\"form-group\">\n                                <div class=\"col-xs-offset-2 col-xs-4\">\n                                    <button type=\"cancel\" class=\"btn btn-warning\" routerLink=\"/list/\">Cancel</button>\n                                </div>\n                                <div class=\"col-xs-offset-2 col-xs-4\">\n                                    <button type=\"submit\" class=\"btn btn-success\" (click)=\"onSubmit(userForm)\" [disabled]=\"!isUserFormValid()\">\n                                        Save\n                                        <i *ngIf=\"wait\" class=\"fa fa-refresh fa-spin fa-fw\"></i> \n                                    </button>\n                                </div>\n                            </div>\n                    </div>\n                </tab>\n\n                <tab heading=\"Update Password\" *ngIf=\"user.id\">\n\n                    <div class=\"panel-body\">\n\n                        <alert *ngIf=\"passMsg\" type=\"success\">{{ passMsg }}</alert>\n                        <alert *ngIf=\"passError\" type=\"danger\">{{ passError }}</alert>\n\n                        <erdiko-password [passwordForm]=\"passwordForm\"></erdiko-password>\n\n                        <div class=\"form-group\">\n                            <div class=\"col-xs-offset-2 col-xs-4\">\n                                <button type=\"cancel\" class=\"btn btn-warning\" routerLink=\"/list/\">Cancel</button>\n                            </div>\n                            <div class=\"col-xs-offset-2 col-xs-4\">\n                                <button type=\"submit\" class=\"btn btn-success\" (click)=\"onSubmitChangepass(passwordForm)\" [disabled]=\"!isPassFormValid()\">\n                                    Save\n                                    <i *ngIf=\"passWait\" class=\"fa fa-refresh fa-spin fa-fw\"></i> \n                                </button>\n                            </div>\n                        </div>\n\n                    </div>\n                </tab>\n            </tabset>\n        </div>\n    </div>\n</div>\n\n<div class=\"row\" *ngIf=\"user.id\">\n    <div class=\"col-xs-12\">\n        <br/>\n        <erdiko-user-event-log [inputUserId]=\"user.id\"></erdiko-user-event-log>\n    </div>\n</div>\n"
+        template: "\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <button class=\"btn btn-info btn-sm\" routerLink=\"/list/\">\n            <i class=\"fa fa-chevron-left\" aria-hidden=\"true\"></i> Back to User List\n        </button>\n    </div>\n</div>\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <br/>\n    </div>\n</div>\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <div id=\"id-title\" *ngIf=\"user.id\">\n            User {{ user.id }}\n        </div>\n        <div class=\"panel panel-default\" id=\"edit-update\">\n            <tabset>\n                <tab [heading]=\"createEditHeader()\">\n                    <div class=\"panel-body\">\n\n                            <form \n                                    id=\"user-edit\" \n                                    class=\"form-horizontal\"\n                                    novalidate \n                                    (ngSubmit)=\"onSubmit(userForm)\" \n                                    [formGroup]=\"userForm\"\n                                >\n\n                                <div class=\"form-group\" *ngIf=\"user && user.id\">\n                                    <label for=\"name\" class=\"col-xs-2 control-label\">ID</label>\n                                    <div class=\"col-xs-10\">\n                                        <p>{{ user.id }}</p>\n                                    </div>\n                                </div>\n                                <div class=\"form-group\" *ngIf=\"user && user.created_at\">\n                                    <label for=\"name\" class=\"col-xs-2 control-label\">Joined</label>\n                                    <div class=\"col-xs-10\">\n                                        <p *ngIf=\"!user.created_at\">n/a</p>\n                                        <p>{{ user.created_at }}</p>\n                                    </div>\n                                </div>\n                                <div class=\"form-group\" *ngIf=\"user.id\">\n                                    <label for=\"name\" class=\"col-xs-2 control-label\">Last Login</label>\n                                    <div class=\"col-xs-10\">\n                                        <p *ngIf=\"!user.last_login\">n/a</p>\n                                        <p>{{ user.last_login }}</p>\n                                    </div>\n                                </div>\n                                <div class=\"form-group\">\n                                    <label for=\"name\" class=\"col-xs-2 control-label\">Name</label>\n                                    <div class=\"col-xs-10\">\n                                        <input type=\"text\" class=\"form-control\" name=\"name\" formControlName=\"name\" placeholder=\"Name\">\n                                        <div class=\"text-danger\" *ngIf=\"userForm.get('name').hasError('required') && userForm.get('name').touched\">\n                                        Name is required\n                                        </div>\n                                        <div class=\"text-danger\" *ngIf=\"userForm.get('name').hasError('minlength') && userForm.get('name').touched\">\n                                        Minimum of 2 characters\n                                        </div>\n                                    </div>\n                                </div>\n                                <div class=\"form-group\">\n                                    <label for=\"email\" class=\"col-xs-2 control-label\">Email</label>\n                                    <div class=\"col-xs-10\">\n                                        <input type=\"email\" class=\"form-control\" name=\"email\" \n                                                formControlName=\"email\" placeholder=\"Email\">\n                                        <div class=\"text-danger\" *ngIf=\"userForm.get('email').hasError('required') && userForm.get('email').touched\">\n                                        Email is required\n                                        </div>\n                                        <div class=\"text-danger\" *ngIf=\"userForm.get('email').hasError('pattern') && userForm.get('email').touched\">\n                                        A Valid email is required\n                                        </div>\n                                    </div>\n                                </div>\n                                <div class=\"form-group\">\n                                    <label for=\"role\" class=\"col-xs-2 control-label\">Role</label>\n                                    <div class=\"col-xs-10\" id=\"select-role\">\n                                            <select class=\"form-control\" name=\"role\" formControlName=\"role\">\n                                                <option value=\"2\">Admin</option>\n                                                <option value=\"1\">User</option>\n                                            </select>\n                                        <div class=\"text-danger\" *ngIf=\"userForm.get('role').hasError('required') && userForm.get('role').touched\">\n                                        Role is required\n                                        </div>\n                                    </div>\n                                </div>\n\n                            </form>\n\n                            <!--show password input if creating user-->\n                            <erdiko-password *ngIf=\"!user.id\" [passwordForm]=\"passwordForm\"></erdiko-password>\n\n                            <div class=\"form-group\">\n                                <div class=\"col-xs-offset-2 col-xs-4\">\n                                    <button type=\"cancel\" class=\"btn btn-warning\" routerLink=\"/list/\">Cancel</button>\n                                </div>\n                                <div class=\"col-xs-offset-2 col-xs-4\">\n                                    <button type=\"submit\" class=\"btn btn-success\" (click)=\"onSubmit(userForm)\" [disabled]=\"!isUserFormValid()\">\n                                        Save\n                                        <i *ngIf=\"wait\" class=\"fa fa-refresh fa-spin fa-fw\"></i> \n                                    </button>\n                                </div>\n                            </div>\n                    </div>\n                </tab>\n\n                <tab heading=\"Update Password\" *ngIf=\"user.id\">\n\n                    <div class=\"panel-body\">\n\n                        <erdiko-password [passwordForm]=\"passwordForm\"></erdiko-password>\n\n                        <div class=\"form-group\">\n                            <div class=\"col-xs-offset-2 col-xs-4\">\n                                <button type=\"cancel\" class=\"btn btn-warning\" routerLink=\"/list/\">Cancel</button>\n                            </div>\n                            <div class=\"col-xs-offset-2 col-xs-4\">\n                                <button type=\"submit\" class=\"btn btn-success\" (click)=\"onSubmitChangepass(passwordForm)\" [disabled]=\"!isPassFormValid()\">\n                                    Save\n                                    <i *ngIf=\"passWait\" class=\"fa fa-refresh fa-spin fa-fw\"></i> \n                                </button>\n                            </div>\n                        </div>\n\n                    </div>\n                </tab>\n            </tabset>\n        </div>\n    </div>\n</div>\n\n<div class=\"row\" *ngIf=\"user.id\">\n    <div class=\"col-xs-12\">\n        <br/>\n        <erdiko-user-event-log [inputUserId]=\"user.id\"></erdiko-user-event-log>\n    </div>\n</div>\n"
     }),
     __param$5(0, Inject(UsersService)),
     __param$5(1, Inject(ActivatedRoute)),
@@ -62015,18 +61969,23 @@ var __param$6 = (undefined && undefined.__param) || function (paramIndex, decora
 };
 exports.MessageComponent = (function () {
     function MessageComponent(messageService) {
+        var _this = this;
         this.messageService = messageService;
+        this.subscription = this.messageService
+            .getMessage()
+            .subscribe(function (message) {
+            _this.message = message;
+        });
     }
-    MessageComponent.prototype.close = function () {
-        this.message = null;
+    MessageComponent.prototype.ngOnDestroy = function () {
+        //this.subscription.unsubscribe();   
     };
     return MessageComponent;
 }());
 exports.MessageComponent = __decorate$11([
     Component({
         selector: 'erdiko-message',
-        providers: [MessageService],
-        template: "\n<alert *ngIf=\"message\" [type]=\"message.type\" (click)=\"close()\">{{ message.body }}</alert>\n"
+        template: "\n  <br />\n  <br />\n  <br />\n  <br />\n<alert *ngIf=\"message\" [type]=\"message.type\" dismissOnTimeout=\"3000\" dismissible=true>{{ message.body }}</alert>\n"
     }),
     __param$6(0, Inject(MessageService))
 ], exports.MessageComponent);

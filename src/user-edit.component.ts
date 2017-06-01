@@ -33,8 +33,6 @@ import { AlertComponent, TabsModule } from 'ngx-bootstrap';
             <tabset>
                 <tab [heading]="createEditHeader()">
                     <div class="panel-body">
-                        <alert *ngIf="msg" type="success">{{ msg }}</alert>
-                        <alert *ngIf="error" type="danger">{{ error }}</alert>
 
                             <form 
                                     id="user-edit" 
@@ -125,9 +123,6 @@ import { AlertComponent, TabsModule } from 'ngx-bootstrap';
 
                     <div class="panel-body">
 
-                        <alert *ngIf="passMsg" type="success">{{ passMsg }}</alert>
-                        <alert *ngIf="passError" type="danger">{{ passError }}</alert>
-
                         <erdiko-password [passwordForm]="passwordForm"></erdiko-password>
 
                         <div class="form-group">
@@ -175,12 +170,6 @@ export class UserEditComponent implements OnInit {
 
     public userForm: FormGroup;
     public passwordForm: FormGroup;
-
-    public error: string;
-    public msg: string;
-
-    public passError: string;
-    public passMsg: string;
 
     public user: User;
 
@@ -277,14 +266,12 @@ export class UserEditComponent implements OnInit {
 
         this.wait = true;
 
-        this.msg = this.error = '';
-
         if(valid) {
             if(this.user.id) {
                 value.id = this.user.id;
                 return this.usersService.updateUser(value)
                            .then(res => this._handleResponse(res))
-                           .catch(error => this.error = error);
+                           .catch(error => this._handleError(error));
             } else {
 
                 let create = {
@@ -296,7 +283,7 @@ export class UserEditComponent implements OnInit {
 
                 return this.usersService.createUser(create)
                            .then(res => this._handleResponse(res))
-                           .catch(error => this.error = error);
+                           .catch(error => this._handleError(error));
             }
         }
     }
@@ -304,12 +291,12 @@ export class UserEditComponent implements OnInit {
     private _handleResponse(res: any) {
         this.wait = false;
         if(true == res.success) {
-            this.messageService.sendMessage("edit-user", "success");
+            this.messageService.setMessage({"type": "success", "body": "User record was successfully updated"});
 
             if("create" === res.method) {
                 // navigate to Edit User for the new user
                 this.router.navigate(['/user/' + res.user.id]);
-                this.messageService.sendMessage("create-user", "success");
+                this.messageService.setMessage({"type": "success", "body": "User was successfully created"});
             }
 
         } else {
@@ -319,12 +306,11 @@ export class UserEditComponent implements OnInit {
 
     onSubmitChangepass({ value, valid }: { value: any, valid: boolean }) {
         this.passWait = true;
-        this.passMsg = this.passError = '';
 
         if(valid) {
             return this.usersService.changePassword(this.user.id, value.passwordInput.password)
                        .then(res => this._handlePasswordResponse(res))
-                       .catch(error => this.passError = error);
+                       .catch(error => this._handleError(error));
         }
     }
 
@@ -334,14 +320,14 @@ export class UserEditComponent implements OnInit {
         this.passwordForm.reset();
 
         if(true == res.success) {
-            this.messageService.sendMessage("edit-password", "success");
+            this.messageService.setMessage({"type": "success", "body": "User password successfully updated"});
         } else {
-            this.passError = res.error_message;
+            this.messageService.setMessage({"type": "danger", "body": res.error});
         }
     }
 
     private _handleError(error: string) {
-        this.error = error;
+        this.messageService.setMessage({"type": "danger", "body": error});
     }
 
     public createEditHeader() {

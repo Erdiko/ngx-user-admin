@@ -1,24 +1,18 @@
-import { Injectable, Inject }                                           from '@angular/core';
-
-import { Subject, BehaviorSubject, Observable, Subscription }                    from "rxjs";
+import { Injectable }  from '@angular/core';
+import { Observable } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class MessageService {
 
-    private dataStore: any;
-    private _message$: BehaviorSubject<any>;
+    private subject = new Subject<any>();
 
-    constructor() {
-        this._message$ = new BehaviorSubject(false);
+    setMessage(msg: any) {
+        this.subject.next(msg);
     }
 
-    set message(msg: any) {
-        this.dataStore = msg;
-        this._message$.next(this.dataStore);
-    }
-
-    get message$() {
-        return this._message$.asObservable();
+    getMessage() {
+        return this.subject.asObservable();
     }
 
 }

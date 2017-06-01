@@ -1,10 +1,9 @@
-import { Subscription } from "rxjs";
+import { OnDestroy } from '@angular/core';
 import { MessageService } from './message.service';
-export declare class MessageComponent {
-    messageType: string;
-    message: any;
-    messageSubscription: Subscription;
-    messageService: MessageService;
+export declare class MessageComponent implements OnDestroy {
+    private message;
+    private subscription;
+    private messageService;
     constructor(messageService: MessageService);
-    close(): void;
+    ngOnDestroy(): void;
 }

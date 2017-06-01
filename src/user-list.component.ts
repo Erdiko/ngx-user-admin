@@ -6,6 +6,7 @@ import { ModalDirective }           from 'ngx-bootstrap';
 
 import { UsersService }             from './users.service';
 import { User }                     from './user.model';
+import { MessageService }           from './message.service';
 
 @Component({
   selector: 'erdiko-user-list',
@@ -151,6 +152,7 @@ export class UserListComponent implements OnInit {
     @ViewChild('confirmDeleteModal') public confirmDeleteModal:ModalDirective;
 
     private usersService: UsersService;
+    public messageService: MessageService;
     public wait: any;
 
     private users$: Subscription;
@@ -170,10 +172,12 @@ export class UserListComponent implements OnInit {
         
     constructor(
            @Inject(UsersService) usersService: UsersService,
+           @Inject(MessageService) messageService: MessageService,
            private route: ActivatedRoute,
            private router: Router) {
 
         this.usersService = usersService;
+        this.messageService = messageService;
 
         // init the wait state (and indication animation) to 'off'
         this.wait = false;
@@ -283,15 +287,17 @@ export class UserListComponent implements OnInit {
         this.wait = true;
         this.usersService.deleteUser(this.selectedUser)
             .then(res => this._handleResponse(res))
-            .catch(error => this.error = error);
+            .catch(error => this.messageService.setMessage({"type": "danger", "body": error}));
     }
 
     private _handleResponse(res: any) {
         this._getUsers();
         this.wait = false;
-        
-        if(false == res.success) {
-            this.error = res.error_message;
+
+        if(false !== res.success) {
+            this.messageService.setMessage({"type": "success", "body": "User successfully deleted"});
+        } else {
+            this.messageService.setMessage({"type": "danger", "body": res.error_message});
         }
 
     }
