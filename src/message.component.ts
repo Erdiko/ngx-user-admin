@@ -5,10 +5,6 @@ import { MessageService }                 from './message.service';
 @Component({
   selector: 'erdiko-message',
   template: `
-  <br />
-  <br />
-  <br />
-  <br />
 <alert *ngIf="message" [type]="message.type" dismissOnTimeout="3000" dismissible=true>{{ message.body }}</alert>
 `
 })
@@ -30,7 +26,7 @@ export class MessageComponent implements OnDestroy {
     }
 
     ngOnDestroy() { 
-        //this.subscription.unsubscribe();   
+        this.subscription.unsubscribe();   
     }
 
 }
