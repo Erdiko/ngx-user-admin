@@ -1,6 +1,6 @@
 {
   "name": "@erdiko/ng-user-admin",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "description": "Erdiko Angular User Admin",
   "scripts": {
     "transpile": "ngc -p tsconfig.json",
@@ -13,7 +13,7 @@
     "type": "git",
     "url": "git+https://github.com/Erdiko/ng-user-admin.git"
   },
-  "author": "Robert Nadler",
+  "author": "Andy Armstrong",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Erdiko/ng-user-admin/issues"
