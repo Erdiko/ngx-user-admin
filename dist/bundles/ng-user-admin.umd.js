@@ -61966,7 +61966,7 @@ exports.UserEditComponent = __decorate$10([
     __param$5(3, Inject(MessageService))
 ], exports.UserEditComponent);
 
-var tpl$5 = "\n<alert *ngIf=\"message\" [type]=\"message.type\" (click)=\"close()\">{{ message.body }}</alert>\n";
+var tpl$5 = "\n<alert *ngIf=\"message\" [type]=\"message.type\" dismissOnTimeout=\"3000\" dismissible=true>{{ message.body }}</alert>\n";
 
 var __decorate$11 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
