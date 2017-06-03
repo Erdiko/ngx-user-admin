@@ -7,25 +7,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component, Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { tpl } from './password.component.tpl';
-var PasswordComponent = (function () {
-    function PasswordComponent() {
+import { Component } from '@angular/core';
+import { tpl } from './home.component.tpl';
+var HomeComponent = (function () {
+    function HomeComponent() {
     }
-    PasswordComponent.prototype.ngOnInit = function () { };
-    return PasswordComponent;
+    HomeComponent.prototype.ngOnInit = function () {
+    };
+    return HomeComponent;
 }());
-__decorate([
-    Input(),
-    __metadata("design:type", FormGroup)
-], PasswordComponent.prototype, "passwordForm", void 0);
-PasswordComponent = __decorate([
+HomeComponent = __decorate([
     Component({
-        selector: 'erdiko-password',
+        selector: 'app-home',
         template: tpl
     }),
     __metadata("design:paramtypes", [])
-], PasswordComponent);
-export { PasswordComponent };
-//# sourceMappingURL=password.component.js.map
+], HomeComponent);
+export { HomeComponent };
+//# sourceMappingURL=home.component.js.map

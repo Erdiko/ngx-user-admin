@@ -16,7 +16,7 @@ export default {
   sourceMap: false,
   format: 'umd',
   moduleName: 'ng.ng-user-admin',
-  external: ['@angular/http'],
+  external: ['@angular/http', '@angular/router'],
 
   plugins: [
     angular({
@@ -34,6 +34,7 @@ export default {
   globals: {
     '@angular/core': 'ng.core',
     '@angular/http' : 'vendor._angular_http',
+    '@angular/router' : 'vendor._angular_router',
     'rxjs/Observable': 'Rx',
     'rxjs/ReplaySubject': 'Rx',
     'rxjs/add/operator/map': 'Rx.Observable.prototype',

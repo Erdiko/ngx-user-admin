@@ -1,4 +1,8 @@
 export { UserAdminModule } from './src/user-admin.module';
+export { AppComponent } from './src/app.component';
+export { LoginComponent } from './src/login.component';
+export { HeaderComponent } from './src/header.component';
+export { HomeComponent } from './src/home.component';
 export { UserListComponent } from './src/user-list.component';
 export { UserEventLogComponent } from './src/user-event-log.component';
 export { UsersEventLogComponent } from './src/users-event-log.component';

@@ -4,6 +4,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
@@ -150,7 +153,8 @@ var UserEditComponent = (function () {
     return UserEditComponent;
 }());
 __decorate([
-    ViewChild(PasswordComponent)
+    ViewChild(PasswordComponent),
+    __metadata("design:type", PasswordComponent)
 ], UserEditComponent.prototype, "passwordComponent", void 0);
 UserEditComponent = __decorate([
     Component({
@@ -160,7 +164,11 @@ UserEditComponent = __decorate([
     __param(0, Inject(UsersService)),
     __param(1, Inject(ActivatedRoute)),
     __param(2, Inject(Router)),
-    __param(3, Inject(MessageService))
+    __param(3, Inject(MessageService)),
+    __metadata("design:paramtypes", [UsersService,
+        ActivatedRoute,
+        Router,
+        MessageService])
 ], UserEditComponent);
 export { UserEditComponent };
 //# sourceMappingURL=user-edit.component.js.map
