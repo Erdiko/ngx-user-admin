@@ -1,6 +1,7 @@
 import { Component, OnDestroy, Inject }   from '@angular/core';
 import { Subscription }                   from 'rxjs/Subscription';
-import { MessageService }                 from './message.service';
+
+import { MessageService }                 from '../message.service';
 
 import { tpl } from './message.component.tpl';
 

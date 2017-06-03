@@ -1,6 +1,6 @@
 import { Component, Input} from '@angular/core';
 import { FormGroup }       from '@angular/forms';
-import { User }            from "./user.model";
+import { User }            from "../user.model";
 
 import { tpl } from './password.component.tpl';
 

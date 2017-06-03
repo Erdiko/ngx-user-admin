@@ -1,11 +1,11 @@
 import { Component, OnInit, Inject, Input, Output }        from '@angular/core';
 
-import { UsersService }             from './users.service';
-import { User }                     from './user.model';
+import { UsersService }             from '../users.service';
+import { User }                     from '../user.model';
 
 import { ActivatedRoute }           from '@angular/router';
 
-import { UserListComponent }        from './user-list.component';
+import { UserListComponent }        from '../user-list/user-list.component';
 
 import { Subscription }             from "rxjs";
 

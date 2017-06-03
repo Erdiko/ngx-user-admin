@@ -4,9 +4,9 @@ import { Observable, Subscription }         from "rxjs";
 
 import { ModalDirective }           from 'ngx-bootstrap';
 
-import { UsersService }             from './users.service';
-import { User }                     from './user.model';
-import { MessageService }           from './message.service';
+import { UsersService }             from '../users.service';
+import { User }                     from '../user.model';
+import { MessageService }           from '../message.service';
 
 import { tpl } from './user-list.component.tpl';
 

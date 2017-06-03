@@ -1,13 +1,13 @@
 export { UserAdminModule }          from './src/user-admin.module';
 
-export { LoginComponent }           from './src/login.component';
-export { HeaderComponent }          from './src/header.component';
-export { HomeComponent }            from './src/home.component';
+export { LoginComponent }           from './src/login/login.component';
+export { HeaderComponent }          from './src/header/header.component';
+export { HomeComponent }            from './src/home/home.component';
 
-export { UserListComponent }        from './src/user-list.component';
-export { UserEventLogComponent }    from './src/user-event-log.component';
-export { UsersEventLogComponent }   from './src/users-event-log.component';
+export { UserListComponent }        from './src/user-list/user-list.component';
+export { UserEventLogComponent }    from './src/user-event-log/user-event-log.component';
+export { UsersEventLogComponent }   from './src/users-event-log/users-event-log.component';
 
-export { UserEditComponent }        from './src/user-edit.component';
+export { UserEditComponent }        from './src/user-edit/user-edit.component';
 
-export { MessageComponent }         from './src/message.component';
+export { MessageComponent }         from './src/message/message.component';

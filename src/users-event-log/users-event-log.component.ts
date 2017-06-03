@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject }        from '@angular/core';
 
-import { UsersService }             from './users.service';
-import { User }                     from './user.model';
+import { UsersService }             from '../users.service';
+import { User }                     from '../user.model';
 
 import { Subscription }             from 'rxjs';
 

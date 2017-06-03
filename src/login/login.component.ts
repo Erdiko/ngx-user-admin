@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild }         from '@angular/core';
 import { Router }                               from '@angular/router';
 import { FormBuilder, FormGroup, Validators }   from '@angular/forms';
 
-import { AuthService }   from './auth.service';
+import { AuthService }   from '../auth.service';
 
 import { tpl } from './login.component.tpl';
 

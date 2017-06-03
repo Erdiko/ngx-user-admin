@@ -2,12 +2,13 @@ import { Component, NgModule, OnInit, ViewChild, AfterViewInit, Inject }   from 
 import { Router, ActivatedRoute }               from '@angular/router';
 import { FormBuilder, FormGroup, Validators }   from '@angular/forms';
 
-import { UsersService }         from './users.service';
-import { User }                 from "./user.model";
-import { PasswordComponent }    from './password.component';
-import { MessageService }       from './message.service';
+import { UsersService }         from '../users.service';
+import { User }                 from "../user.model";
+import { MessageService }       from '../message.service';
 
 import { AlertComponent, TabsModule } from 'ngx-bootstrap';
+
+import { PasswordComponent }    from '../password/password.component';
 
 import { tpl } from './user-edit.component.tpl';
 

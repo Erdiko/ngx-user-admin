@@ -15,15 +15,15 @@ import { UsersService } from './users.service';
 import { MessageService } from './message.service';
 import { AuthGuard } from './auth.guard';
 import { UserResolve } from './user-resolve.service';
-import { HeaderComponent } from './header.component';
-import { LoginComponent } from './login.component';
-import { HomeComponent } from './home.component';
-import { UserListComponent } from './user-list.component';
-import { UserEventLogComponent } from './user-event-log.component';
-import { UsersEventLogComponent } from './users-event-log.component';
-import { PasswordComponent } from './password.component';
-import { UserEditComponent } from './user-edit.component';
-import { MessageComponent } from './message.component';
+import { HeaderComponent } from './header/header.component';
+import { LoginComponent } from './login/login.component';
+import { HomeComponent } from './home/home.component';
+import { UserListComponent } from './user-list/user-list.component';
+import { UserEventLogComponent } from './user-event-log/user-event-log.component';
+import { UsersEventLogComponent } from './users-event-log/users-event-log.component';
+import { PasswordComponent } from './password/password.component';
+import { UserEditComponent } from './user-edit/user-edit.component';
+import { MessageComponent } from './message/message.component';
 // clang-format off
 var appRoutes = [
     {
