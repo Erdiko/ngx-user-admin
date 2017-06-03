@@ -1,5 +1,4 @@
 export { UserAdminModule } from './src/user-admin.module';
-export { AppComponent } from './src/app.component';
 export { LoginComponent } from './src/login.component';
 export { HeaderComponent } from './src/header.component';
 export { HomeComponent } from './src/home.component';

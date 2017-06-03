@@ -15,7 +15,6 @@ import { UsersService } from './users.service';
 import { MessageService } from './message.service';
 import { AuthGuard } from './auth.guard';
 import { UserResolve } from './user-resolve.service';
-import { AppComponent } from './app.component';
 import { HeaderComponent } from './header.component';
 import { LoginComponent } from './login.component';
 import { HomeComponent } from './home.component';
@@ -99,7 +98,6 @@ UserAdminModule = UserAdminModule_1 = __decorate([
             RouterModule.forRoot(appRoutes)
         ],
         declarations: [
-            AppComponent,
             HeaderComponent,
             LoginComponent,
             HomeComponent,
@@ -111,7 +109,6 @@ UserAdminModule = UserAdminModule_1 = __decorate([
             MessageComponent
         ],
         exports: [
-            AppComponent,
             HeaderComponent,
             LoginComponent,
             HomeComponent,
