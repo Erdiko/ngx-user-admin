@@ -1,90 +1,168 @@
 # ng-user-admin
 
-**A modular user management system using Angular 2**
+**A modular AngularJS User Management UI**
 
-ng-user-admin is an npm package for AngularJS based components used in the Erdiko User Admin project.
+ng-user-admin is a npm package or our AngularJS user-admin module designed for use with our Erdiko User Admin project but is easily extended for use in other projects. Secured with routing guards and JWT tokens, this is a great start (or end) for secure user management.
 
-It uses the [Angular CLI](https://github.com/angular/angular-cli) project.
-
-The ajax endpoints are based on a few erdiko packages (user-admin, users, authorize, authenticate) as well as 
+The UI relies upon the Twitter Bootstrap / ngx-bootstrap projects and is easily modified for customization.
 
 **Note** this is an active development project and not quite ready for production yet.  A stable V1 is due for release in June 2017.
 
 
-Application
------------
-
-The UI is an Angular CLI project using an erdiko web application to interact with the database. Erdiko loads the Angular 2 application as well as serves the AJAX routes.
-
-We chose to use Angular CLI since it makes it very simple to create new components as well as creating basic unit and functional tests for the developer. We also wanted to provide a method to allow the user to easily test their code as they developed yet still compile and serve the smallest code when serving to the end user.
-
-
-Installation
+Package Installation
 ------------
 
-#### Create your project using composer
+This package is included as a dependency with our user-admin project. We highly suggest you check out this package for all your user administration needs. 
 
-`composer create erdiko/user-admin [PROJECT NAME]`
+If you would like to use this package with your custom package, you will need to provide mapped AJAX responses.
 
-##### Note about versions
+Manual installation of this package is also quite simple and is required for local development:
 
-Since this project is still under heavy development we recommend running the latest from the develop branch.  If you would like to tell composer to use the develop branch use this command instead of the one above. 
-
-`composer create erdiko/user-admin:dev-develop [PROJECT NAME]`
-
-#### Create your docker containers
-
-Enter your newly created project directory and run docker compose.
-
-`cd [PROJECT NAME]`
-
-`docker-compose up -d`
-
-If you don't have docker compose installed you can install by following the instructions here, [https://docs.docker.com/compose/install/](https://docs.docker.com/compose/install/).  You can, of course, just create create your own lamp stack if you wish.  If you create your own enviornment the weboot is /public/default/ and the database config is in /app/config/shared/database.json
-
-#### Install the users database
-
-If you're running the docker container, installing the db is easy.  Just run the scripts/install-db.sh script.
-
-If you are not using the docker script then simply restore the sql dump found in vendor/erdiko/users/sql/dumps/user-admin.sql.  Update app/config/shared/database.json with the connection information for your mysql server.
-
-Check the users README if you need more information [https://github.com/Erdiko/users](https://github.com/Erdiko/users).
-
-#### View your new project in your browser
-
-[http://docker.local:8088/](http://docker.local:8088/)
+`npm i --save-dev @erdiko/ng-user-admin`
 
 
-Editing & Compiling the Angular Code
-------------------------------------
+## Package Commands
 
-Editing and compiling the Angular code is simple, and we use Angular CLIs test server to allow you to edit your code and test in real time.
-
-1. Go to the `user-admin` theme directory under `user-admin/app/themes/user-admin`
-1. Install all dependencies via npm: `npm i`
-1. Start the development server: `npm run start`
-1. Edit the typescript found in the `src` directory and save in another terminal window or tab, watch for compiler errors
-
-## NPM Run Commands
-
-* Start the Development server: `npm run start`
-* Run the unit tests: `npm run test`
-* Run the e2e/functional tests: `npm run e2e`
 * Compile and export files for end user: `npm run build`
+* Run the unit tests: `npm run test`
 
 
-Local Development
------------------
+## Editing & Compiling the Code Locally
 
-To set your environment up for local development, please follow these steps:
+The easiest way to install this package locally is as a depedency of our user-admin project, but you must install the package locally and link to it if you wish to edit the code and test your changes.
 
-* Clone your fork of the User Admin project into a local directory
-* Clone the following packages into the same directory
-  * [Authenticate](https://github.com/Erdiko/authenticate)
-  * [Authorize](https://github.com/Erdiko/authorize)
-  * [Users](https://github.com/Erdiko/users)
-* Copy the `composer-dev.json` file to `composer.json`
-* Start your docker container `docker-composer up --build`
+First you must link your local package, then you can follow our guidelines for local development.
+
+As a rule, edit code in the `src` directory and link the compiled bundle from the `dist` directory. 
+
+### Workflow Overview
+
+* Fork and clone the ng-user-admin repo to a local directory
+* Fork and clone the user-admin repo to a local directory
+* NPM link the ng-user-admin `dist` directory via `npm link`
+* Install the user-admin repo's npm dependencies via `npm i`
+* Edit the code in the ng-user-admin `src` directory
+* Build the package via `npm run build` and test in the user-admin application
+
+### NPM Linking
+
+NPM's Link command allows you to install a locally hosted package when installing another packages dependencies.
+
+You must link from the `dist` directory as this is the compiled package's destination (and the directory we publish to npm).
+
+Please note that if/when you delete your node_modules directory the link will remain present and will be installed on subseuqent installs! Please refer to the npm docs on how to remove the link when you are done developing!
+
+## Package Overview
+
+The package itself provides the following elements:
+
+* Application Routes
+* Services, Guards & Resolvers
+* Components
+
+### Routes
+
+The app consists of a few simple routes with more to be added in the near future. All of these can be found in the `user-admin` module.
+
+##### Login
+
+Presents a basic login form requiring the user to enter an email and password.
+
+This is default view for logged out users. 
+
+##### Home
+
+Presents a list of links allowing the user to access the remaining routes. 
+
+##### User List
+
+Presents a sortable list of users returned via AJAX from the Users Service.
+
+##### User Events
+
+Presents a sortable list showing user events returned via AJAX from the Users Service.
+
+##### User Edit
+
+Presents a form allowing the current user to edit a provided user record, and the User Event log.
+
+### Services, Guards & Resolves
+
+##### Auth Service
+
+Handles AJAX login requests from the Login Component and is responsible for creating the localstorage record indicating a logged in user.
+
+This service is used by the Login Component described below.
+
+##### Users Service
+
+This service manages the following actions and AJAX endpoints:
+
+* User List
+* User Events
+* Create and Update User
+
+##### Messages Service
+
+An observable service to handle the flash messaging displayed below the header component. This service is paired with the message component to display application messaging and results from a user action.
+
+##### Auth Guard
+
+Routing guard that only allows logged in users to access a route by verifying the user record stored in localstorage.
+
+##### User Resolve
+
+Retrieves and provides a user record based upon an ID from the User Edit Route. This guard prevents the User Edit route from loading until it finds an expected user.
+
+### Models
+
+##### User
+
+A model representing a single User Record when returned from the Users Service.
+
+### Components
+
+##### Message
+
+Component that displays a flash message that uses the Messages Service to provide messaging.
+
+##### Login
+
+Component that displays a login form prompting the user for an email and password. 
+
+This component is the default view for logged out users.
+
+##### Header
+
+Component to display links to the application routes.
+
+##### Home
+
+Component displaying a list of application routes. 
+
+This is the default view for a logged in user.
+
+##### User List
+
+Component displaying a sortable list of application Users.
+
+##### User Edit
+
+Component displaying a form allowing the user to create a new user or edit an existing user. 
+
+It requires the password component to allow the user to edit a user's password.
+
+##### Password
+
+Component that displays a simple form allowing the user to edit a user's password.
+
+##### User Events
+
+Component displaying a sortable list of application Users.
+
+##### User Event
+
+Component displaying the events for a specific user.
 
 
 Special Thanks
