@@ -7,45 +7,51 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component } from '@angular/core';
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+import { Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
+import { MessageService } from '../message.service';
 import { AuthService } from '../auth.service';
 import { tpl } from './login.component.tpl';
 var LoginComponent = (function () {
-    function LoginComponent(authService, router, fb) {
+    function LoginComponent(messageService, authService, router, fb) {
         this.authService = authService;
         this.router = router;
         this.fb = fb;
         // init the wait state (and indication animation) to 'off'
         this.wait = false;
+        this.messageService = messageService;
     }
     LoginComponent.prototype.ngOnInit = function () {
         this._initForm();
     };
+    // foo bar
     LoginComponent.prototype._initForm = function () {
         this.loginForm = this.fb.group({
-            email: ['', Validators.required, Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/i)],
+            email: ['', Validators.required],
             password: ['', Validators.required]
         });
     };
     LoginComponent.prototype.onSubmit = function (_a) {
         var _this = this;
         var value = _a.value, valid = _a.valid;
-        this.wait = true;
         if (valid) {
+            this.wait = true;
             this.authService.login(value)
                 .subscribe(function (result) {
                 if (result === true) {
                     _this.router.navigate(['/']);
-                    //this.messageService.sendMessage("login", "success");
+                    _this.messageService.setMessage({ "type": "success", "body": "Login successful" });
                 }
                 else {
-                    //this.messageService.sendMessage("login", "error");
+                    _this.messageService.setMessage({ "type": "danger", "body": "Login un-successful" });
                     _this.wait = false;
                 }
             }, function (err) {
-                //this.messageService.sendMessage("login", "no-password");
+                _this.messageService.setMessage({ "type": "danger", "body": "Login un-successful" });
                 _this.wait = false;
             });
         }
@@ -57,7 +63,9 @@ LoginComponent = __decorate([
         selector: 'app-login',
         template: tpl
     }),
-    __metadata("design:paramtypes", [AuthService,
+    __param(0, Inject(MessageService)),
+    __metadata("design:paramtypes", [MessageService,
+        AuthService,
         Router,
         FormBuilder])
 ], LoginComponent);

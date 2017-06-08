@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild }         from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Router }                               from '@angular/router';
 import { FormBuilder, FormGroup, Validators }   from '@angular/forms';
 
-import { AuthService }   from '../auth.service';
+import { MessageService }           from '../message.service';
+import { AuthService }              from '../auth.service';
 
 import { tpl } from './login.component.tpl';
 
@@ -16,12 +17,14 @@ export class LoginComponent implements OnInit {
 
     public title: string;
 
+    public messageService: MessageService;
     public loginForm: FormGroup;
 
     public loggedOut: string;
     public error: string;
 
     constructor(
+           @Inject(MessageService) messageService: MessageService,
            private authService: AuthService,
            private router: Router,
            private fb: FormBuilder) { 
@@ -29,6 +32,7 @@ export class LoginComponent implements OnInit {
         // init the wait state (and indication animation) to 'off'
         this.wait = false;
         
+        this.messageService = messageService;
     }
 
     ngOnInit() {
@@ -37,30 +41,30 @@ export class LoginComponent implements OnInit {
 
     }
 
+    // foo bar
     private _initForm() {
         this.loginForm = this.fb.group({
-            email: ['', Validators.required, Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/i)],
+            email: ['', Validators.required],
             password:  ['', Validators.required]
         });
     }
 
     onSubmit({ value, valid }: { value: any, valid: boolean }) {
 
-        this.wait = true;
-
         if(valid) {
 
+            this.wait = true;
             this.authService.login(value)
                 .subscribe(result => {
                     if (result === true) {
                         this.router.navigate(['/']);
-                        //this.messageService.sendMessage("login", "success");
+                        this.messageService.setMessage({"type": "success", "body": "Login successful"});
                     } else {
-                        //this.messageService.sendMessage("login", "error");
+                        this.messageService.setMessage({"type": "danger", "body": "Login un-successful"});
                         this.wait = false;
                     }
                 }, err => {
-                    //this.messageService.sendMessage("login", "no-password");
+                    this.messageService.setMessage({"type": "danger", "body": "Login un-successful"});
                     this.wait = false;
                 });
 

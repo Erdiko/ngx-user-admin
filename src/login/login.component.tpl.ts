@@ -16,13 +16,11 @@ export const tpl: string= `
                     <div class="form-group" id="email-form">
                         <label for="email" class="col-xs-2 control-label">Email</label>
                         <div class="col-xs-10">
-                            <input type="email" class="form-control" name="email" 
-                                    formControlName="email" placeholder="Email">
+                            <input type="text" class="form-control" name="email" 
+                                formControlName="email" placeholder="Email">
+
                             <div class="text-danger" *ngIf="loginForm.get('email').hasError('required') && loginForm.get('email').touched">
-                              Email is required
-                            </div>
-                            <div class="text-danger" *ngIf="loginForm.get('email').hasError('pattern') && loginForm.get('email').touched">
-                              A Valid email is required
+                              A valid email is required
                             </div>
                         </div>
                     </div>

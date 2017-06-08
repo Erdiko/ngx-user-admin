@@ -55582,7 +55582,7 @@ exports.HeaderComponent = __decorate$8([
         _angular_router.Router])
 ], exports.HeaderComponent);
 
-var tpl$1 = "\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <div class=\"panel panel-default\">\n            <div class=\"panel-heading\">\n                Login\n            </div>\n            <div class=\"panel-body\">\n                <form \n                        id=\"user-edit\" \n                        class=\"form-horizontal\"\n                        novalidate \n                        (ngSubmit)=\"onSubmit(loginForm)\" \n                        [formGroup]=\"loginForm\"\n                    >\n                    <div class=\"form-group\" id=\"email-form\">\n                        <label for=\"email\" class=\"col-xs-2 control-label\">Email</label>\n                        <div class=\"col-xs-10\">\n                            <input type=\"email\" class=\"form-control\" name=\"email\" \n                                    formControlName=\"email\" placeholder=\"Email\">\n                            <div class=\"text-danger\" *ngIf=\"loginForm.get('email').hasError('required') && loginForm.get('email').touched\">\n                              Email is required\n                            </div>\n                            <div class=\"text-danger\" *ngIf=\"loginForm.get('email').hasError('pattern') && loginForm.get('email').touched\">\n                              A Valid email is required\n                            </div>\n                        </div>\n                    </div>\n\n                    <div class=\"form-group\" id=\"password-form\">\n                        <label for=\"password\" class=\"col-xs-2 control-label\">Password</label>\n                        <div class=\"col-xs-10\">\n                            <input type=\"password\" class=\"form-control\" name=\"password\" \n                                    formControlName=\"password\" placeholder=\"Password\">\n                            <div class=\"text-danger\" *ngIf=\"loginForm.get('password').hasError('required') && loginForm.get('password').touched\">\n                              Password is required.\n                            </div>\n                        </div>\n                    </div>\n\n                    <div class=\"form-group\">\n                        <div class=\"col-xs-offset-2 col-xs-4\">\n                            <button type=\"submit\" class=\"btn btn-success\" [disabled]=\"loginForm.invalid || wait\">\n                                Login\n                                <i *ngIf=\"wait\" class=\"fa fa-refresh fa-spin fa-fw\"></i> \n                            </button>\n                        </div>\n                    </div>\n                </form>\n\n            </div>\n        </div>\n    </div>\n</div>\n";
+var tpl$1 = "\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <div class=\"panel panel-default\">\n            <div class=\"panel-heading\">\n                Login\n            </div>\n            <div class=\"panel-body\">\n                <form \n                        id=\"user-edit\" \n                        class=\"form-horizontal\"\n                        novalidate \n                        (ngSubmit)=\"onSubmit(loginForm)\" \n                        [formGroup]=\"loginForm\"\n                    >\n                    <div class=\"form-group\" id=\"email-form\">\n                        <label for=\"email\" class=\"col-xs-2 control-label\">Email</label>\n                        <div class=\"col-xs-10\">\n                            <input type=\"text\" class=\"form-control\" name=\"email\" \n                                formControlName=\"email\" placeholder=\"Email\">\n\n                            <div class=\"text-danger\" *ngIf=\"loginForm.get('email').hasError('required') && loginForm.get('email').touched\">\n                              A valid email is required\n                            </div>\n                        </div>\n                    </div>\n\n                    <div class=\"form-group\" id=\"password-form\">\n                        <label for=\"password\" class=\"col-xs-2 control-label\">Password</label>\n                        <div class=\"col-xs-10\">\n                            <input type=\"password\" class=\"form-control\" name=\"password\" \n                                    formControlName=\"password\" placeholder=\"Password\">\n                            <div class=\"text-danger\" *ngIf=\"loginForm.get('password').hasError('required') && loginForm.get('password').touched\">\n                              Password is required.\n                            </div>\n                        </div>\n                    </div>\n\n                    <div class=\"form-group\">\n                        <div class=\"col-xs-offset-2 col-xs-4\">\n                            <button type=\"submit\" class=\"btn btn-success\" [disabled]=\"loginForm.invalid || wait\">\n                                Login\n                                <i *ngIf=\"wait\" class=\"fa fa-refresh fa-spin fa-fw\"></i> \n                            </button>\n                        </div>\n                    </div>\n                </form>\n\n            </div>\n        </div>\n    </div>\n</div>\n";
 
 var __decorate$9 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -55593,40 +55593,45 @@ var __decorate$9 = (undefined && undefined.__decorate) || function (decorators, 
 var __metadata$7 = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param$2 = (undefined && undefined.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 exports.LoginComponent = (function () {
-    function LoginComponent(authService, router, fb) {
+    function LoginComponent(messageService, authService, router, fb) {
         this.authService = authService;
         this.router = router;
         this.fb = fb;
         // init the wait state (and indication animation) to 'off'
         this.wait = false;
+        this.messageService = messageService;
     }
     LoginComponent.prototype.ngOnInit = function () {
         this._initForm();
     };
+    // foo bar
     LoginComponent.prototype._initForm = function () {
         this.loginForm = this.fb.group({
-            email: ['', Validators.required, Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/i)],
+            email: ['', Validators.required],
             password: ['', Validators.required]
         });
     };
     LoginComponent.prototype.onSubmit = function (_a) {
         var _this = this;
         var value = _a.value, valid = _a.valid;
-        this.wait = true;
         if (valid) {
+            this.wait = true;
             this.authService.login(value)
                 .subscribe(function (result) {
                 if (result === true) {
                     _this.router.navigate(['/']);
-                    //this.messageService.sendMessage("login", "success");
+                    _this.messageService.setMessage({ "type": "success", "body": "Login successful" });
                 }
                 else {
-                    //this.messageService.sendMessage("login", "error");
+                    _this.messageService.setMessage({ "type": "danger", "body": "Login un-successful" });
                     _this.wait = false;
                 }
             }, function (err) {
-                //this.messageService.sendMessage("login", "no-password");
+                _this.messageService.setMessage({ "type": "danger", "body": "Login un-successful" });
                 _this.wait = false;
             });
         }
@@ -55638,7 +55643,9 @@ exports.LoginComponent = __decorate$9([
         selector: 'app-login',
         template: tpl$1
     }),
-    __metadata$7("design:paramtypes", [AuthService,
+    __param$2(0, Inject(MessageService)),
+    __metadata$7("design:paramtypes", [MessageService,
+        AuthService,
         _angular_router.Router,
         FormBuilder])
 ], exports.LoginComponent);
@@ -55680,7 +55687,7 @@ var __decorate$11 = (undefined && undefined.__decorate) || function (decorators,
 var __metadata$9 = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param$2 = (undefined && undefined.__param) || function (paramIndex, decorator) {
+var __param$3 = (undefined && undefined.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 exports.UserListComponent = (function () {
@@ -55797,8 +55804,8 @@ exports.UserListComponent = __decorate$11([
         selector: 'erdiko-user-list',
         template: tpl$3
     }),
-    __param$2(0, Inject(UsersService)),
-    __param$2(1, Inject(MessageService)),
+    __param$3(0, Inject(UsersService)),
+    __param$3(1, Inject(MessageService)),
     __metadata$9("design:paramtypes", [UsersService,
         MessageService,
         _angular_router.ActivatedRoute,
@@ -55816,7 +55823,7 @@ var __decorate$12 = (undefined && undefined.__decorate) || function (decorators,
 var __metadata$10 = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param$3 = (undefined && undefined.__param) || function (paramIndex, decorator) {
+var __param$4 = (undefined && undefined.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 exports.UserEventLogComponent = (function () {
@@ -55923,7 +55930,7 @@ exports.UserEventLogComponent = __decorate$12([
         selector: 'erdiko-user-event-log',
         template: tpl$4
     }),
-    __param$3(0, Inject(UsersService)),
+    __param$4(0, Inject(UsersService)),
     __metadata$10("design:paramtypes", [UsersService])
 ], exports.UserEventLogComponent);
 
@@ -55938,7 +55945,7 @@ var __decorate$13 = (undefined && undefined.__decorate) || function (decorators,
 var __metadata$11 = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param$4 = (undefined && undefined.__param) || function (paramIndex, decorator) {
+var __param$5 = (undefined && undefined.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 exports.UsersEventLogComponent = (function () {
@@ -56046,7 +56053,7 @@ exports.UsersEventLogComponent = __decorate$13([
         selector: 'erdiko-users-event-log',
         template: tpl$5
     }),
-    __param$4(0, Inject(UsersService)),
+    __param$5(0, Inject(UsersService)),
     __metadata$11("design:paramtypes", [UsersService])
 ], exports.UsersEventLogComponent);
 
@@ -56096,7 +56103,7 @@ var __decorate$15 = (undefined && undefined.__decorate) || function (decorators,
 var __metadata$13 = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param$5 = (undefined && undefined.__param) || function (paramIndex, decorator) {
+var __param$6 = (undefined && undefined.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 exports.UserEditComponent = (function () {
@@ -56242,10 +56249,10 @@ exports.UserEditComponent = __decorate$15([
         selector: 'erdiko-user-edit',
         template: tpl$7
     }),
-    __param$5(0, Inject(UsersService)),
-    __param$5(1, Inject(_angular_router.ActivatedRoute)),
-    __param$5(2, Inject(_angular_router.Router)),
-    __param$5(3, Inject(MessageService)),
+    __param$6(0, Inject(UsersService)),
+    __param$6(1, Inject(_angular_router.ActivatedRoute)),
+    __param$6(2, Inject(_angular_router.Router)),
+    __param$6(3, Inject(MessageService)),
     __metadata$13("design:paramtypes", [UsersService,
         _angular_router.ActivatedRoute,
         _angular_router.Router,
@@ -56263,7 +56270,7 @@ var __decorate$16 = (undefined && undefined.__decorate) || function (decorators,
 var __metadata$14 = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param$6 = (undefined && undefined.__param) || function (paramIndex, decorator) {
+var __param$7 = (undefined && undefined.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 exports.MessageComponent = (function () {
@@ -56286,7 +56293,7 @@ exports.MessageComponent = __decorate$16([
         selector: 'erdiko-message',
         template: tpl$8
     }),
-    __param$6(0, Inject(MessageService)),
+    __param$7(0, Inject(MessageService)),
     __metadata$14("design:paramtypes", [MessageService])
 ], exports.MessageComponent);
 
