@@ -17,8 +17,7 @@ export const tpl: string= `
                         <label for="email" class="col-xs-2 control-label">Email</label>
                         <div class="col-xs-10">
                             <input type="email" class="form-control" name="email" 
-                                    formControlName="email" placeholder="Email"
-                                    pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+                                    formControlName="email" placeholder="Email">
                             <div class="text-danger" *ngIf="loginForm.get('email').hasError('required') && loginForm.get('email').touched">
                               Email is required
                             </div>
