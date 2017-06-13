@@ -30,7 +30,7 @@
             'rxjs':                      'npm:rxjs',
 
             // ng2-bootstrap
-            'moment': 'npm:moment/moment.js',
+            'moment': 'npm:moment/moment',
             'ngx-bootstrap': 'npm:ngx-bootstrap/bundles/ngx-bootstrap.umd.js'
 
         },
