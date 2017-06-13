@@ -1,8 +1,8 @@
-# ng-user-admin
+# ngx-user-admin
 
 **A modular AngularJS User Management UI**
 
-ng-user-admin is a npm package or our AngularJS user-admin module designed for use with our Erdiko User Admin project but is easily extended for use in other projects. Secured with routing guards and JWT tokens, this is a great start (or end) for secure user management.
+ngx-user-admin is a npm package or our AngularJS user-admin module designed for use with our Erdiko User Admin project but is easily extended for use in other projects. Secured with routing guards and JWT tokens, this is a great start (or end) for secure user management.
 
 The UI relies upon the Twitter Bootstrap / ngx-bootstrap projects and is easily modified for customization.
 
@@ -18,7 +18,7 @@ If you would like to use this package with your custom package, you will need to
 
 Manual installation of this package is also quite simple and is required for local development:
 
-`npm i --save-dev @erdiko/ng-user-admin`
+`npm i --save-dev @erdiko/ngx-user-admin`
 
 
 ## Package Commands
@@ -37,11 +37,11 @@ As a rule, edit code in the `src` directory and link the compiled bundle from th
 
 ### Workflow Overview
 
-* Fork and clone the ng-user-admin repo to a local directory
+* Fork and clone the ngx-user-admin repo to a local directory
 * Fork and clone the user-admin repo to a local directory
-* NPM link the ng-user-admin `dist` directory via `npm link`
+* NPM link the ngx-user-admin `dist` directory via `npm link`
 * Install the user-admin repo's npm dependencies via `npm i`
-* Edit the code in the ng-user-admin `src` directory
+* Edit the code in the ngx-user-admin `src` directory
 * Build the package via `npm run build` and test in the user-admin application
 
 ### NPM Linking
