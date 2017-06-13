@@ -155,12 +155,12 @@ export class UserEditComponent implements OnInit {
     private _handleResponse(res: any) {
         this.wait = false;
         if(true == res.success) {
-            this.messageService.setMessage([{"type": "success", "body": "User record was successfully updated"}, {"type": "success", "body": "User record was super successfully updated"}]);
+            this.messageService.setMessage([{"type": "success", "body": "User record was successfully updated"}]);
 
             if("create" === res.method) {
                 // navigate to Edit User for the new user
                 this.router.navigate(['/user/' + res.user.id]);
-                this.messageService.setMessage([{"type": "success", "body": "User was successfully created"}, {"type": "success", "body": "User was super successfully created"}]);
+                this.messageService.setMessage([{"type": "success", "body": "User was successfully created"}]);
             }
 
         } else {
@@ -184,14 +184,14 @@ export class UserEditComponent implements OnInit {
         this.passwordForm.reset();
 
         if(true == res.success) {
-            this.messageService.setMessage([{"type": "success", "body": "User password successfully updated"}, {"type": "success", "body": "User password super successfully updated"}]);
+            this.messageService.setMessage([{"type": "success", "body": "User password successfully updated"}]);
         } else {
             this.messageService.setMessage([{"type": "danger", "body": res.error}, {"type": "danger", "body": res.error}]);
         }
     }
 
     private _handleError(error: string) {
-        this.messageService.setMessage([{"type": "danger", "body": error}, {"type": "danger", "body": error}]);
+        this.messageService.setMessage([{"type": "danger", "body": error}]);
     }
 
     public createEditHeader() {
