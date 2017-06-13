@@ -1,24 +1,24 @@
 {
-  "name": "@erdiko/ng-user-admin",
-  "version": "1.1.14",
+  "name": "@erdiko/ngx-user-admin",
+  "version": "1.1.15",
   "description": "Erdiko Angular User Admin",
   "scripts": {
     "transpile": "ngc -p tsconfig.json",
     "package": "rollup -c --silent",
-    "minify": "uglifyjs dist/bundles/ng-user-admin.umd.js --screw-ie8 --compress --mangle --comments --output dist/bundles/ng-user-admin.umd.min.js",
+    "minify": "uglifyjs dist/bundles/ngx-user-admin.umd.js --screw-ie8 --compress --mangle --comments --output dist/bundles/ngx-user-admin.umd.min.js",
     "build": "npm run transpile && npm run package && npm run minify"
   },
   "types": "./index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Erdiko/ng-user-admin.git"
+    "url": "git+https://github.com/Erdiko/ngx-user-admin.git"
   },
   "author": "Andy Armstrong",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Erdiko/ng-user-admin/issues"
+    "url": "https://github.com/Erdiko/ngx-user-admin/issues"
   },
-  "homepage": "https://github.com/Erdiko/ng-user-admin#readme",
+  "homepage": "https://github.com/Erdiko/ngx-user-admin#readme",
   "dependencies": {},
   "devDependencies": {
     "@angular/common": "~2.4.0",
