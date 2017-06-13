@@ -22,17 +22,20 @@ export const tpl: string= `
                         User Name
                         <i *ngIf="sortCol == 'name'" class="fa" [ngClass]="{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}" aria-hidden="true"></i>
                     </th> 
-                    <th>
+                    <th (click)="sort('role')">
                         Role
+                        <i *ngIf="sortCol == 'role'" class="fa" [ngClass]="{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}" aria-hidden="true"></i>
                     </th> 
-                    <th>
+                    <th (click)="sort('last_login')">
                         Last Login
+                        <i *ngIf="sortCol == 'last_login'" class="fa" [ngClass]="{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}" aria-hidden="true"></i>
                     </th> 
-                    <th>
+                    <th (click)="sort('created_at')">
                         Joined
+                        <i *ngIf="sortCol == 'created_at'" class="fa" [ngClass]="{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}" aria-hidden="true"></i>
                     </th> 
-                    <th>Edit</th> 
-                    <th>Delete</th> 
+                    <th></th> 
+                    <th></th> 
                 </tr> 
             </thead> 
 
