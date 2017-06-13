@@ -11,7 +11,7 @@ import { tpl } from './message.component.tpl';
 })
 export class MessageComponent implements OnDestroy {
 
-    private message: any;
+    private messages: any;
     private subscription: Subscription;
 
     private messageService: MessageService;
@@ -22,7 +22,7 @@ export class MessageComponent implements OnDestroy {
         this.subscription = this.messageService
                                 .getMessage()
                                 .subscribe(message => { 
-                                    this.message = message 
+                                    this.messages = message 
                                 });
     }
 

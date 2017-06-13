@@ -154,7 +154,7 @@ export class UserListComponent implements OnInit {
         this.wait = true;
         this.usersService.deleteUser(this.selectedUser)
             .then(res => this._handleResponse(res))
-            .catch(error => this.messageService.setMessage({"type": "danger", "body": error}));
+            .catch(error => this.messageService.setMessage([{"type": "danger", "body": error}, {"type": "danger", "body": error}]));
     }
 
     private _handleResponse(res: any) {
@@ -162,9 +162,9 @@ export class UserListComponent implements OnInit {
         this.wait = false;
 
         if(false !== res.success) {
-            this.messageService.setMessage({"type": "success", "body": "User successfully deleted"});
+            this.messageService.setMessage([{"type": "success", "body": "User successfully deleted"}, {"type": "success", "body": "User successfully deleted"}]);
         } else {
-            this.messageService.setMessage({"type": "danger", "body": res.error_message});
+            this.messageService.setMessage([{"type": "danger", "body": res.error_message}, {"type": "danger", "body": res.error_message}]);
         }
 
     }

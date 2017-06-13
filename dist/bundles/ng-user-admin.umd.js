@@ -28863,7 +28863,7 @@ var AccordionPanelComponent = (function () {
     AccordionPanelComponent.decorators = [
         { type: Component, args: [{
                     selector: 'accordion-group, accordion-panel',
-                    template: "\n<div class=\"panel card\" [ngClass]=\"panelClass\">\n  <div class=\"panel-heading card-header\" role=\"tab\" (click)=\"toggleOpen($event)\">\n    <div class=\"panel-title card-title\">\n      <div role=\"button\" class=\"accordion-toggle\" [attr.aria-expanded]=\"isOpen\">\n        <div *ngIf=\"heading\"[ngClass]=\"{'text-muted': isDisabled}\">{{heading}}</div>\n        <ng-content select=\"[accordion-heading]\"></ng-content>\n      </div>\n    </div>\n  </div>\n  <div class=\"panel-collapse collapse\" role=\"tabpanel\" [collapse]=\"!isOpen\">\n    <div class=\"panel-body card-block\">\n      <ng-content></ng-content>\n    </div>\n  </div>\n</div>\n  "
+                    template: "\n<div class=\"panel card\" [ngClass]=\"panelClass\">\n  <div class=\"panel-heading card-header\" role=\"tab\" (click)=\"toggleOpen($event)\">\n    <div class=\"panel-title\">\n      <div role=\"button\" class=\"accordion-toggle\" [attr.aria-expanded]=\"isOpen\">\n        <div *ngIf=\"heading\"[ngClass]=\"{'text-muted': isDisabled}\">{{heading}}</div>\n        <ng-content select=\"[accordion-heading]\"></ng-content>\n      </div>\n    </div>\n  </div>\n  <div class=\"panel-collapse collapse\" role=\"tabpanel\" [collapse]=\"!isOpen\">\n    <div class=\"panel-body card-block\">\n      <ng-content></ng-content>\n    </div>\n  </div>\n</div>\n  "
                 },] },
     ];
     /** @nocollapse */
@@ -34234,6 +34234,7 @@ hooks.relativeTimeThreshold = getSetRelativeTimeThreshold;
 hooks.calendarFormat        = getCalendarFormat;
 hooks.prototype             = proto;
 
+//import * as moment from 'moment';
 var DateFormatter$1 = (function () {
     function DateFormatter() {
     }
@@ -35558,6 +35559,7 @@ var BsDropdownDirective = (function () {
             .provide({ provide: BsDropdownState, useValue: this._state });
         this.onShown = this._dropdown.onShown;
         this.onHidden = this._dropdown.onHidden;
+        this.isOpenChange = this._state.isOpenChange;
         // set initial dropdown state from config
         this._state.autoClose = this._config.autoClose;
     }
@@ -35663,6 +35665,7 @@ var BsDropdownDirective = (function () {
         }
         if (this._showInline) {
             this._isInlineOpen = true;
+            this.onShown.emit(true);
             this._state.isOpenChange.emit(true);
             return;
         }
@@ -35696,6 +35699,7 @@ var BsDropdownDirective = (function () {
         }
         if (this._showInline) {
             this._isInlineOpen = false;
+            this.onHidden.emit(true);
         }
         else {
             this._dropdown.hide();
@@ -35749,6 +35753,7 @@ var BsDropdownDirective = (function () {
         'autoClose': [{ type: Input },],
         'isDisabled': [{ type: Input },],
         'isOpen': [{ type: Input },],
+        'isOpenChange': [{ type: Output },],
         'onShown': [{ type: Output },],
         'onHidden': [{ type: Output },],
     };
@@ -35885,6 +35890,7 @@ var ModalDirective = (function () {
         this.scrollbarWidth = 0;
         this.timerHideModal = 0;
         this.timerRmBackDrop = 0;
+        this.isNested = false;
         this._element = _element;
         this._renderer = _renderer;
         this._backdrop = clf.createLoader(_element, _viewContainerRef, _renderer);
@@ -35951,7 +35957,12 @@ var ModalDirective = (function () {
         this.checkScrollbar();
         this.setScrollbar();
         if (document$2 && document$2.body) {
-            this._renderer.setElementClass(document$2.body, ClassName.OPEN, true);
+            if (document$2.body.classList.contains(ClassName.OPEN)) {
+                this.isNested = true;
+            }
+            else {
+                this._renderer.setElementClass(document$2.body, ClassName.OPEN, true);
+            }
         }
         this.showBackdrop(function () {
             _this.showElement();
@@ -36031,11 +36042,13 @@ var ModalDirective = (function () {
         this._renderer.setElementAttribute(this._element.nativeElement, 'aria-hidden', 'true');
         this._renderer.setElementStyle(this._element.nativeElement, 'display', 'none');
         this.showBackdrop(function () {
-            if (document$2 && document$2.body) {
-                _this._renderer.setElementClass(document$2.body, ClassName.OPEN, false);
+            if (!_this.isNested) {
+                if (document$2 && document$2.body) {
+                    _this._renderer.setElementClass(document$2.body, ClassName.OPEN, false);
+                }
+                _this.resetScrollbar();
             }
             _this.resetAdjustments();
-            _this.resetScrollbar();
             _this.onHidden.emit(_this);
         });
     };
@@ -37292,18 +37305,24 @@ var TabsetComponent = (function () {
         this.tabs.push(tab);
         tab.active = this.tabs.length === 1 && tab.active !== false;
     };
-    TabsetComponent.prototype.removeTab = function (tab) {
+    TabsetComponent.prototype.removeTab = function (tab, options) {
+        if (options === void 0) { options = { reselect: true, emit: true }; }
         var index = this.tabs.indexOf(tab);
         if (index === -1 || this.isDestroyed) {
             return;
         }
         // Select a new tab if the tab to be removed is selected and not destroyed
-        if (tab.active && this.hasAvailableTabs(index)) {
+        if (options.reselect && tab.active && this.hasAvailableTabs(index)) {
             var newActiveIndex = this.getClosestTabIndex(index);
             this.tabs[newActiveIndex].active = true;
         }
-        tab.removed.emit(tab);
+        if (options.emit) {
+            tab.removed.emit(tab);
+        }
         this.tabs.splice(index, 1);
+        if (tab.elementRef.nativeElement && tab.elementRef.nativeElement.remove) {
+            tab.elementRef.nativeElement.remove();
+        }
     };
     TabsetComponent.prototype.getClosestTabIndex = function (index) {
         var tabsLength = this.tabs.length;
@@ -37364,12 +37383,13 @@ var TabsetComponent = (function () {
 }());
 
 var TabDirective = (function () {
-    function TabDirective(tabset) {
+    function TabDirective(tabset, elementRef) {
+        this.elementRef = elementRef;
         /** fired when tab became active, $event:Tab equals to selected instance of Tab component */
         this.select = new EventEmitter();
         /** fired when tab became inactive, $event:Tab equals to deselected instance of Tab component */
         this.deselect = new EventEmitter();
-        /** fired before tab will be removed */
+        /** fired before tab will be removed, $event:Tab equals to instance of removed tab */
         this.removed = new EventEmitter();
         this.addClass = true;
         this.tabset = tabset;
@@ -37403,15 +37423,20 @@ var TabDirective = (function () {
     TabDirective.prototype.ngOnInit = function () {
         this.removable = this.removable;
     };
+    TabDirective.prototype.ngOnDestroy = function () {
+        this.tabset.removeTab(this, { reselect: false, emit: false });
+    };
     TabDirective.decorators = [
         { type: Directive, args: [{ selector: 'tab, [tab]' },] },
     ];
     /** @nocollapse */
     TabDirective.ctorParameters = function () { return [
         { type: TabsetComponent, },
+        { type: ElementRef, },
     ]; };
     TabDirective.propDecorators = {
         'heading': [{ type: Input },],
+        'id': [{ type: Input },],
         'disabled': [{ type: Input },],
         'removable': [{ type: Input },],
         'customClass': [{ type: Input },],
@@ -41398,6 +41423,7 @@ var PopoverContainerComponent = (function () {
  */
 var PopoverDirective = (function () {
     function PopoverDirective(_elementRef, _renderer, _viewContainerRef, _config, cis) {
+        this._isInited = false;
         this._popover = cis
             .createLoader(_elementRef, _viewContainerRef, _renderer)
             .provide({ provide: PopoverConfig, useValue: _config });
@@ -41462,6 +41488,13 @@ var PopoverDirective = (function () {
     };
     PopoverDirective.prototype.ngOnInit = function () {
         var _this = this;
+        // fix: seems there are an issue with `routerLinkActive`
+        // which result in duplicated call ngOnInit without call to ngOnDestroy
+        // read more: https://github.com/valor-software/ngx-bootstrap/issues/1885
+        if (this._isInited) {
+            return;
+        }
+        this._isInited = true;
         this._popover.listen({
             triggers: this.triggers,
             show: function () { return _this.show(); }
@@ -55582,7 +55615,7 @@ exports.HeaderComponent = __decorate$8([
         _angular_router.Router])
 ], exports.HeaderComponent);
 
-var tpl$1 = "\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <div class=\"panel panel-default\">\n            <div class=\"panel-heading\">\n                Login\n            </div>\n            <div class=\"panel-body\">\n                <form \n                        id=\"user-edit\" \n                        class=\"form-horizontal\"\n                        novalidate \n                        (ngSubmit)=\"onSubmit(loginForm)\" \n                        [formGroup]=\"loginForm\"\n                    >\n                    <div class=\"form-group\" id=\"email-form\">\n                        <label for=\"email\" class=\"col-xs-2 control-label\">Email</label>\n                        <div class=\"col-xs-10\">\n                            <input type=\"text\" class=\"form-control\" name=\"email\" \n                                formControlName=\"email\" placeholder=\"Email\">\n\n                            <div class=\"text-danger\" *ngIf=\"loginForm.get('email').hasError('required') && loginForm.get('email').touched\">\n                              A valid email is required\n                            </div>\n                        </div>\n                    </div>\n\n                    <div class=\"form-group\" id=\"password-form\">\n                        <label for=\"password\" class=\"col-xs-2 control-label\">Password</label>\n                        <div class=\"col-xs-10\">\n                            <input type=\"password\" class=\"form-control\" name=\"password\" \n                                    formControlName=\"password\" placeholder=\"Password\">\n                            <div class=\"text-danger\" *ngIf=\"loginForm.get('password').hasError('required') && loginForm.get('password').touched\">\n                              Password is required.\n                            </div>\n                        </div>\n                    </div>\n\n                    <div class=\"form-group\">\n                        <div class=\"col-xs-offset-2 col-xs-4\">\n                            <button type=\"submit\" class=\"btn btn-success\" [disabled]=\"loginForm.invalid || wait\">\n                                Login\n                                <i *ngIf=\"wait\" class=\"fa fa-refresh fa-spin fa-fw\"></i> \n                            </button>\n                        </div>\n                    </div>\n                </form>\n\n            </div>\n        </div>\n    </div>\n</div>\n";
+var tpl$1 = "\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <div class=\"panel panel-default\">\n            <div class=\"panel-heading\">\n                Login\n            </div>\n            <div class=\"panel-body\">\n                <form \n                        id=\"user-edit\" \n                        class=\"form-horizontal\"\n                        novalidate \n                        (ngSubmit)=\"onSubmit(loginForm)\" \n                        [formGroup]=\"loginForm\"\n                    >\n                    <div class=\"form-group\" id=\"email-form\">\n                        <label for=\"email\" class=\"col-xs-2 control-label\">Email</label>\n                        <div class=\"col-xs-10\">\n                            <input type=\"text\" class=\"form-control\" name=\"email\" \n                                formControlName=\"email\" placeholder=\"Email\">\n\n                            <div class=\"text-danger\" *ngIf=\"loginForm.get('email').hasError('required') && loginForm.get('email').touched\">\n                              A valid email is required.\n                            </div>\n                        </div>\n                    </div>\n\n                    <div class=\"form-group\" id=\"password-form\">\n                        <label for=\"password\" class=\"col-xs-2 control-label\">Password</label>\n                        <div class=\"col-xs-10\">\n                            <input type=\"password\" class=\"form-control\" name=\"password\" \n                                    formControlName=\"password\" placeholder=\"Password\">\n                            <div class=\"text-danger\" *ngIf=\"loginForm.get('password').hasError('required') && loginForm.get('password').touched\">\n                              Password is required.\n                            </div>\n                        </div>\n                    </div>\n\n                    <div class=\"form-group\">\n                        <div class=\"col-xs-offset-2 col-xs-4\">\n                            <button type=\"submit\" class=\"btn btn-success\" [disabled]=\"loginForm.invalid || wait\">\n                                Login\n                                <i *ngIf=\"wait\" class=\"fa fa-refresh fa-spin fa-fw\"></i> \n                            </button>\n                        </div>\n                    </div>\n                </form>\n\n            </div>\n        </div>\n    </div>\n</div>\n";
 
 var __decorate$9 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -55624,14 +55657,14 @@ exports.LoginComponent = (function () {
                 .subscribe(function (result) {
                 if (result === true) {
                     _this.router.navigate(['/']);
-                    _this.messageService.setMessage({ "type": "success", "body": "Login successful" });
+                    _this.messageService.setMessage([{ "type": "success", "body": "Login successful" }, { "type": "success", "body": "Login super successful" }]);
                 }
                 else {
-                    _this.messageService.setMessage({ "type": "danger", "body": "Login un-successful" });
+                    _this.messageService.setMessage([{ "type": "danger", "body": "Login un-successful" }, { "type": "danger", "body": "Login super un-successful" }]);
                     _this.wait = false;
                 }
             }, function (err) {
-                _this.messageService.setMessage({ "type": "danger", "body": "Login un-successful" });
+                _this.messageService.setMessage([{ "type": "danger", "body": "Login un-successful" }, { "type": "danger", "body": "Login super un-successful" }]);
                 _this.wait = false;
             });
         }
@@ -55781,16 +55814,16 @@ exports.UserListComponent = (function () {
         this.wait = true;
         this.usersService.deleteUser(this.selectedUser)
             .then(function (res) { return _this._handleResponse(res); })
-            .catch(function (error) { return _this.messageService.setMessage({ "type": "danger", "body": error }); });
+            .catch(function (error) { return _this.messageService.setMessage([{ "type": "danger", "body": error }, { "type": "danger", "body": error }]); });
     };
     UserListComponent.prototype._handleResponse = function (res) {
         this._getUsers();
         this.wait = false;
         if (false !== res.success) {
-            this.messageService.setMessage({ "type": "success", "body": "User successfully deleted" });
+            this.messageService.setMessage([{ "type": "success", "body": "User successfully deleted" }, { "type": "success", "body": "User successfully deleted" }]);
         }
         else {
-            this.messageService.setMessage({ "type": "danger", "body": res.error_message });
+            this.messageService.setMessage([{ "type": "danger", "body": res.error_message }, { "type": "danger", "body": res.error_message }]);
         }
     };
     return UserListComponent;
@@ -56200,11 +56233,11 @@ exports.UserEditComponent = (function () {
     UserEditComponent.prototype._handleResponse = function (res) {
         this.wait = false;
         if (true == res.success) {
-            this.messageService.setMessage({ "type": "success", "body": "User record was successfully updated" });
+            this.messageService.setMessage([{ "type": "success", "body": "User record was successfully updated" }, { "type": "success", "body": "User record was super successfully updated" }]);
             if ("create" === res.method) {
                 // navigate to Edit User for the new user
                 this.router.navigate(['/user/' + res.user.id]);
-                this.messageService.setMessage({ "type": "success", "body": "User was successfully created" });
+                this.messageService.setMessage([{ "type": "success", "body": "User was successfully created" }, { "type": "success", "body": "User was super successfully created" }]);
             }
         }
         else {
@@ -56225,14 +56258,14 @@ exports.UserEditComponent = (function () {
         this.passWait = false;
         this.passwordForm.reset();
         if (true == res.success) {
-            this.messageService.setMessage({ "type": "success", "body": "User password successfully updated" });
+            this.messageService.setMessage([{ "type": "success", "body": "User password successfully updated" }, { "type": "success", "body": "User password super successfully updated" }]);
         }
         else {
-            this.messageService.setMessage({ "type": "danger", "body": res.error });
+            this.messageService.setMessage([{ "type": "danger", "body": res.error }, { "type": "danger", "body": res.error }]);
         }
     };
     UserEditComponent.prototype._handleError = function (error) {
-        this.messageService.setMessage({ "type": "danger", "body": error });
+        this.messageService.setMessage([{ "type": "danger", "body": error }, { "type": "danger", "body": error }]);
     };
     UserEditComponent.prototype.createEditHeader = function () {
         var panelHeader = this.user.id ? "Edit User" : "Create User";
@@ -56259,7 +56292,7 @@ exports.UserEditComponent = __decorate$15([
         MessageService])
 ], exports.UserEditComponent);
 
-var tpl$8 = "\n<alert *ngIf=\"message\" [type]=\"message.type\" dismissOnTimeout=\"3000\" dismissible=true>{{ message.body }}</alert>\n";
+var tpl$8 = "\n<div>\n<alert *ngFor=\"let message of messages\" [type]=\"message.type\" dismissOnTimeout=\"3000\" dismissible=true>{{ message.body }}</alert>\n</div>\n";
 
 var __decorate$16 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -56280,7 +56313,7 @@ exports.MessageComponent = (function () {
         this.subscription = this.messageService
             .getMessage()
             .subscribe(function (message) {
-            _this.message = message;
+            _this.messages = message;
         });
     }
     MessageComponent.prototype.ngOnDestroy = function () {
