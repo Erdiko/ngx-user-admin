@@ -55637,15 +55637,32 @@ var __decorate$8 = (undefined && undefined.__decorate) || function (decorators, 
 var __metadata$6 = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+/**
+ * Header Component
+ *
+ * Displays application header, with alternate header when the user is logged in
+ */
 exports.HeaderComponent = (function () {
+    /**
+     * set local instance of the auth service and router
+     */
     function HeaderComponent(authService, router) {
         this.authService = authService;
         this.router = router;
     }
+    /**
+     *
+     */
     HeaderComponent.prototype.ngOnInit = function () { };
+    /**
+     * returns true if the user is logged in, used to display full header based on user state
+     */
     HeaderComponent.prototype.isLoggedIn = function () {
         return this.authService.isLoggedIn();
     };
+    /**
+     * handle click action if the user clicks "logout"
+     */
     HeaderComponent.prototype.clickLogout = function () {
         this.authService.logout();
         this.router.navigate(['/login']);
@@ -55675,7 +55692,15 @@ var __metadata$7 = (undefined && undefined.__metadata) || function (k, v) {
 var __param$2 = (undefined && undefined.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+/**
+ * Login Component
+ *
+ * Displays login form and handles form submissions
+ */
 exports.LoginComponent = (function () {
+    /**
+     *
+     */
     function LoginComponent(messageService, authService, router, fb) {
         this.authService = authService;
         this.router = router;
@@ -55684,16 +55709,26 @@ exports.LoginComponent = (function () {
         this.wait = false;
         this.messageService = messageService;
     }
+    /**
+     * initialize and render the form on the onInit life cycle hook
+     */
     LoginComponent.prototype.ngOnInit = function () {
         this._initForm();
     };
-    // foo bar
+    /**
+     * initialize the form group and add validators
+     */
     LoginComponent.prototype._initForm = function () {
         this.loginForm = this.fb.group({
             email: ['', Validators.required],
             password: ['', Validators.required]
         });
     };
+    /**
+     * handle the onSubmit action for the login form
+     *
+     *
+     */
     LoginComponent.prototype.onSubmit = function (_a) {
         var _this = this;
         var value = _a.value, valid = _a.valid;
@@ -55740,9 +55775,20 @@ var __decorate$10 = (undefined && undefined.__decorate) || function (decorators,
 var __metadata$8 = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+/**
+ * Home Component
+ *
+ * Default view component for a logged in user
+ */
 exports.HomeComponent = (function () {
+    /**
+     *
+     */
     function HomeComponent() {
     }
+    /**
+     *
+     */
     HomeComponent.prototype.ngOnInit = function () {
     };
     return HomeComponent;
@@ -55769,13 +55815,33 @@ var __metadata$9 = (undefined && undefined.__metadata) || function (k, v) {
 var __param$3 = (undefined && undefined.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+/**
+ * HTML template for this component
+ */
+/**
+ * User List Component
+ *
+ * Displays a sortable list of current users in the system
+ */
 exports.UserListComponent = (function () {
+    /**
+     *
+     */
     function UserListComponent(usersService, messageService, route, router) {
         var _this = this;
         this.route = route;
         this.router = router;
+        /**
+         *
+         */
         this.currentPage = 1;
+        /**
+         *
+         */
         this.pagesize = 10;
+        /**
+         *
+         */
         this.pages = [];
         this.usersService = usersService;
         this.messageService = messageService;
@@ -55791,50 +55857,72 @@ exports.UserListComponent = (function () {
         this.usersService.total$.subscribe(function () { return _this._listUpdated(); });
         this.selectedUser = false;
     }
-    // on init get a list of the users
+    /**
+     * on init get a list of the users
+     */
     UserListComponent.prototype.ngOnInit = function () {
         this._getUsers();
     };
-    // unsub all the things
+    /**
+     * unsub all the things
+     */
     UserListComponent.prototype.ngOnDestroy = function () {
         this.users$.unsubscribe();
         this.total$.unsubscribe();
     };
-    // update the user list by making another request to the users service
+    /**
+     * update the user list by making another request to the users service
+     */
     UserListComponent.prototype._getUsers = function () {
         this.wait = true;
         this.usersService.getUsers(this.pagesize, this.currentPage, this.sortCol, this.sortDir);
     };
-    // list has been updated; toggle wait state off and generate pagination links
+    /**
+     * list has been updated; toggle wait state off and generate pagination links
+     */
     UserListComponent.prototype._listUpdated = function () {
         this.wait = false;
         this._setPagination();
     };
-    // return pagination links count
+    /**
+     * return pagination links count
+     */
     UserListComponent.prototype.getPageCount = function () {
         return Math.ceil(this.total / this.pagesize);
     };
-    // create a list of pagination links
+    /**
+     * create a list of pagination links
+     */
     UserListComponent.prototype._setPagination = function () {
         this.pages = [];
         for (var i = 1; i <= this.getPageCount(); i++) {
             this.pages.push(i);
         }
     };
-    // pagination click listeners
+    /**
+     * pagination click listeners
+     */
     UserListComponent.prototype.clickPage = function (idx) {
         this.currentPage = idx;
         this._getUsers();
     };
+    /**
+     * handles "next" pagination button click
+     */
     UserListComponent.prototype.clickNext = function () {
         this.currentPage++;
         this._getUsers();
     };
+    /**
+     * handles "prev" pagination button click
+     */
     UserListComponent.prototype.clickPrev = function () {
         this.currentPage--;
         this._getUsers();
     };
-    // sort click listeners
+    /**
+     * sort click listeners
+     */
     UserListComponent.prototype.sort = function (col) {
         // toggle sort dir if the user clicks on currently sorted column
         if (this.sortCol == col) {
@@ -55847,13 +55935,22 @@ exports.UserListComponent = (function () {
         this.sortCol = col;
         this._getUsers();
     };
+    /**
+     *
+     */
     UserListComponent.prototype.clickDelete = function (idx) {
         this.selectedUser = idx;
         this.confirmDeleteModal.show();
     };
+    /**
+     *
+     */
     UserListComponent.prototype.cancelDelete = function () {
         this.confirmDeleteModal.hide();
     };
+    /**
+     *
+     */
     UserListComponent.prototype.confirmDelete = function (idx) {
         var _this = this;
         this.confirmDeleteModal.hide();
@@ -55862,6 +55959,9 @@ exports.UserListComponent = (function () {
             .then(function (res) { return _this._handleResponse(res); })
             .catch(function (error) { return _this.messageService.setMessage({ "type": "danger", "body": error }); });
     };
+    /**
+     *
+     */
     UserListComponent.prototype._handleResponse = function (res) {
         this._getUsers();
         this.wait = false;
@@ -56147,6 +56247,11 @@ var __decorate$14 = (undefined && undefined.__decorate) || function (decorators,
 var __metadata$12 = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+/**
+ * Password Component
+ *
+ * Component to display password update form
+ */
 var PasswordComponent = (function () {
     function PasswordComponent() {
     }
@@ -56190,6 +56295,11 @@ var __metadata$13 = (undefined && undefined.__metadata) || function (k, v) {
 var __param$6 = (undefined && undefined.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+/**
+ * User Edit Component
+ *
+ * Component to display form to create a new user or to edit an exiting user
+ */
 exports.UserEditComponent = (function () {
     function UserEditComponent(usersService, route, router, messageService) {
         // init the wait state (and indication animation) to 'off'
@@ -56357,7 +56467,15 @@ var __metadata$14 = (undefined && undefined.__metadata) || function (k, v) {
 var __param$7 = (undefined && undefined.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+/**
+ * Message Component
+ *
+ * Displays flash messages from service
+ */
 exports.MessageComponent = (function () {
+    /**
+     *
+     */
     function MessageComponent(messageService) {
         var _this = this;
         this.messageService = messageService;
@@ -56367,6 +56485,9 @@ exports.MessageComponent = (function () {
             _this.message = message;
         });
     }
+    /**
+     * stop subscription to prevent memory leaks
+     */
     MessageComponent.prototype.ngOnDestroy = function () {
         this.subscription.unsubscribe();
     };

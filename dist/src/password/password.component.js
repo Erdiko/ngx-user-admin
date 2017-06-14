@@ -10,6 +10,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { tpl } from './password.component.tpl';
+/**
+ * Password Component
+ *
+ * Component to display password update form
+ */
 var PasswordComponent = (function () {
     function PasswordComponent() {
     }

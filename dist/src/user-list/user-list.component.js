@@ -15,14 +15,34 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap';
 import { UsersService } from '../users.service';
 import { MessageService } from '../message.service';
+/**
+ * HTML template for this component
+ */
 import { tpl } from './user-list.component.tpl';
+/**
+ * User List Component
+ *
+ * Displays a sortable list of current users in the system
+ */
 var UserListComponent = (function () {
+    /**
+     *
+     */
     function UserListComponent(usersService, messageService, route, router) {
         var _this = this;
         this.route = route;
         this.router = router;
+        /**
+         *
+         */
         this.currentPage = 1;
+        /**
+         *
+         */
         this.pagesize = 10;
+        /**
+         *
+         */
         this.pages = [];
         this.usersService = usersService;
         this.messageService = messageService;
@@ -38,50 +58,72 @@ var UserListComponent = (function () {
         this.usersService.total$.subscribe(function () { return _this._listUpdated(); });
         this.selectedUser = false;
     }
-    // on init get a list of the users
+    /**
+     * on init get a list of the users
+     */
     UserListComponent.prototype.ngOnInit = function () {
         this._getUsers();
     };
-    // unsub all the things
+    /**
+     * unsub all the things
+     */
     UserListComponent.prototype.ngOnDestroy = function () {
         this.users$.unsubscribe();
         this.total$.unsubscribe();
     };
-    // update the user list by making another request to the users service
+    /**
+     * update the user list by making another request to the users service
+     */
     UserListComponent.prototype._getUsers = function () {
         this.wait = true;
         this.usersService.getUsers(this.pagesize, this.currentPage, this.sortCol, this.sortDir);
     };
-    // list has been updated; toggle wait state off and generate pagination links
+    /**
+     * list has been updated; toggle wait state off and generate pagination links
+     */
     UserListComponent.prototype._listUpdated = function () {
         this.wait = false;
         this._setPagination();
     };
-    // return pagination links count
+    /**
+     * return pagination links count
+     */
     UserListComponent.prototype.getPageCount = function () {
         return Math.ceil(this.total / this.pagesize);
     };
-    // create a list of pagination links
+    /**
+     * create a list of pagination links
+     */
     UserListComponent.prototype._setPagination = function () {
         this.pages = [];
         for (var i = 1; i <= this.getPageCount(); i++) {
             this.pages.push(i);
         }
     };
-    // pagination click listeners
+    /**
+     * pagination click listeners
+     */
     UserListComponent.prototype.clickPage = function (idx) {
         this.currentPage = idx;
         this._getUsers();
     };
+    /**
+     * handles "next" pagination button click
+     */
     UserListComponent.prototype.clickNext = function () {
         this.currentPage++;
         this._getUsers();
     };
+    /**
+     * handles "prev" pagination button click
+     */
     UserListComponent.prototype.clickPrev = function () {
         this.currentPage--;
         this._getUsers();
     };
-    // sort click listeners
+    /**
+     * sort click listeners
+     */
     UserListComponent.prototype.sort = function (col) {
         // toggle sort dir if the user clicks on currently sorted column
         if (this.sortCol == col) {
@@ -94,13 +136,22 @@ var UserListComponent = (function () {
         this.sortCol = col;
         this._getUsers();
     };
+    /**
+     *
+     */
     UserListComponent.prototype.clickDelete = function (idx) {
         this.selectedUser = idx;
         this.confirmDeleteModal.show();
     };
+    /**
+     *
+     */
     UserListComponent.prototype.cancelDelete = function () {
         this.confirmDeleteModal.hide();
     };
+    /**
+     *
+     */
     UserListComponent.prototype.confirmDelete = function (idx) {
         var _this = this;
         this.confirmDeleteModal.hide();
@@ -109,6 +160,9 @@ var UserListComponent = (function () {
             .then(function (res) { return _this._handleResponse(res); })
             .catch(function (error) { return _this.messageService.setMessage({ "type": "danger", "body": error }); });
     };
+    /**
+     *
+     */
     UserListComponent.prototype._handleResponse = function (res) {
         this._getUsers();
         this.wait = false;
