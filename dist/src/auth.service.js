@@ -14,28 +14,38 @@ import { Injectable, Inject } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
+/**
+ * Service that handles logging the user in and creating the logged in localStorage key
+ *
+ */
 var AuthService = (function () {
     /**
-     *
-     *
+     * initialize service class variables
      */
     function AuthService(http) {
         this.http = http;
+        /**
+         * AJAX URL for login requests
+         */
         this.loginUrl = "/ajax/users/authentication/login";
+        /**
+         * AJAX url for logout requests
+         */
         this.logoutUrl = "/ajax/users/authentication/logout";
         var currentUser = { 'token': false };
         this.token = currentUser && currentUser.token;
         this._baseUrl = "";
     }
     /**
+     * returns true if the user is logged in.
      *
-     *
+     * checks the localStorage to make sure an expected token exists
      */
     AuthService.prototype.isLoggedIn = function () {
         return Boolean(localStorage.getItem('currentUser'));
     };
     /**
-     *
+     * performs a login request via POST
      *
      */
     AuthService.prototype.login = function (form) {
@@ -64,7 +74,7 @@ var AuthService = (function () {
             .catch(function (error) { return Observable.throw(error.json().error || 'Server error'); });
     };
     /**
-     *
+     * deletes the user token to log the user out
      *
      */
     AuthService.prototype.logout = function () {

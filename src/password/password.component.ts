@@ -4,6 +4,11 @@ import { User }            from "../user.model";
 
 import { tpl } from './password.component.tpl';
 
+/**
+ * Password Component
+ *
+ * Component to display password update form
+ */
 @Component({
     selector: 'erdiko-password',
     template: tpl

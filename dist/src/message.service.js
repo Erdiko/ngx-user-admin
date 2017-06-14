@@ -6,13 +6,25 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
+/**
+ * Service that handles flash messages
+ */
 var MessageService = (function () {
     function MessageService() {
+        /**
+         * Messages observable
+         */
         this.subject = new Subject();
     }
+    /**
+     * Add a message to the array
+     */
     MessageService.prototype.setMessage = function (msg) {
         this.subject.next(msg);
     };
+    /**
+     * Return observable array of messages
+     */
     MessageService.prototype.getMessage = function () {
         return this.subject.asObservable();
     };

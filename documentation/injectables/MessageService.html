@@ -377,6 +377,12 @@
             <code>src/message.service.ts</code>
         </p>
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Service that handles flash messages</p><br/>
+            </p>
 
 
             <section>
@@ -400,12 +406,13 @@
             
                                 <tr>
                                     <td class="col-md-4">
-                                        <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/message.service.ts:10</a></div>
+                                        <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/message.service.ts:19</a></div>
                                     </td>
                                 </tr>
             
                             <tr>
                                 <td class="col-md-4">
+                                        <div class="io-description"><p>Add a message to the array</p><br/></div>
             
                                         <div class="io-description">
                                             <b>Returns : </b>    <code>void</code>
@@ -431,15 +438,16 @@
             
                                 <tr>
                                     <td class="col-md-4">
-                                        <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/message.service.ts:14</a></div>
+                                        <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/message.service.ts:26</a></div>
                                     </td>
                                 </tr>
             
                             <tr>
                                 <td class="col-md-4">
+                                        <div class="io-description"><p>Return observable array of messages</p><br/></div>
             
                                         <div class="io-description">
-                                            <b>Returns : </b>    <code>void</code>
+                                            <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
             
                                         </div>
                                 </td>
@@ -468,9 +476,14 @@
                             </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <div class="io-line">Defined in <a href="" data-line="8" class="link-to-prism">src/message.service.ts:8</a></div>
+                                        <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/message.service.ts:14</a></div>
                                     </td>
                                 </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Messages observable</p><br/></div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
             </section>
@@ -480,16 +493,28 @@
 import { Observable } from &#x27;rxjs&#x27;;
 import { Subject } from &#x27;rxjs/Subject&#x27;;
 
+/**
+ * Service that handles flash messages
+ */
 @Injectable()
 export class MessageService {
 
+    /**
+     * Messages observable
+     */
     private subject &#x3D; new Subject&lt;any&gt;();
 
-    setMessage(msg: any) {
+    /**
+     * Add a message to the array
+     */
+    setMessage(msg: any) : void {
         this.subject.next(msg);
     }
 
-    getMessage() {
+    /**
+     * Return observable array of messages
+     */
+     getMessage() : Observable&lt;any&gt; {
         return this.subject.asObservable();
     }
 

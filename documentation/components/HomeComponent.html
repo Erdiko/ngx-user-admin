@@ -379,6 +379,12 @@
     <code>src/home/home.component.ts</code>
 </p>
 
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Home Component</p><br/><p>Default view component for a logged in user</p><br/>
+    </p>
 
 
     <p class="comment">
@@ -436,7 +442,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="9" class="link-to-prism">src/home/home.component.ts:9</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/home/home.component.ts:14</a></div>
                             </td>
                         </tr>
     
@@ -465,7 +471,7 @@
     
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/home/home.component.ts:13</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/home/home.component.ts:24</a></div>
                             </td>
                         </tr>
     
@@ -490,14 +496,25 @@
 
 import { tpl } from &#x27;./home.component.tpl&#x27;;
 
+/**
+ * Home Component
+ *
+ * Default view component for a logged in user
+ */
 @Component({
   selector: &#x27;app-home&#x27;,
   template: tpl
 })
 export class HomeComponent implements OnInit {
 
+  /**
+   * 
+   */
   constructor() { }
 
+  /**
+   * 
+   */
   ngOnInit() {
   }
 

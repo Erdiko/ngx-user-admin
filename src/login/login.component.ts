@@ -7,22 +7,50 @@ import { AuthService }              from '../auth.service';
 
 import { tpl } from './login.component.tpl';
 
+/**
+ * Login Component
+ * 
+ * Displays login form and handles form submissions
+ */
 @Component({
   selector: 'app-login',
   template: tpl
 })
 export class LoginComponent implements OnInit {
 
+    /**
+     * Flag used to show/hide the wait spinner
+     */
     public wait: any;
 
+    /**
+     * Title of the login form
+     */
     public title: string;
 
+    /**
+     * local MessageService instance
+     */
     public messageService: MessageService;
+
+    /**
+     * FormGroup instance used to construct the login form
+     */
     public loginForm: FormGroup;
 
+    /**
+     *
+     */
     public loggedOut: string;
+
+    /**
+     *
+     */
     public error: string;
 
+    /**
+     *
+     */
     constructor(
            @Inject(MessageService) messageService: MessageService,
            private authService: AuthService,
@@ -35,13 +63,18 @@ export class LoginComponent implements OnInit {
         this.messageService = messageService;
     }
 
+    /**
+     * initialize and render the form on the onInit life cycle hook
+     */
     ngOnInit() {
 
         this._initForm();
 
     }
 
-    // foo bar
+    /**
+     * initialize the form group and add validators
+     */
     private _initForm() {
         this.loginForm = this.fb.group({
             email: ['', Validators.required],
@@ -49,6 +82,11 @@ export class LoginComponent implements OnInit {
         });
     }
 
+    /**
+     * handle the onSubmit action for the login form
+     * 
+     *  
+     */
     onSubmit({ value, valid }: { value: any, valid: boolean }) {
 
         if(valid) {

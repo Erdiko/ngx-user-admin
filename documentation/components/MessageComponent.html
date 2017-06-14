@@ -379,6 +379,12 @@
     <code>src/message/message.component.ts</code>
 </p>
 
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Message Component</p><br/><p>Displays flash messages from service</p><br/>
+    </p>
 
 
     <p class="comment">
@@ -436,7 +442,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/message/message.component.ts:17</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/message/message.component.ts:32</a></div>
                             </td>
                         </tr>
     
@@ -465,12 +471,13 @@
     
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/message/message.component.ts:29</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">src/message/message.component.ts:50</a></div>
                             </td>
                         </tr>
     
                     <tr>
                         <td class="col-md-4">
+                                <div class="io-description"><p>stop subscription to prevent memory leaks</p><br/></div>
     
                                 <div class="io-description">
                                     <b>Returns : </b>    <code>void</code>
@@ -502,9 +509,14 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/message/message.component.ts:14</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/message/message.component.ts:22</a></div>
                             </td>
                         </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Current message</p><br/></div>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <table class="table table-sm table-bordered">
@@ -522,9 +534,14 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/message/message.component.ts:17</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/message/message.component.ts:32</a></div>
                             </td>
                         </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>local instance of message service</p><br/></div>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <table class="table table-sm table-bordered">
@@ -542,9 +559,14 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/message/message.component.ts:15</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/message/message.component.ts:27</a></div>
                             </td>
                         </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Message service subscription</p><br/></div>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
     </section>
@@ -559,17 +581,35 @@ import { MessageService }                 from &#x27;../message.service&#x27;;
 
 import { tpl } from &#x27;./message.component.tpl&#x27;;
 
+/**
+ * Message Component
+ * 
+ * Displays flash messages from service
+ */
 @Component({
   selector: &#x27;erdiko-message&#x27;,
   template: tpl
 })
 export class MessageComponent implements OnDestroy {
 
+    /**
+     * Current message
+     */
     private message: any;
+
+    /**
+     * Message service subscription
+     */
     private subscription: Subscription;
 
+    /**
+     * local instance of message service
+     */
     private messageService: MessageService;
 
+    /**
+     * 
+     */
     constructor(@Inject(MessageService) messageService: MessageService) { 
         this.messageService &#x3D; messageService;
 
@@ -580,6 +620,9 @@ export class MessageComponent implements OnDestroy {
                                 });
     }
 
+    /**
+     * stop subscription to prevent memory leaks
+     */
     ngOnDestroy() { 
         this.subscription.unsubscribe();   
     }

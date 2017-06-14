@@ -656,6 +656,11 @@
         </bcode>
                             </td>
                         </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-description"><p>Application Routes</p><br/></div>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
         </section>
@@ -976,17 +981,20 @@
                                 User Name
                                 &lt;i *ngIf&#x3D;&quot;sortCol &#x3D;&#x3D; &#x27;name&#x27;&quot; class&#x3D;&quot;fa&quot; [ngClass]&#x3D;&quot;{&#x27;fa-sort-asc&#x27;: (sortDir &#x3D;&#x3D; &#x27;asc&#x27;), &#x27;fa-sort-desc&#x27;: (sortDir &#x3D;&#x3D; &#x27;desc&#x27;)}&quot; aria-hidden&#x3D;&quot;true&quot;&gt;&lt;/i&gt;
                             &lt;/th&gt; 
-                            &lt;th&gt;
+                            &lt;th (click)&#x3D;&quot;sort(&#x27;role&#x27;)&quot;&gt;
                                 Role
+                                &lt;i *ngIf&#x3D;&quot;sortCol &#x3D;&#x3D; &#x27;role&#x27;&quot; class&#x3D;&quot;fa&quot; [ngClass]&#x3D;&quot;{&#x27;fa-sort-asc&#x27;: (sortDir &#x3D;&#x3D; &#x27;asc&#x27;), &#x27;fa-sort-desc&#x27;: (sortDir &#x3D;&#x3D; &#x27;desc&#x27;)}&quot; aria-hidden&#x3D;&quot;true&quot;&gt;&lt;/i&gt;
                             &lt;/th&gt; 
-                            &lt;th&gt;
+                            &lt;th (click)&#x3D;&quot;sort(&#x27;last_login&#x27;)&quot;&gt;
                                 Last Login
+                                &lt;i *ngIf&#x3D;&quot;sortCol &#x3D;&#x3D; &#x27;last_login&#x27;&quot; class&#x3D;&quot;fa&quot; [ngClass]&#x3D;&quot;{&#x27;fa-sort-asc&#x27;: (sortDir &#x3D;&#x3D; &#x27;asc&#x27;), &#x27;fa-sort-desc&#x27;: (sortDir &#x3D;&#x3D; &#x27;desc&#x27;)}&quot; aria-hidden&#x3D;&quot;true&quot;&gt;&lt;/i&gt;
                             &lt;/th&gt; 
-                            &lt;th&gt;
+                            &lt;th (click)&#x3D;&quot;sort(&#x27;created_at&#x27;)&quot;&gt;
                                 Joined
+                                &lt;i *ngIf&#x3D;&quot;sortCol &#x3D;&#x3D; &#x27;created_at&#x27;&quot; class&#x3D;&quot;fa&quot; [ngClass]&#x3D;&quot;{&#x27;fa-sort-asc&#x27;: (sortDir &#x3D;&#x3D; &#x27;asc&#x27;), &#x27;fa-sort-desc&#x27;: (sortDir &#x3D;&#x3D; &#x27;desc&#x27;)}&quot; aria-hidden&#x3D;&quot;true&quot;&gt;&lt;/i&gt;
                             &lt;/th&gt; 
-                            &lt;th&gt;Edit&lt;/th&gt; 
-                            &lt;th&gt;Delete&lt;/th&gt; 
+                            &lt;th&gt;&lt;/th&gt; 
+                            &lt;th&gt;&lt;/th&gt; 
                         &lt;/tr&gt; 
                     &lt;/thead&gt; 
         

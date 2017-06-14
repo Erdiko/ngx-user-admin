@@ -8,35 +8,100 @@ import { UsersService }             from '../users.service';
 import { User }                     from '../user.model';
 import { MessageService }           from '../message.service';
 
+/**
+ * HTML template for this component
+ */
 import { tpl } from './user-list.component.tpl';
 
+/**
+ * User List Component
+ *
+ * Displays a sortable list of current users in the system
+ */
 @Component({
     selector: 'erdiko-user-list',
     template: tpl
 })
 export class UserListComponent implements OnInit {
 
+    /**
+     * ngx-bootstrap modal view child, injected so we can listen for button click events
+     */
     @ViewChild('confirmDeleteModal') public confirmDeleteModal:ModalDirective;
 
+    /**
+     * local users service instance
+     */
     private usersService: UsersService;
+
+    /**
+     * local message service instance 
+     */
     public messageService: MessageService;
+
+    /**
+     * Flag used to show/hide the wait spinner
+     */
     public wait: any;
 
+    /**
+     * 
+     */
     private users$: Subscription;
+
+    /**
+     * 
+     */
     private total$: Subscription;
+
+    /**
+     * 
+     */
     public users: User[];
+
+    /**
+     * 
+     */
     public total: number;
 
+    /**
+     * 
+     */
     public currentPage = 1;
+
+    /**
+     * 
+     */
     public pagesize = 10;
+
+    /**
+     * 
+     */
     public pages: number[] = [];
 
+    /**
+     * 
+     */
     public sortCol: string;
+
+    /**
+     * 
+     */
     public sortDir: string;
 
+    /**
+     * 
+     */
     public error: any;
+
+    /**
+     * 
+     */
     public selectedUser: any;
         
+    /**
+     * 
+     */
     constructor(
            @Inject(UsersService) usersService: UsersService,
            @Inject(MessageService) messageService: MessageService,
@@ -70,18 +135,24 @@ export class UserListComponent implements OnInit {
         this.selectedUser = false;
     }
     
-    // on init get a list of the users
+    /**
+     * on init get a list of the users
+     */
     ngOnInit() {
         this._getUsers();
     }
 
-    // unsub all the things
+    /**
+     * unsub all the things
+     */
     ngOnDestroy() {
         this.users$.unsubscribe();
         this.total$.unsubscribe();
     }
 
-    // update the user list by making another request to the users service
+    /**
+     * update the user list by making another request to the users service
+     */
     private _getUsers() {
         this.wait = true;
         this.usersService.getUsers(this.pagesize, 
@@ -90,18 +161,24 @@ export class UserListComponent implements OnInit {
                                    this.sortDir);
     }
 
-    // list has been updated; toggle wait state off and generate pagination links
+    /**
+     * list has been updated; toggle wait state off and generate pagination links
+     */
     private _listUpdated() {
         this.wait = false;
         this._setPagination();
     }
 
-    // return pagination links count
+    /**
+     * return pagination links count
+     */
     getPageCount() {
         return Math.ceil(this.total / this.pagesize);
     }
 
-    // create a list of pagination links
+    /**
+     * create a list of pagination links
+     */
     private _setPagination() {
         this.pages = [];
         for(var i = 1; i <= this.getPageCount(); i++){
@@ -109,23 +186,33 @@ export class UserListComponent implements OnInit {
         }
     }
 
-    // pagination click listeners
+    /**
+     * pagination click listeners
+     */
     clickPage(idx: any) {
         this.currentPage = idx;
         this._getUsers();
     }
 
+    /**
+     * handles "next" pagination button click 
+     */
     clickNext() {
         this.currentPage++;
         this._getUsers();
     }
 
+    /**
+     * handles "prev" pagination button click 
+     */
     clickPrev() {
         this.currentPage--;
         this._getUsers();
     }
 
-    // sort click listeners
+    /**
+     * sort click listeners
+     */
     sort(col: any) {
 
         // toggle sort dir if the user clicks on currently sorted column
@@ -140,15 +227,24 @@ export class UserListComponent implements OnInit {
         this._getUsers();
     }
 
+    /**
+     * 
+     */
     clickDelete(idx: any) {
         this.selectedUser = idx;
         this.confirmDeleteModal.show();
     }
 
+    /**
+     * 
+     */
     cancelDelete() {
         this.confirmDeleteModal.hide();
     }
 
+    /**
+     * 
+     */
     confirmDelete(idx: any) {
         this.confirmDeleteModal.hide();
         this.wait = true;
@@ -157,6 +253,9 @@ export class UserListComponent implements OnInit {
             .catch(error => this.messageService.setMessage({"type": "danger", "body": error}));
     }
 
+    /**
+     * 
+     */
     private _handleResponse(res: any) {
         this._getUsers();
         this.wait = false;

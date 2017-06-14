@@ -377,6 +377,12 @@
             <code>src/auth.guard.ts</code>
         </p>
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Route Guard preventing access to users without the expected localStorage value</p><br/>
+            </p>
 
             <section>
                 <h3 id="constructor">Constructor</h3>
@@ -389,10 +395,15 @@
                             </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <div class="io-line">Defined in <a href="" data-line="5" class="link-to-prism">src/auth.guard.ts:5</a></div>
+                                        <div class="io-line">Defined in <a href="" data-line="9" class="link-to-prism">src/auth.guard.ts:9</a></div>
                                     </td>
                                 </tr>
             
+                            <tr>
+                                <td class="col-md-4">
+                                        <div class="io-description"><p>initialize the guard class and set router to injected Router instance</p><br/></div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
             </section>
@@ -418,15 +429,16 @@
             
                                 <tr>
                                     <td class="col-md-4">
-                                        <div class="io-line">Defined in <a href="" data-line="9" class="link-to-prism">src/auth.guard.ts:9</a></div>
+                                        <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/auth.guard.ts:20</a></div>
                                     </td>
                                 </tr>
             
                             <tr>
                                 <td class="col-md-4">
+                                        <div class="io-description"><p>returns true if the user has a valid localStorage token<br/>and allows the user to access logged in routes</p><br/></div>
             
                                         <div class="io-description">
-                                            <b>Returns : </b>    <code>void</code>
+                                            <b>Returns : </b>    <code>boolean</code>
             
                                         </div>
                                 </td>
@@ -440,12 +452,23 @@
         <pre class="line-numbers"><code class="language-typescript">import { Injectable }          from &#x27;@angular/core&#x27;;
 import { Router, CanActivate } from &#x27;@angular/router&#x27;;
 
+/**
+ * Route Guard preventing access to users without the expected localStorage value
+ *
+ */
 @Injectable()
 export class AuthGuard implements CanActivate {
 
+    /**
+     * initialize the guard class and set router to injected Router instance
+     */
     constructor(private router: Router) { }
 
-    canActivate() {
+    /**
+     * returns true if the user has a valid localStorage token
+     * and allows the user to access logged in routes
+     */
+    canActivate() : boolean {
 
         if (localStorage.getItem(&#x27;currentUser&#x27;)) {
             // logged in so return true

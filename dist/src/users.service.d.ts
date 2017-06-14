@@ -1,28 +1,87 @@
 import { Http } from '@angular/http';
 import { Observable, Subscription } from "rxjs";
 import { AuthService } from "./auth.service";
-import { User } from "./user.model";
+/**
+ * Service to handle user CRUD, as well as listing of users and user events.
+ */
 export declare class UsersService {
     private http;
     private authService;
+    /**
+     *
+     */
     private _users$;
+    /**
+     *
+     */
     private _total$;
+    /**
+     *
+     */
     private _events$;
+    /**
+     *
+     */
     private _eventsTotal$;
+    /**
+     *
+     */
     private dataStore;
+    /**
+     *
+     */
     private listUrl;
+    /**
+     *
+     */
     private userUrl;
+    /**
+     *
+     */
     private updateUrl;
+    /**
+     *
+     */
     private createUrl;
+    /**
+     *
+     */
     private deleteUrl;
+    /**
+     *
+     */
     private changePassUrl;
+    /**
+     *
+     */
     private userEventUrl;
+    /**
+     *
+     */
     private authToken;
+    /**
+     *
+     */
     private _baseUrl;
+    /**
+     * inject services and set class variables
+     */
     constructor(http: Http, authService: AuthService);
+    /**
+     *
+     */
     readonly users$: Observable<any>;
+    /**
+     *
+     */
     readonly total$: Observable<any>;
+    /**
+     *
+     */
     readonly events$: Observable<any>;
+    /**
+     *
+     */
     readonly eventsTotal$: Observable<any>;
     /**
      *
@@ -38,7 +97,7 @@ export declare class UsersService {
      * Get a specific user, returns a promise
      *
      */
-    getUser(id: string): Promise<User>;
+    getUser(id: string): Promise<any>;
     /**
      * Update a specific user
      *

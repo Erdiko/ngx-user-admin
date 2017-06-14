@@ -1,3 +1,8 @@
+/**
+ * User Model
+ *
+ * Represents a user model instance
+ */
 export declare class User {
     id: number;
     email: string;

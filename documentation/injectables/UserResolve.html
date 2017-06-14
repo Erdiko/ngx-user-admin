@@ -377,6 +377,12 @@
             <code>src/user-resolve.service.ts</code>
         </p>
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Returns a User model for a provided ID, if one is found. Else<br/>return false and navigate the user to the default route</p><br/>
+            </p>
 
             <section>
                 <h3 id="constructor">Constructor</h3>
@@ -389,10 +395,15 @@
                             </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <div class="io-line">Defined in <a href="" data-line="9" class="link-to-prism">src/user-resolve.service.ts:9</a></div>
+                                        <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/user-resolve.service.ts:13</a></div>
                                     </td>
                                 </tr>
             
+                            <tr>
+                                <td class="col-md-4">
+                                        <div class="io-description"><p>set user service and router to local instances</p><br/></div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
             </section>
@@ -418,7 +429,7 @@
             
                                 <tr>
                                     <td class="col-md-4">
-                                        <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/user-resolve.service.ts:18</a></div>
+                                        <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/user-resolve.service.ts:25</a></div>
                                     </td>
                                 </tr>
             
@@ -444,9 +455,16 @@ import { Router, Resolve,
 import { User }           from &#x27;./user.model&#x27;;
 import { UsersService }   from &#x27;./users.service&#x27;;
 
+/**
+ * Returns a User model for a provided ID, if one is found. Else
+ * return false and navigate the user to the default route
+ */
 @Injectable()
 export class UserResolve implements Resolve&lt;any&gt; {
 
+    /**
+     * set user service and router to local instances
+     */
     constructor(
                 private us: UsersService, 
                 private router: Router

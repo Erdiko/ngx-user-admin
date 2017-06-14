@@ -12,6 +12,11 @@ import { PasswordComponent }    from '../password/password.component';
 
 import { tpl } from './user-edit.component.tpl';
 
+/**
+ * User Edit Component
+ *
+ * Component to display form to create a new user or to edit an exiting user
+ */
 @Component({
   selector: 'erdiko-user-edit',
   template: tpl
@@ -26,8 +31,14 @@ export class UserEditComponent implements OnInit {
     public fb: FormBuilder;
     public messageService: MessageService;
 
+    /**
+     * Flag used to show/hide the wait spinner
+     */
     public wait: any;
 
+    /**
+     * Flag used to show/hide the wait spinner
+     */
     public passWait: any;
 
     private title: string;

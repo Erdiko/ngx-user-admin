@@ -55160,28 +55160,38 @@ var __metadata$2 = (undefined && undefined.__metadata) || function (k, v) {
 var __param = (undefined && undefined.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+/**
+ * Service that handles logging the user in and creating the logged in localStorage key
+ *
+ */
 var AuthService = (function () {
     /**
-     *
-     *
+     * initialize service class variables
      */
     function AuthService(http) {
         this.http = http;
+        /**
+         * AJAX URL for login requests
+         */
         this.loginUrl = "/ajax/users/authentication/login";
+        /**
+         * AJAX url for logout requests
+         */
         this.logoutUrl = "/ajax/users/authentication/logout";
         var currentUser = { 'token': false };
         this.token = currentUser && currentUser.token;
         this._baseUrl = "";
     }
     /**
+     * returns true if the user is logged in.
      *
-     *
+     * checks the localStorage to make sure an expected token exists
      */
     AuthService.prototype.isLoggedIn = function () {
         return Boolean(localStorage.getItem('currentUser'));
     };
     /**
-     *
+     * performs a login request via POST
      *
      */
     AuthService.prototype.login = function (form) {
@@ -55210,7 +55220,7 @@ var AuthService = (function () {
             .catch(function (error) { return Observable$1.throw(error.json().error || 'Server error'); });
     };
     /**
-     *
+     * deletes the user token to log the user out
      *
      */
     AuthService.prototype.logout = function () {
@@ -55238,16 +55248,43 @@ var __metadata$3 = (undefined && undefined.__metadata) || function (k, v) {
 var __param$1 = (undefined && undefined.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+/**
+ * Service to handle user CRUD, as well as listing of users and user events.
+ */
 var UsersService = (function () {
+    /**
+     * inject services and set class variables
+     */
     function UsersService(http, authService) {
         this.http = http;
         this.authService = authService;
+        /**
+         *
+         */
         this.listUrl = "/ajax/erdiko/users/admin/list";
+        /**
+         *
+         */
         this.userUrl = "/ajax/erdiko/users/admin/retrieve";
+        /**
+         *
+         */
         this.updateUrl = "/ajax/erdiko/users/admin/update";
+        /**
+         *
+         */
         this.createUrl = "/ajax/erdiko/users/admin/create";
+        /**
+         *
+         */
         this.deleteUrl = "/ajax/erdiko/users/admin/delete";
+        /**
+         *
+         */
         this.changePassUrl = "/ajax/erdiko/users/admin/changepass";
+        /**
+         *
+         */
         this.userEventUrl = "/ajax/erdiko/users/admin/eventlogs";
         this.dataStore = {};
         this._users$ = new BehaviorSubject(null);
@@ -55261,6 +55298,9 @@ var UsersService = (function () {
         }
     }
     Object.defineProperty(UsersService.prototype, "users$", {
+        /**
+         *
+         */
         get: function () {
             return this._users$.asObservable();
         },
@@ -55268,6 +55308,9 @@ var UsersService = (function () {
         configurable: true
     });
     Object.defineProperty(UsersService.prototype, "total$", {
+        /**
+         *
+         */
         get: function () {
             return this._total$.asObservable();
         },
@@ -55275,6 +55318,9 @@ var UsersService = (function () {
         configurable: true
     });
     Object.defineProperty(UsersService.prototype, "events$", {
+        /**
+         *
+         */
         get: function () {
             return this._events$.asObservable();
         },
@@ -55282,6 +55328,9 @@ var UsersService = (function () {
         configurable: true
     });
     Object.defineProperty(UsersService.prototype, "eventsTotal$", {
+        /**
+         *
+         */
         get: function () {
             return this._eventsTotal$.asObservable();
         },
@@ -55465,13 +55514,25 @@ var __decorate$5 = (undefined && undefined.__decorate) || function (decorators, 
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+/**
+ * Service that handles flash messages
+ */
 var MessageService = (function () {
     function MessageService() {
+        /**
+         * Messages observable
+         */
         this.subject = new Subject_2();
     }
+    /**
+     * Add a message to the array
+     */
     MessageService.prototype.setMessage = function (msg) {
         this.subject.next(msg);
     };
+    /**
+     * Return observable array of messages
+     */
     MessageService.prototype.getMessage = function () {
         return this.subject.asObservable();
     };
@@ -55490,10 +55551,21 @@ var __decorate$6 = (undefined && undefined.__decorate) || function (decorators, 
 var __metadata$4 = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+/**
+ * Route Guard preventing access to users without the expected localStorage value
+ *
+ */
 var AuthGuard = (function () {
+    /**
+     * initialize the guard class and set router to injected Router instance
+     */
     function AuthGuard(router) {
         this.router = router;
     }
+    /**
+     * returns true if the user has a valid localStorage token
+     * and allows the user to access logged in routes
+     */
     AuthGuard.prototype.canActivate = function () {
         if (localStorage.getItem('currentUser')) {
             // logged in so return true
@@ -55521,7 +55593,14 @@ var __decorate$7 = (undefined && undefined.__decorate) || function (decorators, 
 var __metadata$5 = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+/**
+ * Returns a User model for a provided ID, if one is found. Else
+ * return false and navigate the user to the default route
+ */
 var UserResolve = (function () {
+    /**
+     * set user service and router to local instances
+     */
     function UserResolve(us, router) {
         this.us = us;
         this.router = router;
@@ -56086,6 +56165,11 @@ PasswordComponent = __decorate$14([
     __metadata$12("design:paramtypes", [])
 ], PasswordComponent);
 
+/**
+ * User Model
+ *
+ * Represents a user model instance
+ */
 var User = (function () {
     function User() {
     }
@@ -56303,6 +56387,10 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+/**
+ * Application Routes
+ *
+ */
 // clang-format off
 var appRoutes = [
     {
@@ -56353,6 +56441,9 @@ var appRoutes = [
     }
 ];
 // clang-format on
+/**
+ * User Admin Module
+ */
 exports.UserAdminModule = UserAdminModule_1 = (function () {
     function UserAdminModule() {
     }

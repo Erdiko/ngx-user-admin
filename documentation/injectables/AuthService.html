@@ -377,6 +377,12 @@
             <code>src/auth.service.ts</code>
         </p>
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Service that handles logging the user in and creating the logged in localStorage key</p><br/>
+            </p>
 
             <section>
                 <h3 id="constructor">Constructor</h3>
@@ -389,10 +395,15 @@
                             </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/auth.service.ts:16</a></div>
+                                        <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/auth.service.ts:33</a></div>
                                     </td>
                                 </tr>
             
+                            <tr>
+                                <td class="col-md-4">
+                                        <div class="io-description"><p>initialize service class variables</p><br/></div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
             </section>
@@ -418,15 +429,16 @@
             
                                 <tr>
                                     <td class="col-md-4">
-                                        <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/auth.service.ts:33</a></div>
+                                        <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">src/auth.service.ts:50</a></div>
                                     </td>
                                 </tr>
             
                             <tr>
                                 <td class="col-md-4">
+                                        <div class="io-description"><p>returns true if the user is logged in. </p><br/><p>checks the localStorage to make sure an expected token exists</p><br/></div>
             
                                         <div class="io-description">
-                                            <b>Returns : </b>    <code>void</code>
+                                            <b>Returns : </b>    <code>boolean</code>
             
                                         </div>
                                 </td>
@@ -449,12 +461,13 @@
             
                                 <tr>
                                     <td class="col-md-4">
-                                        <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/auth.service.ts:41</a></div>
+                                        <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">src/auth.service.ts:58</a></div>
                                     </td>
                                 </tr>
             
                             <tr>
                                 <td class="col-md-4">
+                                        <div class="io-description"><p>performs a login request via POST</p><br/></div>
             
                                         <div class="io-description">
                                             <b>Returns : </b>    <code>Observable&lt;boolean&gt;</code>
@@ -480,12 +493,13 @@
             
                                 <tr>
                                     <td class="col-md-4">
-                                        <div class="io-line">Defined in <a href="" data-line="76" class="link-to-prism">src/auth.service.ts:76</a></div>
+                                        <div class="io-line">Defined in <a href="" data-line="93" class="link-to-prism">src/auth.service.ts:93</a></div>
                                     </td>
                                 </tr>
             
                             <tr>
                                 <td class="col-md-4">
+                                        <div class="io-description"><p>deletes the user token to log the user out</p><br/></div>
             
                                         <div class="io-description">
                                             <b>Returns : </b>    <code>void</code>
@@ -517,9 +531,14 @@
                             </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/auth.service.ts:14</a></div>
+                                        <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/auth.service.ts:28</a></div>
                                     </td>
                                 </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Base AJAX url, set in the constructor</p><br/></div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -542,9 +561,14 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/auth.service.ts:11</a></div>
+                                        <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/auth.service.ts:18</a></div>
                                     </td>
                                 </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>AJAX URL for login requests</p><br/></div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -567,9 +591,14 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/auth.service.ts:12</a></div>
+                                        <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/auth.service.ts:23</a></div>
                                     </td>
                                 </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>AJAX url for logout requests</p><br/></div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -587,9 +616,14 @@
                             </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/auth.service.ts:16</a></div>
+                                        <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/auth.service.ts:33</a></div>
                                     </td>
                                 </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Logged-In user token</p><br/></div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
             </section>
@@ -602,19 +636,35 @@ import { Observable }                                                   from &#x
 
 import &#x27;rxjs/add/operator/map&#x27;
 
+/**
+ * Service that handles logging the user in and creating the logged in localStorage key
+ *
+ */
 @Injectable()
 export class AuthService {
 
+    /**
+     * AJAX URL for login requests
+     */
     private loginUrl     &#x3D; &quot;/ajax/users/authentication/login&quot;;
+
+    /**
+     * AJAX url for logout requests
+     */
     private logoutUrl    &#x3D; &quot;/ajax/users/authentication/logout&quot;;
 
+    /**
+     * Base AJAX url, set in the constructor
+     */
     private _baseUrl: string;
 
+    /**
+     * Logged-In user token
+     */
     public token: any;
 
     /**
-     *
-     *
+     * initialize service class variables
      */
     constructor(@Inject(Http) private http: Http) {
         let currentUser &#x3D; {&#x27;token&#x27;: false};
@@ -624,15 +674,16 @@ export class AuthService {
     }
 
     /**
-     *
-     *
+     * returns true if the user is logged in. 
+     * 
+     * checks the localStorage to make sure an expected token exists
      */
-    isLoggedIn() {
+    isLoggedIn() : boolean {
         return Boolean(localStorage.getItem(&#x27;currentUser&#x27;)); 
     }
 
     /**
-     *
+     * performs a login request via POST
      *
      */
     login(form: any): Observable&lt;boolean&gt; {
@@ -667,7 +718,7 @@ export class AuthService {
     }
 
     /**
-     *
+     * deletes the user token to log the user out
      *
      */
     logout(): void {

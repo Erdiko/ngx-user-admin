@@ -64,6 +64,8 @@ The package itself provides the following elements:
 * Services, Guards & Resolvers
 * Components
 
+More info can be found in our full documentation (coming soon).
+
 ### Routes
 
 The app consists of a few simple routes with more to be added in the near future. All of these can be found in the `user-admin` module.
