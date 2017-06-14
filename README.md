@@ -1,20 +1,20 @@
 # ngx-user-admin
 
-**A modular AngularJS User Management UI**
+**A modular AngularJS User Management UI package**
 
-ngx-user-admin is a npm package or our AngularJS user-admin module designed for use with our Erdiko User Admin project but is easily extended for use in other projects. Secured with routing guards and JWT tokens, this is a great start (or end) for secure user management.
+ngx-user-admin is a npm package designed for use with the [Erdiko User Admin Module](https://github.com/Erdiko/user-admin) but is easily extended for use in other projects. Secured with routing guards and JWT tokens, this package is a great start (or end) for secure user management.
 
-The UI relies upon the Twitter Bootstrap / ngx-bootstrap projects and is easily modified for customization.
+The UI relies upon the Twitter Bootstrap / ngx-bootstrap projects and is easily modified for customization by extending the components.
 
-**Note** this is an active development project and not quite ready for production yet.  A stable V1 is due for release in June 2017.
+**Note** this is an active development project and not quite ready for production yet.  A stable V1 is due for release end of June 2017.
 
 
 Package Installation
 ------------
 
-This package is included as a dependency with our user-admin project. We highly suggest you check out this package for all your user administration needs. 
+This package is included as a dependency with our [user-admin](https://github.com/Erdiko/user-admin) project by default. We highly suggest you check out this package for all your user administration needs. 
 
-If you would like to use this package with your custom package, you will need to provide mapped AJAX responses.
+If you would like to use this package with your custom package, you will need to provide matching AJAX responses or extend the services. For more information, please refer to our documentation (coming soon).
 
 Manual installation of this package is also quite simple and is required for local development:
 
@@ -31,11 +31,11 @@ Manual installation of this package is also quite simple and is required for loc
 
 The easiest way to install this package locally is as a depedency of our user-admin project, but you must install the package locally and link to it if you wish to edit the code and test your changes.
 
-First you must link your local package, then you can follow our guidelines for local development.
+First you must link your local package then follow our guidelines for local development.
 
 As a rule, edit code in the `src` directory and link the compiled bundle from the `dist` directory. 
 
-### Workflow Overview
+### Local Development Workflow
 
 * Fork and clone the ngx-user-admin repo to a local directory
 * Fork and clone the user-admin repo to a local directory
@@ -44,13 +44,17 @@ As a rule, edit code in the `src` directory and link the compiled bundle from th
 * Edit the code in the ngx-user-admin `src` directory
 * Build the package via `npm run build` and test in the user-admin application
 
-### NPM Linking
+#### NPM Linking
 
-NPM's Link command allows you to install a locally hosted package when installing another packages dependencies.
-
-You must link from the `dist` directory as this is the compiled package's destination (and the directory we publish to npm).
+[NPM's Link](https://docs.npmjs.com/cli/link) command allows you to install a locally hosted package into your project.
 
 Please note that if/when you delete your node_modules directory the link will remain present and will be installed on subseuqent installs! Please refer to the npm docs on how to remove the link when you are done developing!
+
+#### How to Link the package
+
+1. cd into your locally cloned `ngx-user-admin` package and navigate to the `dist` directory
+1. create a link with this command: `npm link`
+1. cd into your locally cloned `user-admin` package, navigate to the angular application directory `app/themes/user-admin`, and install the package link with this command: `npm link @erdiko/ngx-user-admin`
 
 ## Package Overview
 
