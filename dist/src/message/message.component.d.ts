@@ -6,9 +6,7 @@ import { MessageService } from '../message.service';
  * Displays flash messages from service
  */
 export declare class MessageComponent implements OnDestroy {
-
     private messages;
-
     private subscription;
     /**
      * local instance of message service

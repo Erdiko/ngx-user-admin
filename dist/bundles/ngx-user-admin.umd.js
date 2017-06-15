@@ -55678,7 +55678,7 @@ exports.HeaderComponent = __decorate$8([
         _angular_router.Router])
 ], exports.HeaderComponent);
 
-var tpl$1 = "\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <div class=\"panel panel-default\">\n            <div class=\"panel-heading\">\n                Login\n            </div>\n            <div class=\"panel-body\">\n                <form \n                        id=\"user-edit\" \n                        class=\"form-horizontal\"\n                        novalidate \n                        (ngSubmit)=\"onSubmit(loginForm)\" \n                        [formGroup]=\"loginForm\"\n                    >\n                    <div class=\"form-group\" id=\"email-form\">\n                        <label for=\"email\" class=\"col-xs-2 control-label\">Email</label>\n                        <div class=\"col-xs-10\">\n                            <input type=\"text\" class=\"form-control\" name=\"email\" \n                                formControlName=\"email\" placeholder=\"Email\">\n\n                            <div class=\"text-danger\" *ngIf=\"loginForm.get('email').hasError('required') && loginForm.get('email').touched\">\n                              A valid email is required\n                            </div>\n                        </div>\n                    </div>\n\n                    <div class=\"form-group\" id=\"password-form\">\n                        <label for=\"password\" class=\"col-xs-2 control-label\">Password</label>\n                        <div class=\"col-xs-10\">\n                            <input type=\"password\" class=\"form-control\" name=\"password\" \n                                    formControlName=\"password\" placeholder=\"Password\">\n                            <div class=\"text-danger\" *ngIf=\"loginForm.get('password').hasError('required') && loginForm.get('password').touched\">\n                              Password is required.\n                            </div>\n                        </div>\n                    </div>\n\n                    <div class=\"form-group\">\n                        <div class=\"col-xs-offset-2 col-xs-4\">\n                            <button type=\"submit\" class=\"btn btn-success\" [disabled]=\"loginForm.invalid || wait\">\n                                Login\n                                <i *ngIf=\"wait\" class=\"fa fa-refresh fa-spin fa-fw\"></i> \n                            </button>\n                        </div>\n                    </div>\n                </form>\n\n            </div>\n        </div>\n    </div>\n</div>\n";
+var tpl$1 = "\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <div class=\"panel panel-default\">\n            <div class=\"panel-heading\">\n                Login\n            </div>\n            <div class=\"panel-body\">\n                <form \n                        id=\"user-edit\" \n                        class=\"form-horizontal\"\n                        novalidate \n                        (ngSubmit)=\"onSubmit(loginForm)\" \n                        [formGroup]=\"loginForm\"\n                    >\n                    <div class=\"form-group\" id=\"email-form\">\n                        <label for=\"email\" class=\"col-xs-2 control-label\">Email</label>\n                        <div class=\"col-xs-10\">\n                            <input type=\"text\" class=\"form-control\" name=\"email\" \n                                formControlName=\"email\" placeholder=\"Email\">\n\n                            <div class=\"text-danger\" *ngIf=\"loginForm.get('email').hasError('required') && loginForm.get('email').touched\">\n                              A valid email is required.\n                            </div>\n                        </div>\n                    </div>\n\n                    <div class=\"form-group\" id=\"password-form\">\n                        <label for=\"password\" class=\"col-xs-2 control-label\">Password</label>\n                        <div class=\"col-xs-10\">\n                            <input type=\"password\" class=\"form-control\" name=\"password\" \n                                    formControlName=\"password\" placeholder=\"Password\">\n                            <div class=\"text-danger\" *ngIf=\"loginForm.get('password').hasError('required') && loginForm.get('password').touched\">\n                              Password is required.\n                            </div>\n                        </div>\n                    </div>\n\n                    <div class=\"form-group\">\n                        <div class=\"col-xs-offset-2 col-xs-4\">\n                            <button type=\"submit\" class=\"btn btn-success\" [disabled]=\"loginForm.invalid || wait\">\n                                Login\n                                <i *ngIf=\"wait\" class=\"fa fa-refresh fa-spin fa-fw\"></i> \n                            </button>\n                        </div>\n                    </div>\n                </form>\n\n            </div>\n        </div>\n    </div>\n</div>\n";
 
 var __decorate$9 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -55738,14 +55738,14 @@ exports.LoginComponent = (function () {
                 .subscribe(function (result) {
                 if (result === true) {
                     _this.router.navigate(['/']);
-                    _this.messageService.setMessage({ "type": "success", "body": "Login successful" });
+                    _this.messageService.setMessage([{ "type": "success", "body": "Login successful" }]);
                 }
                 else {
-                    _this.messageService.setMessage({ "type": "danger", "body": "Login un-successful" });
+                    _this.messageService.setMessage([{ "type": "danger", "body": "Login un-successful" }]);
                     _this.wait = false;
                 }
             }, function (err) {
-                _this.messageService.setMessage({ "type": "danger", "body": "Login un-successful" });
+                _this.messageService.setMessage([{ "type": "danger", "body": "Login un-successful" }]);
                 _this.wait = false;
             });
         }
@@ -55957,7 +55957,7 @@ exports.UserListComponent = (function () {
         this.wait = true;
         this.usersService.deleteUser(this.selectedUser)
             .then(function (res) { return _this._handleResponse(res); })
-            .catch(function (error) { return _this.messageService.setMessage({ "type": "danger", "body": error }); });
+            .catch(function (error) { return _this.messageService.setMessage([{ "type": "danger", "body": error }]); });
     };
     /**
      *
@@ -55966,10 +55966,10 @@ exports.UserListComponent = (function () {
         this._getUsers();
         this.wait = false;
         if (false !== res.success) {
-            this.messageService.setMessage({ "type": "success", "body": "User successfully deleted" });
+            this.messageService.setMessage([{ "type": "success", "body": "User successfully deleted" }]);
         }
         else {
-            this.messageService.setMessage({ "type": "danger", "body": res.error_message });
+            this.messageService.setMessage([{ "type": "danger", "body": res.error_message }]);
         }
     };
     return UserListComponent;
@@ -56394,11 +56394,11 @@ exports.UserEditComponent = (function () {
     UserEditComponent.prototype._handleResponse = function (res) {
         this.wait = false;
         if (true == res.success) {
-            this.messageService.setMessage({ "type": "success", "body": "User record was successfully updated" });
+            this.messageService.setMessage([{ "type": "success", "body": "User record was successfully updated" }]);
             if ("create" === res.method) {
                 // navigate to Edit User for the new user
                 this.router.navigate(['/user/' + res.user.id]);
-                this.messageService.setMessage({ "type": "success", "body": "User was successfully created" });
+                this.messageService.setMessage([{ "type": "success", "body": "User was successfully created" }]);
             }
         }
         else {
@@ -56419,14 +56419,14 @@ exports.UserEditComponent = (function () {
         this.passWait = false;
         this.passwordForm.reset();
         if (true == res.success) {
-            this.messageService.setMessage({ "type": "success", "body": "User password successfully updated" });
+            this.messageService.setMessage([{ "type": "success", "body": "User password successfully updated" }]);
         }
         else {
-            this.messageService.setMessage({ "type": "danger", "body": res.error });
+            this.messageService.setMessage([{ "type": "danger", "body": res.error }, { "type": "danger", "body": res.error }]);
         }
     };
     UserEditComponent.prototype._handleError = function (error) {
-        this.messageService.setMessage({ "type": "danger", "body": error });
+        this.messageService.setMessage([{ "type": "danger", "body": error }]);
     };
     UserEditComponent.prototype.createEditHeader = function () {
         var panelHeader = this.user.id ? "Edit User" : "Create User";
@@ -56453,7 +56453,7 @@ exports.UserEditComponent = __decorate$15([
         MessageService])
 ], exports.UserEditComponent);
 
-var tpl$8 = "\n<alert *ngIf=\"message\" [type]=\"message.type\" dismissOnTimeout=\"3000\" dismissible=true>{{ message.body }}</alert>\n";
+var tpl$8 = "\n<div>\n<alert *ngFor=\"let message of messages\" [type]=\"message.type\" dismissOnTimeout=\"10000\" dismissible=true>{{ message.body }}</alert>\n</div>\n";
 
 var __decorate$16 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -56482,7 +56482,7 @@ exports.MessageComponent = (function () {
         this.subscription = this.messageService
             .getMessage()
             .subscribe(function (message) {
-            _this.message = message;
+            _this.messages = message;
         });
     }
     /**

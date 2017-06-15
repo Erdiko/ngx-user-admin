@@ -117,11 +117,11 @@ var UserEditComponent = (function () {
     UserEditComponent.prototype._handleResponse = function (res) {
         this.wait = false;
         if (true == res.success) {
-            this.messageService.setMessage([{ "type": "success", "body": "User record was successfully updated" }, { "type": "success", "body": "User record was super successfully updated" }]);
+            this.messageService.setMessage([{ "type": "success", "body": "User record was successfully updated" }]);
             if ("create" === res.method) {
                 // navigate to Edit User for the new user
                 this.router.navigate(['/user/' + res.user.id]);
-                this.messageService.setMessage([{ "type": "success", "body": "User was successfully created" }, { "type": "success", "body": "User was super successfully created" }]);
+                this.messageService.setMessage([{ "type": "success", "body": "User was successfully created" }]);
             }
         }
         else {
@@ -142,14 +142,14 @@ var UserEditComponent = (function () {
         this.passWait = false;
         this.passwordForm.reset();
         if (true == res.success) {
-            this.messageService.setMessage([{ "type": "success", "body": "User password successfully updated" }, { "type": "success", "body": "User password super successfully updated" }]);
+            this.messageService.setMessage([{ "type": "success", "body": "User password successfully updated" }]);
         }
         else {
             this.messageService.setMessage([{ "type": "danger", "body": res.error }, { "type": "danger", "body": res.error }]);
         }
     };
     UserEditComponent.prototype._handleError = function (error) {
-        this.messageService.setMessage([{ "type": "danger", "body": error }, { "type": "danger", "body": error }]);
+        this.messageService.setMessage([{ "type": "danger", "body": error }]);
     };
     UserEditComponent.prototype.createEditHeader = function () {
         var panelHeader = this.user.id ? "Edit User" : "Create User";

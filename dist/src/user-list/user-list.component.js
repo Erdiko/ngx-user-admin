@@ -158,7 +158,7 @@ var UserListComponent = (function () {
         this.wait = true;
         this.usersService.deleteUser(this.selectedUser)
             .then(function (res) { return _this._handleResponse(res); })
-            .catch(function (error) { return _this.messageService.setMessage([{ "type": "danger", "body": error }, { "type": "danger", "body": error }]); });
+            .catch(function (error) { return _this.messageService.setMessage([{ "type": "danger", "body": error }]); });
     };
     /**
      *
@@ -167,10 +167,10 @@ var UserListComponent = (function () {
         this._getUsers();
         this.wait = false;
         if (false !== res.success) {
-            this.messageService.setMessage([{ "type": "success", "body": "User successfully deleted" }, { "type": "success", "body": "User successfully deleted" }]);
+            this.messageService.setMessage([{ "type": "success", "body": "User successfully deleted" }]);
         }
         else {
-            this.messageService.setMessage([{ "type": "danger", "body": res.error_message }, { "type": "danger", "body": res.error_message }]);
+            this.messageService.setMessage([{ "type": "danger", "body": res.error_message }]);
         }
     };
     return UserListComponent;

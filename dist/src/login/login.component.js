@@ -62,14 +62,14 @@ var LoginComponent = (function () {
                 .subscribe(function (result) {
                 if (result === true) {
                     _this.router.navigate(['/']);
-                    _this.messageService.setMessage([{ "type": "success", "body": "Login successful" }, { "type": "success", "body": "Login super successful" }]);
+                    _this.messageService.setMessage([{ "type": "success", "body": "Login successful" }]);
                 }
                 else {
-                    _this.messageService.setMessage([{ "type": "danger", "body": "Login un-successful" }, { "type": "danger", "body": "Login super un-successful" }]);
+                    _this.messageService.setMessage([{ "type": "danger", "body": "Login un-successful" }]);
                     _this.wait = false;
                 }
             }, function (err) {
-                _this.messageService.setMessage([{ "type": "danger", "body": "Login un-successful" }, { "type": "danger", "body": "Login super un-successful" }]);
+                _this.messageService.setMessage([{ "type": "danger", "body": "Login un-successful" }]);
                 _this.wait = false;
             });
         }
