@@ -10,7 +10,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsersService } from './users.service';
+/**
+ * Returns a User model for a provided ID, if one is found. Else
+ * return false and navigate the user to the default route
+ */
 var UserResolve = (function () {
+    /**
+     * set user service and router to local instances
+     */
     function UserResolve(us, router) {
         this.us = us;
         this.router = router;

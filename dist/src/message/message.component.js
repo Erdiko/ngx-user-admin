@@ -13,16 +13,27 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 import { Component, Inject } from '@angular/core';
 import { MessageService } from '../message.service';
 import { tpl } from './message.component.tpl';
+/**
+ * Message Component
+ *
+ * Displays flash messages from service
+ */
 var MessageComponent = (function () {
+    /**
+     *
+     */
     function MessageComponent(messageService) {
         var _this = this;
         this.messageService = messageService;
         this.subscription = this.messageService
             .getMessage()
             .subscribe(function (message) {
-            _this.message = message;
+            _this.messages = message;
         });
     }
+    /**
+     * stop subscription to prevent memory leaks
+     */
     MessageComponent.prototype.ngOnDestroy = function () {
         this.subscription.unsubscribe();
     };

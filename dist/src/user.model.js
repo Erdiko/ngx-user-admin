@@ -1,3 +1,8 @@
+/**
+ * User Model
+ *
+ * Represents a user model instance
+ */
 var User = (function () {
     function User() {
     }

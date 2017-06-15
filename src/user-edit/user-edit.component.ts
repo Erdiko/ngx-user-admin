@@ -12,6 +12,11 @@ import { PasswordComponent }    from '../password/password.component';
 
 import { tpl } from './user-edit.component.tpl';
 
+/**
+ * User Edit Component
+ *
+ * Component to display form to create a new user or to edit an exiting user
+ */
 @Component({
   selector: 'erdiko-user-edit',
   template: tpl
@@ -26,8 +31,14 @@ export class UserEditComponent implements OnInit {
     public fb: FormBuilder;
     public messageService: MessageService;
 
+    /**
+     * Flag used to show/hide the wait spinner
+     */
     public wait: any;
 
+    /**
+     * Flag used to show/hide the wait spinner
+     */
     public passWait: any;
 
     private title: string;
@@ -155,12 +166,12 @@ export class UserEditComponent implements OnInit {
     private _handleResponse(res: any) {
         this.wait = false;
         if(true == res.success) {
-            this.messageService.setMessage({"type": "success", "body": "User record was successfully updated"});
+            this.messageService.setMessage([{"type": "success", "body": "User record was successfully updated"}]);
 
             if("create" === res.method) {
                 // navigate to Edit User for the new user
                 this.router.navigate(['/user/' + res.user.id]);
-                this.messageService.setMessage({"type": "success", "body": "User was successfully created"});
+                this.messageService.setMessage([{"type": "success", "body": "User was successfully created"}]);
             }
 
         } else {
@@ -184,14 +195,14 @@ export class UserEditComponent implements OnInit {
         this.passwordForm.reset();
 
         if(true == res.success) {
-            this.messageService.setMessage({"type": "success", "body": "User password successfully updated"});
+            this.messageService.setMessage([{"type": "success", "body": "User password successfully updated"}]);
         } else {
-            this.messageService.setMessage({"type": "danger", "body": res.error});
+            this.messageService.setMessage([{"type": "danger", "body": res.error}, {"type": "danger", "body": res.error}]);
         }
     }
 
     private _handleError(error: string) {
-        this.messageService.setMessage({"type": "danger", "body": error});
+        this.messageService.setMessage([{"type": "danger", "body": error}]);
     }
 
     public createEditHeader() {

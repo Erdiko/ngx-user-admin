@@ -20,7 +20,7 @@ export const tpl: string= `
                                 formControlName="email" placeholder="Email">
 
                             <div class="text-danger" *ngIf="loginForm.get('email').hasError('required') && loginForm.get('email').touched">
-                              A valid email is required
+                              A valid email is required.
                             </div>
                         </div>
                     </div>

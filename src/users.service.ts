@@ -6,29 +6,85 @@ import { BehaviorSubject, Observable, Subscription }                    from "rx
 import { AuthService }  from "./auth.service";
 import { User }         from "./user.model";
 
+/**
+ * Service to handle user CRUD, as well as listing of users and user events.
+ */
 @Injectable()
 export class UsersService {
 
+    /**
+     * 
+     */
     private _users$:       BehaviorSubject<any>;
+
+    /**
+     * 
+     */
     private _total$:       BehaviorSubject<any>;
+
+    /**
+     * 
+     */
     private _events$:      BehaviorSubject<any>;
+
+    /**
+     * 
+     */
     private _eventsTotal$: BehaviorSubject<any>;
 
+    /**
+     * 
+     */
     private dataStore: {users?: any, total?: number, events?: any, eventsTotal?: number};
 
+    /**
+     * 
+     */
     private listUrl         = "/ajax/erdiko/users/admin/list";
+
+    /**
+     * 
+     */
     private userUrl         = "/ajax/erdiko/users/admin/retrieve";
+
+    /**
+     * 
+     */
     private updateUrl       = "/ajax/erdiko/users/admin/update";
+
+    /**
+     * 
+     */
     private createUrl       = "/ajax/erdiko/users/admin/create";
+
+    /**
+     * 
+     */
     private deleteUrl       = "/ajax/erdiko/users/admin/delete";
+
+    /**
+     * 
+     */
     private changePassUrl   = "/ajax/erdiko/users/admin/changepass";
 
+    /**
+     * 
+     */
     private userEventUrl    = "/ajax/erdiko/users/admin/eventlogs";
 
+    /**
+     * 
+     */
     private authToken: any;
 
+    /**
+     * 
+     */
     private _baseUrl: string;
 
+    /**
+     * inject services and set class variables
+     */
     constructor(
         @Inject(Http) private http: Http,
         @Inject(AuthService) private authService: AuthService) {
@@ -48,18 +104,30 @@ export class UsersService {
 
     }
 
+    /**
+     * 
+     */
     get users$() {
         return this._users$.asObservable();
     }
 
+    /**
+     * 
+     */
     get total$() {
         return this._total$.asObservable();
     }
 
+    /**
+     * 
+     */
     get events$() {
         return this._events$.asObservable();
     }
 
+    /**
+     * 
+     */
     get eventsTotal$() {
         return this._eventsTotal$.asObservable();
     }
@@ -129,7 +197,7 @@ export class UsersService {
      * Get a specific user, returns a promise
      *
      */
-     getUser(id: string) {
+     getUser(id: string) : Promise<any> {
 
         let url = this._baseUrl + this.userUrl + '?id=' + id;
         let options = this._getHeaderOptions();

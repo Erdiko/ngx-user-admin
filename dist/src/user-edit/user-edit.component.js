@@ -18,6 +18,11 @@ import { User } from "../user.model";
 import { MessageService } from '../message.service';
 import { PasswordComponent } from '../password/password.component';
 import { tpl } from './user-edit.component.tpl';
+/**
+ * User Edit Component
+ *
+ * Component to display form to create a new user or to edit an exiting user
+ */
 var UserEditComponent = (function () {
     function UserEditComponent(usersService, route, router, messageService) {
         // init the wait state (and indication animation) to 'off'
@@ -112,11 +117,11 @@ var UserEditComponent = (function () {
     UserEditComponent.prototype._handleResponse = function (res) {
         this.wait = false;
         if (true == res.success) {
-            this.messageService.setMessage({ "type": "success", "body": "User record was successfully updated" });
+            this.messageService.setMessage([{ "type": "success", "body": "User record was successfully updated" }]);
             if ("create" === res.method) {
                 // navigate to Edit User for the new user
                 this.router.navigate(['/user/' + res.user.id]);
-                this.messageService.setMessage({ "type": "success", "body": "User was successfully created" });
+                this.messageService.setMessage([{ "type": "success", "body": "User was successfully created" }]);
             }
         }
         else {
@@ -137,14 +142,14 @@ var UserEditComponent = (function () {
         this.passWait = false;
         this.passwordForm.reset();
         if (true == res.success) {
-            this.messageService.setMessage({ "type": "success", "body": "User password successfully updated" });
+            this.messageService.setMessage([{ "type": "success", "body": "User password successfully updated" }]);
         }
         else {
-            this.messageService.setMessage({ "type": "danger", "body": res.error });
+            this.messageService.setMessage([{ "type": "danger", "body": res.error }, { "type": "danger", "body": res.error }]);
         }
     };
     UserEditComponent.prototype._handleError = function (error) {
-        this.messageService.setMessage({ "type": "danger", "body": error });
+        this.messageService.setMessage([{ "type": "danger", "body": error }]);
     };
     UserEditComponent.prototype.createEditHeader = function () {
         var panelHeader = this.user.id ? "Edit User" : "Create User";

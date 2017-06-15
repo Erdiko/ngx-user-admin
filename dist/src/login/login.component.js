@@ -16,7 +16,15 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { MessageService } from '../message.service';
 import { AuthService } from '../auth.service';
 import { tpl } from './login.component.tpl';
+/**
+ * Login Component
+ *
+ * Displays login form and handles form submissions
+ */
 var LoginComponent = (function () {
+    /**
+     *
+     */
     function LoginComponent(messageService, authService, router, fb) {
         this.authService = authService;
         this.router = router;
@@ -25,16 +33,26 @@ var LoginComponent = (function () {
         this.wait = false;
         this.messageService = messageService;
     }
+    /**
+     * initialize and render the form on the onInit life cycle hook
+     */
     LoginComponent.prototype.ngOnInit = function () {
         this._initForm();
     };
-    // foo bar
+    /**
+     * initialize the form group and add validators
+     */
     LoginComponent.prototype._initForm = function () {
         this.loginForm = this.fb.group({
             email: ['', Validators.required],
             password: ['', Validators.required]
         });
     };
+    /**
+     * handle the onSubmit action for the login form
+     *
+     *
+     */
     LoginComponent.prototype.onSubmit = function (_a) {
         var _this = this;
         var value = _a.value, valid = _a.valid;
@@ -44,14 +62,14 @@ var LoginComponent = (function () {
                 .subscribe(function (result) {
                 if (result === true) {
                     _this.router.navigate(['/']);
-                    _this.messageService.setMessage({ "type": "success", "body": "Login successful" });
+                    _this.messageService.setMessage([{ "type": "success", "body": "Login successful" }]);
                 }
                 else {
-                    _this.messageService.setMessage({ "type": "danger", "body": "Login un-successful" });
+                    _this.messageService.setMessage([{ "type": "danger", "body": "Login un-successful" }]);
                     _this.wait = false;
                 }
             }, function (err) {
-                _this.messageService.setMessage({ "type": "danger", "body": "Login un-successful" });
+                _this.messageService.setMessage([{ "type": "danger", "body": "Login un-successful" }]);
                 _this.wait = false;
             });
         }
