@@ -9,10 +9,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+/**
+ * Route Guard preventing access to users without the expected localStorage value
+ *
+ */
 var AuthGuard = (function () {
+    /**
+     * initialize the guard class and set router to injected Router instance
+     */
     function AuthGuard(router) {
         this.router = router;
     }
+    /**
+     * returns true if the user has a valid localStorage token
+     * and allows the user to access logged in routes
+     */
     AuthGuard.prototype.canActivate = function () {
         if (localStorage.getItem('currentUser')) {
             // logged in so return true

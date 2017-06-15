@@ -14,16 +14,43 @@ import { Injectable, Inject } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { BehaviorSubject } from "rxjs";
 import { AuthService } from "./auth.service";
+/**
+ * Service to handle user CRUD, as well as listing of users and user events.
+ */
 var UsersService = (function () {
+    /**
+     * inject services and set class variables
+     */
     function UsersService(http, authService) {
         this.http = http;
         this.authService = authService;
+        /**
+         *
+         */
         this.listUrl = "/ajax/erdiko/users/admin/list";
+        /**
+         *
+         */
         this.userUrl = "/ajax/erdiko/users/admin/retrieve";
+        /**
+         *
+         */
         this.updateUrl = "/ajax/erdiko/users/admin/update";
+        /**
+         *
+         */
         this.createUrl = "/ajax/erdiko/users/admin/create";
+        /**
+         *
+         */
         this.deleteUrl = "/ajax/erdiko/users/admin/delete";
+        /**
+         *
+         */
         this.changePassUrl = "/ajax/erdiko/users/admin/changepass";
+        /**
+         *
+         */
         this.userEventUrl = "/ajax/erdiko/users/admin/eventlogs";
         this.dataStore = {};
         this._users$ = new BehaviorSubject(null);
@@ -37,6 +64,9 @@ var UsersService = (function () {
         }
     }
     Object.defineProperty(UsersService.prototype, "users$", {
+        /**
+         *
+         */
         get: function () {
             return this._users$.asObservable();
         },
@@ -44,6 +74,9 @@ var UsersService = (function () {
         configurable: true
     });
     Object.defineProperty(UsersService.prototype, "total$", {
+        /**
+         *
+         */
         get: function () {
             return this._total$.asObservable();
         },
@@ -51,6 +84,9 @@ var UsersService = (function () {
         configurable: true
     });
     Object.defineProperty(UsersService.prototype, "events$", {
+        /**
+         *
+         */
         get: function () {
             return this._events$.asObservable();
         },
@@ -58,6 +94,9 @@ var UsersService = (function () {
         configurable: true
     });
     Object.defineProperty(UsersService.prototype, "eventsTotal$", {
+        /**
+         *
+         */
         get: function () {
             return this._eventsTotal$.asObservable();
         },

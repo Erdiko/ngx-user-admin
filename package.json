@@ -1,12 +1,15 @@
 {
   "name": "@erdiko/ngx-user-admin",
-  "version": "1.1.16",
+  "version": "1.1.18",
   "description": "Erdiko Angular User Admin",
   "scripts": {
+    "preinstall": "npm i -g @compodoc/compodoc",
     "transpile": "ngc -p tsconfig.json",
     "package": "rollup -c --silent",
     "minify": "uglifyjs dist/bundles/ngx-user-admin.umd.js --screw-ie8 --compress --mangle --comments --output dist/bundles/ngx-user-admin.umd.min.js",
-    "build": "npm run transpile && npm run package && npm run minify"
+    "build": "npm run transpile && npm run package && npm run minify",
+    "clean": "rimraf src/*.ngfactory.* src/*.ngsummary.* src/**/*.ngsummary.* && rimraf src/**/*ngfactory.*",
+    "docs": "npm run clean && compodoc -p src/tsconfig.json"
   },
   "types": "./index.d.ts",
   "repository": {

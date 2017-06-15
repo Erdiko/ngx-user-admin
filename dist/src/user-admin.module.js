@@ -24,6 +24,10 @@ import { UsersEventLogComponent } from './users-event-log/users-event-log.compon
 import { PasswordComponent } from './password/password.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { MessageComponent } from './message/message.component';
+/**
+ * Application Routes
+ *
+ */
 // clang-format off
 var appRoutes = [
     {
@@ -74,6 +78,9 @@ var appRoutes = [
     }
 ];
 // clang-format on
+/**
+ * User Admin Module
+ */
 var UserAdminModule = UserAdminModule_1 = (function () {
     function UserAdminModule() {
     }

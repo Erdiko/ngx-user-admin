@@ -18,6 +18,11 @@ import { User } from "../user.model";
 import { MessageService } from '../message.service';
 import { PasswordComponent } from '../password/password.component';
 import { tpl } from './user-edit.component.tpl';
+/**
+ * User Edit Component
+ *
+ * Component to display form to create a new user or to edit an exiting user
+ */
 var UserEditComponent = (function () {
     function UserEditComponent(usersService, route, router, messageService) {
         // init the wait state (and indication animation) to 'off'

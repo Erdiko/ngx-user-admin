@@ -5,6 +5,11 @@ import { UsersService } from '../users.service';
 import { User } from "../user.model";
 import { MessageService } from '../message.service';
 import { PasswordComponent } from '../password/password.component';
+/**
+ * User Edit Component
+ *
+ * Component to display form to create a new user or to edit an exiting user
+ */
 export declare class UserEditComponent implements OnInit {
     passwordComponent: PasswordComponent;
     usersService: UsersService;
@@ -12,7 +17,13 @@ export declare class UserEditComponent implements OnInit {
     router: Router;
     fb: FormBuilder;
     messageService: MessageService;
+    /**
+     * Flag used to show/hide the wait spinner
+     */
     wait: any;
+    /**
+     * Flag used to show/hide the wait spinner
+     */
     passWait: any;
     private title;
     userForm: FormGroup;

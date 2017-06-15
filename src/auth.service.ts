@@ -5,19 +5,35 @@ import { Observable }                                                   from 'rx
 
 import 'rxjs/add/operator/map'
 
+/**
+ * Service that handles logging the user in and creating the logged in localStorage key
+ *
+ */
 @Injectable()
 export class AuthService {
 
+    /**
+     * AJAX URL for login requests
+     */
     private loginUrl     = "/ajax/users/authentication/login";
+
+    /**
+     * AJAX url for logout requests
+     */
     private logoutUrl    = "/ajax/users/authentication/logout";
 
+    /**
+     * Base AJAX url, set in the constructor
+     */
     private _baseUrl: string;
 
+    /**
+     * Logged-In user token
+     */
     public token: any;
 
     /**
-     *
-     *
+     * initialize service class variables
      */
     constructor(@Inject(Http) private http: Http) {
         let currentUser = {'token': false};
@@ -27,15 +43,16 @@ export class AuthService {
     }
 
     /**
-     *
-     *
+     * returns true if the user is logged in. 
+     * 
+     * checks the localStorage to make sure an expected token exists
      */
-    isLoggedIn() {
+    isLoggedIn() : boolean {
         return Boolean(localStorage.getItem('currentUser')); 
     }
 
     /**
-     *
+     * performs a login request via POST
      *
      */
     login(form: any): Observable<boolean> {
@@ -70,7 +87,7 @@ export class AuthService {
     }
 
     /**
-     *
+     * deletes the user token to log the user out
      *
      */
     logout(): void {

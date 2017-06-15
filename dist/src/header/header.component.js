@@ -11,15 +11,32 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from "../auth.service";
 import { tpl } from './header.component.tpl';
+/**
+ * Header Component
+ *
+ * Displays application header, with alternate header when the user is logged in
+ */
 var HeaderComponent = (function () {
+    /**
+     * set local instance of the auth service and router
+     */
     function HeaderComponent(authService, router) {
         this.authService = authService;
         this.router = router;
     }
+    /**
+     *
+     */
     HeaderComponent.prototype.ngOnInit = function () { };
+    /**
+     * returns true if the user is logged in, used to display full header based on user state
+     */
     HeaderComponent.prototype.isLoggedIn = function () {
         return this.authService.isLoggedIn();
     };
+    /**
+     * handle click action if the user clicks "logout"
+     */
     HeaderComponent.prototype.clickLogout = function () {
         this.authService.logout();
         this.router.navigate(['/login']);

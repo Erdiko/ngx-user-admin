@@ -9,9 +9,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { tpl } from './home.component.tpl';
+/**
+ * Home Component
+ *
+ * Default view component for a logged in user
+ */
 var HomeComponent = (function () {
+    /**
+     *
+     */
     function HomeComponent() {
     }
+    /**
+     *
+     */
     HomeComponent.prototype.ngOnInit = function () {
     };
     return HomeComponent;

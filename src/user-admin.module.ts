@@ -32,6 +32,10 @@ import { UserEditComponent }        from './user-edit/user-edit.component';
 
 import { MessageComponent }         from './message/message.component';
 
+/**
+ * Application Routes
+ *
+ */
 // clang-format off
 const appRoutes = [
     {
@@ -83,6 +87,9 @@ const appRoutes = [
 ];
 // clang-format on
 
+/**
+ * User Admin Module
+ */
 @NgModule({
     imports: [ 
         BrowserModule,
