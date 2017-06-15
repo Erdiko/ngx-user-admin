@@ -96,13 +96,13 @@ export class LoginComponent implements OnInit {
                 .subscribe(result => {
                     if (result === true) {
                         this.router.navigate(['/']);
-                        this.messageService.setMessage({"type": "success", "body": "Login successful"});
+                        this.messageService.setMessage([{"type": "success", "body": "Login successful"}]);
                     } else {
-                        this.messageService.setMessage({"type": "danger", "body": "Login un-successful"});
+                        this.messageService.setMessage([{"type": "danger", "body": "Login un-successful"}]);
                         this.wait = false;
                     }
                 }, err => {
-                    this.messageService.setMessage({"type": "danger", "body": "Login un-successful"});
+                    this.messageService.setMessage([{"type": "danger", "body": "Login un-successful"}]);
                     this.wait = false;
                 });
 

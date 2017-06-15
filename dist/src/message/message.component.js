@@ -28,7 +28,7 @@ var MessageComponent = (function () {
         this.subscription = this.messageService
             .getMessage()
             .subscribe(function (message) {
-            _this.message = message;
+            _this.messages = message;
         });
     }
     /**

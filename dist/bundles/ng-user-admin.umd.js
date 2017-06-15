@@ -1,7 +1,7 @@
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/http'), require('@angular/router')) :
 	typeof define === 'function' && define.amd ? define(['exports', '@angular/http', '@angular/router'], factory) :
-	(factory((global.ng = global.ng || {}, global.ng['ngx-user-admin'] = global.ng['ngx-user-admin'] || {}),global.vendor._angular_http,global.vendor._angular_router));
+	(factory((global.ng = global.ng || {}, global.ng['ng-user-admin'] = global.ng['ng-user-admin'] || {}),global.vendor._angular_http,global.vendor._angular_router));
 }(this, (function (exports,_angular_http,_angular_router) { 'use strict';
 
 /**
@@ -28863,7 +28863,7 @@ var AccordionPanelComponent = (function () {
     AccordionPanelComponent.decorators = [
         { type: Component, args: [{
                     selector: 'accordion-group, accordion-panel',
-                    template: "\n<div class=\"panel card\" [ngClass]=\"panelClass\">\n  <div class=\"panel-heading card-header\" role=\"tab\" (click)=\"toggleOpen($event)\">\n    <div class=\"panel-title card-title\">\n      <div role=\"button\" class=\"accordion-toggle\" [attr.aria-expanded]=\"isOpen\">\n        <div *ngIf=\"heading\"[ngClass]=\"{'text-muted': isDisabled}\">{{heading}}</div>\n        <ng-content select=\"[accordion-heading]\"></ng-content>\n      </div>\n    </div>\n  </div>\n  <div class=\"panel-collapse collapse\" role=\"tabpanel\" [collapse]=\"!isOpen\">\n    <div class=\"panel-body card-block\">\n      <ng-content></ng-content>\n    </div>\n  </div>\n</div>\n  "
+                    template: "\n<div class=\"panel card\" [ngClass]=\"panelClass\">\n  <div class=\"panel-heading card-header\" role=\"tab\" (click)=\"toggleOpen($event)\">\n    <div class=\"panel-title\">\n      <div role=\"button\" class=\"accordion-toggle\" [attr.aria-expanded]=\"isOpen\">\n        <div *ngIf=\"heading\"[ngClass]=\"{'text-muted': isDisabled}\">{{heading}}</div>\n        <ng-content select=\"[accordion-heading]\"></ng-content>\n      </div>\n    </div>\n  </div>\n  <div class=\"panel-collapse collapse\" role=\"tabpanel\" [collapse]=\"!isOpen\">\n    <div class=\"panel-body card-block\">\n      <ng-content></ng-content>\n    </div>\n  </div>\n</div>\n  "
                 },] },
     ];
     /** @nocollapse */
@@ -34234,6 +34234,7 @@ hooks.relativeTimeThreshold = getSetRelativeTimeThreshold;
 hooks.calendarFormat        = getCalendarFormat;
 hooks.prototype             = proto;
 
+//import * as moment from 'moment';
 var DateFormatter$1 = (function () {
     function DateFormatter() {
     }
@@ -35558,6 +35559,7 @@ var BsDropdownDirective = (function () {
             .provide({ provide: BsDropdownState, useValue: this._state });
         this.onShown = this._dropdown.onShown;
         this.onHidden = this._dropdown.onHidden;
+        this.isOpenChange = this._state.isOpenChange;
         // set initial dropdown state from config
         this._state.autoClose = this._config.autoClose;
     }
@@ -35663,6 +35665,7 @@ var BsDropdownDirective = (function () {
         }
         if (this._showInline) {
             this._isInlineOpen = true;
+            this.onShown.emit(true);
             this._state.isOpenChange.emit(true);
             return;
         }
@@ -35696,6 +35699,7 @@ var BsDropdownDirective = (function () {
         }
         if (this._showInline) {
             this._isInlineOpen = false;
+            this.onHidden.emit(true);
         }
         else {
             this._dropdown.hide();
@@ -35749,6 +35753,7 @@ var BsDropdownDirective = (function () {
         'autoClose': [{ type: Input },],
         'isDisabled': [{ type: Input },],
         'isOpen': [{ type: Input },],
+        'isOpenChange': [{ type: Output },],
         'onShown': [{ type: Output },],
         'onHidden': [{ type: Output },],
     };
@@ -35885,6 +35890,7 @@ var ModalDirective = (function () {
         this.scrollbarWidth = 0;
         this.timerHideModal = 0;
         this.timerRmBackDrop = 0;
+        this.isNested = false;
         this._element = _element;
         this._renderer = _renderer;
         this._backdrop = clf.createLoader(_element, _viewContainerRef, _renderer);
@@ -35951,7 +35957,12 @@ var ModalDirective = (function () {
         this.checkScrollbar();
         this.setScrollbar();
         if (document$2 && document$2.body) {
-            this._renderer.setElementClass(document$2.body, ClassName.OPEN, true);
+            if (document$2.body.classList.contains(ClassName.OPEN)) {
+                this.isNested = true;
+            }
+            else {
+                this._renderer.setElementClass(document$2.body, ClassName.OPEN, true);
+            }
         }
         this.showBackdrop(function () {
             _this.showElement();
@@ -36031,11 +36042,13 @@ var ModalDirective = (function () {
         this._renderer.setElementAttribute(this._element.nativeElement, 'aria-hidden', 'true');
         this._renderer.setElementStyle(this._element.nativeElement, 'display', 'none');
         this.showBackdrop(function () {
-            if (document$2 && document$2.body) {
-                _this._renderer.setElementClass(document$2.body, ClassName.OPEN, false);
+            if (!_this.isNested) {
+                if (document$2 && document$2.body) {
+                    _this._renderer.setElementClass(document$2.body, ClassName.OPEN, false);
+                }
+                _this.resetScrollbar();
             }
             _this.resetAdjustments();
-            _this.resetScrollbar();
             _this.onHidden.emit(_this);
         });
     };
@@ -37292,18 +37305,24 @@ var TabsetComponent = (function () {
         this.tabs.push(tab);
         tab.active = this.tabs.length === 1 && tab.active !== false;
     };
-    TabsetComponent.prototype.removeTab = function (tab) {
+    TabsetComponent.prototype.removeTab = function (tab, options) {
+        if (options === void 0) { options = { reselect: true, emit: true }; }
         var index = this.tabs.indexOf(tab);
         if (index === -1 || this.isDestroyed) {
             return;
         }
         // Select a new tab if the tab to be removed is selected and not destroyed
-        if (tab.active && this.hasAvailableTabs(index)) {
+        if (options.reselect && tab.active && this.hasAvailableTabs(index)) {
             var newActiveIndex = this.getClosestTabIndex(index);
             this.tabs[newActiveIndex].active = true;
         }
-        tab.removed.emit(tab);
+        if (options.emit) {
+            tab.removed.emit(tab);
+        }
         this.tabs.splice(index, 1);
+        if (tab.elementRef.nativeElement && tab.elementRef.nativeElement.remove) {
+            tab.elementRef.nativeElement.remove();
+        }
     };
     TabsetComponent.prototype.getClosestTabIndex = function (index) {
         var tabsLength = this.tabs.length;
@@ -37364,12 +37383,13 @@ var TabsetComponent = (function () {
 }());
 
 var TabDirective = (function () {
-    function TabDirective(tabset) {
+    function TabDirective(tabset, elementRef) {
+        this.elementRef = elementRef;
         /** fired when tab became active, $event:Tab equals to selected instance of Tab component */
         this.select = new EventEmitter();
         /** fired when tab became inactive, $event:Tab equals to deselected instance of Tab component */
         this.deselect = new EventEmitter();
-        /** fired before tab will be removed */
+        /** fired before tab will be removed, $event:Tab equals to instance of removed tab */
         this.removed = new EventEmitter();
         this.addClass = true;
         this.tabset = tabset;
@@ -37403,15 +37423,20 @@ var TabDirective = (function () {
     TabDirective.prototype.ngOnInit = function () {
         this.removable = this.removable;
     };
+    TabDirective.prototype.ngOnDestroy = function () {
+        this.tabset.removeTab(this, { reselect: false, emit: false });
+    };
     TabDirective.decorators = [
         { type: Directive, args: [{ selector: 'tab, [tab]' },] },
     ];
     /** @nocollapse */
     TabDirective.ctorParameters = function () { return [
         { type: TabsetComponent, },
+        { type: ElementRef, },
     ]; };
     TabDirective.propDecorators = {
         'heading': [{ type: Input },],
+        'id': [{ type: Input },],
         'disabled': [{ type: Input },],
         'removable': [{ type: Input },],
         'customClass': [{ type: Input },],
@@ -41398,6 +41423,7 @@ var PopoverContainerComponent = (function () {
  */
 var PopoverDirective = (function () {
     function PopoverDirective(_elementRef, _renderer, _viewContainerRef, _config, cis) {
+        this._isInited = false;
         this._popover = cis
             .createLoader(_elementRef, _viewContainerRef, _renderer)
             .provide({ provide: PopoverConfig, useValue: _config });
@@ -41462,6 +41488,13 @@ var PopoverDirective = (function () {
     };
     PopoverDirective.prototype.ngOnInit = function () {
         var _this = this;
+        // fix: seems there are an issue with `routerLinkActive`
+        // which result in duplicated call ngOnInit without call to ngOnDestroy
+        // read more: https://github.com/valor-software/ngx-bootstrap/issues/1885
+        if (this._isInited) {
+            return;
+        }
+        this._isInited = true;
         this._popover.listen({
             triggers: this.triggers,
             show: function () { return _this.show(); }
@@ -55160,38 +55193,28 @@ var __metadata$2 = (undefined && undefined.__metadata) || function (k, v) {
 var __param = (undefined && undefined.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-/**
- * Service that handles logging the user in and creating the logged in localStorage key
- *
- */
 var AuthService = (function () {
     /**
-     * initialize service class variables
+     *
+     *
      */
     function AuthService(http) {
         this.http = http;
-        /**
-         * AJAX URL for login requests
-         */
         this.loginUrl = "/ajax/users/authentication/login";
-        /**
-         * AJAX url for logout requests
-         */
         this.logoutUrl = "/ajax/users/authentication/logout";
         var currentUser = { 'token': false };
         this.token = currentUser && currentUser.token;
         this._baseUrl = "";
     }
     /**
-     * returns true if the user is logged in.
      *
-     * checks the localStorage to make sure an expected token exists
+     *
      */
     AuthService.prototype.isLoggedIn = function () {
         return Boolean(localStorage.getItem('currentUser'));
     };
     /**
-     * performs a login request via POST
+     *
      *
      */
     AuthService.prototype.login = function (form) {
@@ -55220,7 +55243,7 @@ var AuthService = (function () {
             .catch(function (error) { return Observable$1.throw(error.json().error || 'Server error'); });
     };
     /**
-     * deletes the user token to log the user out
+     *
      *
      */
     AuthService.prototype.logout = function () {
@@ -55248,43 +55271,16 @@ var __metadata$3 = (undefined && undefined.__metadata) || function (k, v) {
 var __param$1 = (undefined && undefined.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-/**
- * Service to handle user CRUD, as well as listing of users and user events.
- */
 var UsersService = (function () {
-    /**
-     * inject services and set class variables
-     */
     function UsersService(http, authService) {
         this.http = http;
         this.authService = authService;
-        /**
-         *
-         */
         this.listUrl = "/ajax/erdiko/users/admin/list";
-        /**
-         *
-         */
         this.userUrl = "/ajax/erdiko/users/admin/retrieve";
-        /**
-         *
-         */
         this.updateUrl = "/ajax/erdiko/users/admin/update";
-        /**
-         *
-         */
         this.createUrl = "/ajax/erdiko/users/admin/create";
-        /**
-         *
-         */
         this.deleteUrl = "/ajax/erdiko/users/admin/delete";
-        /**
-         *
-         */
         this.changePassUrl = "/ajax/erdiko/users/admin/changepass";
-        /**
-         *
-         */
         this.userEventUrl = "/ajax/erdiko/users/admin/eventlogs";
         this.dataStore = {};
         this._users$ = new BehaviorSubject(null);
@@ -55298,9 +55294,6 @@ var UsersService = (function () {
         }
     }
     Object.defineProperty(UsersService.prototype, "users$", {
-        /**
-         *
-         */
         get: function () {
             return this._users$.asObservable();
         },
@@ -55308,9 +55301,6 @@ var UsersService = (function () {
         configurable: true
     });
     Object.defineProperty(UsersService.prototype, "total$", {
-        /**
-         *
-         */
         get: function () {
             return this._total$.asObservable();
         },
@@ -55318,9 +55308,6 @@ var UsersService = (function () {
         configurable: true
     });
     Object.defineProperty(UsersService.prototype, "events$", {
-        /**
-         *
-         */
         get: function () {
             return this._events$.asObservable();
         },
@@ -55328,9 +55315,6 @@ var UsersService = (function () {
         configurable: true
     });
     Object.defineProperty(UsersService.prototype, "eventsTotal$", {
-        /**
-         *
-         */
         get: function () {
             return this._eventsTotal$.asObservable();
         },
@@ -55514,25 +55498,13 @@ var __decorate$5 = (undefined && undefined.__decorate) || function (decorators, 
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-/**
- * Service that handles flash messages
- */
 var MessageService = (function () {
     function MessageService() {
-        /**
-         * Messages observable
-         */
         this.subject = new Subject_2();
     }
-    /**
-     * Add a message to the array
-     */
     MessageService.prototype.setMessage = function (msg) {
         this.subject.next(msg);
     };
-    /**
-     * Return observable array of messages
-     */
     MessageService.prototype.getMessage = function () {
         return this.subject.asObservable();
     };
@@ -55551,21 +55523,10 @@ var __decorate$6 = (undefined && undefined.__decorate) || function (decorators, 
 var __metadata$4 = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-/**
- * Route Guard preventing access to users without the expected localStorage value
- *
- */
 var AuthGuard = (function () {
-    /**
-     * initialize the guard class and set router to injected Router instance
-     */
     function AuthGuard(router) {
         this.router = router;
     }
-    /**
-     * returns true if the user has a valid localStorage token
-     * and allows the user to access logged in routes
-     */
     AuthGuard.prototype.canActivate = function () {
         if (localStorage.getItem('currentUser')) {
             // logged in so return true
@@ -55593,14 +55554,7 @@ var __decorate$7 = (undefined && undefined.__decorate) || function (decorators, 
 var __metadata$5 = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-/**
- * Returns a User model for a provided ID, if one is found. Else
- * return false and navigate the user to the default route
- */
 var UserResolve = (function () {
-    /**
-     * set user service and router to local instances
-     */
     function UserResolve(us, router) {
         this.us = us;
         this.router = router;
@@ -55637,32 +55591,15 @@ var __decorate$8 = (undefined && undefined.__decorate) || function (decorators, 
 var __metadata$6 = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-/**
- * Header Component
- *
- * Displays application header, with alternate header when the user is logged in
- */
 exports.HeaderComponent = (function () {
-    /**
-     * set local instance of the auth service and router
-     */
     function HeaderComponent(authService, router) {
         this.authService = authService;
         this.router = router;
     }
-    /**
-     *
-     */
     HeaderComponent.prototype.ngOnInit = function () { };
-    /**
-     * returns true if the user is logged in, used to display full header based on user state
-     */
     HeaderComponent.prototype.isLoggedIn = function () {
         return this.authService.isLoggedIn();
     };
-    /**
-     * handle click action if the user clicks "logout"
-     */
     HeaderComponent.prototype.clickLogout = function () {
         this.authService.logout();
         this.router.navigate(['/login']);
@@ -55692,15 +55629,7 @@ var __metadata$7 = (undefined && undefined.__metadata) || function (k, v) {
 var __param$2 = (undefined && undefined.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-/**
- * Login Component
- *
- * Displays login form and handles form submissions
- */
 exports.LoginComponent = (function () {
-    /**
-     *
-     */
     function LoginComponent(messageService, authService, router, fb) {
         this.authService = authService;
         this.router = router;
@@ -55709,26 +55638,16 @@ exports.LoginComponent = (function () {
         this.wait = false;
         this.messageService = messageService;
     }
-    /**
-     * initialize and render the form on the onInit life cycle hook
-     */
     LoginComponent.prototype.ngOnInit = function () {
         this._initForm();
     };
-    /**
-     * initialize the form group and add validators
-     */
+    // foo bar
     LoginComponent.prototype._initForm = function () {
         this.loginForm = this.fb.group({
             email: ['', Validators.required],
             password: ['', Validators.required]
         });
     };
-    /**
-     * handle the onSubmit action for the login form
-     *
-     *
-     */
     LoginComponent.prototype.onSubmit = function (_a) {
         var _this = this;
         var value = _a.value, valid = _a.valid;
@@ -55738,14 +55657,14 @@ exports.LoginComponent = (function () {
                 .subscribe(function (result) {
                 if (result === true) {
                     _this.router.navigate(['/']);
-                    _this.messageService.setMessage([{ "type": "success", "body": "Login successful" }]);
+                    _this.messageService.setMessage([{ "type": "success", "body": "Login successful" }, { "type": "success", "body": "Login super successful" }]);
                 }
                 else {
-                    _this.messageService.setMessage([{ "type": "danger", "body": "Login un-successful" }]);
+                    _this.messageService.setMessage([{ "type": "danger", "body": "Login un-successful" }, { "type": "danger", "body": "Login super un-successful" }]);
                     _this.wait = false;
                 }
             }, function (err) {
-                _this.messageService.setMessage([{ "type": "danger", "body": "Login un-successful" }]);
+                _this.messageService.setMessage([{ "type": "danger", "body": "Login un-successful" }, { "type": "danger", "body": "Login super un-successful" }]);
                 _this.wait = false;
             });
         }
@@ -55775,20 +55694,9 @@ var __decorate$10 = (undefined && undefined.__decorate) || function (decorators,
 var __metadata$8 = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-/**
- * Home Component
- *
- * Default view component for a logged in user
- */
 exports.HomeComponent = (function () {
-    /**
-     *
-     */
     function HomeComponent() {
     }
-    /**
-     *
-     */
     HomeComponent.prototype.ngOnInit = function () {
     };
     return HomeComponent;
@@ -55801,7 +55709,7 @@ exports.HomeComponent = __decorate$10([
     __metadata$8("design:paramtypes", [])
 ], exports.HomeComponent);
 
-var tpl$3 = "\n<div class=\"row\">\n    <div class=\"col-xs-4\">\n        <button class=\"btn btn-info btn-sm\" routerLink=\"/user/\">Create a New User</button>\n    </div>\n</div>\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <br />\n    </div>\n</div>\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <table class=\"table table-bordered table-hover\"> \n            <thead> \n                <tr> \n                    <th (click)=\"sort('id')\">\n                        ID \n                        <i *ngIf=\"sortCol == 'id'\" class=\"fa\" [ngClass]=\"{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}\" aria-hidden=\"true\"></i>\n                    </th> \n                    <th (click)=\"sort('name')\">\n                        User Name\n                        <i *ngIf=\"sortCol == 'name'\" class=\"fa\" [ngClass]=\"{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}\" aria-hidden=\"true\"></i>\n                    </th> \n                    <th (click)=\"sort('role')\">\n                        Role\n                        <i *ngIf=\"sortCol == 'role'\" class=\"fa\" [ngClass]=\"{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}\" aria-hidden=\"true\"></i>\n                    </th> \n                    <th (click)=\"sort('last_login')\">\n                        Last Login\n                        <i *ngIf=\"sortCol == 'last_login'\" class=\"fa\" [ngClass]=\"{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}\" aria-hidden=\"true\"></i>\n                    </th> \n                    <th (click)=\"sort('created_at')\">\n                        Joined\n                        <i *ngIf=\"sortCol == 'created_at'\" class=\"fa\" [ngClass]=\"{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}\" aria-hidden=\"true\"></i>\n                    </th> \n                    <th></th> \n                    <th></th> \n                </tr> \n            </thead> \n\n            <tbody *ngIf=\"wait\"> \n                <tr>\n                    <td colspan=\"7\" align=\"center\">\n                        <i class=\"fa fa-refresh fa-spin fa-2x fa-fw\"></i> \n                    </td>\n                </tr>\n            </tbody> \n\n            <tbody *ngIf=\"!wait && error\"> \n                <tr>\n                    <td colspan=\"7\" align=\"center\">\n                        <alert type=\"warning\">{{ error }}</alert>\n                    </td>\n                </tr>\n            </tbody> \n\n            <tbody *ngIf=\"!wait && !error && users && users.length < 1\"> \n                <tr>\n                    <td colspan=\"7\" align=\"center\">\n                        <alert type=\"warning\">Sorry, no users were found. Please try again.</alert>\n                    </td>\n                </tr>\n            </tbody> \n\n            <tbody *ngIf=\"!wait && !error && users && users.length > 0\"> \n                <tr class=\"user_row\" *ngFor=\"let user of users; let index = index\"> \n                    <th class=\"user_id\" scope=\"row\">{{ user.id }}</th> \n                    <td class=\"user_name\">{{ user.name }}</td> \n                    <td class=\"user_role_name\">{{ user.role.name }}</td> \n                    <td class=\"user_last_login\">{{ user.last_login }}</td> \n                    <td class=\"user_joined\">{{ user.joined }}</td> \n                    <td class=\"user_edit\"><a routerLink=\"/user/{{ user.id }}\">Edit</a></td>\n                    <td class=\"user_delete\"><button type=\"button\" class=\"btn btn-danger\" (click)=\"clickDelete(user.id)\">Delete</button></td> \n                </tr> \n            </tbody> \n        </table>\n    </div>\n</div>\n<div class=\"row paging\" *ngIf=\"total\">\n    <div class=\"col-xs-4\">\n\n        <nav aria-label=\"Page navigation\">\n          <ul class=\"pagination pagination-sm\">\n\n            <li *ngIf=\"(currentPage > 1)\">\n              <a (click)=\"clickPrev()\" aria-label=\"Previous\">\n                <span aria-hidden=\"true\">&laquo;</span>\n              </a>\n            </li>\n\n            <li \n                *ngFor=\"let page of pages; let index = index\"\n                 [ngClass]=\"{'active': (page == currentPage)}\"\n                 [attr.id]=\"'page'+(index + 1)\"\n                >\n                <a (click)=\"clickPage(page)\">{{ page }}</a>\n            </li>\n\n            <li *ngIf=\"(currentPage < getPageCount())\">\n              <a (click)=\"clickNext()\" aria-label=\"Next\">\n                <span aria-hidden=\"true\">&raquo;</span>\n              </a>\n            </li>\n\n          </ul>\n        </nav>\n\n    </div>\n</div>\n\n<div bsModal #confirmDeleteModal=\"bs-modal\" class=\"modal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"mySmallModalLabel\" aria-hidden=\"true\">\n  <div class=\"modal-dialog modal-sm\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h4 class=\"modal-title pull-left\">Delete?</h4>\n        <button type=\"button\" class=\"close pull-right\" aria-label=\"Close\" (click)=\"cancelDelete()\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body\">\n        <div class=\"row\">\n            <div class=\"col-xs-12\">\n                <p>Are you sure you want to delete this user?</p>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"col-xs-6\">\n                <button type=\"button\" class=\"btn btn-warning\" (click)=\"cancelDelete()\">Cancel</button>\n            </div>\n            <div class=\"col-xs-6\">\n                <button type=\"button\" class=\"btn btn-danger\" (click)=\"confirmDelete(selectedUser)\">Confirm</button>\n            </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n";
+var tpl$3 = "\n<div class=\"row\">\n    <div class=\"col-xs-4\">\n        <button class=\"btn btn-info btn-sm\" routerLink=\"/user/\">Create a New User</button>\n    </div>\n</div>\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <br />\n    </div>\n</div>\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <table class=\"table table-bordered table-hover\"> \n            <thead> \n                <tr> \n                    <th (click)=\"sort('id')\">\n                        ID \n                        <i *ngIf=\"sortCol == 'id'\" class=\"fa\" [ngClass]=\"{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}\" aria-hidden=\"true\"></i>\n                    </th> \n                    <th (click)=\"sort('name')\">\n                        User Name\n                        <i *ngIf=\"sortCol == 'name'\" class=\"fa\" [ngClass]=\"{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}\" aria-hidden=\"true\"></i>\n                    </th> \n                    <th>\n                        Role\n                    </th> \n                    <th>\n                        Last Login\n                    </th> \n                    <th>\n                        Joined\n                    </th> \n                    <th>Edit</th> \n                    <th>Delete</th> \n                </tr> \n            </thead> \n\n            <tbody *ngIf=\"wait\"> \n                <tr>\n                    <td colspan=\"7\" align=\"center\">\n                        <i class=\"fa fa-refresh fa-spin fa-2x fa-fw\"></i> \n                    </td>\n                </tr>\n            </tbody> \n\n            <tbody *ngIf=\"!wait && error\"> \n                <tr>\n                    <td colspan=\"7\" align=\"center\">\n                        <alert type=\"warning\">{{ error }}</alert>\n                    </td>\n                </tr>\n            </tbody> \n\n            <tbody *ngIf=\"!wait && !error && users && users.length < 1\"> \n                <tr>\n                    <td colspan=\"7\" align=\"center\">\n                        <alert type=\"warning\">Sorry, no users were found. Please try again.</alert>\n                    </td>\n                </tr>\n            </tbody> \n\n            <tbody *ngIf=\"!wait && !error && users && users.length > 0\"> \n                <tr class=\"user_row\" *ngFor=\"let user of users; let index = index\"> \n                    <th class=\"user_id\" scope=\"row\">{{ user.id }}</th> \n                    <td class=\"user_name\">{{ user.name }}</td> \n                    <td class=\"user_role_name\">{{ user.role.name }}</td> \n                    <td class=\"user_last_login\">{{ user.last_login }}</td> \n                    <td class=\"user_joined\">{{ user.joined }}</td> \n                    <td class=\"user_edit\"><a routerLink=\"/user/{{ user.id }}\">Edit</a></td>\n                    <td class=\"user_delete\"><button type=\"button\" class=\"btn btn-danger\" (click)=\"clickDelete(user.id)\">Delete</button></td> \n                </tr> \n            </tbody> \n        </table>\n    </div>\n</div>\n<div class=\"row paging\" *ngIf=\"total\">\n    <div class=\"col-xs-4\">\n\n        <nav aria-label=\"Page navigation\">\n          <ul class=\"pagination pagination-sm\">\n\n            <li *ngIf=\"(currentPage > 1)\">\n              <a (click)=\"clickPrev()\" aria-label=\"Previous\">\n                <span aria-hidden=\"true\">&laquo;</span>\n              </a>\n            </li>\n\n            <li \n                *ngFor=\"let page of pages; let index = index\"\n                 [ngClass]=\"{'active': (page == currentPage)}\"\n                 [attr.id]=\"'page'+(index + 1)\"\n                >\n                <a (click)=\"clickPage(page)\">{{ page }}</a>\n            </li>\n\n            <li *ngIf=\"(currentPage < getPageCount())\">\n              <a (click)=\"clickNext()\" aria-label=\"Next\">\n                <span aria-hidden=\"true\">&raquo;</span>\n              </a>\n            </li>\n\n          </ul>\n        </nav>\n\n    </div>\n</div>\n\n<div bsModal #confirmDeleteModal=\"bs-modal\" class=\"modal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"mySmallModalLabel\" aria-hidden=\"true\">\n  <div class=\"modal-dialog modal-sm\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h4 class=\"modal-title pull-left\">Delete?</h4>\n        <button type=\"button\" class=\"close pull-right\" aria-label=\"Close\" (click)=\"cancelDelete()\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body\">\n        <div class=\"row\">\n            <div class=\"col-xs-12\">\n                <p>Are you sure you want to delete this user?</p>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"col-xs-6\">\n                <button type=\"button\" class=\"btn btn-warning\" (click)=\"cancelDelete()\">Cancel</button>\n            </div>\n            <div class=\"col-xs-6\">\n                <button type=\"button\" class=\"btn btn-danger\" (click)=\"confirmDelete(selectedUser)\">Confirm</button>\n            </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n";
 
 var __decorate$11 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -55815,33 +55723,13 @@ var __metadata$9 = (undefined && undefined.__metadata) || function (k, v) {
 var __param$3 = (undefined && undefined.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-/**
- * HTML template for this component
- */
-/**
- * User List Component
- *
- * Displays a sortable list of current users in the system
- */
 exports.UserListComponent = (function () {
-    /**
-     *
-     */
     function UserListComponent(usersService, messageService, route, router) {
         var _this = this;
         this.route = route;
         this.router = router;
-        /**
-         *
-         */
         this.currentPage = 1;
-        /**
-         *
-         */
         this.pagesize = 10;
-        /**
-         *
-         */
         this.pages = [];
         this.usersService = usersService;
         this.messageService = messageService;
@@ -55857,72 +55745,50 @@ exports.UserListComponent = (function () {
         this.usersService.total$.subscribe(function () { return _this._listUpdated(); });
         this.selectedUser = false;
     }
-    /**
-     * on init get a list of the users
-     */
+    // on init get a list of the users
     UserListComponent.prototype.ngOnInit = function () {
         this._getUsers();
     };
-    /**
-     * unsub all the things
-     */
+    // unsub all the things
     UserListComponent.prototype.ngOnDestroy = function () {
         this.users$.unsubscribe();
         this.total$.unsubscribe();
     };
-    /**
-     * update the user list by making another request to the users service
-     */
+    // update the user list by making another request to the users service
     UserListComponent.prototype._getUsers = function () {
         this.wait = true;
         this.usersService.getUsers(this.pagesize, this.currentPage, this.sortCol, this.sortDir);
     };
-    /**
-     * list has been updated; toggle wait state off and generate pagination links
-     */
+    // list has been updated; toggle wait state off and generate pagination links
     UserListComponent.prototype._listUpdated = function () {
         this.wait = false;
         this._setPagination();
     };
-    /**
-     * return pagination links count
-     */
+    // return pagination links count
     UserListComponent.prototype.getPageCount = function () {
         return Math.ceil(this.total / this.pagesize);
     };
-    /**
-     * create a list of pagination links
-     */
+    // create a list of pagination links
     UserListComponent.prototype._setPagination = function () {
         this.pages = [];
         for (var i = 1; i <= this.getPageCount(); i++) {
             this.pages.push(i);
         }
     };
-    /**
-     * pagination click listeners
-     */
+    // pagination click listeners
     UserListComponent.prototype.clickPage = function (idx) {
         this.currentPage = idx;
         this._getUsers();
     };
-    /**
-     * handles "next" pagination button click
-     */
     UserListComponent.prototype.clickNext = function () {
         this.currentPage++;
         this._getUsers();
     };
-    /**
-     * handles "prev" pagination button click
-     */
     UserListComponent.prototype.clickPrev = function () {
         this.currentPage--;
         this._getUsers();
     };
-    /**
-     * sort click listeners
-     */
+    // sort click listeners
     UserListComponent.prototype.sort = function (col) {
         // toggle sort dir if the user clicks on currently sorted column
         if (this.sortCol == col) {
@@ -55935,41 +55801,29 @@ exports.UserListComponent = (function () {
         this.sortCol = col;
         this._getUsers();
     };
-    /**
-     *
-     */
     UserListComponent.prototype.clickDelete = function (idx) {
         this.selectedUser = idx;
         this.confirmDeleteModal.show();
     };
-    /**
-     *
-     */
     UserListComponent.prototype.cancelDelete = function () {
         this.confirmDeleteModal.hide();
     };
-    /**
-     *
-     */
     UserListComponent.prototype.confirmDelete = function (idx) {
         var _this = this;
         this.confirmDeleteModal.hide();
         this.wait = true;
         this.usersService.deleteUser(this.selectedUser)
             .then(function (res) { return _this._handleResponse(res); })
-            .catch(function (error) { return _this.messageService.setMessage([{ "type": "danger", "body": error }]); });
+            .catch(function (error) { return _this.messageService.setMessage([{ "type": "danger", "body": error }, { "type": "danger", "body": error }]); });
     };
-    /**
-     *
-     */
     UserListComponent.prototype._handleResponse = function (res) {
         this._getUsers();
         this.wait = false;
         if (false !== res.success) {
-            this.messageService.setMessage([{ "type": "success", "body": "User successfully deleted" }]);
+            this.messageService.setMessage([{ "type": "success", "body": "User successfully deleted" }, { "type": "success", "body": "User successfully deleted" }]);
         }
         else {
-            this.messageService.setMessage([{ "type": "danger", "body": res.error_message }]);
+            this.messageService.setMessage([{ "type": "danger", "body": res.error_message }, { "type": "danger", "body": res.error_message }]);
         }
     };
     return UserListComponent;
@@ -56247,11 +56101,6 @@ var __decorate$14 = (undefined && undefined.__decorate) || function (decorators,
 var __metadata$12 = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-/**
- * Password Component
- *
- * Component to display password update form
- */
 var PasswordComponent = (function () {
     function PasswordComponent() {
     }
@@ -56270,11 +56119,6 @@ PasswordComponent = __decorate$14([
     __metadata$12("design:paramtypes", [])
 ], PasswordComponent);
 
-/**
- * User Model
- *
- * Represents a user model instance
- */
 var User = (function () {
     function User() {
     }
@@ -56295,11 +56139,6 @@ var __metadata$13 = (undefined && undefined.__metadata) || function (k, v) {
 var __param$6 = (undefined && undefined.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-/**
- * User Edit Component
- *
- * Component to display form to create a new user or to edit an exiting user
- */
 exports.UserEditComponent = (function () {
     function UserEditComponent(usersService, route, router, messageService) {
         // init the wait state (and indication animation) to 'off'
@@ -56394,11 +56233,11 @@ exports.UserEditComponent = (function () {
     UserEditComponent.prototype._handleResponse = function (res) {
         this.wait = false;
         if (true == res.success) {
-            this.messageService.setMessage([{ "type": "success", "body": "User record was successfully updated" }]);
+            this.messageService.setMessage([{ "type": "success", "body": "User record was successfully updated" }, { "type": "success", "body": "User record was super successfully updated" }]);
             if ("create" === res.method) {
                 // navigate to Edit User for the new user
                 this.router.navigate(['/user/' + res.user.id]);
-                this.messageService.setMessage([{ "type": "success", "body": "User was successfully created" }]);
+                this.messageService.setMessage([{ "type": "success", "body": "User was successfully created" }, { "type": "success", "body": "User was super successfully created" }]);
             }
         }
         else {
@@ -56419,14 +56258,14 @@ exports.UserEditComponent = (function () {
         this.passWait = false;
         this.passwordForm.reset();
         if (true == res.success) {
-            this.messageService.setMessage([{ "type": "success", "body": "User password successfully updated" }]);
+            this.messageService.setMessage([{ "type": "success", "body": "User password successfully updated" }, { "type": "success", "body": "User password super successfully updated" }]);
         }
         else {
             this.messageService.setMessage([{ "type": "danger", "body": res.error }, { "type": "danger", "body": res.error }]);
         }
     };
     UserEditComponent.prototype._handleError = function (error) {
-        this.messageService.setMessage([{ "type": "danger", "body": error }]);
+        this.messageService.setMessage([{ "type": "danger", "body": error }, { "type": "danger", "body": error }]);
     };
     UserEditComponent.prototype.createEditHeader = function () {
         var panelHeader = this.user.id ? "Edit User" : "Create User";
@@ -56453,7 +56292,7 @@ exports.UserEditComponent = __decorate$15([
         MessageService])
 ], exports.UserEditComponent);
 
-var tpl$8 = "\n<div>\n<alert *ngFor=\"let message of messages\" [type]=\"message.type\" dismissOnTimeout=\"10000\" dismissible=true>{{ message.body }}</alert>\n</div>\n";
+var tpl$8 = "\n<div>\n<alert *ngFor=\"let message of messages\" [type]=\"message.type\" dismissOnTimeout=\"3000\" dismissible=true>{{ message.body }}</alert>\n</div>\n";
 
 var __decorate$16 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -56467,15 +56306,7 @@ var __metadata$14 = (undefined && undefined.__metadata) || function (k, v) {
 var __param$7 = (undefined && undefined.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-/**
- * Message Component
- *
- * Displays flash messages from service
- */
 exports.MessageComponent = (function () {
-    /**
-     *
-     */
     function MessageComponent(messageService) {
         var _this = this;
         this.messageService = messageService;
@@ -56485,9 +56316,6 @@ exports.MessageComponent = (function () {
             _this.messages = message;
         });
     }
-    /**
-     * stop subscription to prevent memory leaks
-     */
     MessageComponent.prototype.ngOnDestroy = function () {
         this.subscription.unsubscribe();
     };
@@ -56508,10 +56336,6 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-/**
- * Application Routes
- *
- */
 // clang-format off
 var appRoutes = [
     {
@@ -56562,9 +56386,6 @@ var appRoutes = [
     }
 ];
 // clang-format on
-/**
- * User Admin Module
- */
 exports.UserAdminModule = UserAdminModule_1 = (function () {
     function UserAdminModule() {
     }
