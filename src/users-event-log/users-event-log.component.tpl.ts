@@ -6,7 +6,7 @@ export const tpl: string= `
 </div>
 <div class="row">
     <div class="col-xs-12">
-        <table class="table table-bordered table-hover"> 
+        <table class="table table-bordered table-hover">
             <thead>
                 <tr>
                     <th (click)="sort('id')">
@@ -30,10 +30,10 @@ export const tpl: string= `
                 </tr>
             </thead>
 
-            <tbody *ngIf="wait"> 
+            <tbody *ngIf="wait">
                 <tr>
                     <td colspan="7" align="center">
-                        <i class="fa fa-refresh fa-spin fa-2x fa-fw"></i> 
+                        <i class="fa fa-refresh fa-spin fa-2x fa-fw"></i>
                     </td>
                 </tr>
             </tbody>
@@ -62,7 +62,7 @@ export const tpl: string= `
     <div class="col-xs-4">
 
         <nav aria-label="Page navigation">
-          <ul class="pagination pagination-sm">
+          <ul class="pagination pagination-md">
 
             <li *ngIf="(currentPage > 1)">
               <a (click)="clickPrev()" aria-label="Previous">
@@ -70,7 +70,7 @@ export const tpl: string= `
               </a>
             </li>
 
-            <li 
+            <li
                 *ngFor="let page of pages"
                  [ngClass]="{'active': (page == currentPage)}"
                 >
