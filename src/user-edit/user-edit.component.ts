@@ -181,9 +181,8 @@ export class UserEditComponent implements OnInit {
 
     onSubmitChangepass({ value, valid }: { value: any, valid: boolean }) {
         this.passWait = true;
-
         if(valid) {
-            return this.usersService.changePassword(this.user.id, value.passwordInput.password)
+            return this.usersService.changePassword(this.user.id, value.password)
                        .then(res => this._handlePasswordResponse(res))
                        .catch(error => this._handleError(error));
         }
