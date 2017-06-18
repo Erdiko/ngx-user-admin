@@ -9,11 +9,11 @@ export const tpl: string= `
         <table class="table table-bordered table-hover">
             <thead>
                 <tr>
-                    <th (click)="sort('id')">
+                    <th (click)="sort('id')" class="sortable">
                         ID
                         <i class="fa" [ngClass]="{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}" aria-hidden="true"></i>
                     </th>
-                    <th (click)="sort('user_id')">
+                    <th (click)="sort('user_id')" class="sortable">
                         User ID
                         <i class="fa" [ngClass]="{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}" aria-hidden="true"></i>
                     </th>
@@ -23,7 +23,7 @@ export const tpl: string= `
                     <th>
                         Event Data
                     </th>
-                    <th (click)="sort('created_at')">
+                    <th (click)="sort('created_at')" class="sortable">
                         Created At
                         <i class="fa" [ngClass]="{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}" aria-hidden="true"></i>
                     </th>

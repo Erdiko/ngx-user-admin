@@ -14,23 +14,23 @@ export const tpl: string= `
         <table class="table table-bordered table-hover">
             <thead>
                 <tr>
-                    <th (click)="sort('id')">
+                    <th (click)="sort('id')" class="sortable">
                         ID
                         <i *ngIf="sortCol == 'id'" class="fa" [ngClass]="{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}" aria-hidden="true"></i>
                     </th>
-                    <th (click)="sort('name')">
+                    <th (click)="sort('name')" class="sortable">
                         User Name
                         <i *ngIf="sortCol == 'name'" class="fa" [ngClass]="{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}" aria-hidden="true"></i>
                     </th>
-                    <th (click)="sort('role')">
+                    <th (click)="sort('role')" class="sortable">
                         Role
                         <i *ngIf="sortCol == 'role'" class="fa" [ngClass]="{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}" aria-hidden="true"></i>
                     </th>
-                    <th (click)="sort('last_login')">
+                    <th (click)="sort('last_login')" class="sortable">
                         Last Login
                         <i *ngIf="sortCol == 'last_login'" class="fa" [ngClass]="{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}" aria-hidden="true"></i>
                     </th>
-                    <th (click)="sort('created_at')">
+                    <th (click)="sort('created_at')" class="sortable">
                         Joined
                         <i *ngIf="sortCol == 'created_at'" class="fa" [ngClass]="{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}" aria-hidden="true"></i>
                     </th>

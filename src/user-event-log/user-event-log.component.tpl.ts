@@ -11,7 +11,7 @@ export const tpl: string= `
                     <thead>
 
                         <tr>
-                            <th (click)="sort('id')">
+                            <th (click)="sort('id')" class="sortable">
                                 ID
                                 <i class="fa" [ngClass]="{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}" aria-hidden="true"></i>
                             </th>
@@ -21,7 +21,7 @@ export const tpl: string= `
                             <th>
                                 Event Data
                             </th>
-                            <th (click)="sort('created_at')">
+                            <th (click)="sort('created_at')" class="sortable">
                                 Created At
                                 <i class="fa" [ngClass]="{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}" aria-hidden="true"></i>
                             </th>
