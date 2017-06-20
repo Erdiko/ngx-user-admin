@@ -77,7 +77,7 @@ describe('AuthService', () => {
 
     function setupConnections(backend: MockBackend, options: any) {
         backend.connections.subscribe((connection: MockConnection) => {
-            if (connection.request.url === "http://docker.local:8088/ajax/users/authentication/login") {
+            if (connection.request.url === "http://erdiko.local/ajax/users/authentication/login") {
                 const responseOptions = new ResponseOptions(options);
                 const response = new Response(responseOptions);
                 connection.mockRespond(response);

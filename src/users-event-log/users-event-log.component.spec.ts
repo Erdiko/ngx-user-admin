@@ -144,7 +144,7 @@ describe('UserEventLogComponent', () => {
 
 			let url = connection.request.url;
             let queryString = url.slice(url.indexOf("?"));
-			url = url.slice(0, url.indexOf("?")).replace('http://docker.local:8088', '');
+			url = url.slice(0, url.indexOf("?")).replace('http://erdiko.local', '');
 			
         
             switch(url) {

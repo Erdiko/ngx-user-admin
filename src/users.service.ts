@@ -99,7 +99,7 @@ export class UsersService {
         // hack to help with local development
         this._baseUrl = "";
         if(window.location && "localhost" == window.location.hostname) {
-            this._baseUrl = "http://docker.local:8088";
+            this._baseUrl = "http://erdiko.local";
         }
 
     }
