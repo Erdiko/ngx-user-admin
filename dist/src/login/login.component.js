@@ -65,11 +65,11 @@ var LoginComponent = (function () {
                     _this.messageService.setMessage([{ "type": "success", "body": "Login successful" }]);
                 }
                 else {
-                    _this.messageService.setMessage([{ "type": "danger", "body": "Login un-successful" }]);
+                    _this.messageService.setMessage([{ "type": "danger", "body": "Invalid username or password" }]);
                     _this.wait = false;
                 }
             }, function (err) {
-                _this.messageService.setMessage([{ "type": "danger", "body": "Login un-successful" }]);
+                _this.messageService.setMessage([{ "type": "danger", "body": "Login failed" }]);
                 _this.wait = false;
             });
         }

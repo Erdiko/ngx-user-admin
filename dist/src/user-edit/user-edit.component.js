@@ -133,7 +133,7 @@ var UserEditComponent = (function () {
         var value = _a.value, valid = _a.valid;
         this.passWait = true;
         if (valid) {
-            return this.usersService.changePassword(this.user.id, value.passwordInput.password)
+            return this.usersService.changePassword(this.user.id, value.password)
                 .then(function (res) { return _this._handlePasswordResponse(res); })
                 .catch(function (error) { return _this._handleError(error); });
         }
