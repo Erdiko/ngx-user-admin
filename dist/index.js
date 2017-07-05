@@ -9,5 +9,5 @@ export { UserEditComponent } from './src/user-edit/user-edit.component';
 export { MessageComponent } from './src/message/message.component';
 
 export { UsersService }     from './src/users.service';
-export { MessagesService }  from './src/users.service';
+export { MessageService }   from './src/message.service';
 //# sourceMappingURL=index.js.map

@@ -7,3 +7,6 @@ export { UserEventLogComponent } from './src/user-event-log/user-event-log.compo
 export { UsersEventLogComponent } from './src/users-event-log/users-event-log.component';
 export { UserEditComponent } from './src/user-edit/user-edit.component';
 export { MessageComponent } from './src/message/message.component';
+
+export { UsersService }     from './src/users.service';
+export { MessageService }   from './src/message.service';
