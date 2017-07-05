@@ -8,6 +8,8 @@ export { UsersEventLogComponent } from './src/users-event-log/users-event-log.co
 export { UserEditComponent } from './src/user-edit/user-edit.component';
 export { MessageComponent } from './src/message/message.component';
 
-export { UsersService }     from './src/users.service';
-export { MessageService }   from './src/message.service';
+export { AuthService }              from './src/auth.service';
+export { UserResolveService }       from './src/user-resolve.service';
+export { UsersService }             from './src/users.service';
+export { MessageService }           from './src/message.service';
 //# sourceMappingURL=index.js.map
