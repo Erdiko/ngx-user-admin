@@ -58,7 +58,7 @@ export const tpl: string= `
         </div>
 
         <div class="row paging" *ngIf="eventsTotal">
-            <div class="col-xs-4">
+            <div class="col-xs-12">
 
                 <nav aria-label="Page navigation">
                 <ul class="pagination pagination-md">
