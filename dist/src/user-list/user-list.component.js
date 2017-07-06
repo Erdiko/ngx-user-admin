@@ -173,23 +173,23 @@ var UserListComponent = (function () {
             this.messageService.setMessage([{ "type": "danger", "body": res.error_message }]);
         }
     };
+    __decorate([
+        ViewChild('confirmDeleteModal'),
+        __metadata("design:type", ModalDirective)
+    ], UserListComponent.prototype, "confirmDeleteModal", void 0);
+    UserListComponent = __decorate([
+        Component({
+            selector: 'erdiko-user-list',
+            template: tpl
+        }),
+        __param(0, Inject(UsersService)),
+        __param(1, Inject(MessageService)),
+        __metadata("design:paramtypes", [UsersService,
+            MessageService,
+            ActivatedRoute,
+            Router])
+    ], UserListComponent);
     return UserListComponent;
 }());
-__decorate([
-    ViewChild('confirmDeleteModal'),
-    __metadata("design:type", ModalDirective)
-], UserListComponent.prototype, "confirmDeleteModal", void 0);
-UserListComponent = __decorate([
-    Component({
-        selector: 'erdiko-user-list',
-        template: tpl
-    }),
-    __param(0, Inject(UsersService)),
-    __param(1, Inject(MessageService)),
-    __metadata("design:paramtypes", [UsersService,
-        MessageService,
-        ActivatedRoute,
-        Router])
-], UserListComponent);
 export { UserListComponent };
 //# sourceMappingURL=user-list.component.js.map

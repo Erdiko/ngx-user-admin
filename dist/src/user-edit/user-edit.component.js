@@ -25,6 +25,12 @@ import { tpl } from './user-edit.component.tpl';
  */
 var UserEditComponent = (function () {
     function UserEditComponent(usersService, route, router, messageService) {
+        // TODO replace this with an array from a service 
+        this.roles = [
+            { "value": "3", "key": "General" },
+            { "value": "2", "key": "Admin" },
+            { "value": "1", "key": "Super Admin" },
+        ];
         // init the wait state (and indication animation) to 'off'
         this.wait = false;
         this.passWait = false;
@@ -155,25 +161,25 @@ var UserEditComponent = (function () {
         var panelHeader = this.user.id ? "Edit User" : "Create User";
         return panelHeader;
     };
+    __decorate([
+        ViewChild(PasswordComponent),
+        __metadata("design:type", PasswordComponent)
+    ], UserEditComponent.prototype, "passwordComponent", void 0);
+    UserEditComponent = __decorate([
+        Component({
+            selector: 'erdiko-user-edit',
+            template: tpl
+        }),
+        __param(0, Inject(UsersService)),
+        __param(1, Inject(ActivatedRoute)),
+        __param(2, Inject(Router)),
+        __param(3, Inject(MessageService)),
+        __metadata("design:paramtypes", [UsersService,
+            ActivatedRoute,
+            Router,
+            MessageService])
+    ], UserEditComponent);
     return UserEditComponent;
 }());
-__decorate([
-    ViewChild(PasswordComponent),
-    __metadata("design:type", PasswordComponent)
-], UserEditComponent.prototype, "passwordComponent", void 0);
-UserEditComponent = __decorate([
-    Component({
-        selector: 'erdiko-user-edit',
-        template: tpl
-    }),
-    __param(0, Inject(UsersService)),
-    __param(1, Inject(ActivatedRoute)),
-    __param(2, Inject(Router)),
-    __param(3, Inject(MessageService)),
-    __metadata("design:paramtypes", [UsersService,
-        ActivatedRoute,
-        Router,
-        MessageService])
-], UserEditComponent);
 export { UserEditComponent };
 //# sourceMappingURL=user-edit.component.js.map

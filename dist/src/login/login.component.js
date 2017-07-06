@@ -74,18 +74,18 @@ var LoginComponent = (function () {
             });
         }
     };
+    LoginComponent = __decorate([
+        Component({
+            selector: 'app-login',
+            template: tpl
+        }),
+        __param(0, Inject(MessageService)),
+        __metadata("design:paramtypes", [MessageService,
+            AuthService,
+            Router,
+            FormBuilder])
+    ], LoginComponent);
     return LoginComponent;
 }());
-LoginComponent = __decorate([
-    Component({
-        selector: 'app-login',
-        template: tpl
-    }),
-    __param(0, Inject(MessageService)),
-    __metadata("design:paramtypes", [MessageService,
-        AuthService,
-        Router,
-        FormBuilder])
-], LoginComponent);
 export { LoginComponent };
 //# sourceMappingURL=login.component.js.map

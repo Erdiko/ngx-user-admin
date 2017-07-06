@@ -7,8 +7,7 @@ export { UserEventLogComponent } from './src/user-event-log/user-event-log.compo
 export { UsersEventLogComponent } from './src/users-event-log/users-event-log.component';
 export { UserEditComponent } from './src/user-edit/user-edit.component';
 export { MessageComponent } from './src/message/message.component';
-
-export { AuthService }              from './src/auth.service';
-export { UserResolve }              from './src/user-resolve.service';
-export { UsersService }             from './src/users.service';
-export { MessageService }           from './src/message.service';
+export { AuthService } from './src/auth.service';
+export { UserResolve } from './src/user-resolve.service';
+export { UsersService } from './src/users.service';
+export { MessageService } from './src/message.service';

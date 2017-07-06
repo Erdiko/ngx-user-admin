@@ -264,14 +264,14 @@ var UsersService = (function () {
     UsersService.prototype.handleError = function (error) {
         return Promise.reject(error.message || error);
     };
+    UsersService = __decorate([
+        Injectable(),
+        __param(0, Inject(Http)),
+        __param(1, Inject(AuthService)),
+        __metadata("design:paramtypes", [Http,
+            AuthService])
+    ], UsersService);
     return UsersService;
 }());
-UsersService = __decorate([
-    Injectable(),
-    __param(0, Inject(Http)),
-    __param(1, Inject(AuthService)),
-    __metadata("design:paramtypes", [Http,
-        AuthService])
-], UsersService);
 export { UsersService };
 //# sourceMappingURL=users.service.js.map

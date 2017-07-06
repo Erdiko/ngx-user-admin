@@ -28,10 +28,10 @@ var MessageService = (function () {
     MessageService.prototype.getMessage = function () {
         return this.subject.asObservable();
     };
+    MessageService = __decorate([
+        Injectable()
+    ], MessageService);
     return MessageService;
 }());
-MessageService = __decorate([
-    Injectable()
-], MessageService);
 export { MessageService };
 //# sourceMappingURL=message.service.js.map

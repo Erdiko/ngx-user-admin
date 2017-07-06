@@ -82,12 +82,12 @@ var AuthService = (function () {
         this.token = null;
         localStorage.removeItem('currentUser');
     };
+    AuthService = __decorate([
+        Injectable(),
+        __param(0, Inject(Http)),
+        __metadata("design:paramtypes", [Http])
+    ], AuthService);
     return AuthService;
 }());
-AuthService = __decorate([
-    Injectable(),
-    __param(0, Inject(Http)),
-    __metadata("design:paramtypes", [Http])
-], AuthService);
 export { AuthService };
 //# sourceMappingURL=auth.service.js.map

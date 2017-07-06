@@ -55228,13 +55228,13 @@ var AuthService = (function () {
         this.token = null;
         localStorage.removeItem('currentUser');
     };
+    AuthService = __decorate$3([
+        Injectable(),
+        __param(0, Inject(_angular_http.Http)),
+        __metadata$2("design:paramtypes", [_angular_http.Http])
+    ], AuthService);
     return AuthService;
 }());
-AuthService = __decorate$3([
-    Injectable(),
-    __param(0, Inject(_angular_http.Http)),
-    __metadata$2("design:paramtypes", [_angular_http.Http])
-], AuthService);
 
 var __decorate$4 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -55498,15 +55498,15 @@ var UsersService = (function () {
     UsersService.prototype.handleError = function (error) {
         return Promise.reject(error.message || error);
     };
+    UsersService = __decorate$4([
+        Injectable(),
+        __param$1(0, Inject(_angular_http.Http)),
+        __param$1(1, Inject(AuthService)),
+        __metadata$3("design:paramtypes", [_angular_http.Http,
+            AuthService])
+    ], UsersService);
     return UsersService;
 }());
-UsersService = __decorate$4([
-    Injectable(),
-    __param$1(0, Inject(_angular_http.Http)),
-    __param$1(1, Inject(AuthService)),
-    __metadata$3("design:paramtypes", [_angular_http.Http,
-        AuthService])
-], UsersService);
 
 var __decorate$5 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -55536,11 +55536,11 @@ var MessageService = (function () {
     MessageService.prototype.getMessage = function () {
         return this.subject.asObservable();
     };
+    MessageService = __decorate$5([
+        Injectable()
+    ], MessageService);
     return MessageService;
 }());
-MessageService = __decorate$5([
-    Injectable()
-], MessageService);
 
 var __decorate$6 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -55577,12 +55577,12 @@ var AuthGuard = (function () {
         //this.messageService.sendMessage("login", "no-access");
         return false;
     };
+    AuthGuard = __decorate$6([
+        Injectable(),
+        __metadata$4("design:paramtypes", [_angular_router.Router])
+    ], AuthGuard);
     return AuthGuard;
 }());
-AuthGuard = __decorate$6([
-    Injectable(),
-    __metadata$4("design:paramtypes", [_angular_router.Router])
-], AuthGuard);
 
 var __decorate$7 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -55618,13 +55618,13 @@ var UserResolve = (function () {
             }
         });
     };
+    UserResolve = __decorate$7([
+        Injectable(),
+        __metadata$5("design:paramtypes", [UsersService,
+            _angular_router.Router])
+    ], UserResolve);
     return UserResolve;
 }());
-UserResolve = __decorate$7([
-    Injectable(),
-    __metadata$5("design:paramtypes", [UsersService,
-        _angular_router.Router])
-], UserResolve);
 
 var tpl = "\n<nav class=\"navbar navbar-default navbar-fixed-top\"> \n    <div class=\"container\"> \n        <div class=\"navbar-header\"> \n            <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#navbar\" aria-expanded=\"false\"> \n                <span class=\"sr-only\">Toggle navigation</span> <span class=\"icon-bar\"></span> <span class=\"icon-bar\"></span> <span class=\"icon-bar\"></span> \n            </button> \n            <a routerLink=\"/\" class=\"navbar-brand\">User Admin</a> \n        </div> \n        <div class=\"collapse navbar-collapse\" id=\"navbar\"> \n            <ul class=\"nav navbar-nav\" *ngIf=\"isLoggedIn()\">\n                <li>\n                    <a routerLink=\"/list\" routerLinkActive=\"active\">List Users</a>\n                </li>\n                <li>\n                    <a routerLink=\"/events\" routerLinkActive=\"active\">User Event Log</a>\n                </li>  \n                <li>\n                    <a (click)=\"clickLogout()\">Logout</a>\n                </li> \n            </ul> \n        </div> \n    </div> \n</nav>\n<div id=\"header-push\"></div>\n";
 
@@ -55642,7 +55642,7 @@ var __metadata$6 = (undefined && undefined.__metadata) || function (k, v) {
  *
  * Displays application header, with alternate header when the user is logged in
  */
-exports.HeaderComponent = (function () {
+var HeaderComponent = (function () {
     /**
      * set local instance of the auth service and router
      */
@@ -55667,16 +55667,16 @@ exports.HeaderComponent = (function () {
         this.authService.logout();
         this.router.navigate(['/login']);
     };
+    HeaderComponent = __decorate$8([
+        Component({
+            selector: 'app-header',
+            template: tpl
+        }),
+        __metadata$6("design:paramtypes", [AuthService,
+            _angular_router.Router])
+    ], HeaderComponent);
     return HeaderComponent;
 }());
-exports.HeaderComponent = __decorate$8([
-    Component({
-        selector: 'app-header',
-        template: tpl
-    }),
-    __metadata$6("design:paramtypes", [AuthService,
-        _angular_router.Router])
-], exports.HeaderComponent);
 
 var tpl$1 = "\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <div class=\"panel panel-default\">\n            <div class=\"panel-heading\">\n                Login\n            </div>\n            <div class=\"panel-body\">\n                <form \n                        id=\"user-edit\" \n                        class=\"form-horizontal\"\n                        novalidate \n                        (ngSubmit)=\"onSubmit(loginForm)\" \n                        [formGroup]=\"loginForm\"\n                    >\n                    <div class=\"form-group\" id=\"email-form\">\n                        <label for=\"email\" class=\"col-xs-2 control-label\">Email</label>\n                        <div class=\"col-xs-10\">\n                            <input type=\"text\" class=\"form-control\" name=\"email\" \n                                formControlName=\"email\" placeholder=\"Email\">\n\n                            <div class=\"text-danger\" *ngIf=\"loginForm.get('email').hasError('required') && loginForm.get('email').touched\">\n                              A valid email is required.\n                            </div>\n                        </div>\n                    </div>\n\n                    <div class=\"form-group\" id=\"password-form\">\n                        <label for=\"password\" class=\"col-xs-2 control-label\">Password</label>\n                        <div class=\"col-xs-10\">\n                            <input type=\"password\" class=\"form-control\" name=\"password\" \n                                    formControlName=\"password\" placeholder=\"Password\">\n                            <div class=\"text-danger\" *ngIf=\"loginForm.get('password').hasError('required') && loginForm.get('password').touched\">\n                              Password is required.\n                            </div>\n                        </div>\n                    </div>\n\n                    <div class=\"form-group\">\n                        <div class=\"col-xs-offset-2 col-xs-4\">\n                            <button type=\"submit\" class=\"btn btn-success\" [disabled]=\"loginForm.invalid || wait\">\n                                Login\n                                <i *ngIf=\"wait\" class=\"fa fa-refresh fa-spin fa-fw\"></i> \n                            </button>\n                        </div>\n                    </div>\n                </form>\n\n            </div>\n        </div>\n    </div>\n</div>\n";
 
@@ -55697,7 +55697,7 @@ var __param$2 = (undefined && undefined.__param) || function (paramIndex, decora
  *
  * Displays login form and handles form submissions
  */
-exports.LoginComponent = (function () {
+var LoginComponent = (function () {
     /**
      *
      */
@@ -55750,19 +55750,19 @@ exports.LoginComponent = (function () {
             });
         }
     };
+    LoginComponent = __decorate$9([
+        Component({
+            selector: 'app-login',
+            template: tpl$1
+        }),
+        __param$2(0, Inject(MessageService)),
+        __metadata$7("design:paramtypes", [MessageService,
+            AuthService,
+            _angular_router.Router,
+            FormBuilder])
+    ], LoginComponent);
     return LoginComponent;
 }());
-exports.LoginComponent = __decorate$9([
-    Component({
-        selector: 'app-login',
-        template: tpl$1
-    }),
-    __param$2(0, Inject(MessageService)),
-    __metadata$7("design:paramtypes", [MessageService,
-        AuthService,
-        _angular_router.Router,
-        FormBuilder])
-], exports.LoginComponent);
 
 var tpl$2 = "\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <h1 id=\"welcome-title\">Erdiko User Admin</h1>\n    </div>\n</div>\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <br />\n    </div>\n</div>\n<div class=\"row\">\n    <div class=\"col-sm-6 col-xs-12\">\n        <ul class=\"list-group\">\n            <li class=\"list-group-item\">\n                <a routerLink=\"/user/\">Create a User</a>\n            </li>\n            <li class=\"list-group-item\">\n                <a routerLink=\"/list\">List Users</a>\n            </li>\n            <li class=\"list-group-item\">\n                <a routerLink=\"/events\">User Event Log</a>\n            </li> \n        </ul>\n    </div>\n</div>\n";
 
@@ -55780,7 +55780,7 @@ var __metadata$8 = (undefined && undefined.__metadata) || function (k, v) {
  *
  * Default view component for a logged in user
  */
-exports.HomeComponent = (function () {
+var HomeComponent = (function () {
     /**
      *
      */
@@ -55791,17 +55791,17 @@ exports.HomeComponent = (function () {
      */
     HomeComponent.prototype.ngOnInit = function () {
     };
+    HomeComponent = __decorate$10([
+        Component({
+            selector: 'app-home',
+            template: tpl$2
+        }),
+        __metadata$8("design:paramtypes", [])
+    ], HomeComponent);
     return HomeComponent;
 }());
-exports.HomeComponent = __decorate$10([
-    Component({
-        selector: 'app-home',
-        template: tpl$2
-    }),
-    __metadata$8("design:paramtypes", [])
-], exports.HomeComponent);
 
-var tpl$3 = "\n<div class=\"row\">\n    <div class=\"col-xs-4\">\n        <button class=\"btn btn-info btn-sm\" routerLink=\"/user/\">Create a New User</button>\n    </div>\n</div>\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <br />\n    </div>\n</div>\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <table class=\"table table-bordered table-hover\">\n            <thead>\n                <tr>\n                    <th (click)=\"sort('id')\" class=\"sortable\">\n                        ID\n                        <i *ngIf=\"sortCol == 'id'\" class=\"fa\" [ngClass]=\"{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}\" aria-hidden=\"true\"></i>\n                    </th>\n                    <th (click)=\"sort('name')\" class=\"sortable\">\n                        User Name\n                        <i *ngIf=\"sortCol == 'name'\" class=\"fa\" [ngClass]=\"{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}\" aria-hidden=\"true\"></i>\n                    </th>\n                    <th (click)=\"sort('role')\" class=\"sortable\">\n                        Role\n                        <i *ngIf=\"sortCol == 'role'\" class=\"fa\" [ngClass]=\"{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}\" aria-hidden=\"true\"></i>\n                    </th>\n                    <th (click)=\"sort('last_login')\" class=\"sortable\">\n                        Last Login\n                        <i *ngIf=\"sortCol == 'last_login'\" class=\"fa\" [ngClass]=\"{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}\" aria-hidden=\"true\"></i>\n                    </th>\n                    <th (click)=\"sort('created_at')\" class=\"sortable\">\n                        Joined\n                        <i *ngIf=\"sortCol == 'created_at'\" class=\"fa\" [ngClass]=\"{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}\" aria-hidden=\"true\"></i>\n                    </th>\n                    <th></th>\n                    <th></th>\n                </tr>\n            </thead>\n\n            <tbody *ngIf=\"wait\">\n                <tr>\n                    <td colspan=\"7\" align=\"center\">\n                        <i class=\"fa fa-refresh fa-spin fa-2x fa-fw\"></i>\n                    </td>\n                </tr>\n            </tbody>\n\n            <tbody *ngIf=\"!wait && error\">\n                <tr>\n                    <td colspan=\"7\" align=\"center\">\n                        <alert type=\"warning\">{{ error }}</alert>\n                    </td>\n                </tr>\n            </tbody>\n\n            <tbody *ngIf=\"!wait && !error && users && users.length < 1\">\n                <tr>\n                    <td colspan=\"7\" align=\"center\">\n                        <alert type=\"warning\">Sorry, no users were found. Please try again.</alert>\n                    </td>\n                </tr>\n            </tbody>\n\n            <tbody *ngIf=\"!wait && !error && users && users.length > 0\">\n                <tr class=\"user_row\" *ngFor=\"let user of users; let index = index\">\n                    <th class=\"user_id\" scope=\"row\">{{ user.id }}</th>\n                    <td class=\"user_name\">{{ user.name }}</td>\n                    <td class=\"user_role_name\">{{ user.role.name }}</td>\n                    <td class=\"user_last_login\">{{ user.last_login }}</td>\n                    <td class=\"user_joined\">{{ user.joined }}</td>\n                    <td class=\"user_edit\"><a routerLink=\"/user/{{ user.id }}\">Edit</a></td>\n                    <td class=\"user_delete\"><button type=\"button\" class=\"btn btn-danger\" (click)=\"clickDelete(user.id)\">Delete</button></td>\n                </tr>\n            </tbody>\n        </table>\n    </div>\n</div>\n<div class=\"row paging\" *ngIf=\"total\">\n    <div class=\"col-xs-4\">\n\n        <nav aria-label=\"Page navigation\">\n          <ul class=\"pagination pagination-md\">\n\n            <li *ngIf=\"(currentPage > 1)\">\n              <a (click)=\"clickPrev()\" aria-label=\"Previous\">\n                <span aria-hidden=\"true\">&laquo;</span>\n              </a>\n            </li>\n\n            <li\n                *ngFor=\"let page of pages; let index = index\"\n                 [ngClass]=\"{'active': (page == currentPage)}\"\n                 [attr.id]=\"'page'+(index + 1)\"\n                >\n                <a (click)=\"clickPage(page)\">{{ page }}</a>\n            </li>\n\n            <li *ngIf=\"(currentPage < getPageCount())\">\n              <a (click)=\"clickNext()\" aria-label=\"Next\">\n                <span aria-hidden=\"true\">&raquo;</span>\n              </a>\n            </li>\n\n          </ul>\n        </nav>\n\n    </div>\n</div>\n\n<div bsModal #confirmDeleteModal=\"bs-modal\" class=\"modal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"mySmallModalLabel\" aria-hidden=\"true\">\n  <div class=\"modal-dialog modal-sm\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h4 class=\"modal-title pull-left\">Delete?</h4>\n        <button type=\"button\" class=\"close pull-right\" aria-label=\"Close\" (click)=\"cancelDelete()\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body\">\n        <div class=\"row\">\n            <div class=\"col-xs-12\">\n                <p>Are you sure you want to delete this user?</p>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"col-xs-6\">\n                <button type=\"button\" class=\"btn btn-warning\" (click)=\"cancelDelete()\">Cancel</button>\n            </div>\n            <div class=\"col-xs-6\">\n                <button type=\"button\" class=\"btn btn-danger\" (click)=\"confirmDelete(selectedUser)\">Confirm</button>\n            </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n";
+var tpl$3 = "\n<div class=\"row\">\n    <div class=\"col-xs-4\">\n        <button class=\"btn btn-info btn-sm\" routerLink=\"/user/\">Create a New User</button>\n    </div>\n</div>\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <br />\n    </div>\n</div>\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <table class=\"table table-bordered table-hover\">\n            <thead>\n                <tr>\n                    <th (click)=\"sort('id')\" class=\"sortable\">\n                        ID\n                        <i *ngIf=\"sortCol == 'id'\" class=\"fa\" [ngClass]=\"{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}\" aria-hidden=\"true\"></i>\n                    </th>\n                    <th (click)=\"sort('name')\" class=\"sortable\">\n                        User Name\n                        <i *ngIf=\"sortCol == 'name'\" class=\"fa\" [ngClass]=\"{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}\" aria-hidden=\"true\"></i>\n                    </th>\n                    <th (click)=\"sort('role')\" class=\"sortable\">\n                        Role\n                        <i *ngIf=\"sortCol == 'role'\" class=\"fa\" [ngClass]=\"{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}\" aria-hidden=\"true\"></i>\n                    </th>\n                    <th (click)=\"sort('last_login')\" class=\"sortable\">\n                        Last Login\n                        <i *ngIf=\"sortCol == 'last_login'\" class=\"fa\" [ngClass]=\"{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}\" aria-hidden=\"true\"></i>\n                    </th>\n                    <th (click)=\"sort('created_at')\" class=\"sortable\">\n                        Joined\n                        <i *ngIf=\"sortCol == 'created_at'\" class=\"fa\" [ngClass]=\"{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}\" aria-hidden=\"true\"></i>\n                    </th>\n                    <th></th>\n                    <th></th>\n                </tr>\n            </thead>\n\n            <tbody *ngIf=\"wait\">\n                <tr>\n                    <td colspan=\"7\" align=\"center\">\n                        <i class=\"fa fa-refresh fa-spin fa-2x fa-fw\"></i>\n                    </td>\n                </tr>\n            </tbody>\n\n            <tbody *ngIf=\"!wait && error\">\n                <tr>\n                    <td colspan=\"7\" align=\"center\">\n                        <alert type=\"warning\">{{ error }}</alert>\n                    </td>\n                </tr>\n            </tbody>\n\n            <tbody *ngIf=\"!wait && !error && users && users.length < 1\">\n                <tr>\n                    <td colspan=\"7\" align=\"center\">\n                        <alert type=\"warning\">Sorry, no users were found. Please try again.</alert>\n                    </td>\n                </tr>\n            </tbody>\n\n            <tbody *ngIf=\"!wait && !error && users && users.length > 0\">\n                <tr class=\"user_row\" *ngFor=\"let user of users; let index = index\">\n                    <th class=\"user_id\" scope=\"row\">{{ user.id }}</th>\n                    <td class=\"user_name\">{{ user.name }}</td>\n                    <td class=\"user_role_name\">{{ user.role.name }}</td>\n                    <td class=\"user_last_login\">{{ user.last_login }}</td>\n                    <td class=\"user_joined\">{{ user.joined }}</td>\n                    <td class=\"user_edit\"><a routerLink=\"/user/{{ user.id }}\">Edit</a></td>\n                    <td class=\"user_delete\"><button type=\"button\" class=\"btn btn-danger\" (click)=\"clickDelete(user.id)\">Delete</button></td>\n                </tr>\n            </tbody>\n        </table>\n    </div>\n</div>\n<div class=\"row paging\" *ngIf=\"total\">\n    <div class=\"col-xs-12\">\n\n        <nav aria-label=\"Page navigation\">\n          <ul class=\"pagination pagination-md\">\n\n            <li *ngIf=\"(currentPage > 1)\">\n              <a (click)=\"clickPrev()\" aria-label=\"Previous\">\n                <span aria-hidden=\"true\">&laquo;</span>\n              </a>\n            </li>\n\n            <li\n                *ngFor=\"let page of pages; let index = index\"\n                 [ngClass]=\"{'active': (page == currentPage)}\"\n                 [attr.id]=\"'page'+(index + 1)\"\n                >\n                <a (click)=\"clickPage(page)\">{{ page }}</a>\n            </li>\n\n            <li *ngIf=\"(currentPage < getPageCount())\">\n              <a (click)=\"clickNext()\" aria-label=\"Next\">\n                <span aria-hidden=\"true\">&raquo;</span>\n              </a>\n            </li>\n\n          </ul>\n        </nav>\n\n    </div>\n</div>\n\n<div bsModal #confirmDeleteModal=\"bs-modal\" class=\"modal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"mySmallModalLabel\" aria-hidden=\"true\">\n  <div class=\"modal-dialog modal-sm\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h4 class=\"modal-title pull-left\">Delete?</h4>\n        <button type=\"button\" class=\"close pull-right\" aria-label=\"Close\" (click)=\"cancelDelete()\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body\">\n        <div class=\"row\">\n            <div class=\"col-xs-12\">\n                <p>Are you sure you want to delete this user?</p>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"col-xs-6\">\n                <button type=\"button\" class=\"btn btn-warning\" (click)=\"cancelDelete()\">Cancel</button>\n            </div>\n            <div class=\"col-xs-6\">\n                <button type=\"button\" class=\"btn btn-danger\" (click)=\"confirmDelete(selectedUser)\">Confirm</button>\n            </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n";
 
 var __decorate$11 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -55823,7 +55823,7 @@ var __param$3 = (undefined && undefined.__param) || function (paramIndex, decora
  *
  * Displays a sortable list of current users in the system
  */
-exports.UserListComponent = (function () {
+var UserListComponent = (function () {
     /**
      *
      */
@@ -55972,26 +55972,26 @@ exports.UserListComponent = (function () {
             this.messageService.setMessage([{ "type": "danger", "body": res.error_message }]);
         }
     };
+    __decorate$11([
+        ViewChild('confirmDeleteModal'),
+        __metadata$9("design:type", ModalDirective)
+    ], UserListComponent.prototype, "confirmDeleteModal", void 0);
+    UserListComponent = __decorate$11([
+        Component({
+            selector: 'erdiko-user-list',
+            template: tpl$3
+        }),
+        __param$3(0, Inject(UsersService)),
+        __param$3(1, Inject(MessageService)),
+        __metadata$9("design:paramtypes", [UsersService,
+            MessageService,
+            _angular_router.ActivatedRoute,
+            _angular_router.Router])
+    ], UserListComponent);
     return UserListComponent;
 }());
-__decorate$11([
-    ViewChild('confirmDeleteModal'),
-    __metadata$9("design:type", ModalDirective)
-], exports.UserListComponent.prototype, "confirmDeleteModal", void 0);
-exports.UserListComponent = __decorate$11([
-    Component({
-        selector: 'erdiko-user-list',
-        template: tpl$3
-    }),
-    __param$3(0, Inject(UsersService)),
-    __param$3(1, Inject(MessageService)),
-    __metadata$9("design:paramtypes", [UsersService,
-        MessageService,
-        _angular_router.ActivatedRoute,
-        _angular_router.Router])
-], exports.UserListComponent);
 
-var tpl$4 = "\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <div class=\"panel panel-default\">\n            <div class=\"panel-heading\">\n                <span>User Event Log</span>\n            </div>\n            <div class=\"panel-body\">\n\n                <table class=\"table table-bordered table-hover\">\n                    <thead>\n\n                        <tr>\n                            <th (click)=\"sort('id')\" class=\"sortable\">\n                                ID\n                                <i class=\"fa\" [ngClass]=\"{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}\" aria-hidden=\"true\"></i>\n                            </th>\n                            <th>\n                                Event Log\n                            </th>\n                            <th>\n                                Event Data\n                            </th>\n                            <th (click)=\"sort('created_at')\" class=\"sortable\">\n                                Created At\n                                <i class=\"fa\" [ngClass]=\"{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}\" aria-hidden=\"true\"></i>\n                            </th>\n                        </tr>\n                    </thead>\n\n                    <tbody *ngIf=\"wait\">\n                        <tr>\n                            <td colspan=\"7\" align=\"center\">\n                                <i class=\"fa fa-refresh fa-spin fa-2x fa-fw\"></i>\n                            </td>\n                        </tr>\n                    </tbody>\n\n                    <tbody *ngIf=\"!wait && events.length <= 0\">\n                        <tr>\n                            <td colspan=\"7\" align=\"center\">\n                                <alert type=\"warning\">Sorry, no user events were found.</alert>\n                            </td>\n                        </tr>\n                    </tbody>\n\n                    <tbody *ngIf=\"!wait && events.length > 0\">\n                        <tr class=\"user-events\" *ngFor=\"let event of events\">\n                            <td> {{event.id}} </td>\n                            <td> {{event.event}} </td>\n                            <td> {{event.event_data|json}} </td>\n                            <td> {{event.created_at}} </td>\n                        </tr>\n                    </tbody>\n\n                </table>\n            </div>\n        </div>\n\n        <div class=\"row paging\" *ngIf=\"eventsTotal\">\n            <div class=\"col-xs-4\">\n\n                <nav aria-label=\"Page navigation\">\n                <ul class=\"pagination pagination-md\">\n\n                    <li *ngIf=\"(currentPage > 1)\">\n                    <a (click)=\"clickPrev()\" aria-label=\"Previous\">\n                        <span aria-hidden=\"true\">&laquo;</span>\n                    </a>\n                    </li>\n\n                    <li\n                        *ngFor=\"let page of pages\"\n                        [ngClass]=\"{'active': (page == currentPage)}\"\n                        >\n                        <a (click)=\"clickPage(page)\">{{ page }}</a>\n                    </li>\n\n                    <li *ngIf=\"(currentPage < getPageCount())\">\n                    <a (click)=\"clickNext()\" aria-label=\"Next\">\n                        <span aria-hidden=\"true\">&raquo;</span>\n                    </a>\n                    </li>\n\n                </ul>\n                </nav>\n\n            </div>\n        </div>\n    </div>\n</div>\n";
+var tpl$4 = "\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <div class=\"panel panel-default\">\n            <div class=\"panel-heading\">\n                <span>User Event Log</span>\n            </div>\n            <div class=\"panel-body\">\n\n                <table class=\"table table-bordered table-hover\">\n                    <thead>\n\n                        <tr>\n                            <th (click)=\"sort('id')\" class=\"sortable\">\n                                ID\n                                <i class=\"fa\" [ngClass]=\"{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}\" aria-hidden=\"true\"></i>\n                            </th>\n                            <th>\n                                Event Log\n                            </th>\n                            <th>\n                                Event Data\n                            </th>\n                            <th (click)=\"sort('created_at')\" class=\"sortable\">\n                                Created At\n                                <i class=\"fa\" [ngClass]=\"{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}\" aria-hidden=\"true\"></i>\n                            </th>\n                        </tr>\n                    </thead>\n\n                    <tbody *ngIf=\"wait\">\n                        <tr>\n                            <td colspan=\"7\" align=\"center\">\n                                <i class=\"fa fa-refresh fa-spin fa-2x fa-fw\"></i>\n                            </td>\n                        </tr>\n                    </tbody>\n\n                    <tbody *ngIf=\"!wait && events.length <= 0\">\n                        <tr>\n                            <td colspan=\"7\" align=\"center\">\n                                <alert type=\"warning\">Sorry, no user events were found.</alert>\n                            </td>\n                        </tr>\n                    </tbody>\n\n                    <tbody *ngIf=\"!wait && events.length > 0\">\n                        <tr class=\"user-events\" *ngFor=\"let event of events\">\n                            <td> {{event.id}} </td>\n                            <td> {{event.event}} </td>\n                            <td> {{event.event_data|json}} </td>\n                            <td> {{event.created_at}} </td>\n                        </tr>\n                    </tbody>\n\n                </table>\n            </div>\n        </div>\n\n        <div class=\"row paging\" *ngIf=\"eventsTotal\">\n            <div class=\"col-xs-12\">\n\n                <nav aria-label=\"Page navigation\">\n                <ul class=\"pagination pagination-md\">\n\n                    <li *ngIf=\"(currentPage > 1)\">\n                    <a (click)=\"clickPrev()\" aria-label=\"Previous\">\n                        <span aria-hidden=\"true\">&laquo;</span>\n                    </a>\n                    </li>\n\n                    <li\n                        *ngFor=\"let page of pages\"\n                        [ngClass]=\"{'active': (page == currentPage)}\"\n                        >\n                        <a (click)=\"clickPage(page)\">{{ page }}</a>\n                    </li>\n\n                    <li *ngIf=\"(currentPage < getPageCount())\">\n                    <a (click)=\"clickNext()\" aria-label=\"Next\">\n                        <span aria-hidden=\"true\">&raquo;</span>\n                    </a>\n                    </li>\n\n                </ul>\n                </nav>\n\n            </div>\n        </div>\n    </div>\n</div>\n";
 
 var __decorate$12 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -56005,7 +56005,7 @@ var __metadata$10 = (undefined && undefined.__metadata) || function (k, v) {
 var __param$4 = (undefined && undefined.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-exports.UserEventLogComponent = (function () {
+var UserEventLogComponent = (function () {
     function UserEventLogComponent(usersService) {
         var _this = this;
         this.usersService = usersService;
@@ -56098,22 +56098,22 @@ exports.UserEventLogComponent = (function () {
         this.events$.unsubscribe();
         this.eventsTotal$.unsubscribe();
     };
+    __decorate$12([
+        Input(),
+        __metadata$10("design:type", String)
+    ], UserEventLogComponent.prototype, "inputUserId", void 0);
+    UserEventLogComponent = __decorate$12([
+        Component({
+            selector: 'erdiko-user-event-log',
+            template: tpl$4
+        }),
+        __param$4(0, Inject(UsersService)),
+        __metadata$10("design:paramtypes", [UsersService])
+    ], UserEventLogComponent);
     return UserEventLogComponent;
 }());
-__decorate$12([
-    Input(),
-    __metadata$10("design:type", String)
-], exports.UserEventLogComponent.prototype, "inputUserId", void 0);
-exports.UserEventLogComponent = __decorate$12([
-    Component({
-        selector: 'erdiko-user-event-log',
-        template: tpl$4
-    }),
-    __param$4(0, Inject(UsersService)),
-    __metadata$10("design:paramtypes", [UsersService])
-], exports.UserEventLogComponent);
 
-var tpl$5 = "\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <br />\n    </div>\n</div>\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <table class=\"table table-bordered table-hover\">\n            <thead>\n                <tr>\n                    <th (click)=\"sort('id')\" class=\"sortable\">\n                        ID\n                        <i class=\"fa\" [ngClass]=\"{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}\" aria-hidden=\"true\"></i>\n                    </th>\n                    <th (click)=\"sort('user_id')\" class=\"sortable\">\n                        User ID\n                        <i class=\"fa\" [ngClass]=\"{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}\" aria-hidden=\"true\"></i>\n                    </th>\n                    <th>\n                        Event Log\n                    </th>\n                    <th>\n                        Event Data\n                    </th>\n                    <th (click)=\"sort('created_at')\" class=\"sortable\">\n                        Created At\n                        <i class=\"fa\" [ngClass]=\"{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}\" aria-hidden=\"true\"></i>\n                    </th>\n                </tr>\n            </thead>\n\n            <tbody *ngIf=\"wait\">\n                <tr>\n                    <td colspan=\"7\" align=\"center\">\n                        <i class=\"fa fa-refresh fa-spin fa-2x fa-fw\"></i>\n                    </td>\n                </tr>\n            </tbody>\n\n            <tbody *ngIf=\"!wait && events.length <= 0\">\n                <tr>\n                    <td colspan=\"7\" align=\"center\">\n                        <alert type=\"warning\">Sorry, no user events were found.</alert>\n                    </td>\n                </tr>\n            </tbody>\n\n            <tbody *ngIf=\"!wait && events.length > 0\">\n                <tr class=\"users-events\" *ngFor=\"let event of events\">\n                    <td> {{event.id}} </td>\n                    <td> {{event.user_id}} </td>\n                    <td> {{event.event}} </td>\n                    <td> {{event.event_data|json}} </td>\n                    <td> {{event.created_at}} </td>\n                </tr>\n            </tbody>\n        </table>\n    </div>\n</div>\n<div class=\"row paging\" *ngIf=\"eventsTotal\">\n    <div class=\"col-xs-4\">\n\n        <nav aria-label=\"Page navigation\">\n          <ul class=\"pagination pagination-md\">\n\n            <li *ngIf=\"(currentPage > 1)\">\n              <a (click)=\"clickPrev()\" aria-label=\"Previous\">\n                <span aria-hidden=\"true\">&laquo;</span>\n              </a>\n            </li>\n\n            <li\n                *ngFor=\"let page of pages\"\n                 [ngClass]=\"{'active': (page == currentPage)}\"\n                >\n                <a (click)=\"clickPage(page)\">{{ page }}</a>\n            </li>\n\n            <li *ngIf=\"(currentPage < getPageCount())\">\n              <a (click)=\"clickNext()\" aria-label=\"Next\">\n                <span aria-hidden=\"true\">&raquo;</span>\n              </a>\n            </li>\n\n          </ul>\n        </nav>\n\n    </div>\n</div>\n";
+var tpl$5 = "\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <br />\n    </div>\n</div>\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <table class=\"table table-bordered table-hover\">\n            <thead>\n                <tr>\n                    <th (click)=\"sort('id')\" class=\"sortable\">\n                        ID\n                        <i class=\"fa\" [ngClass]=\"{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}\" aria-hidden=\"true\"></i>\n                    </th>\n                    <th (click)=\"sort('user_id')\" class=\"sortable\">\n                        User ID\n                        <i class=\"fa\" [ngClass]=\"{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}\" aria-hidden=\"true\"></i>\n                    </th>\n                    <th>\n                        Event Log\n                    </th>\n                    <th>\n                        Event Data\n                    </th>\n                    <th (click)=\"sort('created_at')\" class=\"sortable\">\n                        Created At\n                        <i class=\"fa\" [ngClass]=\"{'fa-sort-asc': (sortDir == 'asc'), 'fa-sort-desc': (sortDir == 'desc')}\" aria-hidden=\"true\"></i>\n                    </th>\n                </tr>\n            </thead>\n\n            <tbody *ngIf=\"wait\">\n                <tr>\n                    <td colspan=\"7\" align=\"center\">\n                        <i class=\"fa fa-refresh fa-spin fa-2x fa-fw\"></i>\n                    </td>\n                </tr>\n            </tbody>\n\n            <tbody *ngIf=\"!wait && events.length <= 0\">\n                <tr>\n                    <td colspan=\"7\" align=\"center\">\n                        <alert type=\"warning\">Sorry, no user events were found.</alert>\n                    </td>\n                </tr>\n            </tbody>\n\n            <tbody *ngIf=\"!wait && events.length > 0\">\n                <tr class=\"users-events\" *ngFor=\"let event of events\">\n                    <td> {{event.id}} </td>\n                    <td> {{event.user_id}} </td>\n                    <td> {{event.event}} </td>\n                    <td> {{event.event_data|json}} </td>\n                    <td> {{event.created_at}} </td>\n                </tr>\n            </tbody>\n        </table>\n    </div>\n</div>\n<div class=\"row paging\" *ngIf=\"eventsTotal\">\n    <div class=\"col-xs-12\">\n\n        <nav aria-label=\"Page navigation\">\n          <ul class=\"pagination pagination-md\">\n\n            <li *ngIf=\"(currentPage > 1)\">\n              <a (click)=\"clickPrev()\" aria-label=\"Previous\">\n                <span aria-hidden=\"true\">&laquo;</span>\n              </a>\n            </li>\n\n            <li\n                *ngFor=\"let page of pages\"\n                 [ngClass]=\"{'active': (page == currentPage)}\"\n                >\n                <a (click)=\"clickPage(page)\">{{ page }}</a>\n            </li>\n\n            <li *ngIf=\"(currentPage < getPageCount())\">\n              <a (click)=\"clickNext()\" aria-label=\"Next\">\n                <span aria-hidden=\"true\">&raquo;</span>\n              </a>\n            </li>\n\n          </ul>\n        </nav>\n\n    </div>\n</div>\n";
 
 var __decorate$13 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -56127,7 +56127,7 @@ var __metadata$11 = (undefined && undefined.__metadata) || function (k, v) {
 var __param$5 = (undefined && undefined.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-exports.UsersEventLogComponent = (function () {
+var UsersEventLogComponent = (function () {
     function UsersEventLogComponent(usersService) {
         var _this = this;
         this.usersService = usersService;
@@ -56225,16 +56225,16 @@ exports.UsersEventLogComponent = (function () {
         this.events$.unsubscribe();
         this.eventsTotal$.unsubscribe();
     };
+    UsersEventLogComponent = __decorate$13([
+        Component({
+            selector: 'erdiko-users-event-log',
+            template: tpl$5
+        }),
+        __param$5(0, Inject(UsersService)),
+        __metadata$11("design:paramtypes", [UsersService])
+    ], UsersEventLogComponent);
     return UsersEventLogComponent;
 }());
-exports.UsersEventLogComponent = __decorate$13([
-    Component({
-        selector: 'erdiko-users-event-log',
-        template: tpl$5
-    }),
-    __param$5(0, Inject(UsersService)),
-    __metadata$11("design:paramtypes", [UsersService])
-], exports.UsersEventLogComponent);
 
 var tpl$6 = "\n<form \n        id=\"user-password-change\" \n        class=\"form-horizontal\"\n        novalidate \n        (ngSubmit)=\"onSubmitChangepass(passwordForm)\" \n        [formGroup]=\"passwordForm\"\n    >\n\n    <div class=\"form-group\">\n        <p class=\"col-xs-12\">Passwords must contain at least 1 alpha & 1 numeric character, with a minimum length of 5 characters</p>\n        <label for=\"password\" class=\"col-xs-2 control-label\">New Password</label>\n        <div class=\"col-xs-10\">\n            <input  type=\"password\" \n                    class=\"form-control\" \n                    name=\"password\" \n                    formControlName=\"password\"\n                    required>\n            <div class=\"text-danger\" *ngIf=\"passwordForm.get('password').hasError('required') && passwordForm.get('password').touched\">\n            Password is required\n            </div>\n        </div>\n    </div>\n    <div class=\"form-group\" [formGroup] = \"passwordForm\">\n        <label for=\"password\" class=\"col-xs-2 control-label\">Confirm Password</label>\n        <div class=\"col-xs-10\">\n\n            <input  type=\"password\" \n                    class=\"form-control\" \n                    name=\"confirm\" \n                    formControlName=\"confirm\"\n                    required>\n\n            <div class=\"text-danger\" *ngIf=\"passwordForm.get('confirm').hasError('required') && passwordForm.get('confirm').touched\">\n            Password Confirm is required\n            </div>\n        </div>\n    </div>\n</form>\n";
 
@@ -56256,19 +56256,19 @@ var PasswordComponent = (function () {
     function PasswordComponent() {
     }
     PasswordComponent.prototype.ngOnInit = function () { };
+    __decorate$14([
+        Input(),
+        __metadata$12("design:type", FormGroup)
+    ], PasswordComponent.prototype, "passwordForm", void 0);
+    PasswordComponent = __decorate$14([
+        Component({
+            selector: 'erdiko-password',
+            template: tpl$6
+        }),
+        __metadata$12("design:paramtypes", [])
+    ], PasswordComponent);
     return PasswordComponent;
 }());
-__decorate$14([
-    Input(),
-    __metadata$12("design:type", FormGroup)
-], PasswordComponent.prototype, "passwordForm", void 0);
-PasswordComponent = __decorate$14([
-    Component({
-        selector: 'erdiko-password',
-        template: tpl$6
-    }),
-    __metadata$12("design:paramtypes", [])
-], PasswordComponent);
 
 /**
  * User Model
@@ -56281,7 +56281,7 @@ var User = (function () {
     return User;
 }());
 
-var tpl$7 = "\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <button class=\"btn btn-info btn-sm\" routerLink=\"/list/\">\n            <i class=\"fa fa-chevron-left\" aria-hidden=\"true\"></i> Back to User List\n        </button>\n    </div>\n</div>\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <br/>\n    </div>\n</div>\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <div id=\"id-title\" *ngIf=\"user.id\">\n            User {{ user.id }}\n        </div>\n        <div class=\"panel panel-default\" id=\"edit-update\">\n            <tabset>\n                <tab [heading]=\"createEditHeader()\">\n                    <div class=\"panel-body\">\n\n                            <form \n                                    id=\"user-edit\" \n                                    class=\"form-horizontal\"\n                                    novalidate \n                                    (ngSubmit)=\"onSubmit(userForm)\" \n                                    [formGroup]=\"userForm\"\n                                >\n\n                                <div class=\"form-group\" *ngIf=\"user && user.id\">\n                                    <label for=\"name\" class=\"col-xs-2 control-label\">ID</label>\n                                    <div class=\"col-xs-10\">\n                                        <p>{{ user.id }}</p>\n                                    </div>\n                                </div>\n                                <div class=\"form-group\" *ngIf=\"user && user.created_at\">\n                                    <label for=\"name\" class=\"col-xs-2 control-label\">Joined</label>\n                                    <div class=\"col-xs-10\">\n                                        <p *ngIf=\"!user.created_at\">n/a</p>\n                                        <p>{{ user.created_at }}</p>\n                                    </div>\n                                </div>\n                                <div class=\"form-group\" *ngIf=\"user.id\">\n                                    <label for=\"name\" class=\"col-xs-2 control-label\">Last Login</label>\n                                    <div class=\"col-xs-10\">\n                                        <p *ngIf=\"!user.last_login\">n/a</p>\n                                        <p>{{ user.last_login }}</p>\n                                    </div>\n                                </div>\n                                <div class=\"form-group\">\n                                    <label for=\"name\" class=\"col-xs-2 control-label\">Name</label>\n                                    <div class=\"col-xs-10\">\n                                        <input type=\"text\" class=\"form-control\" name=\"name\" formControlName=\"name\" placeholder=\"Name\">\n                                        <div class=\"text-danger\" *ngIf=\"userForm.get('name').hasError('required') && userForm.get('name').touched\">\n                                        Name is required\n                                        </div>\n                                        <div class=\"text-danger\" *ngIf=\"userForm.get('name').hasError('minlength') && userForm.get('name').touched\">\n                                        Minimum of 2 characters\n                                        </div>\n                                    </div>\n                                </div>\n                                <div class=\"form-group\">\n                                    <label for=\"email\" class=\"col-xs-2 control-label\">Email</label>\n                                    <div class=\"col-xs-10\">\n                                        <input type=\"email\" class=\"form-control\" name=\"email\" \n                                                formControlName=\"email\" placeholder=\"Email\">\n                                        <div class=\"text-danger\" *ngIf=\"userForm.get('email').hasError('required') && userForm.get('email').touched\">\n                                        Email is required\n                                        </div>\n                                        <div class=\"text-danger\" *ngIf=\"userForm.get('email').hasError('pattern') && userForm.get('email').touched\">\n                                        A Valid email is required\n                                        </div>\n                                    </div>\n                                </div>\n                                <div class=\"form-group\">\n                                    <label for=\"role\" class=\"col-xs-2 control-label\">Role</label>\n                                    <div class=\"col-xs-10\" id=\"select-role\">\n                                            <select class=\"form-control\" name=\"role\" formControlName=\"role\">\n                                                <option value=\"2\">Admin</option>\n                                                <option value=\"1\">User</option>\n                                            </select>\n                                        <div class=\"text-danger\" *ngIf=\"userForm.get('role').hasError('required') && userForm.get('role').touched\">\n                                        Role is required\n                                        </div>\n                                    </div>\n                                </div>\n\n                            </form>\n\n                            <!--show password input if creating user-->\n                            <erdiko-password *ngIf=\"!user.id\" [passwordForm]=\"passwordForm\"></erdiko-password>\n\n                            <div class=\"form-group\">\n                                <div class=\"col-xs-offset-2 col-xs-4\">\n                                    <button type=\"cancel\" class=\"btn btn-warning\" routerLink=\"/list/\">Cancel</button>\n                                </div>\n                                <div class=\"col-xs-offset-2 col-xs-4\">\n                                    <button type=\"submit\" class=\"btn btn-success\" (click)=\"onSubmit(userForm)\" [disabled]=\"!isUserFormValid()\">\n                                        Save\n                                        <i *ngIf=\"wait\" class=\"fa fa-refresh fa-spin fa-fw\"></i> \n                                    </button>\n                                </div>\n                            </div>\n                    </div>\n                </tab>\n\n                <tab heading=\"Update Password\" *ngIf=\"user.id\">\n\n                    <div class=\"panel-body\">\n\n                        <erdiko-password [passwordForm]=\"passwordForm\"></erdiko-password>\n\n                        <div class=\"form-group\">\n                            <div class=\"col-xs-offset-2 col-xs-4\">\n                                <button type=\"cancel\" class=\"btn btn-warning\" routerLink=\"/list/\">Cancel</button>\n                            </div>\n                            <div class=\"col-xs-offset-2 col-xs-4\">\n                                <button type=\"submit\" class=\"btn btn-success\" (click)=\"onSubmitChangepass(passwordForm)\" [disabled]=\"!isPassFormValid()\">\n                                    Save\n                                    <i *ngIf=\"passWait\" class=\"fa fa-refresh fa-spin fa-fw\"></i> \n                                </button>\n                            </div>\n                        </div>\n\n                    </div>\n                </tab>\n            </tabset>\n        </div>\n    </div>\n</div>\n\n<div class=\"row\" *ngIf=\"user.id\">\n    <div class=\"col-xs-12\">\n        <br/>\n        <erdiko-user-event-log [inputUserId]=\"user.id\"></erdiko-user-event-log>\n    </div>\n</div>\n";
+var tpl$7 = "\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <button class=\"btn btn-info btn-sm\" routerLink=\"/list/\">\n            <i class=\"fa fa-chevron-left\" aria-hidden=\"true\"></i> Back to User List\n        </button>\n    </div>\n</div>\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <br/>\n    </div>\n</div>\n<div class=\"row\">\n    <div class=\"col-xs-12\">\n        <div id=\"id-title\" *ngIf=\"user.id\">\n            User {{ user.id }}\n        </div>\n        <div class=\"panel panel-default\" id=\"edit-update\">\n            <tabset>\n                <tab [heading]=\"createEditHeader()\">\n                    <div class=\"panel-body\">\n\n                            <form \n                                    id=\"user-edit\" \n                                    class=\"form-horizontal\"\n                                    novalidate \n                                    (ngSubmit)=\"onSubmit(userForm)\" \n                                    [formGroup]=\"userForm\"\n                                >\n\n                                <div class=\"form-group\" *ngIf=\"user && user.id\">\n                                    <label for=\"name\" class=\"col-xs-2 control-label\">ID</label>\n                                    <div class=\"col-xs-10\">\n                                        <p>{{ user.id }}</p>\n                                    </div>\n                                </div>\n                                <div class=\"form-group\" *ngIf=\"user && user.created_at\">\n                                    <label for=\"name\" class=\"col-xs-2 control-label\">Joined</label>\n                                    <div class=\"col-xs-10\">\n                                        <p *ngIf=\"!user.created_at\">n/a</p>\n                                        <p>{{ user.created_at }}</p>\n                                    </div>\n                                </div>\n                                <div class=\"form-group\" *ngIf=\"user.id\">\n                                    <label for=\"name\" class=\"col-xs-2 control-label\">Last Login</label>\n                                    <div class=\"col-xs-10\">\n                                        <p *ngIf=\"!user.last_login\">n/a</p>\n                                        <p>{{ user.last_login }}</p>\n                                    </div>\n                                </div>\n                                <div class=\"form-group\">\n                                    <label for=\"name\" class=\"col-xs-2 control-label\">Name</label>\n                                    <div class=\"col-xs-10\">\n                                        <input type=\"text\" class=\"form-control\" name=\"name\" formControlName=\"name\" placeholder=\"Name\">\n                                        <div class=\"text-danger\" *ngIf=\"userForm.get('name').hasError('required') && userForm.get('name').touched\">\n                                        Name is required\n                                        </div>\n                                        <div class=\"text-danger\" *ngIf=\"userForm.get('name').hasError('minlength') && userForm.get('name').touched\">\n                                        Minimum of 2 characters\n                                        </div>\n                                    </div>\n                                </div>\n                                <div class=\"form-group\">\n                                    <label for=\"email\" class=\"col-xs-2 control-label\">Email</label>\n                                    <div class=\"col-xs-10\">\n                                        <input type=\"email\" class=\"form-control\" name=\"email\" \n                                                formControlName=\"email\" placeholder=\"Email\">\n                                        <div class=\"text-danger\" *ngIf=\"userForm.get('email').hasError('required') && userForm.get('email').touched\">\n                                        Email is required\n                                        </div>\n                                        <div class=\"text-danger\" *ngIf=\"userForm.get('email').hasError('pattern') && userForm.get('email').touched\">\n                                        A Valid email is required\n                                        </div>\n                                    </div>\n                                </div>\n                                <div class=\"form-group\">\n                                    <label for=\"role\" class=\"col-xs-2 control-label\">Role</label>\n                                    <div class=\"col-xs-10\" id=\"select-role\">\n                                            <select class=\"form-control\" name=\"role\" formControlName=\"role\">\n                                                <option *ngFor=\"let role of roles\" \n                                                    [value]=\"role.value\" >\n                                                        <!--[selected]=\"(user && user.role.id == role.value) ? true : null\">-->\n                                                        {{ role.key }}\n                                                </option>\n                                            </select>\n                                        <div class=\"text-danger\" *ngIf=\"userForm.get('role').hasError('required') && userForm.get('role').touched\">\n                                        Role is required\n                                        </div>\n                                    </div>\n                                </div>\n\n                            </form>\n\n                            <!--show password input if creating user-->\n                            <erdiko-password *ngIf=\"!user.id\" [passwordForm]=\"passwordForm\"></erdiko-password>\n\n                            <div class=\"form-group\">\n                                <div class=\"col-xs-offset-2 col-xs-4\">\n                                    <button type=\"cancel\" class=\"btn btn-warning\" routerLink=\"/list/\">Cancel</button>\n                                </div>\n                                <div class=\"col-xs-offset-2 col-xs-4\">\n                                    <button type=\"submit\" class=\"btn btn-success\" (click)=\"onSubmit(userForm)\" [disabled]=\"!isUserFormValid()\">\n                                        Save\n                                        <i *ngIf=\"wait\" class=\"fa fa-refresh fa-spin fa-fw\"></i> \n                                    </button>\n                                </div>\n                            </div>\n                    </div>\n                </tab>\n\n                <tab heading=\"Update Password\" *ngIf=\"user.id\">\n\n                    <div class=\"panel-body\">\n\n                        <erdiko-password [passwordForm]=\"passwordForm\"></erdiko-password>\n\n                        <div class=\"form-group\">\n                            <div class=\"col-xs-offset-2 col-xs-4\">\n                                <button type=\"cancel\" class=\"btn btn-warning\" routerLink=\"/list/\">Cancel</button>\n                            </div>\n                            <div class=\"col-xs-offset-2 col-xs-4\">\n                                <button type=\"submit\" class=\"btn btn-success\" (click)=\"onSubmitChangepass(passwordForm)\" [disabled]=\"!isPassFormValid()\">\n                                    Save\n                                    <i *ngIf=\"passWait\" class=\"fa fa-refresh fa-spin fa-fw\"></i> \n                                </button>\n                            </div>\n                        </div>\n\n                    </div>\n                </tab>\n            </tabset>\n        </div>\n    </div>\n</div>\n\n<div class=\"row\" *ngIf=\"user.id\">\n    <div class=\"col-xs-12\">\n        <br/>\n        <erdiko-user-event-log [inputUserId]=\"user.id\"></erdiko-user-event-log>\n    </div>\n</div>\n";
 
 var __decorate$15 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -56300,8 +56300,14 @@ var __param$6 = (undefined && undefined.__param) || function (paramIndex, decora
  *
  * Component to display form to create a new user or to edit an exiting user
  */
-exports.UserEditComponent = (function () {
+var UserEditComponent = (function () {
     function UserEditComponent(usersService, route, router, messageService) {
+        // TODO replace this with an array from a service 
+        this.roles = [
+            { "value": "3", "key": "General" },
+            { "value": "2", "key": "Admin" },
+            { "value": "1", "key": "Super Admin" },
+        ];
         // init the wait state (and indication animation) to 'off'
         this.wait = false;
         this.passWait = false;
@@ -56432,26 +56438,26 @@ exports.UserEditComponent = (function () {
         var panelHeader = this.user.id ? "Edit User" : "Create User";
         return panelHeader;
     };
+    __decorate$15([
+        ViewChild(PasswordComponent),
+        __metadata$13("design:type", PasswordComponent)
+    ], UserEditComponent.prototype, "passwordComponent", void 0);
+    UserEditComponent = __decorate$15([
+        Component({
+            selector: 'erdiko-user-edit',
+            template: tpl$7
+        }),
+        __param$6(0, Inject(UsersService)),
+        __param$6(1, Inject(_angular_router.ActivatedRoute)),
+        __param$6(2, Inject(_angular_router.Router)),
+        __param$6(3, Inject(MessageService)),
+        __metadata$13("design:paramtypes", [UsersService,
+            _angular_router.ActivatedRoute,
+            _angular_router.Router,
+            MessageService])
+    ], UserEditComponent);
     return UserEditComponent;
 }());
-__decorate$15([
-    ViewChild(PasswordComponent),
-    __metadata$13("design:type", PasswordComponent)
-], exports.UserEditComponent.prototype, "passwordComponent", void 0);
-exports.UserEditComponent = __decorate$15([
-    Component({
-        selector: 'erdiko-user-edit',
-        template: tpl$7
-    }),
-    __param$6(0, Inject(UsersService)),
-    __param$6(1, Inject(_angular_router.ActivatedRoute)),
-    __param$6(2, Inject(_angular_router.Router)),
-    __param$6(3, Inject(MessageService)),
-    __metadata$13("design:paramtypes", [UsersService,
-        _angular_router.ActivatedRoute,
-        _angular_router.Router,
-        MessageService])
-], exports.UserEditComponent);
 
 var tpl$8 = "\n<div>\n<alert *ngFor=\"let message of messages\" [type]=\"message.type\" dismissOnTimeout=\"10000\" dismissible=true>{{ message.body }}</alert>\n</div>\n";
 
@@ -56472,7 +56478,7 @@ var __param$7 = (undefined && undefined.__param) || function (paramIndex, decora
  *
  * Displays flash messages from service
  */
-exports.MessageComponent = (function () {
+var MessageComponent = (function () {
     /**
      *
      */
@@ -56491,16 +56497,16 @@ exports.MessageComponent = (function () {
     MessageComponent.prototype.ngOnDestroy = function () {
         this.subscription.unsubscribe();
     };
+    MessageComponent = __decorate$16([
+        Component({
+            selector: 'erdiko-message',
+            template: tpl$8
+        }),
+        __param$7(0, Inject(MessageService)),
+        __metadata$14("design:paramtypes", [MessageService])
+    ], MessageComponent);
     return MessageComponent;
 }());
-exports.MessageComponent = __decorate$16([
-    Component({
-        selector: 'erdiko-message',
-        template: tpl$8
-    }),
-    __param$7(0, Inject(MessageService)),
-    __metadata$14("design:paramtypes", [MessageService])
-], exports.MessageComponent);
 
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -56519,25 +56525,25 @@ var appRoutes = [
         canActivate: [
             AuthGuard
         ],
-        component: exports.UserListComponent
+        component: UserListComponent
     },
     {
         path: 'events',
         canActivate: [
             AuthGuard
         ],
-        component: exports.UsersEventLogComponent
+        component: UsersEventLogComponent
     },
     {
         path: 'user',
         canActivate: [
             AuthGuard
         ],
-        component: exports.UserEditComponent
+        component: UserEditComponent
     },
     {
         path: 'user/:id',
-        component: exports.UserEditComponent,
+        component: UserEditComponent,
         canActivate: [
             AuthGuard
         ],
@@ -56550,11 +56556,11 @@ var appRoutes = [
         canActivate: [
             AuthGuard
         ],
-        component: exports.HomeComponent
+        component: HomeComponent
     },
     {
         path: 'login',
-        component: exports.LoginComponent
+        component: LoginComponent
     },
     {
         path: '**',
@@ -56565,60 +56571,75 @@ var appRoutes = [
 /**
  * User Admin Module
  */
-exports.UserAdminModule = UserAdminModule_1 = (function () {
+var UserAdminModule = (function () {
     function UserAdminModule() {
     }
+    UserAdminModule_1 = UserAdminModule;
     UserAdminModule.forRoot = function () {
         return {
             ngModule: UserAdminModule_1,
             providers: [AuthService, AuthGuard, UsersService, UserResolve, MessageService]
         };
     };
+    UserAdminModule = UserAdminModule_1 = __decorate([
+        NgModule({
+            imports: [
+                BrowserModule,
+                _angular_http.HttpModule,
+                FormsModule,
+                ReactiveFormsModule,
+                AlertModule,
+                ModalModule,
+                TabsModule,
+                _angular_router.RouterModule.forRoot(appRoutes)
+            ],
+            declarations: [
+                HeaderComponent,
+                LoginComponent,
+                HomeComponent,
+                UserListComponent,
+                UserEventLogComponent,
+                UsersEventLogComponent,
+                UserEditComponent,
+                PasswordComponent,
+                MessageComponent
+            ],
+            exports: [
+                HeaderComponent,
+                LoginComponent,
+                HomeComponent,
+                UserListComponent,
+                UserEventLogComponent,
+                UsersEventLogComponent,
+                UserEditComponent,
+                MessageComponent
+            ],
+            providers: [
+                AuthService,
+                AuthGuard,
+                UsersService,
+                UserResolve,
+                MessageService
+            ]
+        })
+    ], UserAdminModule);
     return UserAdminModule;
+    var UserAdminModule_1;
 }());
-exports.UserAdminModule = UserAdminModule_1 = __decorate([
-    NgModule({
-        imports: [
-            BrowserModule,
-            _angular_http.HttpModule,
-            FormsModule,
-            ReactiveFormsModule,
-            AlertModule,
-            ModalModule,
-            TabsModule,
-            _angular_router.RouterModule.forRoot(appRoutes)
-        ],
-        declarations: [
-            exports.HeaderComponent,
-            exports.LoginComponent,
-            exports.HomeComponent,
-            exports.UserListComponent,
-            exports.UserEventLogComponent,
-            exports.UsersEventLogComponent,
-            exports.UserEditComponent,
-            PasswordComponent,
-            exports.MessageComponent
-        ],
-        exports: [
-            exports.HeaderComponent,
-            exports.LoginComponent,
-            exports.HomeComponent,
-            exports.UserListComponent,
-            exports.UserEventLogComponent,
-            exports.UsersEventLogComponent,
-            exports.UserEditComponent,
-            exports.MessageComponent
-        ],
-        providers: [
-            AuthService,
-            AuthGuard,
-            UsersService,
-            UserResolve,
-            MessageService
-        ]
-    })
-], exports.UserAdminModule);
-var UserAdminModule_1;
+
+exports.UserAdminModule = UserAdminModule;
+exports.LoginComponent = LoginComponent;
+exports.HeaderComponent = HeaderComponent;
+exports.HomeComponent = HomeComponent;
+exports.UserListComponent = UserListComponent;
+exports.UserEventLogComponent = UserEventLogComponent;
+exports.UsersEventLogComponent = UsersEventLogComponent;
+exports.UserEditComponent = UserEditComponent;
+exports.MessageComponent = MessageComponent;
+exports.AuthService = AuthService;
+exports.UserResolve = UserResolve;
+exports.UsersService = UsersService;
+exports.MessageService = MessageService;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

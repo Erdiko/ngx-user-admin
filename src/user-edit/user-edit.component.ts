@@ -48,6 +48,13 @@ export class UserEditComponent implements OnInit {
 
     public user: User;
 
+    // TODO replace this with an array from a service 
+    public roles = [
+        { "value": "3", "key": "General" },
+        { "value": "2", "key": "Admin" },
+        { "value": "1", "key": "Super Admin" },
+    ];
+
     constructor(
            @Inject(UsersService) usersService: UsersService,
            @Inject(ActivatedRoute) route: ActivatedRoute,

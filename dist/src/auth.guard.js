@@ -35,11 +35,11 @@ var AuthGuard = (function () {
         //this.messageService.sendMessage("login", "no-access");
         return false;
     };
+    AuthGuard = __decorate([
+        Injectable(),
+        __metadata("design:paramtypes", [Router])
+    ], AuthGuard);
     return AuthGuard;
 }());
-AuthGuard = __decorate([
-    Injectable(),
-    __metadata("design:paramtypes", [Router])
-], AuthGuard);
 export { AuthGuard };
 //# sourceMappingURL=auth.guard.js.map

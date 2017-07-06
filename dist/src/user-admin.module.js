@@ -81,59 +81,60 @@ var appRoutes = [
 /**
  * User Admin Module
  */
-var UserAdminModule = UserAdminModule_1 = (function () {
+var UserAdminModule = (function () {
     function UserAdminModule() {
     }
+    UserAdminModule_1 = UserAdminModule;
     UserAdminModule.forRoot = function () {
         return {
             ngModule: UserAdminModule_1,
             providers: [AuthService, AuthGuard, UsersService, UserResolve, MessageService]
         };
     };
+    UserAdminModule = UserAdminModule_1 = __decorate([
+        NgModule({
+            imports: [
+                BrowserModule,
+                HttpModule,
+                FormsModule,
+                ReactiveFormsModule,
+                AlertModule,
+                ModalModule,
+                TabsModule,
+                RouterModule.forRoot(appRoutes)
+            ],
+            declarations: [
+                HeaderComponent,
+                LoginComponent,
+                HomeComponent,
+                UserListComponent,
+                UserEventLogComponent,
+                UsersEventLogComponent,
+                UserEditComponent,
+                PasswordComponent,
+                MessageComponent
+            ],
+            exports: [
+                HeaderComponent,
+                LoginComponent,
+                HomeComponent,
+                UserListComponent,
+                UserEventLogComponent,
+                UsersEventLogComponent,
+                UserEditComponent,
+                MessageComponent
+            ],
+            providers: [
+                AuthService,
+                AuthGuard,
+                UsersService,
+                UserResolve,
+                MessageService
+            ]
+        })
+    ], UserAdminModule);
     return UserAdminModule;
+    var UserAdminModule_1;
 }());
-UserAdminModule = UserAdminModule_1 = __decorate([
-    NgModule({
-        imports: [
-            BrowserModule,
-            HttpModule,
-            FormsModule,
-            ReactiveFormsModule,
-            AlertModule,
-            ModalModule,
-            TabsModule,
-            RouterModule.forRoot(appRoutes)
-        ],
-        declarations: [
-            HeaderComponent,
-            LoginComponent,
-            HomeComponent,
-            UserListComponent,
-            UserEventLogComponent,
-            UsersEventLogComponent,
-            UserEditComponent,
-            PasswordComponent,
-            MessageComponent
-        ],
-        exports: [
-            HeaderComponent,
-            LoginComponent,
-            HomeComponent,
-            UserListComponent,
-            UserEventLogComponent,
-            UsersEventLogComponent,
-            UserEditComponent,
-            MessageComponent
-        ],
-        providers: [
-            AuthService,
-            AuthGuard,
-            UsersService,
-            UserResolve,
-            MessageService
-        ]
-    })
-], UserAdminModule);
 export { UserAdminModule };
-var UserAdminModule_1;
 //# sourceMappingURL=user-admin.module.js.map

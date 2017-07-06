@@ -78,8 +78,11 @@ export const tpl: string= `
                                     <label for="role" class="col-xs-2 control-label">Role</label>
                                     <div class="col-xs-10" id="select-role">
                                             <select class="form-control" name="role" formControlName="role">
-                                                <option value="2">Admin</option>
-                                                <option value="1">User</option>
+                                                <option *ngFor="let role of roles" 
+                                                    [value]="role.value" >
+                                                        <!--[selected]="(user && user.role.id == role.value) ? true : null">-->
+                                                        {{ role.key }}
+                                                </option>
                                             </select>
                                         <div class="text-danger" *ngIf="userForm.get('role').hasError('required') && userForm.get('role').touched">
                                         Role is required

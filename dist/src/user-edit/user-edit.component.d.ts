@@ -29,6 +29,10 @@ export declare class UserEditComponent implements OnInit {
     userForm: FormGroup;
     passwordForm: FormGroup;
     user: User;
+    roles: {
+        "value": string;
+        "key": string;
+    }[];
     constructor(usersService: UsersService, route: ActivatedRoute, router: Router, messageService: MessageService);
     ngOnInit(): void;
     private _initForms();

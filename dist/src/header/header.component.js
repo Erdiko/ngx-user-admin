@@ -41,15 +41,15 @@ var HeaderComponent = (function () {
         this.authService.logout();
         this.router.navigate(['/login']);
     };
+    HeaderComponent = __decorate([
+        Component({
+            selector: 'app-header',
+            template: tpl
+        }),
+        __metadata("design:paramtypes", [AuthService,
+            Router])
+    ], HeaderComponent);
     return HeaderComponent;
 }());
-HeaderComponent = __decorate([
-    Component({
-        selector: 'app-header',
-        template: tpl
-    }),
-    __metadata("design:paramtypes", [AuthService,
-        Router])
-], HeaderComponent);
 export { HeaderComponent };
 //# sourceMappingURL=header.component.js.map

@@ -111,15 +111,15 @@ var UsersEventLogComponent = (function () {
         this.events$.unsubscribe();
         this.eventsTotal$.unsubscribe();
     };
+    UsersEventLogComponent = __decorate([
+        Component({
+            selector: 'erdiko-users-event-log',
+            template: tpl
+        }),
+        __param(0, Inject(UsersService)),
+        __metadata("design:paramtypes", [UsersService])
+    ], UsersEventLogComponent);
     return UsersEventLogComponent;
 }());
-UsersEventLogComponent = __decorate([
-    Component({
-        selector: 'erdiko-users-event-log',
-        template: tpl
-    }),
-    __param(0, Inject(UsersService)),
-    __metadata("design:paramtypes", [UsersService])
-], UsersEventLogComponent);
 export { UsersEventLogComponent };
 //# sourceMappingURL=users-event-log.component.js.map

@@ -19,18 +19,18 @@ var PasswordComponent = (function () {
     function PasswordComponent() {
     }
     PasswordComponent.prototype.ngOnInit = function () { };
+    __decorate([
+        Input(),
+        __metadata("design:type", FormGroup)
+    ], PasswordComponent.prototype, "passwordForm", void 0);
+    PasswordComponent = __decorate([
+        Component({
+            selector: 'erdiko-password',
+            template: tpl
+        }),
+        __metadata("design:paramtypes", [])
+    ], PasswordComponent);
     return PasswordComponent;
 }());
-__decorate([
-    Input(),
-    __metadata("design:type", FormGroup)
-], PasswordComponent.prototype, "passwordForm", void 0);
-PasswordComponent = __decorate([
-    Component({
-        selector: 'erdiko-password',
-        template: tpl
-    }),
-    __metadata("design:paramtypes", [])
-], PasswordComponent);
 export { PasswordComponent };
 //# sourceMappingURL=password.component.js.map

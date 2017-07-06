@@ -37,15 +37,15 @@ var MessageComponent = (function () {
     MessageComponent.prototype.ngOnDestroy = function () {
         this.subscription.unsubscribe();
     };
+    MessageComponent = __decorate([
+        Component({
+            selector: 'erdiko-message',
+            template: tpl
+        }),
+        __param(0, Inject(MessageService)),
+        __metadata("design:paramtypes", [MessageService])
+    ], MessageComponent);
     return MessageComponent;
 }());
-MessageComponent = __decorate([
-    Component({
-        selector: 'erdiko-message',
-        template: tpl
-    }),
-    __param(0, Inject(MessageService)),
-    __metadata("design:paramtypes", [MessageService])
-], MessageComponent);
 export { MessageComponent };
 //# sourceMappingURL=message.component.js.map

@@ -35,12 +35,12 @@ var UserResolve = (function () {
             }
         });
     };
+    UserResolve = __decorate([
+        Injectable(),
+        __metadata("design:paramtypes", [UsersService,
+            Router])
+    ], UserResolve);
     return UserResolve;
 }());
-UserResolve = __decorate([
-    Injectable(),
-    __metadata("design:paramtypes", [UsersService,
-        Router])
-], UserResolve);
 export { UserResolve };
 //# sourceMappingURL=user-resolve.service.js.map
