@@ -7,7 +7,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
-import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AlertModule, ModalModule, TabsModule } from 'ngx-bootstrap';
 import { AuthService } from './auth.service';
@@ -24,60 +23,7 @@ import { UsersEventLogComponent } from './users-event-log/users-event-log.compon
 import { PasswordComponent } from './password/password.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { MessageComponent } from './message/message.component';
-/**
- * Application Routes
- *
- */
-// clang-format off
-var appRoutes = [
-    {
-        path: 'list',
-        canActivate: [
-            AuthGuard
-        ],
-        component: UserListComponent
-    },
-    {
-        path: 'events',
-        canActivate: [
-            AuthGuard
-        ],
-        component: UsersEventLogComponent
-    },
-    {
-        path: 'user',
-        canActivate: [
-            AuthGuard
-        ],
-        component: UserEditComponent
-    },
-    {
-        path: 'user/:id',
-        component: UserEditComponent,
-        canActivate: [
-            AuthGuard
-        ],
-        resolve: {
-            user: UserResolve
-        }
-    },
-    {
-        path: '',
-        canActivate: [
-            AuthGuard
-        ],
-        component: HomeComponent
-    },
-    {
-        path: 'login',
-        component: LoginComponent
-    },
-    {
-        path: '**',
-        redirectTo: ''
-    }
-];
-// clang-format on
+import { UserAdminRouting } from './user-admin.routing';
 /**
  * User Admin Module
  */
@@ -101,7 +47,7 @@ var UserAdminModule = (function () {
                 AlertModule,
                 ModalModule,
                 TabsModule,
-                RouterModule.forRoot(appRoutes)
+                UserAdminRouting
             ],
             declarations: [
                 HeaderComponent,

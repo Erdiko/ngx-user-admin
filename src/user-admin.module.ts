@@ -32,60 +32,7 @@ import { UserEditComponent }        from './user-edit/user-edit.component';
 
 import { MessageComponent }         from './message/message.component';
 
-/**
- * Application Routes
- *
- */
-// clang-format off
-const appRoutes = [
-    {
-        path: 'list',
-        canActivate: [
-            AuthGuard
-        ],
-        component: UserListComponent
-    },
-    {
-        path: 'events',
-        canActivate: [
-            AuthGuard
-        ],
-        component: UsersEventLogComponent
-    },
-    {
-        path: 'user',
-        canActivate: [
-            AuthGuard
-        ],
-        component: UserEditComponent
-    },
-    {
-        path: 'user/:id',
-        component: UserEditComponent,
-        canActivate: [
-            AuthGuard
-        ],
-        resolve: {
-            user: UserResolve
-        }
-    },
-    {
-        path: '',
-        canActivate: [
-            AuthGuard
-        ],
-        component: HomeComponent
-    },
-    {
-        path: 'login',
-        component: LoginComponent
-    },
-    {
-        path: '**',
-        redirectTo: ''
-    }
-];
-// clang-format on
+import { UserAdminRouting }         from './user-admin.routing';
 
 /**
  * User Admin Module
@@ -101,7 +48,7 @@ const appRoutes = [
         ModalModule,
         TabsModule,
 
-        RouterModule.forRoot(appRoutes)
+        UserAdminRouting
     ],
     declarations: [ 
         HeaderComponent,
