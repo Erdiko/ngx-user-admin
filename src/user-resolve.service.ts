@@ -22,7 +22,7 @@ export class UserResolve implements Resolve<any> {
 
     }
 
-    resolve(route: ActivatedRouteSnapshot): Promise<User>|boolean {
+    resolve(route: ActivatedRouteSnapshot): any {
         let id = route.params['id'];
         return this.us.getUser(id).then(user => {
             if (user) {

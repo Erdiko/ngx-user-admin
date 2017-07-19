@@ -29,9 +29,17 @@ import {Router, ActivatedRoute } from "@angular/router";
 import { FormsModule, 
          ReactiveFormsModule }  from '@angular/forms';
 
-import { AuthService }          from './auth.service';
-import { UsersService }         from './users.service';
-import { User }                 from './user.model';
+
+import { AlertModule,
+         ModalModule,
+         TabsModule }           from 'ngx-bootstrap';
+
+
+import { AuthService }          from '../auth.service';
+import { UsersService }         from '../users.service';
+import { User }                 from '../user.model';
+
+import { MessageService }           from '../message.service';
 
 import { UserListComponent }    from './user-list.component';
 
@@ -56,8 +64,8 @@ describe('UserListComponent', () => {
                 FormsModule,
                 ReactiveFormsModule,
 
-                //AlertModule.forRoot(),
-                //ModalModule.forRoot()
+                AlertModule.forRoot(),
+                ModalModule.forRoot()
             ],
             providers: [
                 BaseRequestOptions,
@@ -91,7 +99,8 @@ describe('UserListComponent', () => {
                     useFactory: (backend: XHRBackend, defaultOptions: BaseRequestOptions) => {
                         return new Http(backend, defaultOptions);
                     }
-                }
+                },
+                MessageService
             ]
         })
         .compileComponents();

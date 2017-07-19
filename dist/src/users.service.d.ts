@@ -97,7 +97,7 @@ export declare class UsersService {
      * Get a specific user, returns a promise
      *
      */
-    getUser(id: string): Promise<any>;
+    getUser(id: string): any;
     /**
      * Update a specific user
      *

@@ -197,7 +197,7 @@ export class UsersService {
      * Get a specific user, returns a promise
      *
      */
-     getUser(id: string) : Promise<any> {
+     getUser(id: string) : any {
 
         let url = this._baseUrl + this.userUrl + '?id=' + id;
         let options = this._getHeaderOptions();

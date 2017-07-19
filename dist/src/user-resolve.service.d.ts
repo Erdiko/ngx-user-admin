@@ -1,5 +1,4 @@
 import { Router, Resolve, ActivatedRouteSnapshot } from '@angular/router';
-import { User } from './user.model';
 import { UsersService } from './users.service';
 /**
  * Returns a User model for a provided ID, if one is found. Else
@@ -12,5 +11,5 @@ export declare class UserResolve implements Resolve<any> {
      * set user service and router to local instances
      */
     constructor(us: UsersService, router: Router);
-    resolve(route: ActivatedRouteSnapshot): Promise<User> | boolean;
+    resolve(route: ActivatedRouteSnapshot): any;
 }

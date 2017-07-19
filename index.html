@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>User Admin Test</title>
+  <head>
+    <title>Angular2 Testing</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="node_modules/core-js/client/shim.min.js"></script>
@@ -10,14 +10,11 @@
     <script src="node_modules/systemjs/dist/system.src.js"></script>
     <script src="systemjs.config.js"></script>
     <script>
-        System.import('app').catch(function(err){ console.error(err); });
+      System.import('app').catch(function(err){ console.error(err); });
     </script>
-</head>
+  </head>
 
-<body>
-<my-app>
-    loading...
-</my-app>
-</body>
-
+  <body>
+    <app>Loading ...</app>
+  </body>
 </html>

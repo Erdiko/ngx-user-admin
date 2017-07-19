@@ -1,8 +1,9 @@
 {
     "compilerOptions": {
+        "baseUrl": "./src",
         "target": "es6",
         "module": "system",
-        "moduleResolution": "classic",
+        "moduleResolution": "node",
         "sourceMap": true,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
@@ -12,12 +13,15 @@
     },
     "lib": ["es2015", "dom"],
     "files": [
-        "main.ts",
-        "../node_modules/typescript/lib/lib.es6.d.ts"
+        "index.ts"
+    ],
+    "include": [
+        "src/**/*.spec.ts"
     ],
     "exclude": [
-        "../node_modules",
-        "../node_modules/**",
-        "../typings/**"
+        "node_modules",
+        "node_modules/**",
+        "typings/**",
+        "typings/globals/es6-shim/index.d.ts"
     ]
 }
