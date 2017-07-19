@@ -148,7 +148,6 @@ export class UserEditComponent implements OnInit {
 
         this.wait = true;
 
-        console.log("valid", valid);
         if(valid) {
             if(this.user.id) {
                 value.id = this.user.id;
@@ -209,7 +208,6 @@ export class UserEditComponent implements OnInit {
     }
 
     private _handleError(error: string) {
-        this.error = error;
         this.messageService.setMessage([{"type": "danger", "body": error}]);
     }
 
