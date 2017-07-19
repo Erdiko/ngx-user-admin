@@ -1,9 +1,9 @@
 /* tslint:disable:no-unused-variable */
-import {
-    async,
-    getTestBed,
-    TestBed
-} from '@angular/core/testing';
+
+import { async, ComponentFixture, TestBed, getTestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+
+import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 
 import {
     BaseRequestOptions,
@@ -17,9 +17,6 @@ import {
     MockBackend,
     MockConnection
 } from '@angular/http/testing';
-
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
 
 import { Router } from "@angular/router";
 

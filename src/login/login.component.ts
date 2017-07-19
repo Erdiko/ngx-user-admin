@@ -89,7 +89,6 @@ export class LoginComponent implements OnInit {
      */
     onSubmit({ value, valid }: { value: any, valid: boolean }) {
 
-        console.log('valid', valid);
         if(valid) {
 
             this.wait = true;
