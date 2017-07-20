@@ -26,9 +26,21 @@ import { FormsModule,
 import { AlertModule, 
          ModalModule }          from 'ngx-bootstrap';
 
+import 'rxjs/Rx';
+
 import { MessageService }       from '../message.service';
 import { AuthService }          from '../auth.service';
 import { LoginComponent }       from './login.component';
+
+function setupConnections(backend: MockBackend, options: any) {
+    backend.connections.subscribe((connection: MockConnection) => {
+        if (connection.request.url === "/ajax/users/authentication/login") {
+            const responseOptions = new ResponseOptions(options);
+            const response = new Response(responseOptions);
+            connection.mockRespond(response);
+        }
+    });
+}
 
 describe('LoginComponent', () => {
     let component: LoginComponent;
@@ -97,16 +109,6 @@ describe('LoginComponent', () => {
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
-
-    function setupConnections(backend: MockBackend, options: any) {
-        backend.connections.subscribe((connection: MockConnection) => {
-            if (connection.request.url === "/ajax/users/authentication/login") {
-                const responseOptions = new ResponseOptions(options);
-                const response = new Response(responseOptions);
-                connection.mockRespond(response);
-            }
-        });
-    }
 
     it('should create', () => {
         expect(component).toBeTruthy();

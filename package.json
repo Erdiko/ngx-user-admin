@@ -10,7 +10,8 @@
     "clean": "rimraf src/*.ngfactory.* src/*.ngsummary.* src/**/*.ngsummary.* && rimraf src/**/*ngfactory.*",
     "docs": "npm run clean && compodoc -p src/tsconfig.json",
     "start": "npm run tsc && concurrently \"tsc -w\" \"lite-server\" ",
-    "test": "npm run clean && npm run tsc && concurrently \"ngc -w\" \"karma start karma.conf.js\"",
+    "test": "npm run clean && npm run tsc && concurrently \"ngc -w\" \"karma start karma.conf.js --reporters junit\"",
+    "test-single-run-report": "npm run clean && npm run tsc && concurrently \"karma start karma.conf.js --single-run --reporters junit\"",
     "test-single-run": "npm run clean && npm run tsc && concurrently \"karma start karma.conf.js --single-run\"",
     "tsc": "\"ngc\""
   },
@@ -52,6 +53,7 @@
     "karma-cli": "^1.0.1",
     "karma-jasmine": "^1.0.2",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "karma-junit-reporter": "^1.2.0",
     "lite-server": "^2.2.2",
     "lodash": "^4.16.4",
     "ngx-bootstrap": "1.6.6",

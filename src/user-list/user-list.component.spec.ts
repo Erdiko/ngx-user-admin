@@ -34,6 +34,7 @@ import { AlertModule,
          ModalModule,
          TabsModule }           from 'ngx-bootstrap';
 
+import 'rxjs/Rx';
 
 import { AuthService }          from '../auth.service';
 import { UsersService }         from '../users.service';
@@ -42,6 +43,48 @@ import { User }                 from '../user.model';
 import { MessageService }           from '../message.service';
 
 import { UserListComponent }    from './user-list.component';
+
+function _normalizeQString(qstring: any) {
+    let query = {'direction': false, 'sort': false};
+    for(let idx in qstring) {
+        let pair = qstring[idx].split("=");
+        query[pair[0]] = pair[1];
+    }
+    return query;
+}
+
+function setupConnections(backend: MockBackend, options: any) {
+    backend.connections.subscribe((connection: MockConnection) => {
+    
+        let url = connection.request.url.replace('http://docker.local:8088', '');
+
+        switch(url.slice(0, url.indexOf("?"))) {
+            case "/ajax/erdiko/users/admin/list":
+
+                let qstring = url.slice(url.indexOf("?") + 1).split("&");
+                let query = _normalizeQString(qstring);
+
+                let body = options.body.body;
+
+                // match q string vars for sorting and paging (if provided)
+                if(body.direction) {
+                    expect(query.direction).toEqual(body.direction);
+                }
+
+                if(body.sort) {
+                    expect(query.sort).toEqual(body.sort);
+                }
+
+            case "/ajax/erdiko/users/admin/delete":
+            default:
+                const responseOptions = new ResponseOptions(options);
+                const response = new Response(responseOptions);
+                connection.mockRespond(response);
+            break;
+        }
+
+    });
+}
 
 describe('UserListComponent', () => {
     let component: UserListComponent;
@@ -155,48 +198,6 @@ describe('UserListComponent', () => {
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
-
-    function _normalizeQString(qstring: any) {
-        let query = {'direction': false, 'sort': false};
-        for(let idx in qstring) {
-            let pair = qstring[idx].split("=");
-            query[pair[0]] = pair[1];
-        }
-        return query;
-    }
-
-    function setupConnections(backend: MockBackend, options: any) {
-        backend.connections.subscribe((connection: MockConnection) => {
-        
-            let url = connection.request.url.replace('http://docker.local:8088', '');
-
-            switch(url.slice(0, url.indexOf("?"))) {
-                case "/ajax/erdiko/users/admin/list":
-
-                    let qstring = url.slice(url.indexOf("?") + 1).split("&");
-                    let query = _normalizeQString(qstring);
-
-                    let body = options.body.body;
-
-                    // match q string vars for sorting and paging (if provided)
-                    if(body.direction) {
-                        expect(query.direction).toEqual(body.direction);
-                    }
-
-                    if(body.sort) {
-                        expect(query.sort).toEqual(body.sort);
-                    }
-
-                case "/ajax/erdiko/users/admin/delete":
-                default:
-                    const responseOptions = new ResponseOptions(options);
-                    const response = new Response(responseOptions);
-                    connection.mockRespond(response);
-                break;
-            }
-
-        });
-    }
 
     it('should create', () => {
         fixture.detectChanges();

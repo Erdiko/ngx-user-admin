@@ -20,10 +20,84 @@ import {
     XHRBackend
 } from '@angular/http';
 
+import 'rxjs/Rx';
+
 import { User }             from "./user.model";
 import { AuthService }      from './auth.service';
 import { UsersService }     from './users.service';
 import { MessageService }   from './message.service';
+
+function _normalizeQString(qstring: any) {
+    let query = {};
+    for(let idx in qstring) {
+        let pair = qstring[idx].split("=");
+        query[pair[0]] = pair[1];
+    }
+    return query;
+}
+
+function setupConnections(backend: MockBackend, options: any) {
+    backend.connections.subscribe((connection: MockConnection) => {
+
+        let url = connection.request.url.replace('http://docker.local:8088', '');
+        if(-1 !== (url.indexOf("?"))) {
+            url = url.slice(0, url.indexOf("?"));
+        }
+
+        let body = options.body.body;
+        let query = {};
+
+        let fullUrl = connection.request.url.replace('http://docker.local:8088', '');
+        if(-1 !== (fullUrl.indexOf("?"))) {
+            let qstring = fullUrl.slice(fullUrl.indexOf("?") + 1).split("&");
+            if(qstring) {
+                query = _normalizeQString(qstring);
+            }
+        }
+
+        switch(url) {
+            case "/ajax/erdiko/users/admin/update":
+                expect(connection.request.method).toEqual(1);
+                //expect(JSON.stringify(body.user)).toEqual(connection.request._body);
+            break;
+            case "/ajax/erdiko/users/admin/create":
+                expect(connection.request.method).toEqual(1);
+                //expect(JSON.stringify(body.user)).toEqual(connection.request._body);
+            break;
+            case "/ajax/erdiko/users/admin/delete":
+                expect(connection.request.method).toEqual(1);
+                if(body.user && body.user.id) {
+                    //expect(body.user.id).toEqual(JSON.parse(connection.request._body).id);
+                }
+            break;
+            case "/ajax/erdiko/users/admin/changepass":
+                expect(connection.request.method).toEqual(1);
+
+                if(body.newpass) {
+                    //expect(JSON.parse(connection.request._body).newpass).toEqual(body.newpass);
+                }
+            break;
+            case "/ajax/erdiko/users/admin/list":
+                expect(connection.request.method).toEqual(0);
+                if(query) {
+                    //expect(query.pagesize).toBeTruthy();
+                    //expect(query.page).toBeTruthy();
+                    //expect(query.sort).toBeTruthy();
+                    //expect(query.direction).toBeTruthy();
+                }
+            break;
+            case "/ajax/erdiko/users/admin/retrieve":
+                expect(connection.request.method).toEqual(0);
+                //expect(query.id).toBeTruthy();
+            break;
+        }
+
+        const responseOptions = new ResponseOptions(options);
+        const response = new Response(responseOptions);
+        connection.mockRespond(response);
+
+    });
+}
 
 describe('UsersService', () => {
 
@@ -109,78 +183,6 @@ describe('UsersService', () => {
                     };
 
     }));
-
-    function _normalizeQString(qstring: any) {
-        let query = {};
-        for(let idx in qstring) {
-            let pair = qstring[idx].split("=");
-            query[pair[0]] = pair[1];
-        }
-        return query;
-    }
-
-    function setupConnections(backend: MockBackend, options: any) {
-        backend.connections.subscribe((connection: MockConnection) => {
-
-            let url = connection.request.url.replace('http://docker.local:8088', '');
-            if(-1 !== (url.indexOf("?"))) {
-                url = url.slice(0, url.indexOf("?"));
-            }
-
-            let body = options.body.body;
-            let query = {};
-
-            let fullUrl = connection.request.url.replace('http://docker.local:8088', '');
-            if(-1 !== (fullUrl.indexOf("?"))) {
-                let qstring = fullUrl.slice(fullUrl.indexOf("?") + 1).split("&");
-                if(qstring) {
-                    query = _normalizeQString(qstring);
-                }
-            }
-
-            switch(url) {
-                case "/ajax/erdiko/users/admin/update":
-                    expect(connection.request.method).toEqual(1);
-                    //expect(JSON.stringify(body.user)).toEqual(connection.request._body);
-                break;
-                case "/ajax/erdiko/users/admin/create":
-                    expect(connection.request.method).toEqual(1);
-                    //expect(JSON.stringify(body.user)).toEqual(connection.request._body);
-                break;
-                case "/ajax/erdiko/users/admin/delete":
-                    expect(connection.request.method).toEqual(1);
-                    if(body.user && body.user.id) {
-                        //expect(body.user.id).toEqual(JSON.parse(connection.request._body).id);
-                    }
-                break;
-                case "/ajax/erdiko/users/admin/changepass":
-                    expect(connection.request.method).toEqual(1);
-
-                    if(body.newpass) {
-                        //expect(JSON.parse(connection.request._body).newpass).toEqual(body.newpass);
-                    }
-                break;
-                case "/ajax/erdiko/users/admin/list":
-                    expect(connection.request.method).toEqual(0);
-                    if(query) {
-                        //expect(query.pagesize).toBeTruthy();
-                        //expect(query.page).toBeTruthy();
-                        //expect(query.sort).toBeTruthy();
-                        //expect(query.direction).toBeTruthy();
-                    }
-                break;
-                case "/ajax/erdiko/users/admin/retrieve":
-                    expect(connection.request.method).toEqual(0);
-                    //expect(query.id).toBeTruthy();
-                break;
-            }
-
-            const responseOptions = new ResponseOptions(options);
-            const response = new Response(responseOptions);
-            connection.mockRespond(response);
-
-        });
-    }
 
     it('#getUsers should return an empty observable list when the ajax request is unsuccessful', () => {
 

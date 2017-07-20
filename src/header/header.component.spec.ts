@@ -7,6 +7,8 @@ import { Router } from "@angular/router";
 
 import { HttpModule }      from '@angular/http';
 
+import 'rxjs/Rx';
+
 import { AuthService }     from '../auth.service';
 import { UsersService }    from '../users.service';
 import { UserResolve }     from '../user-resolve.service';
