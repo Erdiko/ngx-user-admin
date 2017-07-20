@@ -22,3 +22,4 @@ src/**/*.js
 *.js  # or /src/**/*.js
 /lib
 .rpt2_cache
+.org.chromium.*
