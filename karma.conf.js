@@ -9,7 +9,8 @@ module.exports = function(config) {
     plugins: [
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
-      require('karma-jasmine-html-reporter')
+      require('karma-jasmine-html-reporter'),
+      require('karma-junit-reporter')
     ],
 
     client: {
@@ -52,7 +53,7 @@ module.exports = function(config) {
       { pattern: 'src/**/*.js.map', included: false, watched: true }
     ],
 
-    reporters: ['progress', 'kjhtml'],
+    reporters: ['progress', 'kjhtml', 'junit'],
 
     exclude: [],
     preprocessors: {},
