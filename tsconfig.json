@@ -1,6 +1,5 @@
 {
     "compilerOptions": {
-        "baseUrl": "./src",
         "target": "es6",
         "module": "system",
         "moduleResolution": "node",
@@ -9,10 +8,7 @@
         "experimentalDecorators": true,
         "noImplicitAny": false,
         "suppressImplicitAnyIndexErrors": true,
-        "declaration": true,
-        "strictNullChecks": false,
-        "noImplicitAny": false,
-        "noImplicitThis": false
+        "declaration": true
     },
     "lib": ["es2015", "dom"],
     "files": [
