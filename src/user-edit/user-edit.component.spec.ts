@@ -25,6 +25,8 @@ import { AlertModule,
          ModalModule,
          TabsModule }           from 'ngx-bootstrap';
 
+import 'rxjs/Rx';
+
 import { MessageService }           from '../message.service';
 import { AuthService }              from '../auth.service';
 import { UsersService }             from '../users.service';
