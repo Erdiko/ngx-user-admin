@@ -20,6 +20,8 @@ import {
     XHRBackend
 } from '@angular/http';
 
+import 'rxjs/Rx';
+
 import { User }             from "./user.model";
 import { AuthService }      from './auth.service';
 import { UsersService }     from './users.service';
