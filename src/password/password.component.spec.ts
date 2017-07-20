@@ -17,6 +17,7 @@ import { FormsModule,
          Validators,
          ReactiveFormsModule }  from '@angular/forms';
 
+import { User }                     from "../user.model";
 import { PasswordComponent }        from './password.component';
 
 describe('PasswordComponent', () => {

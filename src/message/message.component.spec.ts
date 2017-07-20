@@ -22,8 +22,6 @@ describe('MessageComponent', () => {
 
     let bodyData: any;
 
-    let user: User;
-
     beforeEach(async(() => {
     
         TestBed.configureTestingModule({
