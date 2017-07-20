@@ -1,5 +1,5 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, getTestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
@@ -14,17 +14,13 @@ import { MessageService }  from '../message.service';
 
 import { HeaderComponent } from './header.component';
 
-class MockAuthService extends AuthService {
-    isLoggedIn() {
-        return false;
-    }
-}
-
 describe('HeaderComponent', () => {
     let component: HeaderComponent;
     let fixture: ComponentFixture<HeaderComponent>;
 
     let router: any;
+
+    let authService: AuthService;
 
     beforeEach(async(() => {
 
@@ -37,19 +33,19 @@ describe('HeaderComponent', () => {
             ],
             providers: [
                 {
-                    provide: AuthService, 
-                    useClass: MockAuthService
-                },
-                {
                     provide: Router, 
                     useClass: class { navigate = jasmine.createSpy("navigate"); } 
                 },
+                AuthService,
                 UsersService,
                 UserResolve,
                 MessageService
             ]
         })
         .compileComponents();
+
+        const testbed = getTestBed();
+        authService = testbed.get(AuthService);
     }));
 
     beforeEach(() => {
@@ -70,8 +66,9 @@ describe('HeaderComponent', () => {
     });
 
     it('should display an ul element with 0 links when notlogged in', () => {
-        fixture.detectChanges();
         const compiled = fixture.debugElement.nativeElement;
+        spyOn(authService, 'isLoggedIn').and.returnValue(false);
+        fixture.detectChanges();
 
         expect(compiled.querySelectorAll('ul')).toBeTruthy();
         expect(compiled.querySelectorAll('ul li').length).toBe(0);
@@ -85,8 +82,7 @@ describe('HeaderComponent', () => {
          * and add a spyOn over-ride to pretend we have
          * a logged in user.
          */
-        let service = fixture.debugElement.injector.get(AuthService);
-        spyOn(service, 'isLoggedIn').and.returnValue(true);
+        spyOn(authService, 'isLoggedIn').and.returnValue(true);
 
         fixture.detectChanges();
         const compiled = fixture.debugElement.nativeElement;
@@ -96,9 +92,7 @@ describe('HeaderComponent', () => {
     });
 
     it('should navigate to /login when clickLogout is fired', () => {
-
-        let service = fixture.debugElement.injector.get(AuthService);
-        spyOn(service, 'isLoggedIn').and.returnValue(true);
+        spyOn(authService, 'isLoggedIn').and.returnValue(true);
 
         let router = fixture.debugElement.injector.get(Router);
 
