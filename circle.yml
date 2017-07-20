@@ -4,7 +4,10 @@ machine:
       6.6.0
 test:
   pre:
-    - npm install -g @angular/cli
+    - npm rm -g angular-cli @angular/cli
+    - npm update
+    - npm install fsevents
+    - npm install -g @angular/cli@latest
     - npm install -g typescript@2.4.2
   override:
     - npm run test-single-run
