@@ -41,7 +41,7 @@ describe('AuthGuard', () => {
             store = {};
         });
 
-    });
+    }));
 
     beforeEach(inject([AuthGuard], (agService:AuthGuard) => {
         service = agService;
