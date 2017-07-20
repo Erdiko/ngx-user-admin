@@ -26,6 +26,8 @@ import { FormsModule,
 import { AlertModule, 
          ModalModule }          from 'ngx-bootstrap';
 
+import 'rxjs/Rx';
+
 import { MessageService }       from '../message.service';
 import { AuthService }          from '../auth.service';
 import { LoginComponent }       from './login.component';
