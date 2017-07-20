@@ -1,0 +1,44 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "declaration": true,
+    "stripInternal": true,
+    "experimentalDecorators": true,
+    "strictNullChecks": true,
+    "noImplicitAny": false,
+    "noImplicitThis": false,
+    "module": "es2015",
+    "moduleResolution": "node",
+    "paths": {
+      "@angular/core": ["node_modules/@angular/core"],
+      "@angular/router": ["node_modules/@angular/router"],
+      "rxjs/*": ["node_modules/rxjs/*"],
+
+      "ngx-bootstrap": ["node_modules/ngx-bootstrap/*"]
+    },
+    "rootDir": ".",
+    "outDir": "dist",
+    "sourceMap": true,
+    "inlineSources": true,
+    "target": "es5",
+    "skipLibCheck": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "es2015", 
+      "dom"
+    ]
+  },
+  "files": [
+    "index.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "node_modules/typescript",
+    "node_modules/typings",
+    "node_modules/@types"
+  ],
+  "angularCompilerOptions": {
+    "strictMetadataEmit": true
+  }
+}

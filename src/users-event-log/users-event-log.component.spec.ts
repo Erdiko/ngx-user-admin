@@ -36,15 +36,15 @@ import { FormsModule,
 
 import { AlertModule } from 'ngx-bootstrap';
 
-import { AuthService }              from './auth.service';
-import { UsersService }             from './users.service';
-import { User }                     from './user.model';
+import { AuthService }              from '../auth.service';
+import { UsersService }             from '../users.service';
+import { User }                     from '../user.model';
 
-import { UserEventLogComponent } from './user-event-log.component';
+import { UsersEventLogComponent } from './users-event-log.component';
 
-describe('UserEventLogComponent', () => {
-  let component: UserEventLogComponent;
-  let fixture: ComponentFixture<UserEventLogComponent>;
+describe('UsersEventLogComponent', () => {
+  let component: UsersEventLogComponent;
+  let fixture: ComponentFixture<UsersEventLogComponent>;
 
   let backend: MockBackend;
   let usersService: UsersService;
@@ -57,7 +57,7 @@ describe('UserEventLogComponent', () => {
 	  //Configures and initializes environment for unit testing and provides
 	  //methods for creating components and services in unit tests
       TestBed.configureTestingModule({
-          declarations: [ UserEventLogComponent ],
+          declarations: [ UsersEventLogComponent ],
 		  schemas: [ NO_ERRORS_SCHEMA ],
           providers: [
 			  BaseRequestOptions, 
@@ -133,8 +133,8 @@ describe('UserEventLogComponent', () => {
   }));
 
   beforeEach(() => {
-      //createComponent creates an instance of the UserEventLogComponent  
-	  fixture = TestBed.createComponent(UserEventLogComponent);
+      //createComponent creates an instance of the UsersEventLogComponent  
+	  fixture = TestBed.createComponent(UsersEventLogComponent);
       component = fixture.componentInstance;
       fixture.detectChanges();
   });
@@ -146,7 +146,6 @@ describe('UserEventLogComponent', () => {
             let queryString = url.slice(url.indexOf("?"));
 			url = url.slice(0, url.indexOf("?")).replace('http://erdiko.local', '');
 			
-        
             switch(url) {
                 case "/ajax/erdiko/users/admin/eventlogs":
 					expect(queryString).toEqual("?pagesize="+component.pageSize+"&page="+component.currentPage+"&sort="+component.sortCol+"&direction="+component.sortDir);
@@ -175,12 +174,13 @@ describe('UserEventLogComponent', () => {
 	expect(compiled.querySelector('table')).toBeTruthy();
 
 	//Checks the number of column
-	expect(compiled.querySelectorAll('tr th').length).toBe(4);
+	expect(compiled.querySelectorAll('tr th').length).toBe(5);
 	
 	//Check for the names of the column headers.
 	expect(compiled.querySelector('tr th:first-child').textContent).toContain("ID");
-	expect(compiled.querySelector('tr th:nth-child(2)').textContent).toContain("Event Log");
-	expect(compiled.querySelector('tr th:nth-child(3)').textContent).toContain("Event Data");
+	expect(compiled.querySelector('tr th:nth-child(2)').textContent).toContain("User ID");
+	expect(compiled.querySelector('tr th:nth-child(3)').textContent).toContain("Event Log");
+	expect(compiled.querySelector('tr th:nth-child(4)').textContent).toContain("Event Data");
 	expect(compiled.querySelector('tr th:last-child').textContent).toContain("Created At");
   });
 
@@ -230,10 +230,9 @@ describe('UserEventLogComponent', () => {
 	component.ngOnInit();
 	fixture.detectChanges();
 
-	expect(compiled.querySelectorAll('tr.user-events').length).toBe(3);
-	expect(compiled.querySelector('tr.user-events:first-child td:first-child').textContent).toContain("3");
-	expect(compiled.querySelector('tr.user-events:last-child td:first-child').textContent).toContain("1");
-
+	expect(compiled.querySelectorAll('tr.users-events').length).toBe(3);
+	expect(compiled.querySelector('tr.users-events:first-child td:first-child').textContent).toContain("3");
+	expect(compiled.querySelector('tr.users-events:last-child td:first-child').textContent).toContain("1");
 
   });
 
@@ -257,7 +256,7 @@ describe('UserEventLogComponent', () => {
     expect(component.sortDir).toBe('asc');
 
 	fixture.detectChanges();
-    expect(compiled.querySelectorAll('tr.user-events').length).toBe(3);
+    expect(compiled.querySelectorAll('tr.users-events').length).toBe(3);
 
     // click it again
 	component.sort('id');
@@ -267,8 +266,7 @@ describe('UserEventLogComponent', () => {
     expect(component.sortDir).toBe('desc');
 
 	fixture.detectChanges();
-	expect(compiled.querySelectorAll('tr.user-events').length).toBe(3);
-
+	expect(compiled.querySelectorAll('tr.users-events').length).toBe(3);
   });
 
 });

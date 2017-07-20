@@ -20,6 +20,8 @@ import {
     MockConnection
 } from '@angular/http/testing';
 
+import 'rxjs/Rx';
+
 import { AuthService } from './auth.service';
 
 describe('AuthService', () => {
@@ -72,12 +74,26 @@ describe('AuthService', () => {
 
         testToken = {"token": bodyData.token};
 
-        localStorage.clear();
+        var store = {};
+
+        spyOn(localStorage, 'getItem').and.callFake( (key:string):String => {
+            return store[key] || null;
+        });
+        spyOn(localStorage, 'removeItem').and.callFake((key:string):void =>  {
+            delete store[key];
+        });
+        spyOn(localStorage, 'setItem').and.callFake((key:string, value:string):string =>  {
+            return store[key] = <string>value;
+        });
+        spyOn(localStorage, 'clear').and.callFake(() =>  {
+            store = {};
+        });
+
     }));
 
     function setupConnections(backend: MockBackend, options: any) {
         backend.connections.subscribe((connection: MockConnection) => {
-            if (connection.request.url === "http://erdiko.local/ajax/users/authentication/login") {
+            if (connection.request.url === "/ajax/users/authentication/login") {
                 const responseOptions = new ResponseOptions(options);
                 const response = new Response(responseOptions);
                 connection.mockRespond(response);
@@ -149,8 +165,7 @@ describe('AuthService', () => {
                     expect(result).toBeTruthy();
                });
         
-       expect(service.isLoggedIn()).toBeTruthy();
-
+        expect(service.isLoggedIn()).toBeTruthy();
     });
 
     it('#isLogout should delete localStorage', () => {
@@ -169,10 +184,7 @@ describe('AuthService', () => {
  
         service.logout();
        
-        let currentUser = JSON.parse(localStorage.getItem("currentUser"));
-        expect(currentUser).toBeFalsy();
         expect(service.isLoggedIn()).toBeFalsy();
-
     });
 
 });
