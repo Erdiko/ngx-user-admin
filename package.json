@@ -11,8 +11,7 @@
     "docs": "npm run clean && compodoc -p src/tsconfig.json",
     "start": "npm run tsc && concurrently \"tsc -w\" \"lite-server\" ",
     "test": "npm run clean && npm run tsc && concurrently \"tsc -w\" \"karma start karma.conf.js\"",
-    "test-single-run": "npm run clean && npm run tsc && concurrently \"tsc -w\" \"karma start karma.conf.js --single-run\"",
-    "tsc": "ngc"
+    "test-single-run": "npm run clean && \"ngc\" && concurrently \"ngc -w\" \"karma start karma.conf.js --single-run\""
   },
   "types": "./index.d.ts",
   "repository": {
