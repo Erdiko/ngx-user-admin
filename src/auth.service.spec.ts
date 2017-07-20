@@ -24,6 +24,16 @@ import 'rxjs/Rx';
 
 import { AuthService } from './auth.service';
 
+function setupConnections(backend: MockBackend, options: any) {
+    backend.connections.subscribe((connection: MockConnection) => {
+        if (connection.request.url === "/ajax/users/authentication/login") {
+            const responseOptions = new ResponseOptions(options);
+            const response = new Response(responseOptions);
+            connection.mockRespond(response);
+        }
+    });
+}
+
 describe('AuthService', () => {
 
     let backend: MockBackend;
@@ -90,16 +100,6 @@ describe('AuthService', () => {
         });
 
     }));
-
-    function setupConnections(backend: MockBackend, options: any) {
-        backend.connections.subscribe((connection: MockConnection) => {
-            if (connection.request.url === "/ajax/users/authentication/login") {
-                const responseOptions = new ResponseOptions(options);
-                const response = new Response(responseOptions);
-                connection.mockRespond(response);
-            }
-        });
-    }
 
     it('#login should return false on an unsuccessful request', () => {
 

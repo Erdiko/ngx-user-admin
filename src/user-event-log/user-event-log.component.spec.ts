@@ -45,6 +45,26 @@ import { UsersService }     from '../users.service';
 
 import { UserEventLogComponent } from './user-event-log.component';
 
+function setupConnections(backend: MockBackend, options: any) {
+    backend.connections.subscribe((connection: MockConnection) => {
+
+        let url = connection.request.url;
+        let queryString = url.slice(url.indexOf("?"));
+        url = url.slice(0, url.indexOf("?")).replace('http://docker.local:8088', '');
+    
+        switch(url) {
+            case "/ajax/erdiko/users/admin/eventlogs":
+                //expect(queryString).toEqual("?pagesize="+component.pageSize+"&page="+component.currentPage+"&sort="+component.sortCol+"&direction="+component.sortDir);
+            default:
+                const responseOptions = new ResponseOptions(options);
+                const response = new Response(responseOptions);
+                connection.mockRespond(response);
+            break;
+        }
+
+    });
+}
+
 describe('UserEventLogComponent', () => {
   let component: UserEventLogComponent;
   let fixture: ComponentFixture<UserEventLogComponent>;
@@ -142,27 +162,6 @@ describe('UserEventLogComponent', () => {
       component = fixture.componentInstance;
       fixture.detectChanges();
   });
-
-  function setupConnections(backend: MockBackend, options: any) {
-        backend.connections.subscribe((connection: MockConnection) => {
-
-            let url = connection.request.url;
-            let queryString = url.slice(url.indexOf("?"));
-            url = url.slice(0, url.indexOf("?")).replace('http://docker.local:8088', '');
-            
-        
-            switch(url) {
-                case "/ajax/erdiko/users/admin/eventlogs":
-                    expect(queryString).toEqual("?pagesize="+component.pageSize+"&page="+component.currentPage+"&sort="+component.sortCol+"&direction="+component.sortDir);
-                default:
-                    const responseOptions = new ResponseOptions(options);
-                    const response = new Response(responseOptions);
-                    connection.mockRespond(response);
-                break;
-            }
-
-        });
-  }
 
   it('should create', () => {
     expect(component).toBeTruthy();      
