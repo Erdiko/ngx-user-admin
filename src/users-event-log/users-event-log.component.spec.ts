@@ -36,6 +36,8 @@ import { FormsModule,
 
 import { AlertModule } from 'ngx-bootstrap';
 
+import 'rxjs/Rx';
+
 import { AuthService }              from '../auth.service';
 import { UsersService }             from '../users.service';
 import { User }                     from '../user.model';
