@@ -57854,62 +57854,6 @@ var MessageComponent = (function () {
     return MessageComponent;
 }());
 
-/**
- * Application Routes
- *
- */
-// clang-format off
-var userAdminRoutes = [
-    {
-        path: 'list',
-        canActivate: [
-            AuthGuard
-        ],
-        component: UserListComponent
-    },
-    {
-        path: 'events',
-        canActivate: [
-            AuthGuard
-        ],
-        component: UsersEventLogComponent
-    },
-    {
-        path: 'user',
-        canActivate: [
-            AuthGuard
-        ],
-        component: UserEditComponent
-    },
-    {
-        path: 'user/:id',
-        component: UserEditComponent,
-        canActivate: [
-            AuthGuard
-        ],
-        resolve: {
-            user: UserResolve
-        }
-    },
-    {
-        path: '',
-        canActivate: [
-            AuthGuard
-        ],
-        component: HomeComponent
-    },
-    {
-        path: 'login',
-        component: LoginComponent
-    },
-    {
-        path: '**',
-        redirectTo: ''
-    }
-];
-// clang-format on
-var UserAdminRouting = _angular_router.RouterModule.forChild(userAdminRoutes);
-
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -57935,11 +57879,12 @@ var UserAdminModule = (function () {
                 BrowserModule,
                 _angular_http.HttpModule,
                 FormsModule,
+                _angular_router.RouterModule,
                 ReactiveFormsModule,
                 AlertModule,
                 ModalModule,
-                TabsModule,
-                UserAdminRouting
+                TabsModule //,
+                //UserAdminRouting
             ],
             declarations: [
                 HeaderComponent,
@@ -57975,6 +57920,61 @@ var UserAdminModule = (function () {
     var UserAdminModule_1;
 }());
 
+/**
+ * Application Routes
+ *
+ */
+// clang-format off
+var userAdminRoutes = [{
+        path: '',
+        children: [
+            {
+                path: 'list',
+                canActivate: [
+                    AuthGuard
+                ],
+                component: UserListComponent
+            },
+            {
+                path: 'events',
+                canActivate: [
+                    AuthGuard
+                ],
+                component: UsersEventLogComponent
+            },
+            {
+                path: 'user',
+                canActivate: [
+                    AuthGuard
+                ],
+                component: UserEditComponent
+            },
+            {
+                path: 'user/:id',
+                component: UserEditComponent,
+                canActivate: [
+                    AuthGuard
+                ],
+                resolve: {
+                    user: UserResolve
+                }
+            },
+            {
+                path: '',
+                canActivate: [
+                    AuthGuard
+                ],
+                component: HomeComponent
+            },
+            {
+                path: 'login',
+                component: LoginComponent
+            }
+        ]
+    }];
+// clang-format on
+var UserAdminRouting = _angular_router.RouterModule.forChild(userAdminRoutes);
+
 exports.UserAdminModule = UserAdminModule;
 exports.LoginComponent = LoginComponent;
 exports.HeaderComponent = HeaderComponent;
@@ -57988,6 +57988,7 @@ exports.AuthService = AuthService;
 exports.UserResolve = UserResolve;
 exports.UsersService = UsersService;
 exports.MessageService = MessageService;
+exports.UserAdminRouting = UserAdminRouting;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

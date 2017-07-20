@@ -11,4 +11,5 @@ export { AuthService } from './src/auth.service';
 export { UserResolve } from './src/user-resolve.service';
 export { UsersService } from './src/users.service';
 export { MessageService } from './src/message.service';
+export { UserAdminRouting } from './src/user-admin.routing';
 //# sourceMappingURL=index.js.map

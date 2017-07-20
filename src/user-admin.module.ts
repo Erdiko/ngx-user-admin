@@ -32,8 +32,6 @@ import { UserEditComponent }        from './user-edit/user-edit.component';
 
 import { MessageComponent }         from './message/message.component';
 
-import { UserAdminRouting }         from './user-admin.routing';
-
 /**
  * User Admin Module
  */
@@ -42,13 +40,12 @@ import { UserAdminRouting }         from './user-admin.routing';
         BrowserModule,
         HttpModule,
         FormsModule,
+        RouterModule,
         ReactiveFormsModule,
 
         AlertModule,
         ModalModule,
-        TabsModule,
-
-        UserAdminRouting
+        TabsModule
     ],
     declarations: [ 
         HeaderComponent,

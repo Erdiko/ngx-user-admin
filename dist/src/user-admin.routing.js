@@ -11,54 +11,53 @@ import { UserEditComponent } from './user-edit/user-edit.component';
  *
  */
 // clang-format off
-var userAdminRoutes = [
-    {
-        path: 'list',
-        canActivate: [
-            AuthGuard
-        ],
-        component: UserListComponent
-    },
-    {
-        path: 'events',
-        canActivate: [
-            AuthGuard
-        ],
-        component: UsersEventLogComponent
-    },
-    {
-        path: 'user',
-        canActivate: [
-            AuthGuard
-        ],
-        component: UserEditComponent
-    },
-    {
-        path: 'user/:id',
-        component: UserEditComponent,
-        canActivate: [
-            AuthGuard
-        ],
-        resolve: {
-            user: UserResolve
-        }
-    },
-    {
+var userAdminRoutes = [{
         path: '',
-        canActivate: [
-            AuthGuard
-        ],
-        component: HomeComponent
-    },
-    {
-        path: 'login',
-        component: LoginComponent
-    },
-    {
-        path: '**',
-        redirectTo: ''
-    }
-];
+        children: [
+            {
+                path: 'list',
+                canActivate: [
+                    AuthGuard
+                ],
+                component: UserListComponent
+            },
+            {
+                path: 'events',
+                canActivate: [
+                    AuthGuard
+                ],
+                component: UsersEventLogComponent
+            },
+            {
+                path: 'user',
+                canActivate: [
+                    AuthGuard
+                ],
+                component: UserEditComponent
+            },
+            {
+                path: 'user/:id',
+                component: UserEditComponent,
+                canActivate: [
+                    AuthGuard
+                ],
+                resolve: {
+                    user: UserResolve
+                }
+            },
+            {
+                path: '',
+                canActivate: [
+                    AuthGuard
+                ],
+                component: HomeComponent
+            },
+            {
+                path: 'login',
+                component: LoginComponent
+            }
+        ]
+    }];
 // clang-format on
 export var UserAdminRouting = RouterModule.forChild(userAdminRoutes);
 //# sourceMappingURL=user-admin.routing.js.map

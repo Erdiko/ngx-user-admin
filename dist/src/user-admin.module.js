@@ -7,6 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
+import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AlertModule, ModalModule, TabsModule } from 'ngx-bootstrap';
 import { AuthService } from './auth.service';
@@ -23,7 +24,6 @@ import { UsersEventLogComponent } from './users-event-log/users-event-log.compon
 import { PasswordComponent } from './password/password.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { MessageComponent } from './message/message.component';
-import { UserAdminRouting } from './user-admin.routing';
 /**
  * User Admin Module
  */
@@ -43,11 +43,12 @@ var UserAdminModule = (function () {
                 BrowserModule,
                 HttpModule,
                 FormsModule,
+                RouterModule,
                 ReactiveFormsModule,
                 AlertModule,
                 ModalModule,
-                TabsModule,
-                UserAdminRouting
+                TabsModule //,
+                //UserAdminRouting
             ],
             declarations: [
                 HeaderComponent,
