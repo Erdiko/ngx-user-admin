@@ -4,8 +4,7 @@ machine:
       6.6.0
 test:
   pre:
-    - npm start:
-        background: true
-    - sleep 5
+    - npm install -g typescript@latest
+    - sleep 30
   override:
     - npm run test-single-run
