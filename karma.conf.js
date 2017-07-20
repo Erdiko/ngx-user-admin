@@ -54,6 +54,9 @@ module.exports = function(config) {
     ],
 
     reporters: ['progress', 'kjhtml', 'junit'],
+    junitReporter: {
+        outputDir: '$CIRCLE_ARTIFACTS'
+    },
 
     exclude: [],
     preprocessors: {},
