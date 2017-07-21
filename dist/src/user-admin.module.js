@@ -47,8 +47,7 @@ var UserAdminModule = (function () {
                 ReactiveFormsModule,
                 AlertModule,
                 ModalModule,
-                TabsModule //,
-                //UserAdminRouting
+                TabsModule
             ],
             declarations: [
                 HeaderComponent,
