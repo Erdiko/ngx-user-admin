@@ -26,53 +26,50 @@ import { MessageComponent }         from './message/message.component';
  *
  */
 // clang-format off
-const userAdminRoutes = [{
-    path: '',
-    children: [
-        {
-            path: 'list',
-            canActivate: [
-                AuthGuard
-            ],
-            component: UserListComponent
-        },
-        {
-            path: 'events',
-            canActivate: [
-                AuthGuard
-            ],
-            component: UsersEventLogComponent
-        },
-        {
-            path: 'user',
-            canActivate: [
-                AuthGuard
-            ],
-            component: UserEditComponent
-        },
-        {
-            path: 'user/:id',
-            component: UserEditComponent,
-            canActivate: [
-                AuthGuard
-            ],
-            resolve: {
-                user: UserResolve
-            }
-        },
-        {
-            path: '',
-            canActivate: [
-                AuthGuard
-            ],
-            component: HomeComponent
-        },
-        {
-            path: 'login',
-            component: LoginComponent
+const userAdminRoutes = [
+    {
+        path: 'list',
+        canActivate: [
+            AuthGuard
+        ],
+        component: UserListComponent
+    },
+    {
+        path: 'events',
+        canActivate: [
+            AuthGuard
+        ],
+        component: UsersEventLogComponent
+    },
+    {
+        path: 'user',
+        canActivate: [
+            AuthGuard
+        ],
+        component: UserEditComponent
+    },
+    {
+        path: 'user/:id',
+        component: UserEditComponent,
+        canActivate: [
+            AuthGuard
+        ],
+        resolve: {
+            user: UserResolve
         }
-    ]
-    }];
+    },
+    {
+        path: '',
+        canActivate: [
+            AuthGuard
+        ],
+        component: HomeComponent
+    },
+    {
+        path: 'login',
+        component: LoginComponent
+    }
+];
 // clang-format on
 
 

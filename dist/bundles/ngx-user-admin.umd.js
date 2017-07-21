@@ -7344,19 +7344,6 @@ var RootRenderer = (function () {
     return RootRenderer;
 }());
 
-var SecurityContext = {};
-SecurityContext.NONE = 0;
-SecurityContext.HTML = 1;
-SecurityContext.STYLE = 2;
-SecurityContext.SCRIPT = 3;
-SecurityContext.URL = 4;
-SecurityContext.RESOURCE_URL = 5;
-SecurityContext[SecurityContext.NONE] = "NONE";
-SecurityContext[SecurityContext.HTML] = "HTML";
-SecurityContext[SecurityContext.STYLE] = "STYLE";
-SecurityContext[SecurityContext.SCRIPT] = "SCRIPT";
-SecurityContext[SecurityContext.URL] = "URL";
-SecurityContext[SecurityContext.RESOURCE_URL] = "RESOURCE_URL";
 /**
  * Sanitizer is used by the views to sanitize potentially dangerous values.
  *
@@ -9014,9 +9001,7 @@ var _NoopGetTestability = (function () {
  * @param {?} getter
  * @return {?}
  */
-function setTestabilityGetter(getter) {
-    _testabilityGetter = getter;
-}
+
 var _testabilityGetter = new _NoopGetTestability();
 
 /**
@@ -9064,17 +9049,7 @@ function isDevMode() {
  *
  * \@experimental
  */
-var NgProbeToken = (function () {
-    /**
-     * @param {?} name
-     * @param {?} token
-     */
-    function NgProbeToken(name, token) {
-        this.name = name;
-        this.token = token;
-    }
-    return NgProbeToken;
-}());
+
 /**
  * Creates a platform.
  * Platforms have to be eagerly created via this function.
@@ -17837,4751 +17812,6 @@ var VERSION$1 = new Version('2.4.10');
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-
-
-var DebugDomRootRenderer$1 = __core_private__.DebugDomRootRenderer;
-
-var NoOpAnimationPlayer$1 = __core_private__.NoOpAnimationPlayer;
-
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-/**
- * \@experimental
- */
-var NoOpAnimationDriver = (function () {
-    function NoOpAnimationDriver() {
-    }
-    /**
-     * @param {?} element
-     * @param {?} startingStyles
-     * @param {?} keyframes
-     * @param {?} duration
-     * @param {?} delay
-     * @param {?} easing
-     * @param {?=} previousPlayers
-     * @return {?}
-     */
-    NoOpAnimationDriver.prototype.animate = function (element, startingStyles, keyframes, duration, delay, easing, previousPlayers) {
-        if (previousPlayers === void 0) { previousPlayers = []; }
-        return new NoOpAnimationPlayer$1();
-    };
-    return NoOpAnimationDriver;
-}());
-/**
- * \@experimental
- * @abstract
- */
-var AnimationDriver = (function () {
-    function AnimationDriver() {
-    }
-    /**
-     * @abstract
-     * @param {?} element
-     * @param {?} startingStyles
-     * @param {?} keyframes
-     * @param {?} duration
-     * @param {?} delay
-     * @param {?} easing
-     * @param {?=} previousPlayers
-     * @return {?}
-     */
-    AnimationDriver.prototype.animate = function (element, startingStyles, keyframes, duration, delay, easing, previousPlayers) { };
-    AnimationDriver.NOOP = new NoOpAnimationDriver();
-    return AnimationDriver;
-}());
-
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-var globalScope$2;
-if (typeof window === 'undefined') {
-    if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope) {
-        // TODO: Replace any with WorkerGlobalScope from lib.webworker.d.ts #3492
-        globalScope$2 = (self);
-    }
-    else {
-        globalScope$2 = (global);
-    }
-}
-else {
-    globalScope$2 = (window);
-}
-/**
- * @param {?} fn
- * @return {?}
- */
-
-// Need to declare a new variable for global here since TypeScript
-// exports the original value of the symbol.
-var _global$2 = globalScope$2;
-/**
- * @param {?} type
- * @return {?}
- */
-
-// TODO: remove calls to assert in production environment
-// Note: Can't just export this and import in in other files
-// as `assert` is a reserved keyword in Dart
-_global$2.assert = function assert(condition) {
-    // TODO: to be fixed properly via #2830, noop for now
-};
-/**
- * @param {?} obj
- * @return {?}
- */
-function isPresent$2(obj) {
-    return obj != null;
-}
-/**
- * @param {?} obj
- * @return {?}
- */
-function isBlank$3(obj) {
-    return obj == null;
-}
-/**
- * @param {?} obj
- * @return {?}
- */
-
-/**
- * @param {?} token
- * @return {?}
- */
-function stringify$2(token) {
-    if (typeof token === 'string') {
-        return token;
-    }
-    if (token == null) {
-        return '' + token;
-    }
-    if (token.overriddenName) {
-        return "" + token.overriddenName;
-    }
-    if (token.name) {
-        return "" + token.name;
-    }
-    var /** @type {?} */ res = token.toString();
-    var /** @type {?} */ newLineIndex = res.indexOf('\n');
-    return newLineIndex === -1 ? res : res.substring(0, newLineIndex);
-}
-
-/**
- * @param {?} a
- * @param {?} b
- * @return {?}
- */
-
-/**
- * @param {?} o
- * @return {?}
- */
-
-/**
- * @param {?} obj
- * @return {?}
- */
-
-/**
- * @param {?} obj
- * @return {?}
- */
-
-/**
- * @param {?} global
- * @param {?} path
- * @param {?} value
- * @return {?}
- */
-function setValueOnPath$2(global, path, value) {
-    var /** @type {?} */ parts = path.split('.');
-    var /** @type {?} */ obj = global;
-    while (parts.length > 1) {
-        var /** @type {?} */ name_1 = parts.shift();
-        if (obj.hasOwnProperty(name_1) && obj[name_1] != null) {
-            obj = obj[name_1];
-        }
-        else {
-            obj = obj[name_1] = {};
-        }
-    }
-    if (obj === undefined || obj === null) {
-        obj = {};
-    }
-    obj[parts.shift()] = value;
-}
-/**
- * @return {?}
- */
-
-/**
- * @param {?} obj
- * @return {?}
- */
-
-/**
- * @param {?} s
- * @return {?}
- */
-
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-var _DOM = null;
-/**
- * @return {?}
- */
-function getDOM() {
-    return _DOM;
-}
-/**
- * @param {?} adapter
- * @return {?}
- */
-
-/**
- * @param {?} adapter
- * @return {?}
- */
-function setRootDomAdapter(adapter) {
-    if (!_DOM) {
-        _DOM = adapter;
-    }
-}
-/**
- * Provides DOM operations in an environment-agnostic way.
- *
- * \@security Tread carefully! Interacting with the DOM directly is dangerous and
- * can introduce XSS risks.
- * @abstract
- */
-var DomAdapter = (function () {
-    function DomAdapter() {
-        this.resourceLoaderType = null;
-    }
-    /**
-     * @abstract
-     * @param {?} element
-     * @param {?} name
-     * @return {?}
-     */
-    DomAdapter.prototype.hasProperty = function (element /** TODO #9100 */, name) { };
-    /**
-     * @abstract
-     * @param {?} el
-     * @param {?} name
-     * @param {?} value
-     * @return {?}
-     */
-    DomAdapter.prototype.setProperty = function (el, name, value) { };
-    /**
-     * @abstract
-     * @param {?} el
-     * @param {?} name
-     * @return {?}
-     */
-    DomAdapter.prototype.getProperty = function (el, name) { };
-    /**
-     * @abstract
-     * @param {?} el
-     * @param {?} methodName
-     * @param {?} args
-     * @return {?}
-     */
-    DomAdapter.prototype.invoke = function (el, methodName, args) { };
-    /**
-     * @abstract
-     * @param {?} error
-     * @return {?}
-     */
-    DomAdapter.prototype.logError = function (error) { };
-    /**
-     * @abstract
-     * @param {?} error
-     * @return {?}
-     */
-    DomAdapter.prototype.log = function (error) { };
-    /**
-     * @abstract
-     * @param {?} error
-     * @return {?}
-     */
-    DomAdapter.prototype.logGroup = function (error) { };
-    /**
-     * @abstract
-     * @return {?}
-     */
-    DomAdapter.prototype.logGroupEnd = function () { };
-    Object.defineProperty(DomAdapter.prototype, "attrToPropMap", {
-        /**
-         * Maps attribute names to their corresponding property names for cases
-         * where attribute name doesn't match property name.
-         * @return {?}
-         */
-        get: function () { return this._attrToPropMap; },
-        /**
-         * @param {?} value
-         * @return {?}
-         */
-        set: function (value) { this._attrToPropMap = value; },
-        enumerable: true,
-        configurable: true
-    });
-    
-    
-    /**
-     * @abstract
-     * @param {?} templateHtml
-     * @return {?}
-     */
-    DomAdapter.prototype.parse = function (templateHtml) { };
-    /**
-     * @abstract
-     * @param {?} selector
-     * @return {?}
-     */
-    DomAdapter.prototype.query = function (selector) { };
-    /**
-     * @abstract
-     * @param {?} el
-     * @param {?} selector
-     * @return {?}
-     */
-    DomAdapter.prototype.querySelector = function (el /** TODO #9100 */, selector) { };
-    /**
-     * @abstract
-     * @param {?} el
-     * @param {?} selector
-     * @return {?}
-     */
-    DomAdapter.prototype.querySelectorAll = function (el /** TODO #9100 */, selector) { };
-    /**
-     * @abstract
-     * @param {?} el
-     * @param {?} evt
-     * @param {?} listener
-     * @return {?}
-     */
-    DomAdapter.prototype.on = function (el /** TODO #9100 */, evt /** TODO #9100 */, listener) { };
-    /**
-     * @abstract
-     * @param {?} el
-     * @param {?} evt
-     * @param {?} listener
-     * @return {?}
-     */
-    DomAdapter.prototype.onAndCancel = function (el /** TODO #9100 */, evt /** TODO #9100 */, listener) { };
-    /**
-     * @abstract
-     * @param {?} el
-     * @param {?} evt
-     * @return {?}
-     */
-    DomAdapter.prototype.dispatchEvent = function (el /** TODO #9100 */, evt) { };
-    /**
-     * @abstract
-     * @param {?} eventType
-     * @return {?}
-     */
-    DomAdapter.prototype.createMouseEvent = function (eventType) { };
-    /**
-     * @abstract
-     * @param {?} eventType
-     * @return {?}
-     */
-    DomAdapter.prototype.createEvent = function (eventType) { };
-    /**
-     * @abstract
-     * @param {?} evt
-     * @return {?}
-     */
-    DomAdapter.prototype.preventDefault = function (evt) { };
-    /**
-     * @abstract
-     * @param {?} evt
-     * @return {?}
-     */
-    DomAdapter.prototype.isPrevented = function (evt) { };
-    /**
-     * @abstract
-     * @param {?} el
-     * @return {?}
-     */
-    DomAdapter.prototype.getInnerHTML = function (el) { };
-    /**
-     * Returns content if el is a <template> element, null otherwise.
-     * @abstract
-     * @param {?} el
-     * @return {?}
-     */
-    DomAdapter.prototype.getTemplateContent = function (el) { };
-    /**
-     * @abstract
-     * @param {?} el
-     * @return {?}
-     */
-    DomAdapter.prototype.getOuterHTML = function (el) { };
-    /**
-     * @abstract
-     * @param {?} node
-     * @return {?}
-     */
-    DomAdapter.prototype.nodeName = function (node) { };
-    /**
-     * @abstract
-     * @param {?} node
-     * @return {?}
-     */
-    DomAdapter.prototype.nodeValue = function (node) { };
-    /**
-     * @abstract
-     * @param {?} node
-     * @return {?}
-     */
-    DomAdapter.prototype.type = function (node) { };
-    /**
-     * @abstract
-     * @param {?} node
-     * @return {?}
-     */
-    DomAdapter.prototype.content = function (node) { };
-    /**
-     * @abstract
-     * @param {?} el
-     * @return {?}
-     */
-    DomAdapter.prototype.firstChild = function (el) { };
-    /**
-     * @abstract
-     * @param {?} el
-     * @return {?}
-     */
-    DomAdapter.prototype.nextSibling = function (el) { };
-    /**
-     * @abstract
-     * @param {?} el
-     * @return {?}
-     */
-    DomAdapter.prototype.parentElement = function (el) { };
-    /**
-     * @abstract
-     * @param {?} el
-     * @return {?}
-     */
-    DomAdapter.prototype.childNodes = function (el) { };
-    /**
-     * @abstract
-     * @param {?} el
-     * @return {?}
-     */
-    DomAdapter.prototype.childNodesAsList = function (el) { };
-    /**
-     * @abstract
-     * @param {?} el
-     * @return {?}
-     */
-    DomAdapter.prototype.clearNodes = function (el) { };
-    /**
-     * @abstract
-     * @param {?} el
-     * @param {?} node
-     * @return {?}
-     */
-    DomAdapter.prototype.appendChild = function (el /** TODO #9100 */, node) { };
-    /**
-     * @abstract
-     * @param {?} el
-     * @param {?} node
-     * @return {?}
-     */
-    DomAdapter.prototype.removeChild = function (el /** TODO #9100 */, node) { };
-    /**
-     * @abstract
-     * @param {?} el
-     * @param {?} newNode
-     * @param {?} oldNode
-     * @return {?}
-     */
-    DomAdapter.prototype.replaceChild = function (el /** TODO #9100 */, newNode /** TODO #9100 */, oldNode) { };
-    /**
-     * @abstract
-     * @param {?} el
-     * @return {?}
-     */
-    DomAdapter.prototype.remove = function (el) { };
-    /**
-     * @abstract
-     * @param {?} el
-     * @param {?} node
-     * @return {?}
-     */
-    DomAdapter.prototype.insertBefore = function (el /** TODO #9100 */, node) { };
-    /**
-     * @abstract
-     * @param {?} el
-     * @param {?} nodes
-     * @return {?}
-     */
-    DomAdapter.prototype.insertAllBefore = function (el /** TODO #9100 */, nodes) { };
-    /**
-     * @abstract
-     * @param {?} el
-     * @param {?} node
-     * @return {?}
-     */
-    DomAdapter.prototype.insertAfter = function (el /** TODO #9100 */, node) { };
-    /**
-     * @abstract
-     * @param {?} el
-     * @param {?} value
-     * @return {?}
-     */
-    DomAdapter.prototype.setInnerHTML = function (el /** TODO #9100 */, value) { };
-    /**
-     * @abstract
-     * @param {?} el
-     * @return {?}
-     */
-    DomAdapter.prototype.getText = function (el) { };
-    /**
-     * @abstract
-     * @param {?} el
-     * @param {?} value
-     * @return {?}
-     */
-    DomAdapter.prototype.setText = function (el /** TODO #9100 */, value) { };
-    /**
-     * @abstract
-     * @param {?} el
-     * @return {?}
-     */
-    DomAdapter.prototype.getValue = function (el) { };
-    /**
-     * @abstract
-     * @param {?} el
-     * @param {?} value
-     * @return {?}
-     */
-    DomAdapter.prototype.setValue = function (el /** TODO #9100 */, value) { };
-    /**
-     * @abstract
-     * @param {?} el
-     * @return {?}
-     */
-    DomAdapter.prototype.getChecked = function (el) { };
-    /**
-     * @abstract
-     * @param {?} el
-     * @param {?} value
-     * @return {?}
-     */
-    DomAdapter.prototype.setChecked = function (el /** TODO #9100 */, value) { };
-    /**
-     * @abstract
-     * @param {?} text
-     * @return {?}
-     */
-    DomAdapter.prototype.createComment = function (text) { };
-    /**
-     * @abstract
-     * @param {?} html
-     * @return {?}
-     */
-    DomAdapter.prototype.createTemplate = function (html) { };
-    /**
-     * @abstract
-     * @param {?} tagName
-     * @param {?=} doc
-     * @return {?}
-     */
-    DomAdapter.prototype.createElement = function (tagName /** TODO #9100 */, doc) { };
-    /**
-     * @abstract
-     * @param {?} ns
-     * @param {?} tagName
-     * @param {?=} doc
-     * @return {?}
-     */
-    DomAdapter.prototype.createElementNS = function (ns, tagName, doc) { };
-    /**
-     * @abstract
-     * @param {?} text
-     * @param {?=} doc
-     * @return {?}
-     */
-    DomAdapter.prototype.createTextNode = function (text, doc) { };
-    /**
-     * @abstract
-     * @param {?} attrName
-     * @param {?} attrValue
-     * @param {?=} doc
-     * @return {?}
-     */
-    DomAdapter.prototype.createScriptTag = function (attrName, attrValue, doc) { };
-    /**
-     * @abstract
-     * @param {?} css
-     * @param {?=} doc
-     * @return {?}
-     */
-    DomAdapter.prototype.createStyleElement = function (css, doc) { };
-    /**
-     * @abstract
-     * @param {?} el
-     * @return {?}
-     */
-    DomAdapter.prototype.createShadowRoot = function (el) { };
-    /**
-     * @abstract
-     * @param {?} el
-     * @return {?}
-     */
-    DomAdapter.prototype.getShadowRoot = function (el) { };
-    /**
-     * @abstract
-     * @param {?} el
-     * @return {?}
-     */
-    DomAdapter.prototype.getHost = function (el) { };
-    /**
-     * @abstract
-     * @param {?} el
-     * @return {?}
-     */
-    DomAdapter.prototype.getDistributedNodes = function (el) { };
-    /**
-     * @abstract
-     * @param {?} node
-     * @return {?}
-     */
-    DomAdapter.prototype.clone /*<T extends Node>*/ = function (node) { };
-    /**
-     * @abstract
-     * @param {?} element
-     * @param {?} name
-     * @return {?}
-     */
-    DomAdapter.prototype.getElementsByClassName = function (element /** TODO #9100 */, name) { };
-    /**
-     * @abstract
-     * @param {?} element
-     * @param {?} name
-     * @return {?}
-     */
-    DomAdapter.prototype.getElementsByTagName = function (element /** TODO #9100 */, name) { };
-    /**
-     * @abstract
-     * @param {?} element
-     * @return {?}
-     */
-    DomAdapter.prototype.classList = function (element) { };
-    /**
-     * @abstract
-     * @param {?} element
-     * @param {?} className
-     * @return {?}
-     */
-    DomAdapter.prototype.addClass = function (element /** TODO #9100 */, className) { };
-    /**
-     * @abstract
-     * @param {?} element
-     * @param {?} className
-     * @return {?}
-     */
-    DomAdapter.prototype.removeClass = function (element /** TODO #9100 */, className) { };
-    /**
-     * @abstract
-     * @param {?} element
-     * @param {?} className
-     * @return {?}
-     */
-    DomAdapter.prototype.hasClass = function (element /** TODO #9100 */, className) { };
-    /**
-     * @abstract
-     * @param {?} element
-     * @param {?} styleName
-     * @param {?} styleValue
-     * @return {?}
-     */
-    DomAdapter.prototype.setStyle = function (element /** TODO #9100 */, styleName, styleValue) { };
-    /**
-     * @abstract
-     * @param {?} element
-     * @param {?} styleName
-     * @return {?}
-     */
-    DomAdapter.prototype.removeStyle = function (element /** TODO #9100 */, styleName) { };
-    /**
-     * @abstract
-     * @param {?} element
-     * @param {?} styleName
-     * @return {?}
-     */
-    DomAdapter.prototype.getStyle = function (element /** TODO #9100 */, styleName) { };
-    /**
-     * @abstract
-     * @param {?} element
-     * @param {?} styleName
-     * @param {?=} styleValue
-     * @return {?}
-     */
-    DomAdapter.prototype.hasStyle = function (element /** TODO #9100 */, styleName, styleValue) { };
-    /**
-     * @abstract
-     * @param {?} element
-     * @return {?}
-     */
-    DomAdapter.prototype.tagName = function (element) { };
-    /**
-     * @abstract
-     * @param {?} element
-     * @return {?}
-     */
-    DomAdapter.prototype.attributeMap = function (element) { };
-    /**
-     * @abstract
-     * @param {?} element
-     * @param {?} attribute
-     * @return {?}
-     */
-    DomAdapter.prototype.hasAttribute = function (element /** TODO #9100 */, attribute) { };
-    /**
-     * @abstract
-     * @param {?} element
-     * @param {?} ns
-     * @param {?} attribute
-     * @return {?}
-     */
-    DomAdapter.prototype.hasAttributeNS = function (element /** TODO #9100 */, ns, attribute) { };
-    /**
-     * @abstract
-     * @param {?} element
-     * @param {?} attribute
-     * @return {?}
-     */
-    DomAdapter.prototype.getAttribute = function (element /** TODO #9100 */, attribute) { };
-    /**
-     * @abstract
-     * @param {?} element
-     * @param {?} ns
-     * @param {?} attribute
-     * @return {?}
-     */
-    DomAdapter.prototype.getAttributeNS = function (element /** TODO #9100 */, ns, attribute) { };
-    /**
-     * @abstract
-     * @param {?} element
-     * @param {?} name
-     * @param {?} value
-     * @return {?}
-     */
-    DomAdapter.prototype.setAttribute = function (element /** TODO #9100 */, name, value) { };
-    /**
-     * @abstract
-     * @param {?} element
-     * @param {?} ns
-     * @param {?} name
-     * @param {?} value
-     * @return {?}
-     */
-    DomAdapter.prototype.setAttributeNS = function (element /** TODO #9100 */, ns, name, value) { };
-    /**
-     * @abstract
-     * @param {?} element
-     * @param {?} attribute
-     * @return {?}
-     */
-    DomAdapter.prototype.removeAttribute = function (element /** TODO #9100 */, attribute) { };
-    /**
-     * @abstract
-     * @param {?} element
-     * @param {?} ns
-     * @param {?} attribute
-     * @return {?}
-     */
-    DomAdapter.prototype.removeAttributeNS = function (element /** TODO #9100 */, ns, attribute) { };
-    /**
-     * @abstract
-     * @param {?} el
-     * @return {?}
-     */
-    DomAdapter.prototype.templateAwareRoot = function (el) { };
-    /**
-     * @abstract
-     * @return {?}
-     */
-    DomAdapter.prototype.createHtmlDocument = function () { };
-    /**
-     * @abstract
-     * @return {?}
-     */
-    DomAdapter.prototype.defaultDoc = function () { };
-    /**
-     * @abstract
-     * @param {?} el
-     * @return {?}
-     */
-    DomAdapter.prototype.getBoundingClientRect = function (el) { };
-    /**
-     * @abstract
-     * @return {?}
-     */
-    DomAdapter.prototype.getTitle = function () { };
-    /**
-     * @abstract
-     * @param {?} newTitle
-     * @return {?}
-     */
-    DomAdapter.prototype.setTitle = function (newTitle) { };
-    /**
-     * @abstract
-     * @param {?} n
-     * @param {?} selector
-     * @return {?}
-     */
-    DomAdapter.prototype.elementMatches = function (n /** TODO #9100 */, selector) { };
-    /**
-     * @abstract
-     * @param {?} el
-     * @return {?}
-     */
-    DomAdapter.prototype.isTemplateElement = function (el) { };
-    /**
-     * @abstract
-     * @param {?} node
-     * @return {?}
-     */
-    DomAdapter.prototype.isTextNode = function (node) { };
-    /**
-     * @abstract
-     * @param {?} node
-     * @return {?}
-     */
-    DomAdapter.prototype.isCommentNode = function (node) { };
-    /**
-     * @abstract
-     * @param {?} node
-     * @return {?}
-     */
-    DomAdapter.prototype.isElementNode = function (node) { };
-    /**
-     * @abstract
-     * @param {?} node
-     * @return {?}
-     */
-    DomAdapter.prototype.hasShadowRoot = function (node) { };
-    /**
-     * @abstract
-     * @param {?} node
-     * @return {?}
-     */
-    DomAdapter.prototype.isShadowRoot = function (node) { };
-    /**
-     * @abstract
-     * @param {?} node
-     * @return {?}
-     */
-    DomAdapter.prototype.importIntoDoc /*<T extends Node>*/ = function (node) { };
-    /**
-     * @abstract
-     * @param {?} node
-     * @return {?}
-     */
-    DomAdapter.prototype.adoptNode /*<T extends Node>*/ = function (node) { };
-    /**
-     * @abstract
-     * @param {?} element
-     * @return {?}
-     */
-    DomAdapter.prototype.getHref = function (element) { };
-    /**
-     * @abstract
-     * @param {?} event
-     * @return {?}
-     */
-    DomAdapter.prototype.getEventKey = function (event) { };
-    /**
-     * @abstract
-     * @param {?} element
-     * @param {?} baseUrl
-     * @param {?} href
-     * @return {?}
-     */
-    DomAdapter.prototype.resolveAndSetHref = function (element /** TODO #9100 */, baseUrl, href) { };
-    /**
-     * @abstract
-     * @return {?}
-     */
-    DomAdapter.prototype.supportsDOMEvents = function () { };
-    /**
-     * @abstract
-     * @return {?}
-     */
-    DomAdapter.prototype.supportsNativeShadowDOM = function () { };
-    /**
-     * @abstract
-     * @param {?} target
-     * @return {?}
-     */
-    DomAdapter.prototype.getGlobalEventTarget = function (target) { };
-    /**
-     * @abstract
-     * @return {?}
-     */
-    DomAdapter.prototype.getHistory = function () { };
-    /**
-     * @abstract
-     * @return {?}
-     */
-    DomAdapter.prototype.getLocation = function () { };
-    /**
-     * @abstract
-     * @return {?}
-     */
-    DomAdapter.prototype.getBaseHref = function () { };
-    /**
-     * @abstract
-     * @return {?}
-     */
-    DomAdapter.prototype.resetBaseElement = function () { };
-    /**
-     * @abstract
-     * @return {?}
-     */
-    DomAdapter.prototype.getUserAgent = function () { };
-    /**
-     * @abstract
-     * @param {?} element
-     * @param {?} name
-     * @param {?} value
-     * @return {?}
-     */
-    DomAdapter.prototype.setData = function (element /** TODO #9100 */, name, value) { };
-    /**
-     * @abstract
-     * @param {?} element
-     * @return {?}
-     */
-    DomAdapter.prototype.getComputedStyle = function (element) { };
-    /**
-     * @abstract
-     * @param {?} element
-     * @param {?} name
-     * @return {?}
-     */
-    DomAdapter.prototype.getData = function (element /** TODO #9100 */, name) { };
-    /**
-     * @abstract
-     * @param {?} name
-     * @param {?} value
-     * @return {?}
-     */
-    DomAdapter.prototype.setGlobalVar = function (name, value) { };
-    /**
-     * @abstract
-     * @return {?}
-     */
-    DomAdapter.prototype.supportsWebAnimation = function () { };
-    /**
-     * @abstract
-     * @return {?}
-     */
-    DomAdapter.prototype.performanceNow = function () { };
-    /**
-     * @abstract
-     * @return {?}
-     */
-    DomAdapter.prototype.getAnimationPrefix = function () { };
-    /**
-     * @abstract
-     * @return {?}
-     */
-    DomAdapter.prototype.getTransitionEnd = function () { };
-    /**
-     * @abstract
-     * @return {?}
-     */
-    DomAdapter.prototype.supportsAnimation = function () { };
-    /**
-     * @abstract
-     * @return {?}
-     */
-    DomAdapter.prototype.supportsCookies = function () { };
-    /**
-     * @abstract
-     * @param {?} name
-     * @return {?}
-     */
-    DomAdapter.prototype.getCookie = function (name) { };
-    /**
-     * @abstract
-     * @param {?} name
-     * @param {?} value
-     * @return {?}
-     */
-    DomAdapter.prototype.setCookie = function (name, value) { };
-    return DomAdapter;
-}());
-
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-var WebAnimationsPlayer = (function () {
-    /**
-     * @param {?} element
-     * @param {?} keyframes
-     * @param {?} options
-     * @param {?=} previousPlayers
-     */
-    function WebAnimationsPlayer(element, keyframes$$1, options, previousPlayers) {
-        var _this = this;
-        if (previousPlayers === void 0) { previousPlayers = []; }
-        this.element = element;
-        this.keyframes = keyframes$$1;
-        this.options = options;
-        this._onDoneFns = [];
-        this._onStartFns = [];
-        this._initialized = false;
-        this._finished = false;
-        this._started = false;
-        this._destroyed = false;
-        this.parentPlayer = null;
-        this._duration = options['duration'];
-        this.previousStyles = {};
-        previousPlayers.forEach(function (player) {
-            var styles = player._captureStyles();
-            Object.keys(styles).forEach(function (prop) { return _this.previousStyles[prop] = styles[prop]; });
-        });
-    }
-    /**
-     * @return {?}
-     */
-    WebAnimationsPlayer.prototype._onFinish = function () {
-        if (!this._finished) {
-            this._finished = true;
-            this._onDoneFns.forEach(function (fn) { return fn(); });
-            this._onDoneFns = [];
-        }
-    };
-    /**
-     * @return {?}
-     */
-    WebAnimationsPlayer.prototype.init = function () {
-        var _this = this;
-        if (this._initialized)
-            return;
-        this._initialized = true;
-        var /** @type {?} */ keyframes$$1 = this.keyframes.map(function (styles) {
-            var /** @type {?} */ formattedKeyframe = {};
-            Object.keys(styles).forEach(function (prop, index) {
-                var /** @type {?} */ value = styles[prop];
-                if (value == AUTO_STYLE) {
-                    value = _computeStyle(_this.element, prop);
-                }
-                if (value != undefined) {
-                    formattedKeyframe[prop] = value;
-                }
-            });
-            return formattedKeyframe;
-        });
-        var /** @type {?} */ previousStyleProps = Object.keys(this.previousStyles);
-        if (previousStyleProps.length) {
-            var /** @type {?} */ startingKeyframe_1 = keyframes$$1[0];
-            var /** @type {?} */ missingStyleProps_1 = [];
-            previousStyleProps.forEach(function (prop) {
-                if (!isPresent$2(startingKeyframe_1[prop])) {
-                    missingStyleProps_1.push(prop);
-                }
-                startingKeyframe_1[prop] = _this.previousStyles[prop];
-            });
-            if (missingStyleProps_1.length) {
-                var _loop_1 = function(i) {
-                    var /** @type {?} */ kf = keyframes$$1[i];
-                    missingStyleProps_1.forEach(function (prop) { kf[prop] = _computeStyle(_this.element, prop); });
-                };
-                for (var /** @type {?} */ i = 1; i < keyframes$$1.length; i++) {
-                    _loop_1(i);
-                }
-            }
-        }
-        this._player = this._triggerWebAnimation(this.element, keyframes$$1, this.options);
-        this._finalKeyframe = _copyKeyframeStyles(keyframes$$1[keyframes$$1.length - 1]);
-        // this is required so that the player doesn't start to animate right away
-        this._resetDomPlayerState();
-        this._player.addEventListener('finish', function () { return _this._onFinish(); });
-    };
-    /**
-     * \@internal
-     * @param {?} element
-     * @param {?} keyframes
-     * @param {?} options
-     * @return {?}
-     */
-    WebAnimationsPlayer.prototype._triggerWebAnimation = function (element, keyframes$$1, options) {
-        // jscompiler doesn't seem to know animate is a native property because it's not fully
-        // supported yet across common browsers (we polyfill it for Edge/Safari) [CL #143630929]
-        return (element['animate'](keyframes$$1, options));
-    };
-    Object.defineProperty(WebAnimationsPlayer.prototype, "domPlayer", {
-        /**
-         * @return {?}
-         */
-        get: function () { return this._player; },
-        enumerable: true,
-        configurable: true
-    });
-    /**
-     * @param {?} fn
-     * @return {?}
-     */
-    WebAnimationsPlayer.prototype.onStart = function (fn) { this._onStartFns.push(fn); };
-    /**
-     * @param {?} fn
-     * @return {?}
-     */
-    WebAnimationsPlayer.prototype.onDone = function (fn) { this._onDoneFns.push(fn); };
-    /**
-     * @return {?}
-     */
-    WebAnimationsPlayer.prototype.play = function () {
-        this.init();
-        if (!this.hasStarted()) {
-            this._onStartFns.forEach(function (fn) { return fn(); });
-            this._onStartFns = [];
-            this._started = true;
-        }
-        this._player.play();
-    };
-    /**
-     * @return {?}
-     */
-    WebAnimationsPlayer.prototype.pause = function () {
-        this.init();
-        this._player.pause();
-    };
-    /**
-     * @return {?}
-     */
-    WebAnimationsPlayer.prototype.finish = function () {
-        this.init();
-        this._onFinish();
-        this._player.finish();
-    };
-    /**
-     * @return {?}
-     */
-    WebAnimationsPlayer.prototype.reset = function () {
-        this._resetDomPlayerState();
-        this._destroyed = false;
-        this._finished = false;
-        this._started = false;
-    };
-    /**
-     * @return {?}
-     */
-    WebAnimationsPlayer.prototype._resetDomPlayerState = function () {
-        if (this._player) {
-            this._player.cancel();
-        }
-    };
-    /**
-     * @return {?}
-     */
-    WebAnimationsPlayer.prototype.restart = function () {
-        this.reset();
-        this.play();
-    };
-    /**
-     * @return {?}
-     */
-    WebAnimationsPlayer.prototype.hasStarted = function () { return this._started; };
-    /**
-     * @return {?}
-     */
-    WebAnimationsPlayer.prototype.destroy = function () {
-        if (!this._destroyed) {
-            this._resetDomPlayerState();
-            this._onFinish();
-            this._destroyed = true;
-        }
-    };
-    Object.defineProperty(WebAnimationsPlayer.prototype, "totalTime", {
-        /**
-         * @return {?}
-         */
-        get: function () { return this._duration; },
-        enumerable: true,
-        configurable: true
-    });
-    /**
-     * @param {?} p
-     * @return {?}
-     */
-    WebAnimationsPlayer.prototype.setPosition = function (p) { this._player.currentTime = p * this.totalTime; };
-    /**
-     * @return {?}
-     */
-    WebAnimationsPlayer.prototype.getPosition = function () { return this._player.currentTime / this.totalTime; };
-    /**
-     * @return {?}
-     */
-    WebAnimationsPlayer.prototype._captureStyles = function () {
-        var _this = this;
-        var /** @type {?} */ styles = {};
-        if (this.hasStarted()) {
-            Object.keys(this._finalKeyframe).forEach(function (prop) {
-                if (prop != 'offset') {
-                    styles[prop] =
-                        _this._finished ? _this._finalKeyframe[prop] : _computeStyle(_this.element, prop);
-                }
-            });
-        }
-        return styles;
-    };
-    return WebAnimationsPlayer;
-}());
-/**
- * @param {?} element
- * @param {?} prop
- * @return {?}
- */
-function _computeStyle(element, prop) {
-    return getDOM().getComputedStyle(element)[prop];
-}
-/**
- * @param {?} styles
- * @return {?}
- */
-function _copyKeyframeStyles(styles) {
-    var /** @type {?} */ newStyles = {};
-    Object.keys(styles).forEach(function (prop) {
-        if (prop != 'offset') {
-            newStyles[prop] = styles[prop];
-        }
-    });
-    return newStyles;
-}
-
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-var WebAnimationsDriver = (function () {
-    function WebAnimationsDriver() {
-    }
-    /**
-     * @param {?} element
-     * @param {?} startingStyles
-     * @param {?} keyframes
-     * @param {?} duration
-     * @param {?} delay
-     * @param {?} easing
-     * @param {?=} previousPlayers
-     * @return {?}
-     */
-    WebAnimationsDriver.prototype.animate = function (element, startingStyles, keyframes, duration, delay, easing, previousPlayers) {
-        if (previousPlayers === void 0) { previousPlayers = []; }
-        var /** @type {?} */ formattedSteps = [];
-        var /** @type {?} */ startingStyleLookup = {};
-        if (isPresent$2(startingStyles)) {
-            startingStyleLookup = _populateStyles(startingStyles, {});
-        }
-        keyframes.forEach(function (keyframe) {
-            var /** @type {?} */ data = _populateStyles(keyframe.styles, startingStyleLookup);
-            data['offset'] = Math.max(0, Math.min(1, keyframe.offset));
-            formattedSteps.push(data);
-        });
-        // Styling passed into element.animate() must always be balanced.
-        // The special cases below can occur if only style() calls exist
-        // within an animation or when a style() calls are used prior
-        // to a group() animation being issued or if the renderer is
-        // invoked by the user directly.
-        if (formattedSteps.length == 0) {
-            formattedSteps = [startingStyleLookup, startingStyleLookup];
-        }
-        else if (formattedSteps.length == 1) {
-            var /** @type {?} */ start = startingStyleLookup;
-            var /** @type {?} */ end = formattedSteps[0];
-            end['offset'] = null;
-            formattedSteps = [start, end];
-        }
-        var /** @type {?} */ playerOptions = {
-            'duration': duration,
-            'delay': delay,
-            'fill': 'both' // we use `both` because it allows for styling at 0% to work with `delay`
-        };
-        // we check for this to avoid having a null|undefined value be present
-        // for the easing (which results in an error for certain browsers #9752)
-        if (easing) {
-            playerOptions['easing'] = easing;
-        }
-        // there may be a chance a NoOp player is returned depending
-        // on when the previous animation was cancelled
-        previousPlayers = previousPlayers.filter(filterWebAnimationPlayerFn);
-        return new WebAnimationsPlayer(element, formattedSteps, playerOptions, /** @type {?} */ (previousPlayers));
-    };
-    return WebAnimationsDriver;
-}());
-/**
- * @param {?} styles
- * @param {?} defaultStyles
- * @return {?}
- */
-function _populateStyles(styles, defaultStyles) {
-    var /** @type {?} */ data = {};
-    styles.styles.forEach(function (entry) { Object.keys(entry).forEach(function (prop) { data[prop] = entry[prop]; }); });
-    Object.keys(defaultStyles).forEach(function (prop) {
-        if (!isPresent$2(data[prop])) {
-            data[prop] = defaultStyles[prop];
-        }
-    });
-    return data;
-}
-/**
- * @param {?} player
- * @return {?}
- */
-function filterWebAnimationPlayerFn(player) {
-    return player instanceof WebAnimationsPlayer;
-}
-
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-var __extends$27 = (undefined && undefined.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-/**
- * Provides DOM operations in any browser environment.
- *
- * \@security Tread carefully! Interacting with the DOM directly is dangerous and
- * can introduce XSS risks.
- * @abstract
- */
-var GenericBrowserDomAdapter = (function (_super) {
-    __extends$27(GenericBrowserDomAdapter, _super);
-    function GenericBrowserDomAdapter() {
-        var _this = this;
-        _super.call(this);
-        this._animationPrefix = null;
-        this._transitionEnd = null;
-        try {
-            var element_1 = this.createElement('div', this.defaultDoc());
-            if (isPresent$2(this.getStyle(element_1, 'animationName'))) {
-                this._animationPrefix = '';
-            }
-            else {
-                var domPrefixes = ['Webkit', 'Moz', 'O', 'ms'];
-                for (var i = 0; i < domPrefixes.length; i++) {
-                    if (isPresent$2(this.getStyle(element_1, domPrefixes[i] + 'AnimationName'))) {
-                        this._animationPrefix = '-' + domPrefixes[i].toLowerCase() + '-';
-                        break;
-                    }
-                }
-            }
-            var transEndEventNames_1 = {
-                WebkitTransition: 'webkitTransitionEnd',
-                MozTransition: 'transitionend',
-                OTransition: 'oTransitionEnd otransitionend',
-                transition: 'transitionend'
-            };
-            Object.keys(transEndEventNames_1).forEach(function (key) {
-                if (isPresent$2(_this.getStyle(element_1, key))) {
-                    _this._transitionEnd = transEndEventNames_1[key];
-                }
-            });
-        }
-        catch (e) {
-            this._animationPrefix = null;
-            this._transitionEnd = null;
-        }
-    }
-    /**
-     * @param {?} el
-     * @return {?}
-     */
-    GenericBrowserDomAdapter.prototype.getDistributedNodes = function (el) { return ((el)).getDistributedNodes(); };
-    /**
-     * @param {?} el
-     * @param {?} baseUrl
-     * @param {?} href
-     * @return {?}
-     */
-    GenericBrowserDomAdapter.prototype.resolveAndSetHref = function (el, baseUrl, href) {
-        el.href = href == null ? baseUrl : baseUrl + '/../' + href;
-    };
-    /**
-     * @return {?}
-     */
-    GenericBrowserDomAdapter.prototype.supportsDOMEvents = function () { return true; };
-    /**
-     * @return {?}
-     */
-    GenericBrowserDomAdapter.prototype.supportsNativeShadowDOM = function () {
-        return typeof ((this.defaultDoc().body)).createShadowRoot === 'function';
-    };
-    /**
-     * @return {?}
-     */
-    GenericBrowserDomAdapter.prototype.getAnimationPrefix = function () { return this._animationPrefix ? this._animationPrefix : ''; };
-    /**
-     * @return {?}
-     */
-    GenericBrowserDomAdapter.prototype.getTransitionEnd = function () { return this._transitionEnd ? this._transitionEnd : ''; };
-    /**
-     * @return {?}
-     */
-    GenericBrowserDomAdapter.prototype.supportsAnimation = function () {
-        return isPresent$2(this._animationPrefix) && isPresent$2(this._transitionEnd);
-    };
-    return GenericBrowserDomAdapter;
-}(DomAdapter));
-
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-var __extends$26 = (undefined && undefined.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var _attrToPropMap = {
-    'class': 'className',
-    'innerHtml': 'innerHTML',
-    'readonly': 'readOnly',
-    'tabindex': 'tabIndex',
-};
-var DOM_KEY_LOCATION_NUMPAD = 3;
-// Map to convert some key or keyIdentifier values to what will be returned by getEventKey
-var _keyMap = {
-    // The following values are here for cross-browser compatibility and to match the W3C standard
-    // cf http://www.w3.org/TR/DOM-Level-3-Events-key/
-    '\b': 'Backspace',
-    '\t': 'Tab',
-    '\x7F': 'Delete',
-    '\x1B': 'Escape',
-    'Del': 'Delete',
-    'Esc': 'Escape',
-    'Left': 'ArrowLeft',
-    'Right': 'ArrowRight',
-    'Up': 'ArrowUp',
-    'Down': 'ArrowDown',
-    'Menu': 'ContextMenu',
-    'Scroll': 'ScrollLock',
-    'Win': 'OS'
-};
-// There is a bug in Chrome for numeric keypad keys:
-// https://code.google.com/p/chromium/issues/detail?id=155654
-// 1, 2, 3 ... are reported as A, B, C ...
-var _chromeNumKeyPadMap = {
-    'A': '1',
-    'B': '2',
-    'C': '3',
-    'D': '4',
-    'E': '5',
-    'F': '6',
-    'G': '7',
-    'H': '8',
-    'I': '9',
-    'J': '*',
-    'K': '+',
-    'M': '-',
-    'N': '.',
-    'O': '/',
-    '\x60': '0',
-    '\x90': 'NumLock'
-};
-var BrowserDomAdapter = (function (_super) {
-    __extends$26(BrowserDomAdapter, _super);
-    function BrowserDomAdapter() {
-        _super.apply(this, arguments);
-    }
-    /**
-     * @param {?} templateHtml
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.parse = function (templateHtml) { throw new Error('parse not implemented'); };
-    /**
-     * @return {?}
-     */
-    BrowserDomAdapter.makeCurrent = function () { setRootDomAdapter(new BrowserDomAdapter()); };
-    /**
-     * @param {?} element
-     * @param {?} name
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.hasProperty = function (element, name) { return name in element; };
-    /**
-     * @param {?} el
-     * @param {?} name
-     * @param {?} value
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.setProperty = function (el, name, value) { ((el))[name] = value; };
-    /**
-     * @param {?} el
-     * @param {?} name
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.getProperty = function (el, name) { return ((el))[name]; };
-    /**
-     * @param {?} el
-     * @param {?} methodName
-     * @param {?} args
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.invoke = function (el, methodName, args) { (_a = ((el)))[methodName].apply(_a, args); var _a; };
-    /**
-     * @param {?} error
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.logError = function (error) {
-        if (window.console) {
-            if (console.error) {
-                console.error(error);
-            }
-            else {
-                console.log(error);
-            }
-        }
-    };
-    /**
-     * @param {?} error
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.log = function (error) {
-        if (window.console) {
-            window.console.log && window.console.log(error);
-        }
-    };
-    /**
-     * @param {?} error
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.logGroup = function (error) {
-        if (window.console) {
-            window.console.group && window.console.group(error);
-        }
-    };
-    /**
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.logGroupEnd = function () {
-        if (window.console) {
-            window.console.groupEnd && window.console.groupEnd();
-        }
-    };
-    Object.defineProperty(BrowserDomAdapter.prototype, "attrToPropMap", {
-        /**
-         * @return {?}
-         */
-        get: function () { return _attrToPropMap; },
-        enumerable: true,
-        configurable: true
-    });
-    /**
-     * @param {?} selector
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.query = function (selector) { return document.querySelector(selector); };
-    /**
-     * @param {?} el
-     * @param {?} selector
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.querySelector = function (el, selector) {
-        return (el.querySelector(selector));
-    };
-    /**
-     * @param {?} el
-     * @param {?} selector
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.querySelectorAll = function (el, selector) { return el.querySelectorAll(selector); };
-    /**
-     * @param {?} el
-     * @param {?} evt
-     * @param {?} listener
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.on = function (el, evt, listener) { el.addEventListener(evt, listener, false); };
-    /**
-     * @param {?} el
-     * @param {?} evt
-     * @param {?} listener
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.onAndCancel = function (el, evt, listener) {
-        el.addEventListener(evt, listener, false);
-        // Needed to follow Dart's subscription semantic, until fix of
-        // https://code.google.com/p/dart/issues/detail?id=17406
-        return function () { el.removeEventListener(evt, listener, false); };
-    };
-    /**
-     * @param {?} el
-     * @param {?} evt
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.dispatchEvent = function (el, evt) { el.dispatchEvent(evt); };
-    /**
-     * @param {?} eventType
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.createMouseEvent = function (eventType) {
-        var /** @type {?} */ evt = document.createEvent('MouseEvent');
-        evt.initEvent(eventType, true, true);
-        return evt;
-    };
-    /**
-     * @param {?} eventType
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.createEvent = function (eventType) {
-        var /** @type {?} */ evt = document.createEvent('Event');
-        evt.initEvent(eventType, true, true);
-        return evt;
-    };
-    /**
-     * @param {?} evt
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.preventDefault = function (evt) {
-        evt.preventDefault();
-        evt.returnValue = false;
-    };
-    /**
-     * @param {?} evt
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.isPrevented = function (evt) {
-        return evt.defaultPrevented || isPresent$2(evt.returnValue) && !evt.returnValue;
-    };
-    /**
-     * @param {?} el
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.getInnerHTML = function (el) { return el.innerHTML; };
-    /**
-     * @param {?} el
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.getTemplateContent = function (el) {
-        return 'content' in el && el instanceof HTMLTemplateElement ? el.content : null;
-    };
-    /**
-     * @param {?} el
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.getOuterHTML = function (el) { return el.outerHTML; };
-    /**
-     * @param {?} node
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.nodeName = function (node) { return node.nodeName; };
-    /**
-     * @param {?} node
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.nodeValue = function (node) { return node.nodeValue; };
-    /**
-     * @param {?} node
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.type = function (node) { return node.type; };
-    /**
-     * @param {?} node
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.content = function (node) {
-        if (this.hasProperty(node, 'content')) {
-            return ((node)).content;
-        }
-        else {
-            return node;
-        }
-    };
-    /**
-     * @param {?} el
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.firstChild = function (el) { return el.firstChild; };
-    /**
-     * @param {?} el
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.nextSibling = function (el) { return el.nextSibling; };
-    /**
-     * @param {?} el
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.parentElement = function (el) { return el.parentNode; };
-    /**
-     * @param {?} el
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.childNodes = function (el) { return el.childNodes; };
-    /**
-     * @param {?} el
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.childNodesAsList = function (el) {
-        var /** @type {?} */ childNodes = el.childNodes;
-        var /** @type {?} */ res = new Array(childNodes.length);
-        for (var /** @type {?} */ i = 0; i < childNodes.length; i++) {
-            res[i] = childNodes[i];
-        }
-        return res;
-    };
-    /**
-     * @param {?} el
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.clearNodes = function (el) {
-        while (el.firstChild) {
-            el.removeChild(el.firstChild);
-        }
-    };
-    /**
-     * @param {?} el
-     * @param {?} node
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.appendChild = function (el, node) { el.appendChild(node); };
-    /**
-     * @param {?} el
-     * @param {?} node
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.removeChild = function (el, node) { el.removeChild(node); };
-    /**
-     * @param {?} el
-     * @param {?} newChild
-     * @param {?} oldChild
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.replaceChild = function (el, newChild, oldChild) { el.replaceChild(newChild, oldChild); };
-    /**
-     * @param {?} node
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.remove = function (node) {
-        if (node.parentNode) {
-            node.parentNode.removeChild(node);
-        }
-        return node;
-    };
-    /**
-     * @param {?} el
-     * @param {?} node
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.insertBefore = function (el, node) { el.parentNode.insertBefore(node, el); };
-    /**
-     * @param {?} el
-     * @param {?} nodes
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.insertAllBefore = function (el, nodes) {
-        nodes.forEach(function (n) { return el.parentNode.insertBefore(n, el); });
-    };
-    /**
-     * @param {?} el
-     * @param {?} node
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.insertAfter = function (el, node) { el.parentNode.insertBefore(node, el.nextSibling); };
-    /**
-     * @param {?} el
-     * @param {?} value
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.setInnerHTML = function (el, value) { el.innerHTML = value; };
-    /**
-     * @param {?} el
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.getText = function (el) { return el.textContent; };
-    /**
-     * @param {?} el
-     * @param {?} value
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.setText = function (el, value) { el.textContent = value; };
-    /**
-     * @param {?} el
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.getValue = function (el) { return el.value; };
-    /**
-     * @param {?} el
-     * @param {?} value
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.setValue = function (el, value) { el.value = value; };
-    /**
-     * @param {?} el
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.getChecked = function (el) { return el.checked; };
-    /**
-     * @param {?} el
-     * @param {?} value
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.setChecked = function (el, value) { el.checked = value; };
-    /**
-     * @param {?} text
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.createComment = function (text) { return document.createComment(text); };
-    /**
-     * @param {?} html
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.createTemplate = function (html) {
-        var /** @type {?} */ t = document.createElement('template');
-        t.innerHTML = html;
-        return t;
-    };
-    /**
-     * @param {?} tagName
-     * @param {?=} doc
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.createElement = function (tagName, doc) {
-        if (doc === void 0) { doc = document; }
-        return doc.createElement(tagName);
-    };
-    /**
-     * @param {?} ns
-     * @param {?} tagName
-     * @param {?=} doc
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.createElementNS = function (ns, tagName, doc) {
-        if (doc === void 0) { doc = document; }
-        return doc.createElementNS(ns, tagName);
-    };
-    /**
-     * @param {?} text
-     * @param {?=} doc
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.createTextNode = function (text, doc) {
-        if (doc === void 0) { doc = document; }
-        return doc.createTextNode(text);
-    };
-    /**
-     * @param {?} attrName
-     * @param {?} attrValue
-     * @param {?=} doc
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.createScriptTag = function (attrName, attrValue, doc) {
-        if (doc === void 0) { doc = document; }
-        var /** @type {?} */ el = (doc.createElement('SCRIPT'));
-        el.setAttribute(attrName, attrValue);
-        return el;
-    };
-    /**
-     * @param {?} css
-     * @param {?=} doc
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.createStyleElement = function (css, doc) {
-        if (doc === void 0) { doc = document; }
-        var /** @type {?} */ style = (doc.createElement('style'));
-        this.appendChild(style, this.createTextNode(css));
-        return style;
-    };
-    /**
-     * @param {?} el
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.createShadowRoot = function (el) { return ((el)).createShadowRoot(); };
-    /**
-     * @param {?} el
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.getShadowRoot = function (el) { return ((el)).shadowRoot; };
-    /**
-     * @param {?} el
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.getHost = function (el) { return ((el)).host; };
-    /**
-     * @param {?} node
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.clone = function (node) { return node.cloneNode(true); };
-    /**
-     * @param {?} element
-     * @param {?} name
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.getElementsByClassName = function (element, name) {
-        return element.getElementsByClassName(name);
-    };
-    /**
-     * @param {?} element
-     * @param {?} name
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.getElementsByTagName = function (element, name) {
-        return element.getElementsByTagName(name);
-    };
-    /**
-     * @param {?} element
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.classList = function (element) { return Array.prototype.slice.call(element.classList, 0); };
-    /**
-     * @param {?} element
-     * @param {?} className
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.addClass = function (element, className) { element.classList.add(className); };
-    /**
-     * @param {?} element
-     * @param {?} className
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.removeClass = function (element, className) { element.classList.remove(className); };
-    /**
-     * @param {?} element
-     * @param {?} className
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.hasClass = function (element, className) {
-        return element.classList.contains(className);
-    };
-    /**
-     * @param {?} element
-     * @param {?} styleName
-     * @param {?} styleValue
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.setStyle = function (element, styleName, styleValue) {
-        element.style[styleName] = styleValue;
-    };
-    /**
-     * @param {?} element
-     * @param {?} stylename
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.removeStyle = function (element, stylename) {
-        // IE requires '' instead of null
-        // see https://github.com/angular/angular/issues/7916
-        element.style[stylename] = '';
-    };
-    /**
-     * @param {?} element
-     * @param {?} stylename
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.getStyle = function (element, stylename) { return element.style[stylename]; };
-    /**
-     * @param {?} element
-     * @param {?} styleName
-     * @param {?=} styleValue
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.hasStyle = function (element, styleName, styleValue) {
-        if (styleValue === void 0) { styleValue = null; }
-        var /** @type {?} */ value = this.getStyle(element, styleName) || '';
-        return styleValue ? value == styleValue : value.length > 0;
-    };
-    /**
-     * @param {?} element
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.tagName = function (element) { return element.tagName; };
-    /**
-     * @param {?} element
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.attributeMap = function (element) {
-        var /** @type {?} */ res = new Map();
-        var /** @type {?} */ elAttrs = element.attributes;
-        for (var /** @type {?} */ i = 0; i < elAttrs.length; i++) {
-            var /** @type {?} */ attrib = elAttrs[i];
-            res.set(attrib.name, attrib.value);
-        }
-        return res;
-    };
-    /**
-     * @param {?} element
-     * @param {?} attribute
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.hasAttribute = function (element, attribute) {
-        return element.hasAttribute(attribute);
-    };
-    /**
-     * @param {?} element
-     * @param {?} ns
-     * @param {?} attribute
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.hasAttributeNS = function (element, ns, attribute) {
-        return element.hasAttributeNS(ns, attribute);
-    };
-    /**
-     * @param {?} element
-     * @param {?} attribute
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.getAttribute = function (element, attribute) {
-        return element.getAttribute(attribute);
-    };
-    /**
-     * @param {?} element
-     * @param {?} ns
-     * @param {?} name
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.getAttributeNS = function (element, ns, name) {
-        return element.getAttributeNS(ns, name);
-    };
-    /**
-     * @param {?} element
-     * @param {?} name
-     * @param {?} value
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.setAttribute = function (element, name, value) { element.setAttribute(name, value); };
-    /**
-     * @param {?} element
-     * @param {?} ns
-     * @param {?} name
-     * @param {?} value
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.setAttributeNS = function (element, ns, name, value) {
-        element.setAttributeNS(ns, name, value);
-    };
-    /**
-     * @param {?} element
-     * @param {?} attribute
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.removeAttribute = function (element, attribute) { element.removeAttribute(attribute); };
-    /**
-     * @param {?} element
-     * @param {?} ns
-     * @param {?} name
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.removeAttributeNS = function (element, ns, name) {
-        element.removeAttributeNS(ns, name);
-    };
-    /**
-     * @param {?} el
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.templateAwareRoot = function (el) { return this.isTemplateElement(el) ? this.content(el) : el; };
-    /**
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.createHtmlDocument = function () {
-        return document.implementation.createHTMLDocument('fakeTitle');
-    };
-    /**
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.defaultDoc = function () { return document; };
-    /**
-     * @param {?} el
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.getBoundingClientRect = function (el) {
-        try {
-            return el.getBoundingClientRect();
-        }
-        catch (e) {
-            return { top: 0, bottom: 0, left: 0, right: 0, width: 0, height: 0 };
-        }
-    };
-    /**
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.getTitle = function () { return document.title; };
-    /**
-     * @param {?} newTitle
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.setTitle = function (newTitle) { document.title = newTitle || ''; };
-    /**
-     * @param {?} n
-     * @param {?} selector
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.elementMatches = function (n, selector) {
-        if (n instanceof HTMLElement) {
-            return n.matches && n.matches(selector) ||
-                n.msMatchesSelector && n.msMatchesSelector(selector) ||
-                n.webkitMatchesSelector && n.webkitMatchesSelector(selector);
-        }
-        return false;
-    };
-    /**
-     * @param {?} el
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.isTemplateElement = function (el) {
-        return el instanceof HTMLElement && el.nodeName == 'TEMPLATE';
-    };
-    /**
-     * @param {?} node
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.isTextNode = function (node) { return node.nodeType === Node.TEXT_NODE; };
-    /**
-     * @param {?} node
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.isCommentNode = function (node) { return node.nodeType === Node.COMMENT_NODE; };
-    /**
-     * @param {?} node
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.isElementNode = function (node) { return node.nodeType === Node.ELEMENT_NODE; };
-    /**
-     * @param {?} node
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.hasShadowRoot = function (node) {
-        return isPresent$2(node.shadowRoot) && node instanceof HTMLElement;
-    };
-    /**
-     * @param {?} node
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.isShadowRoot = function (node) { return node instanceof DocumentFragment; };
-    /**
-     * @param {?} node
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.importIntoDoc = function (node) { return document.importNode(this.templateAwareRoot(node), true); };
-    /**
-     * @param {?} node
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.adoptNode = function (node) { return document.adoptNode(node); };
-    /**
-     * @param {?} el
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.getHref = function (el) { return ((el)).href; };
-    /**
-     * @param {?} event
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.getEventKey = function (event) {
-        var /** @type {?} */ key = event.key;
-        if (isBlank$3(key)) {
-            key = event.keyIdentifier;
-            // keyIdentifier is defined in the old draft of DOM Level 3 Events implemented by Chrome and
-            // Safari cf
-            // http://www.w3.org/TR/2007/WD-DOM-Level-3-Events-20071221/events.html#Events-KeyboardEvents-Interfaces
-            if (isBlank$3(key)) {
-                return 'Unidentified';
-            }
-            if (key.startsWith('U+')) {
-                key = String.fromCharCode(parseInt(key.substring(2), 16));
-                if (event.location === DOM_KEY_LOCATION_NUMPAD && _chromeNumKeyPadMap.hasOwnProperty(key)) {
-                    // There is a bug in Chrome for numeric keypad keys:
-                    // https://code.google.com/p/chromium/issues/detail?id=155654
-                    // 1, 2, 3 ... are reported as A, B, C ...
-                    key = ((_chromeNumKeyPadMap))[key];
-                }
-            }
-        }
-        return _keyMap[key] || key;
-    };
-    /**
-     * @param {?} target
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.getGlobalEventTarget = function (target) {
-        if (target === 'window') {
-            return window;
-        }
-        if (target === 'document') {
-            return document;
-        }
-        if (target === 'body') {
-            return document.body;
-        }
-    };
-    /**
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.getHistory = function () { return window.history; };
-    /**
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.getLocation = function () { return window.location; };
-    /**
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.getBaseHref = function () {
-        var /** @type {?} */ href = getBaseElementHref();
-        return isBlank$3(href) ? null : relativePath(href);
-    };
-    /**
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.resetBaseElement = function () { baseElement = null; };
-    /**
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.getUserAgent = function () { return window.navigator.userAgent; };
-    /**
-     * @param {?} element
-     * @param {?} name
-     * @param {?} value
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.setData = function (element, name, value) {
-        this.setAttribute(element, 'data-' + name, value);
-    };
-    /**
-     * @param {?} element
-     * @param {?} name
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.getData = function (element, name) {
-        return this.getAttribute(element, 'data-' + name);
-    };
-    /**
-     * @param {?} element
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.getComputedStyle = function (element) { return getComputedStyle(element); };
-    /**
-     * @param {?} path
-     * @param {?} value
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.setGlobalVar = function (path, value) { setValueOnPath$2(_global$2, path, value); };
-    /**
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.supportsWebAnimation = function () {
-        return typeof ((Element)).prototype['animate'] === 'function';
-    };
-    /**
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.performanceNow = function () {
-        // performance.now() is not available in all browsers, see
-        // http://caniuse.com/#search=performance.now
-        return window.performance && window.performance.now ? window.performance.now() :
-            new Date().getTime();
-    };
-    /**
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.supportsCookies = function () { return true; };
-    /**
-     * @param {?} name
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.getCookie = function (name) { return parseCookieValue(document.cookie, name); };
-    /**
-     * @param {?} name
-     * @param {?} value
-     * @return {?}
-     */
-    BrowserDomAdapter.prototype.setCookie = function (name, value) {
-        // document.cookie is magical, assigning into it assigns/overrides one cookie value, but does
-        // not clear other cookies.
-        document.cookie = encodeURIComponent(name) + '=' + encodeURIComponent(value);
-    };
-    return BrowserDomAdapter;
-}(GenericBrowserDomAdapter));
-var baseElement = null;
-/**
- * @return {?}
- */
-function getBaseElementHref() {
-    if (!baseElement) {
-        baseElement = document.querySelector('base');
-        if (!baseElement) {
-            return null;
-        }
-    }
-    return baseElement.getAttribute('href');
-}
-// based on urlUtils.js in AngularJS 1
-var urlParsingNode;
-/**
- * @param {?} url
- * @return {?}
- */
-function relativePath(url) {
-    if (!urlParsingNode) {
-        urlParsingNode = document.createElement('a');
-    }
-    urlParsingNode.setAttribute('href', url);
-    return (urlParsingNode.pathname.charAt(0) === '/') ? urlParsingNode.pathname :
-        '/' + urlParsingNode.pathname;
-}
-/**
- * @param {?} cookieStr
- * @param {?} name
- * @return {?}
- */
-function parseCookieValue(cookieStr, name) {
-    name = encodeURIComponent(name);
-    for (var _i = 0, _a = cookieStr.split(';'); _i < _a.length; _i++) {
-        var cookie = _a[_i];
-        var /** @type {?} */ eqIndex = cookie.indexOf('=');
-        var _b = eqIndex == -1 ? [cookie, ''] : [cookie.slice(0, eqIndex), cookie.slice(eqIndex + 1)], cookieName = _b[0], cookieValue = _b[1];
-        if (cookieName.trim() === name) {
-            return decodeURIComponent(cookieValue);
-        }
-    }
-    return null;
-}
-
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- * @return {?}
- */
-function supportsState() {
-    return !!window.history.pushState;
-}
-
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-var __extends$28 = (undefined && undefined.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-/**
- * `PlatformLocation` encapsulates all of the direct calls to platform APIs.
- * This class should not be used directly by an application developer. Instead, use
- * {\@link Location}.
- */
-var BrowserPlatformLocation = (function (_super) {
-    __extends$28(BrowserPlatformLocation, _super);
-    function BrowserPlatformLocation() {
-        _super.call(this);
-        this._init();
-    }
-    /**
-     * \@internal
-     * @return {?}
-     */
-    BrowserPlatformLocation.prototype._init = function () {
-        this._location = getDOM().getLocation();
-        this._history = getDOM().getHistory();
-    };
-    Object.defineProperty(BrowserPlatformLocation.prototype, "location", {
-        /**
-         * @return {?}
-         */
-        get: function () { return this._location; },
-        enumerable: true,
-        configurable: true
-    });
-    /**
-     * @return {?}
-     */
-    BrowserPlatformLocation.prototype.getBaseHrefFromDOM = function () { return getDOM().getBaseHref(); };
-    /**
-     * @param {?} fn
-     * @return {?}
-     */
-    BrowserPlatformLocation.prototype.onPopState = function (fn) {
-        getDOM().getGlobalEventTarget('window').addEventListener('popstate', fn, false);
-    };
-    /**
-     * @param {?} fn
-     * @return {?}
-     */
-    BrowserPlatformLocation.prototype.onHashChange = function (fn) {
-        getDOM().getGlobalEventTarget('window').addEventListener('hashchange', fn, false);
-    };
-    Object.defineProperty(BrowserPlatformLocation.prototype, "pathname", {
-        /**
-         * @return {?}
-         */
-        get: function () { return this._location.pathname; },
-        /**
-         * @param {?} newPath
-         * @return {?}
-         */
-        set: function (newPath) { this._location.pathname = newPath; },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(BrowserPlatformLocation.prototype, "search", {
-        /**
-         * @return {?}
-         */
-        get: function () { return this._location.search; },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(BrowserPlatformLocation.prototype, "hash", {
-        /**
-         * @return {?}
-         */
-        get: function () { return this._location.hash; },
-        enumerable: true,
-        configurable: true
-    });
-    /**
-     * @param {?} state
-     * @param {?} title
-     * @param {?} url
-     * @return {?}
-     */
-    BrowserPlatformLocation.prototype.pushState = function (state$$1, title, url) {
-        if (supportsState()) {
-            this._history.pushState(state$$1, title, url);
-        }
-        else {
-            this._location.hash = url;
-        }
-    };
-    /**
-     * @param {?} state
-     * @param {?} title
-     * @param {?} url
-     * @return {?}
-     */
-    BrowserPlatformLocation.prototype.replaceState = function (state$$1, title, url) {
-        if (supportsState()) {
-            this._history.replaceState(state$$1, title, url);
-        }
-        else {
-            this._location.hash = url;
-        }
-    };
-    /**
-     * @return {?}
-     */
-    BrowserPlatformLocation.prototype.forward = function () { this._history.forward(); };
-    /**
-     * @return {?}
-     */
-    BrowserPlatformLocation.prototype.back = function () { this._history.back(); };
-    BrowserPlatformLocation.decorators = [
-        { type: Injectable },
-    ];
-    /** @nocollapse */
-    BrowserPlatformLocation.ctorParameters = function () { return []; };
-    return BrowserPlatformLocation;
-}(PlatformLocation));
-
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-var BrowserGetTestability = (function () {
-    function BrowserGetTestability() {
-    }
-    /**
-     * @return {?}
-     */
-    BrowserGetTestability.init = function () { setTestabilityGetter(new BrowserGetTestability()); };
-    /**
-     * @param {?} registry
-     * @return {?}
-     */
-    BrowserGetTestability.prototype.addToWindow = function (registry) {
-        _global$2.getAngularTestability = function (elem, findInAncestors) {
-            if (findInAncestors === void 0) { findInAncestors = true; }
-            var /** @type {?} */ testability = registry.findTestabilityInTree(elem, findInAncestors);
-            if (testability == null) {
-                throw new Error('Could not find testability for element.');
-            }
-            return testability;
-        };
-        _global$2.getAllAngularTestabilities = function () { return registry.getAllTestabilities(); };
-        _global$2.getAllAngularRootElements = function () { return registry.getAllRootElements(); };
-        var /** @type {?} */ whenAllStable = function (callback /** TODO #9100 */) {
-            var /** @type {?} */ testabilities = _global$2.getAllAngularTestabilities();
-            var /** @type {?} */ count = testabilities.length;
-            var /** @type {?} */ didWork = false;
-            var /** @type {?} */ decrement = function (didWork_ /** TODO #9100 */) {
-                didWork = didWork || didWork_;
-                count--;
-                if (count == 0) {
-                    callback(didWork);
-                }
-            };
-            testabilities.forEach(function (testability /** TODO #9100 */) {
-                testability.whenStable(decrement);
-            });
-        };
-        if (!_global$2['frameworkStabilizers']) {
-            _global$2['frameworkStabilizers'] = [];
-        }
-        _global$2['frameworkStabilizers'].push(whenAllStable);
-    };
-    /**
-     * @param {?} registry
-     * @param {?} elem
-     * @param {?} findInAncestors
-     * @return {?}
-     */
-    BrowserGetTestability.prototype.findTestabilityInTree = function (registry, elem, findInAncestors) {
-        if (elem == null) {
-            return null;
-        }
-        var /** @type {?} */ t = registry.getTestability(elem);
-        if (isPresent$2(t)) {
-            return t;
-        }
-        else if (!findInAncestors) {
-            return null;
-        }
-        if (getDOM().isShadowRoot(elem)) {
-            return this.findTestabilityInTree(registry, getDOM().getHost(elem), true);
-        }
-        return this.findTestabilityInTree(registry, getDOM().parentElement(elem), true);
-    };
-    return BrowserGetTestability;
-}());
-
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-/**
- * A service that can be used to get and set the title of a current HTML document.
- *
- * Since an Angular 2 application can't be bootstrapped on the entire HTML document (`<html>` tag)
- * it is not possible to bind to the `text` property of the `HTMLTitleElement` elements
- * (representing the `<title>` tag). Instead, this service can be used to set and get the current
- * title value.
- *
- * \@experimental
- */
-var Title = (function () {
-    function Title() {
-    }
-    /**
-     * Get the title of the current HTML document.
-     * @return {?}
-     */
-    Title.prototype.getTitle = function () { return getDOM().getTitle(); };
-    /**
-     * Set the title of the current HTML document.
-     * @param {?} newTitle
-     * @return {?}
-     */
-    Title.prototype.setTitle = function (newTitle) { getDOM().setTitle(newTitle); };
-    return Title;
-}());
-
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-/**
- * Wraps Javascript Objects
- */
-var StringMapWrapper$2 = (function () {
-    function StringMapWrapper() {
-    }
-    /**
-     * @param {?} m1
-     * @param {?} m2
-     * @return {?}
-     */
-    StringMapWrapper.merge = function (m1, m2) {
-        var /** @type {?} */ m = {};
-        for (var _i = 0, _a = Object.keys(m1); _i < _a.length; _i++) {
-            var k = _a[_i];
-            m[k] = m1[k];
-        }
-        for (var _b = 0, _c = Object.keys(m2); _b < _c.length; _b++) {
-            var k = _c[_b];
-            m[k] = m2[k];
-        }
-        return m;
-    };
-    /**
-     * @param {?} m1
-     * @param {?} m2
-     * @return {?}
-     */
-    StringMapWrapper.equals = function (m1, m2) {
-        var /** @type {?} */ k1 = Object.keys(m1);
-        var /** @type {?} */ k2 = Object.keys(m2);
-        if (k1.length != k2.length) {
-            return false;
-        }
-        for (var /** @type {?} */ i = 0; i < k1.length; i++) {
-            var /** @type {?} */ key = k1[i];
-            if (m1[key] !== m2[key]) {
-                return false;
-            }
-        }
-        return true;
-    };
-    return StringMapWrapper;
-}());
-
-/**
- * @param {?} obj
- * @return {?}
- */
-
-/**
- * @param {?} a
- * @param {?} b
- * @param {?} comparator
- * @return {?}
- */
-
-/**
- * @param {?} obj
- * @param {?} fn
- * @return {?}
- */
-
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-/**
- * A DI Token representing the main rendering context. In a browser this is the DOM Document.
- *
- * Note: Document might not be available in the Application Context when Application and Rendering
- * Contexts are not the same (e.g. when running the application into a Web Worker).
- *
- * @stable
- */
-var DOCUMENT = new OpaqueToken('DocumentToken');
-
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-/**
- * @stable
- */
-var EVENT_MANAGER_PLUGINS = new OpaqueToken('EventManagerPlugins');
-/**
- * \@stable
- */
-var EventManager = (function () {
-    /**
-     * @param {?} plugins
-     * @param {?} _zone
-     */
-    function EventManager(plugins, _zone) {
-        var _this = this;
-        this._zone = _zone;
-        this._eventNameToPlugin = new Map();
-        plugins.forEach(function (p) { return p.manager = _this; });
-        this._plugins = plugins.slice().reverse();
-    }
-    /**
-     * @param {?} element
-     * @param {?} eventName
-     * @param {?} handler
-     * @return {?}
-     */
-    EventManager.prototype.addEventListener = function (element, eventName, handler) {
-        var /** @type {?} */ plugin = this._findPluginFor(eventName);
-        return plugin.addEventListener(element, eventName, handler);
-    };
-    /**
-     * @param {?} target
-     * @param {?} eventName
-     * @param {?} handler
-     * @return {?}
-     */
-    EventManager.prototype.addGlobalEventListener = function (target, eventName, handler) {
-        var /** @type {?} */ plugin = this._findPluginFor(eventName);
-        return plugin.addGlobalEventListener(target, eventName, handler);
-    };
-    /**
-     * @return {?}
-     */
-    EventManager.prototype.getZone = function () { return this._zone; };
-    /**
-     * \@internal
-     * @param {?} eventName
-     * @return {?}
-     */
-    EventManager.prototype._findPluginFor = function (eventName) {
-        var /** @type {?} */ plugin = this._eventNameToPlugin.get(eventName);
-        if (plugin) {
-            return plugin;
-        }
-        var /** @type {?} */ plugins = this._plugins;
-        for (var /** @type {?} */ i = 0; i < plugins.length; i++) {
-            var /** @type {?} */ plugin_1 = plugins[i];
-            if (plugin_1.supports(eventName)) {
-                this._eventNameToPlugin.set(eventName, plugin_1);
-                return plugin_1;
-            }
-        }
-        throw new Error("No event manager plugin found for event " + eventName);
-    };
-    EventManager.decorators = [
-        { type: Injectable },
-    ];
-    /** @nocollapse */
-    EventManager.ctorParameters = function () { return [
-        { type: Array, decorators: [{ type: Inject, args: [EVENT_MANAGER_PLUGINS,] },] },
-        { type: NgZone, },
-    ]; };
-    return EventManager;
-}());
-/**
- * @abstract
- */
-var EventManagerPlugin = (function () {
-    function EventManagerPlugin() {
-    }
-    /**
-     * @abstract
-     * @param {?} eventName
-     * @return {?}
-     */
-    EventManagerPlugin.prototype.supports = function (eventName) { };
-    /**
-     * @abstract
-     * @param {?} element
-     * @param {?} eventName
-     * @param {?} handler
-     * @return {?}
-     */
-    EventManagerPlugin.prototype.addEventListener = function (element, eventName, handler) { };
-    /**
-     * @param {?} element
-     * @param {?} eventName
-     * @param {?} handler
-     * @return {?}
-     */
-    EventManagerPlugin.prototype.addGlobalEventListener = function (element, eventName, handler) {
-        var /** @type {?} */ target = getDOM().getGlobalEventTarget(element);
-        if (!target) {
-            throw new Error("Unsupported event target " + target + " for event " + eventName);
-        }
-        return this.addEventListener(target, eventName, handler);
-    };
-    
-    return EventManagerPlugin;
-}());
-
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-var __extends$30 = (undefined && undefined.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var SharedStylesHost = (function () {
-    function SharedStylesHost() {
-        /** @internal */
-        this._stylesSet = new Set();
-    }
-    /**
-     * @param {?} styles
-     * @return {?}
-     */
-    SharedStylesHost.prototype.addStyles = function (styles) {
-        var _this = this;
-        var /** @type {?} */ additions = new Set();
-        styles.forEach(function (style$$1) {
-            if (!_this._stylesSet.has(style$$1)) {
-                _this._stylesSet.add(style$$1);
-                additions.add(style$$1);
-            }
-        });
-        this.onStylesAdded(additions);
-    };
-    /**
-     * @param {?} additions
-     * @return {?}
-     */
-    SharedStylesHost.prototype.onStylesAdded = function (additions) { };
-    /**
-     * @return {?}
-     */
-    SharedStylesHost.prototype.getAllStyles = function () { return Array.from(this._stylesSet); };
-    SharedStylesHost.decorators = [
-        { type: Injectable },
-    ];
-    /** @nocollapse */
-    SharedStylesHost.ctorParameters = function () { return []; };
-    return SharedStylesHost;
-}());
-var DomSharedStylesHost = (function (_super) {
-    __extends$30(DomSharedStylesHost, _super);
-    /**
-     * @param {?} _doc
-     */
-    function DomSharedStylesHost(_doc) {
-        _super.call(this);
-        this._doc = _doc;
-        this._hostNodes = new Set();
-        this._styleNodes = new Set();
-        this._hostNodes.add(_doc.head);
-    }
-    /**
-     * @param {?} styles
-     * @param {?} host
-     * @return {?}
-     */
-    DomSharedStylesHost.prototype._addStylesToHost = function (styles, host) {
-        var _this = this;
-        styles.forEach(function (style$$1) {
-            var /** @type {?} */ styleEl = _this._doc.createElement('style');
-            styleEl.textContent = style$$1;
-            _this._styleNodes.add(host.appendChild(styleEl));
-        });
-    };
-    /**
-     * @param {?} hostNode
-     * @return {?}
-     */
-    DomSharedStylesHost.prototype.addHost = function (hostNode) {
-        this._addStylesToHost(this._stylesSet, hostNode);
-        this._hostNodes.add(hostNode);
-    };
-    /**
-     * @param {?} hostNode
-     * @return {?}
-     */
-    DomSharedStylesHost.prototype.removeHost = function (hostNode) { this._hostNodes.delete(hostNode); };
-    /**
-     * @param {?} additions
-     * @return {?}
-     */
-    DomSharedStylesHost.prototype.onStylesAdded = function (additions) {
-        var _this = this;
-        this._hostNodes.forEach(function (hostNode) { return _this._addStylesToHost(additions, hostNode); });
-    };
-    /**
-     * @return {?}
-     */
-    DomSharedStylesHost.prototype.ngOnDestroy = function () { this._styleNodes.forEach(function (styleNode) { return getDOM().remove(styleNode); }); };
-    DomSharedStylesHost.decorators = [
-        { type: Injectable },
-    ];
-    /** @nocollapse */
-    DomSharedStylesHost.ctorParameters = function () { return [
-        { type: undefined, decorators: [{ type: Inject, args: [DOCUMENT,] },] },
-    ]; };
-    return DomSharedStylesHost;
-}(SharedStylesHost));
-
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-var __extends$29 = (undefined && undefined.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var NAMESPACE_URIS = {
-    'xlink': 'http://www.w3.org/1999/xlink',
-    'svg': 'http://www.w3.org/2000/svg',
-    'xhtml': 'http://www.w3.org/1999/xhtml'
-};
-var TEMPLATE_COMMENT_TEXT = 'template bindings={}';
-var TEMPLATE_BINDINGS_EXP = /^template bindings=(.*)$/;
-/**
- * @abstract
- */
-var DomRootRenderer = (function () {
-    /**
-     * @param {?} document
-     * @param {?} eventManager
-     * @param {?} sharedStylesHost
-     * @param {?} animationDriver
-     * @param {?} appId
-     */
-    function DomRootRenderer(document, eventManager, sharedStylesHost, animationDriver, appId) {
-        this.document = document;
-        this.eventManager = eventManager;
-        this.sharedStylesHost = sharedStylesHost;
-        this.animationDriver = animationDriver;
-        this.appId = appId;
-        this.registeredComponents = new Map();
-    }
-    /**
-     * @param {?} componentProto
-     * @return {?}
-     */
-    DomRootRenderer.prototype.renderComponent = function (componentProto) {
-        var /** @type {?} */ renderer = this.registeredComponents.get(componentProto.id);
-        if (!renderer) {
-            renderer = new DomRenderer(this, componentProto, this.animationDriver, this.appId + "-" + componentProto.id);
-            this.registeredComponents.set(componentProto.id, renderer);
-        }
-        return renderer;
-    };
-    return DomRootRenderer;
-}());
-var DomRootRenderer_ = (function (_super) {
-    __extends$29(DomRootRenderer_, _super);
-    /**
-     * @param {?} _document
-     * @param {?} _eventManager
-     * @param {?} sharedStylesHost
-     * @param {?} animationDriver
-     * @param {?} appId
-     */
-    function DomRootRenderer_(_document, _eventManager, sharedStylesHost, animationDriver, appId) {
-        _super.call(this, _document, _eventManager, sharedStylesHost, animationDriver, appId);
-    }
-    DomRootRenderer_.decorators = [
-        { type: Injectable },
-    ];
-    /** @nocollapse */
-    DomRootRenderer_.ctorParameters = function () { return [
-        { type: undefined, decorators: [{ type: Inject, args: [DOCUMENT,] },] },
-        { type: EventManager, },
-        { type: DomSharedStylesHost, },
-        { type: AnimationDriver, },
-        { type: undefined, decorators: [{ type: Inject, args: [APP_ID,] },] },
-    ]; };
-    return DomRootRenderer_;
-}(DomRootRenderer));
-var DIRECT_DOM_RENDERER = {
-    /**
-     * @param {?} node
-     * @return {?}
-     */
-    remove: function (node) {
-        if (node.parentNode) {
-            node.parentNode.removeChild(node);
-        }
-    },
-    /**
-     * @param {?} node
-     * @param {?} parent
-     * @return {?}
-     */
-    appendChild: function (node, parent) { parent.appendChild(node); },
-    /**
-     * @param {?} node
-     * @param {?} refNode
-     * @return {?}
-     */
-    insertBefore: function (node, refNode) { refNode.parentNode.insertBefore(node, refNode); },
-    /**
-     * @param {?} node
-     * @return {?}
-     */
-    nextSibling: function (node) { return node.nextSibling; },
-    /**
-     * @param {?} node
-     * @return {?}
-     */
-    parentElement: function (node) { return (node.parentNode); }
-};
-var DomRenderer = (function () {
-    /**
-     * @param {?} _rootRenderer
-     * @param {?} componentProto
-     * @param {?} _animationDriver
-     * @param {?} styleShimId
-     */
-    function DomRenderer(_rootRenderer, componentProto, _animationDriver, styleShimId) {
-        this._rootRenderer = _rootRenderer;
-        this.componentProto = componentProto;
-        this._animationDriver = _animationDriver;
-        this.directRenderer = DIRECT_DOM_RENDERER;
-        this._styles = flattenStyles$1(styleShimId, componentProto.styles, []);
-        if (componentProto.encapsulation !== ViewEncapsulation.Native) {
-            this._rootRenderer.sharedStylesHost.addStyles(this._styles);
-        }
-        if (this.componentProto.encapsulation === ViewEncapsulation.Emulated) {
-            this._contentAttr = shimContentAttribute(styleShimId);
-            this._hostAttr = shimHostAttribute(styleShimId);
-        }
-        else {
-            this._contentAttr = null;
-            this._hostAttr = null;
-        }
-    }
-    /**
-     * @param {?} selectorOrNode
-     * @param {?} debugInfo
-     * @return {?}
-     */
-    DomRenderer.prototype.selectRootElement = function (selectorOrNode, debugInfo) {
-        var /** @type {?} */ el;
-        if (typeof selectorOrNode === 'string') {
-            el = this._rootRenderer.document.querySelector(selectorOrNode);
-            if (!el) {
-                throw new Error("The selector \"" + selectorOrNode + "\" did not match any elements");
-            }
-        }
-        else {
-            el = selectorOrNode;
-        }
-        while (el.firstChild) {
-            el.removeChild(el.firstChild);
-        }
-        return el;
-    };
-    /**
-     * @param {?} parent
-     * @param {?} name
-     * @param {?} debugInfo
-     * @return {?}
-     */
-    DomRenderer.prototype.createElement = function (parent, name, debugInfo) {
-        var /** @type {?} */ el;
-        if (isNamespaced(name)) {
-            var /** @type {?} */ nsAndName = splitNamespace(name);
-            el = document.createElementNS((NAMESPACE_URIS)[nsAndName[0]], nsAndName[1]);
-        }
-        else {
-            el = document.createElement(name);
-        }
-        if (this._contentAttr) {
-            el.setAttribute(this._contentAttr, '');
-        }
-        if (parent) {
-            parent.appendChild(el);
-        }
-        return el;
-    };
-    /**
-     * @param {?} hostElement
-     * @return {?}
-     */
-    DomRenderer.prototype.createViewRoot = function (hostElement) {
-        var /** @type {?} */ nodesParent;
-        if (this.componentProto.encapsulation === ViewEncapsulation.Native) {
-            nodesParent = ((hostElement)).createShadowRoot();
-            for (var /** @type {?} */ i = 0; i < this._styles.length; i++) {
-                var /** @type {?} */ styleEl = document.createElement('style');
-                styleEl.textContent = this._styles[i];
-                nodesParent.appendChild(styleEl);
-            }
-        }
-        else {
-            if (this._hostAttr) {
-                hostElement.setAttribute(this._hostAttr, '');
-            }
-            nodesParent = hostElement;
-        }
-        return nodesParent;
-    };
-    /**
-     * @param {?} parentElement
-     * @param {?} debugInfo
-     * @return {?}
-     */
-    DomRenderer.prototype.createTemplateAnchor = function (parentElement, debugInfo) {
-        var /** @type {?} */ comment = document.createComment(TEMPLATE_COMMENT_TEXT);
-        if (parentElement) {
-            parentElement.appendChild(comment);
-        }
-        return comment;
-    };
-    /**
-     * @param {?} parentElement
-     * @param {?} value
-     * @param {?} debugInfo
-     * @return {?}
-     */
-    DomRenderer.prototype.createText = function (parentElement, value, debugInfo) {
-        var /** @type {?} */ node = document.createTextNode(value);
-        if (parentElement) {
-            parentElement.appendChild(node);
-        }
-        return node;
-    };
-    /**
-     * @param {?} parentElement
-     * @param {?} nodes
-     * @return {?}
-     */
-    DomRenderer.prototype.projectNodes = function (parentElement, nodes) {
-        if (!parentElement)
-            return;
-        appendNodes(parentElement, nodes);
-    };
-    /**
-     * @param {?} node
-     * @param {?} viewRootNodes
-     * @return {?}
-     */
-    DomRenderer.prototype.attachViewAfter = function (node, viewRootNodes) { moveNodesAfterSibling(node, viewRootNodes); };
-    /**
-     * @param {?} viewRootNodes
-     * @return {?}
-     */
-    DomRenderer.prototype.detachView = function (viewRootNodes) {
-        for (var /** @type {?} */ i = 0; i < viewRootNodes.length; i++) {
-            var /** @type {?} */ node = viewRootNodes[i];
-            if (node.parentNode) {
-                node.parentNode.removeChild(node);
-            }
-        }
-    };
-    /**
-     * @param {?} hostElement
-     * @param {?} viewAllNodes
-     * @return {?}
-     */
-    DomRenderer.prototype.destroyView = function (hostElement, viewAllNodes) {
-        if (this.componentProto.encapsulation === ViewEncapsulation.Native && hostElement) {
-            this._rootRenderer.sharedStylesHost.removeHost(((hostElement)).shadowRoot);
-        }
-    };
-    /**
-     * @param {?} renderElement
-     * @param {?} name
-     * @param {?} callback
-     * @return {?}
-     */
-    DomRenderer.prototype.listen = function (renderElement, name, callback) {
-        return this._rootRenderer.eventManager.addEventListener(renderElement, name, decoratePreventDefault(callback));
-    };
-    /**
-     * @param {?} target
-     * @param {?} name
-     * @param {?} callback
-     * @return {?}
-     */
-    DomRenderer.prototype.listenGlobal = function (target, name, callback) {
-        return this._rootRenderer.eventManager.addGlobalEventListener(target, name, decoratePreventDefault(callback));
-    };
-    /**
-     * @param {?} renderElement
-     * @param {?} propertyName
-     * @param {?} propertyValue
-     * @return {?}
-     */
-    DomRenderer.prototype.setElementProperty = function (renderElement, propertyName, propertyValue) {
-        ((renderElement))[propertyName] = propertyValue;
-    };
-    /**
-     * @param {?} renderElement
-     * @param {?} attributeName
-     * @param {?} attributeValue
-     * @return {?}
-     */
-    DomRenderer.prototype.setElementAttribute = function (renderElement, attributeName, attributeValue) {
-        var /** @type {?} */ attrNs;
-        var /** @type {?} */ attrNameWithoutNs = attributeName;
-        if (isNamespaced(attributeName)) {
-            var /** @type {?} */ nsAndName = splitNamespace(attributeName);
-            attrNameWithoutNs = nsAndName[1];
-            attributeName = nsAndName[0] + ':' + nsAndName[1];
-            attrNs = NAMESPACE_URIS[nsAndName[0]];
-        }
-        if (isPresent$2(attributeValue)) {
-            if (attrNs) {
-                renderElement.setAttributeNS(attrNs, attributeName, attributeValue);
-            }
-            else {
-                renderElement.setAttribute(attributeName, attributeValue);
-            }
-        }
-        else {
-            if (isPresent$2(attrNs)) {
-                renderElement.removeAttributeNS(attrNs, attrNameWithoutNs);
-            }
-            else {
-                renderElement.removeAttribute(attributeName);
-            }
-        }
-    };
-    /**
-     * @param {?} renderElement
-     * @param {?} propertyName
-     * @param {?} propertyValue
-     * @return {?}
-     */
-    DomRenderer.prototype.setBindingDebugInfo = function (renderElement, propertyName, propertyValue) {
-        if (renderElement.nodeType === Node.COMMENT_NODE) {
-            var /** @type {?} */ existingBindings = renderElement.nodeValue.replace(/\n/g, '').match(TEMPLATE_BINDINGS_EXP);
-            var /** @type {?} */ parsedBindings = JSON.parse(existingBindings[1]);
-            parsedBindings[propertyName] = propertyValue;
-            renderElement.nodeValue =
-                TEMPLATE_COMMENT_TEXT.replace('{}', JSON.stringify(parsedBindings, null, 2));
-        }
-        else {
-            this.setElementAttribute(renderElement, propertyName, propertyValue);
-        }
-    };
-    /**
-     * @param {?} renderElement
-     * @param {?} className
-     * @param {?} isAdd
-     * @return {?}
-     */
-    DomRenderer.prototype.setElementClass = function (renderElement, className, isAdd) {
-        if (isAdd) {
-            renderElement.classList.add(className);
-        }
-        else {
-            renderElement.classList.remove(className);
-        }
-    };
-    /**
-     * @param {?} renderElement
-     * @param {?} styleName
-     * @param {?} styleValue
-     * @return {?}
-     */
-    DomRenderer.prototype.setElementStyle = function (renderElement, styleName, styleValue) {
-        if (isPresent$2(styleValue)) {
-            ((renderElement.style))[styleName] = stringify$2(styleValue);
-        }
-        else {
-            // IE requires '' instead of null
-            // see https://github.com/angular/angular/issues/7916
-            ((renderElement.style))[styleName] = '';
-        }
-    };
-    /**
-     * @param {?} renderElement
-     * @param {?} methodName
-     * @param {?} args
-     * @return {?}
-     */
-    DomRenderer.prototype.invokeElementMethod = function (renderElement, methodName, args) {
-        ((renderElement))[methodName].apply(renderElement, args);
-    };
-    /**
-     * @param {?} renderNode
-     * @param {?} text
-     * @return {?}
-     */
-    DomRenderer.prototype.setText = function (renderNode, text) { renderNode.nodeValue = text; };
-    /**
-     * @param {?} element
-     * @param {?} startingStyles
-     * @param {?} keyframes
-     * @param {?} duration
-     * @param {?} delay
-     * @param {?} easing
-     * @param {?=} previousPlayers
-     * @return {?}
-     */
-    DomRenderer.prototype.animate = function (element, startingStyles, keyframes$$1, duration, delay, easing, previousPlayers) {
-        if (previousPlayers === void 0) { previousPlayers = []; }
-        if (this._rootRenderer.document.body.contains(element)) {
-            return this._animationDriver.animate(element, startingStyles, keyframes$$1, duration, delay, easing, previousPlayers);
-        }
-        return new NoOpAnimationPlayer$1();
-    };
-    return DomRenderer;
-}());
-/**
- * @param {?} sibling
- * @param {?} nodes
- * @return {?}
- */
-function moveNodesAfterSibling(sibling, nodes) {
-    var /** @type {?} */ parent = sibling.parentNode;
-    if (nodes.length > 0 && parent) {
-        var /** @type {?} */ nextSibling = sibling.nextSibling;
-        if (nextSibling) {
-            for (var /** @type {?} */ i = 0; i < nodes.length; i++) {
-                parent.insertBefore(nodes[i], nextSibling);
-            }
-        }
-        else {
-            for (var /** @type {?} */ i = 0; i < nodes.length; i++) {
-                parent.appendChild(nodes[i]);
-            }
-        }
-    }
-}
-/**
- * @param {?} parent
- * @param {?} nodes
- * @return {?}
- */
-function appendNodes(parent, nodes) {
-    for (var /** @type {?} */ i = 0; i < nodes.length; i++) {
-        parent.appendChild(nodes[i]);
-    }
-}
-/**
- * @param {?} eventHandler
- * @return {?}
- */
-function decoratePreventDefault(eventHandler) {
-    return function (event) {
-        var /** @type {?} */ allowDefaultBehavior = eventHandler(event);
-        if (allowDefaultBehavior === false) {
-            // TODO(tbosch): move preventDefault into event plugins...
-            event.preventDefault();
-            event.returnValue = false;
-        }
-    };
-}
-var COMPONENT_REGEX = /%COMP%/g;
-var COMPONENT_VARIABLE = '%COMP%';
-var HOST_ATTR = "_nghost-" + COMPONENT_VARIABLE;
-var CONTENT_ATTR = "_ngcontent-" + COMPONENT_VARIABLE;
-/**
- * @param {?} componentShortId
- * @return {?}
- */
-function shimContentAttribute(componentShortId) {
-    return CONTENT_ATTR.replace(COMPONENT_REGEX, componentShortId);
-}
-/**
- * @param {?} componentShortId
- * @return {?}
- */
-function shimHostAttribute(componentShortId) {
-    return HOST_ATTR.replace(COMPONENT_REGEX, componentShortId);
-}
-/**
- * @param {?} compId
- * @param {?} styles
- * @param {?} target
- * @return {?}
- */
-function flattenStyles$1(compId, styles, target) {
-    for (var /** @type {?} */ i = 0; i < styles.length; i++) {
-        var /** @type {?} */ style$$1 = styles[i];
-        if (Array.isArray(style$$1)) {
-            flattenStyles$1(compId, style$$1, target);
-        }
-        else {
-            style$$1 = style$$1.replace(COMPONENT_REGEX, compId);
-            target.push(style$$1);
-        }
-    }
-    return target;
-}
-var NS_PREFIX_RE = /^:([^:]+):(.+)$/;
-/**
- * @param {?} name
- * @return {?}
- */
-function isNamespaced(name) {
-    return name[0] === ':';
-}
-/**
- * @param {?} name
- * @return {?}
- */
-function splitNamespace(name) {
-    var /** @type {?} */ match = name.match(NS_PREFIX_RE);
-    return [match[1], match[2]];
-}
-
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-var CORE_TOKENS = {
-    'ApplicationRef': ApplicationRef,
-    'NgZone': NgZone,
-};
-var INSPECT_GLOBAL_NAME = 'ng.probe';
-var CORE_TOKENS_GLOBAL_NAME = 'ng.coreTokens';
-/**
- * Returns a {\@link DebugElement} for the given native DOM element, or
- * null if the given native element does not have an Angular view associated
- * with it.
- * @param {?} element
- * @return {?}
- */
-function inspectNativeElement(element) {
-    return getDebugNode(element);
-}
-/**
- * Deprecated. Use the one from '\@angular/core'.
- * @deprecated
- */
-var NgProbeToken$1 = (function () {
-    /**
-     * @param {?} name
-     * @param {?} token
-     */
-    function NgProbeToken$$1(name, token) {
-        this.name = name;
-        this.token = token;
-    }
-    return NgProbeToken$$1;
-}());
-/**
- * @param {?} rootRenderer
- * @param {?} extraTokens
- * @param {?} coreTokens
- * @return {?}
- */
-function _createConditionalRootRenderer(rootRenderer, extraTokens, coreTokens) {
-    return isDevMode() ?
-        _createRootRenderer(rootRenderer, (extraTokens || []).concat(coreTokens || [])) :
-        rootRenderer;
-}
-/**
- * @param {?} rootRenderer
- * @param {?} extraTokens
- * @return {?}
- */
-function _createRootRenderer(rootRenderer, extraTokens) {
-    getDOM().setGlobalVar(INSPECT_GLOBAL_NAME, inspectNativeElement);
-    getDOM().setGlobalVar(CORE_TOKENS_GLOBAL_NAME, StringMapWrapper$2.merge(CORE_TOKENS, _ngProbeTokensToMap(extraTokens || [])));
-    return new DebugDomRootRenderer$1(rootRenderer);
-}
-/**
- * @param {?} tokens
- * @return {?}
- */
-function _ngProbeTokensToMap(tokens) {
-    return tokens.reduce(function (prev, t) { return (prev[t.name] = t.token, prev); }, {});
-}
-/**
- * Providers which support debugging Angular applications (e.g. via `ng.probe`).
- */
-var ELEMENT_PROBE_PROVIDERS = [{
-        provide: RootRenderer,
-        useFactory: _createConditionalRootRenderer,
-        deps: [
-            DomRootRenderer, [NgProbeToken$1, new Optional()],
-            [NgProbeToken, new Optional()]
-        ]
-    }];
-
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-var __extends$31 = (undefined && undefined.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var DomEventsPlugin = (function (_super) {
-    __extends$31(DomEventsPlugin, _super);
-    function DomEventsPlugin() {
-        _super.apply(this, arguments);
-    }
-    /**
-     * @param {?} eventName
-     * @return {?}
-     */
-    DomEventsPlugin.prototype.supports = function (eventName) { return true; };
-    /**
-     * @param {?} element
-     * @param {?} eventName
-     * @param {?} handler
-     * @return {?}
-     */
-    DomEventsPlugin.prototype.addEventListener = function (element, eventName, handler) {
-        element.addEventListener(eventName, /** @type {?} */ (handler), false);
-        return function () { return element.removeEventListener(eventName, /** @type {?} */ (handler), false); };
-    };
-    DomEventsPlugin.decorators = [
-        { type: Injectable },
-    ];
-    /** @nocollapse */
-    DomEventsPlugin.ctorParameters = function () { return []; };
-    return DomEventsPlugin;
-}(EventManagerPlugin));
-
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-var __extends$32 = (undefined && undefined.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var EVENT_NAMES = {
-    // pan
-    'pan': true,
-    'panstart': true,
-    'panmove': true,
-    'panend': true,
-    'pancancel': true,
-    'panleft': true,
-    'panright': true,
-    'panup': true,
-    'pandown': true,
-    // pinch
-    'pinch': true,
-    'pinchstart': true,
-    'pinchmove': true,
-    'pinchend': true,
-    'pinchcancel': true,
-    'pinchin': true,
-    'pinchout': true,
-    // press
-    'press': true,
-    'pressup': true,
-    // rotate
-    'rotate': true,
-    'rotatestart': true,
-    'rotatemove': true,
-    'rotateend': true,
-    'rotatecancel': true,
-    // swipe
-    'swipe': true,
-    'swipeleft': true,
-    'swiperight': true,
-    'swipeup': true,
-    'swipedown': true,
-    // tap
-    'tap': true,
-};
-/**
- * A DI token that you can use to provide{@link HammerGestureConfig} to Angular. Use it to configure
- * Hammer gestures.
- *
- * @experimental
- */
-var HAMMER_GESTURE_CONFIG = new OpaqueToken('HammerGestureConfig');
-/**
- * \@experimental
- */
-var HammerGestureConfig = (function () {
-    function HammerGestureConfig() {
-        this.events = [];
-        this.overrides = {};
-    }
-    /**
-     * @param {?} element
-     * @return {?}
-     */
-    HammerGestureConfig.prototype.buildHammer = function (element) {
-        var /** @type {?} */ mc = new Hammer(element);
-        mc.get('pinch').set({ enable: true });
-        mc.get('rotate').set({ enable: true });
-        for (var eventName in this.overrides) {
-            mc.get(eventName).set(this.overrides[eventName]);
-        }
-        return mc;
-    };
-    HammerGestureConfig.decorators = [
-        { type: Injectable },
-    ];
-    /** @nocollapse */
-    HammerGestureConfig.ctorParameters = function () { return []; };
-    return HammerGestureConfig;
-}());
-var HammerGesturesPlugin = (function (_super) {
-    __extends$32(HammerGesturesPlugin, _super);
-    /**
-     * @param {?} _config
-     */
-    function HammerGesturesPlugin(_config) {
-        _super.call(this);
-        this._config = _config;
-    }
-    /**
-     * @param {?} eventName
-     * @return {?}
-     */
-    HammerGesturesPlugin.prototype.supports = function (eventName) {
-        if (!EVENT_NAMES.hasOwnProperty(eventName.toLowerCase()) && !this.isCustomEvent(eventName)) {
-            return false;
-        }
-        if (!((window)).Hammer) {
-            throw new Error("Hammer.js is not loaded, can not bind " + eventName + " event");
-        }
-        return true;
-    };
-    /**
-     * @param {?} element
-     * @param {?} eventName
-     * @param {?} handler
-     * @return {?}
-     */
-    HammerGesturesPlugin.prototype.addEventListener = function (element, eventName, handler) {
-        var _this = this;
-        var /** @type {?} */ zone = this.manager.getZone();
-        eventName = eventName.toLowerCase();
-        return zone.runOutsideAngular(function () {
-            // Creating the manager bind events, must be done outside of angular
-            var /** @type {?} */ mc = _this._config.buildHammer(element);
-            var /** @type {?} */ callback = function (eventObj) {
-                zone.runGuarded(function () { handler(eventObj); });
-            };
-            mc.on(eventName, callback);
-            return function () { return mc.off(eventName, callback); };
-        });
-    };
-    /**
-     * @param {?} eventName
-     * @return {?}
-     */
-    HammerGesturesPlugin.prototype.isCustomEvent = function (eventName) { return this._config.events.indexOf(eventName) > -1; };
-    HammerGesturesPlugin.decorators = [
-        { type: Injectable },
-    ];
-    /** @nocollapse */
-    HammerGesturesPlugin.ctorParameters = function () { return [
-        { type: HammerGestureConfig, decorators: [{ type: Inject, args: [HAMMER_GESTURE_CONFIG,] },] },
-    ]; };
-    return HammerGesturesPlugin;
-}(EventManagerPlugin));
-
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-var __extends$33 = (undefined && undefined.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var MODIFIER_KEYS = ['alt', 'control', 'meta', 'shift'];
-var MODIFIER_KEY_GETTERS = {
-    'alt': function (event) { return event.altKey; },
-    'control': function (event) { return event.ctrlKey; },
-    'meta': function (event) { return event.metaKey; },
-    'shift': function (event) { return event.shiftKey; }
-};
-/**
- * \@experimental
- */
-var KeyEventsPlugin = (function (_super) {
-    __extends$33(KeyEventsPlugin, _super);
-    function KeyEventsPlugin() {
-        _super.call(this);
-    }
-    /**
-     * @param {?} eventName
-     * @return {?}
-     */
-    KeyEventsPlugin.prototype.supports = function (eventName) { return KeyEventsPlugin.parseEventName(eventName) != null; };
-    /**
-     * @param {?} element
-     * @param {?} eventName
-     * @param {?} handler
-     * @return {?}
-     */
-    KeyEventsPlugin.prototype.addEventListener = function (element, eventName, handler) {
-        var /** @type {?} */ parsedEvent = KeyEventsPlugin.parseEventName(eventName);
-        var /** @type {?} */ outsideHandler = KeyEventsPlugin.eventCallback(parsedEvent['fullKey'], handler, this.manager.getZone());
-        return this.manager.getZone().runOutsideAngular(function () {
-            return getDOM().onAndCancel(element, parsedEvent['domEventName'], outsideHandler);
-        });
-    };
-    /**
-     * @param {?} eventName
-     * @return {?}
-     */
-    KeyEventsPlugin.parseEventName = function (eventName) {
-        var /** @type {?} */ parts = eventName.toLowerCase().split('.');
-        var /** @type {?} */ domEventName = parts.shift();
-        if ((parts.length === 0) || !(domEventName === 'keydown' || domEventName === 'keyup')) {
-            return null;
-        }
-        var /** @type {?} */ key = KeyEventsPlugin._normalizeKey(parts.pop());
-        var /** @type {?} */ fullKey = '';
-        MODIFIER_KEYS.forEach(function (modifierName) {
-            var /** @type {?} */ index = parts.indexOf(modifierName);
-            if (index > -1) {
-                parts.splice(index, 1);
-                fullKey += modifierName + '.';
-            }
-        });
-        fullKey += key;
-        if (parts.length != 0 || key.length === 0) {
-            // returning null instead of throwing to let another plugin process the event
-            return null;
-        }
-        var /** @type {?} */ result = {};
-        result['domEventName'] = domEventName;
-        result['fullKey'] = fullKey;
-        return result;
-    };
-    /**
-     * @param {?} event
-     * @return {?}
-     */
-    KeyEventsPlugin.getEventFullKey = function (event) {
-        var /** @type {?} */ fullKey = '';
-        var /** @type {?} */ key = getDOM().getEventKey(event);
-        key = key.toLowerCase();
-        if (key === ' ') {
-            key = 'space'; // for readability
-        }
-        else if (key === '.') {
-            key = 'dot'; // because '.' is used as a separator in event names
-        }
-        MODIFIER_KEYS.forEach(function (modifierName) {
-            if (modifierName != key) {
-                var /** @type {?} */ modifierGetter = MODIFIER_KEY_GETTERS[modifierName];
-                if (modifierGetter(event)) {
-                    fullKey += modifierName + '.';
-                }
-            }
-        });
-        fullKey += key;
-        return fullKey;
-    };
-    /**
-     * @param {?} fullKey
-     * @param {?} handler
-     * @param {?} zone
-     * @return {?}
-     */
-    KeyEventsPlugin.eventCallback = function (fullKey, handler, zone) {
-        return function (event /** TODO #9100 */) {
-            if (KeyEventsPlugin.getEventFullKey(event) === fullKey) {
-                zone.runGuarded(function () { return handler(event); });
-            }
-        };
-    };
-    /**
-     * \@internal
-     * @param {?} keyName
-     * @return {?}
-     */
-    KeyEventsPlugin._normalizeKey = function (keyName) {
-        // TODO: switch to a Map if the mapping grows too much
-        switch (keyName) {
-            case 'esc':
-                return 'escape';
-            default:
-                return keyName;
-        }
-    };
-    KeyEventsPlugin.decorators = [
-        { type: Injectable },
-    ];
-    /** @nocollapse */
-    KeyEventsPlugin.ctorParameters = function () { return []; };
-    return KeyEventsPlugin;
-}(EventManagerPlugin));
-
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-/**
- * A pattern that recognizes a commonly useful subset of URLs that are safe.
- *
- * This regular expression matches a subset of URLs that will not cause script
- * execution if used in URL context within a HTML document. Specifically, this
- * regular expression matches if (comment from here on and regex copied from
- * Soy's EscapingConventions):
- * (1) Either a protocol in a whitelist (http, https, mailto or ftp).
- * (2) or no protocol.  A protocol must be followed by a colon. The below
- *     allows that by allowing colons only after one of the characters [/?#].
- *     A colon after a hash (#) must be in the fragment.
- *     Otherwise, a colon after a (?) must be in a query.
- *     Otherwise, a colon after a single solidus (/) must be in a path.
- *     Otherwise, a colon after a double solidus (//) must be in the authority
- *     (before port).
- *
- * The pattern disallows &, used in HTML entity declarations before
- * one of the characters in [/?#]. This disallows HTML entities used in the
- * protocol name, which should never happen, e.g. "h&#116;tp" for "http".
- * It also disallows HTML entities in the first path part of a relative path,
- * e.g. "foo&lt;bar/baz".  Our existing escaping functions should not produce
- * that. More importantly, it disallows masking of a colon,
- * e.g. "javascript&#58;...".
- *
- * This regular expression was taken from the Closure sanitization library.
- */
-var SAFE_URL_PATTERN = /^(?:(?:https?|mailto|ftp|tel|file):|[^&:/?#]*(?:[/?#]|$))/gi;
-/** A pattern that matches safe data URLs. Only matches image, video and audio types. */
-var DATA_URL_PATTERN = /^data:(?:image\/(?:bmp|gif|jpeg|jpg|png|tiff|webp)|video\/(?:mpeg|mp4|ogg|webm)|audio\/(?:mp3|oga|ogg|opus));base64,[a-z0-9+\/]+=*$/i;
-/**
- * @param {?} url
- * @return {?}
- */
-function sanitizeUrl(url) {
-    url = String(url);
-    if (url.match(SAFE_URL_PATTERN) || url.match(DATA_URL_PATTERN))
-        return url;
-    if (isDevMode()) {
-        getDOM().log("WARNING: sanitizing unsafe URL value " + url + " (see http://g.co/ng/security#xss)");
-    }
-    return 'unsafe:' + url;
-}
-/**
- * @param {?} srcset
- * @return {?}
- */
-function sanitizeSrcset(srcset) {
-    srcset = String(srcset);
-    return srcset.split(',').map(function (srcset) { return sanitizeUrl(srcset.trim()); }).join(', ');
-}
-
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-/** A <body> element that can be safely used to parse untrusted HTML. Lazily initialized below. */
-var inertElement = null;
-/** Lazily initialized to make sure the DOM adapter gets set before use. */
-var DOM = null;
-/**
- * Returns an HTML element that is guaranteed to not execute code when creating elements in it.
- * @return {?}
- */
-function getInertElement() {
-    if (inertElement)
-        return inertElement;
-    DOM = getDOM();
-    // Prefer using <template> element if supported.
-    var /** @type {?} */ templateEl = DOM.createElement('template');
-    if ('content' in templateEl)
-        return templateEl;
-    var /** @type {?} */ doc = DOM.createHtmlDocument();
-    inertElement = DOM.querySelector(doc, 'body');
-    if (inertElement == null) {
-        // usually there should be only one body element in the document, but IE doesn't have any, so we
-        // need to create one.
-        var /** @type {?} */ html = DOM.createElement('html', doc);
-        inertElement = DOM.createElement('body', doc);
-        DOM.appendChild(html, inertElement);
-        DOM.appendChild(doc, html);
-    }
-    return inertElement;
-}
-/**
- * @param {?} tags
- * @return {?}
- */
-function tagSet(tags) {
-    var /** @type {?} */ res = {};
-    for (var _i = 0, _a = tags.split(','); _i < _a.length; _i++) {
-        var t = _a[_i];
-        res[t] = true;
-    }
-    return res;
-}
-/**
- * @param {...?} sets
- * @return {?}
- */
-function merge() {
-    var sets = [];
-    for (var _i = 0; _i < arguments.length; _i++) {
-        sets[_i - 0] = arguments[_i];
-    }
-    var /** @type {?} */ res = {};
-    for (var _a = 0, sets_1 = sets; _a < sets_1.length; _a++) {
-        var s = sets_1[_a];
-        for (var v in s) {
-            if (s.hasOwnProperty(v))
-                res[v] = true;
-        }
-    }
-    return res;
-}
-// Good source of info about elements and attributes
-// http://dev.w3.org/html5/spec/Overview.html#semantics
-// http://simon.html5.org/html-elements
-// Safe Void Elements - HTML5
-// http://dev.w3.org/html5/spec/Overview.html#void-elements
-var VOID_ELEMENTS = tagSet('area,br,col,hr,img,wbr');
-// Elements that you can, intentionally, leave open (and which close themselves)
-// http://dev.w3.org/html5/spec/Overview.html#optional-tags
-var OPTIONAL_END_TAG_BLOCK_ELEMENTS = tagSet('colgroup,dd,dt,li,p,tbody,td,tfoot,th,thead,tr');
-var OPTIONAL_END_TAG_INLINE_ELEMENTS = tagSet('rp,rt');
-var OPTIONAL_END_TAG_ELEMENTS = merge(OPTIONAL_END_TAG_INLINE_ELEMENTS, OPTIONAL_END_TAG_BLOCK_ELEMENTS);
-// Safe Block Elements - HTML5
-var BLOCK_ELEMENTS = merge(OPTIONAL_END_TAG_BLOCK_ELEMENTS, tagSet('address,article,' +
-    'aside,blockquote,caption,center,del,details,dialog,dir,div,dl,figure,figcaption,footer,h1,h2,h3,h4,h5,' +
-    'h6,header,hgroup,hr,ins,main,map,menu,nav,ol,pre,section,summary,table,ul'));
-// Inline Elements - HTML5
-var INLINE_ELEMENTS = merge(OPTIONAL_END_TAG_INLINE_ELEMENTS, tagSet('a,abbr,acronym,audio,b,' +
-    'bdi,bdo,big,br,cite,code,del,dfn,em,font,i,img,ins,kbd,label,map,mark,picture,q,ruby,rp,rt,s,' +
-    'samp,small,source,span,strike,strong,sub,sup,time,track,tt,u,var,video'));
-var VALID_ELEMENTS = merge(VOID_ELEMENTS, BLOCK_ELEMENTS, INLINE_ELEMENTS, OPTIONAL_END_TAG_ELEMENTS);
-// Attributes that have href and hence need to be sanitized
-var URI_ATTRS = tagSet('background,cite,href,itemtype,longdesc,poster,src,xlink:href');
-// Attributes that have special href set hence need to be sanitized
-var SRCSET_ATTRS = tagSet('srcset');
-var HTML_ATTRS = tagSet('abbr,accesskey,align,alt,autoplay,axis,bgcolor,border,cellpadding,cellspacing,class,clear,color,cols,colspan,' +
-    'compact,controls,coords,datetime,default,dir,download,face,headers,height,hidden,hreflang,hspace,' +
-    'ismap,itemscope,itemprop,kind,label,lang,language,loop,media,muted,nohref,nowrap,open,preload,rel,rev,role,rows,rowspan,rules,' +
-    'scope,scrolling,shape,size,sizes,span,srclang,start,summary,tabindex,target,title,translate,type,usemap,' +
-    'valign,value,vspace,width');
-// NB: This currently conciously doesn't support SVG. SVG sanitization has had several security
-// issues in the past, so it seems safer to leave it out if possible. If support for binding SVG via
-// innerHTML is required, SVG attributes should be added here.
-// NB: Sanitization does not allow <form> elements or other active elements (<button> etc). Those
-// can be sanitized, but they increase security surface area without a legitimate use case, so they
-// are left out here.
-var VALID_ATTRS = merge(URI_ATTRS, SRCSET_ATTRS, HTML_ATTRS);
-/**
- * SanitizingHtmlSerializer serializes a DOM fragment, stripping out any unsafe elements and unsafe
- * attributes.
- */
-var SanitizingHtmlSerializer = (function () {
-    function SanitizingHtmlSerializer() {
-        this.sanitizedSomething = false;
-        this.buf = [];
-    }
-    /**
-     * @param {?} el
-     * @return {?}
-     */
-    SanitizingHtmlSerializer.prototype.sanitizeChildren = function (el) {
-        // This cannot use a TreeWalker, as it has to run on Angular's various DOM adapters.
-        // However this code never accesses properties off of `document` before deleting its contents
-        // again, so it shouldn't be vulnerable to DOM clobbering.
-        var /** @type {?} */ current = el.firstChild;
-        while (current) {
-            if (DOM.isElementNode(current)) {
-                this.startElement(/** @type {?} */ (current));
-            }
-            else if (DOM.isTextNode(current)) {
-                this.chars(DOM.nodeValue(current));
-            }
-            else {
-                // Strip non-element, non-text nodes.
-                this.sanitizedSomething = true;
-            }
-            if (DOM.firstChild(current)) {
-                current = DOM.firstChild(current);
-                continue;
-            }
-            while (current) {
-                // Leaving the element. Walk up and to the right, closing tags as we go.
-                if (DOM.isElementNode(current)) {
-                    this.endElement(/** @type {?} */ (current));
-                }
-                if (DOM.nextSibling(current)) {
-                    current = DOM.nextSibling(current);
-                    break;
-                }
-                current = DOM.parentElement(current);
-            }
-        }
-        return this.buf.join('');
-    };
-    /**
-     * @param {?} element
-     * @return {?}
-     */
-    SanitizingHtmlSerializer.prototype.startElement = function (element) {
-        var _this = this;
-        var /** @type {?} */ tagName = DOM.nodeName(element).toLowerCase();
-        if (!VALID_ELEMENTS.hasOwnProperty(tagName)) {
-            this.sanitizedSomething = true;
-            return;
-        }
-        this.buf.push('<');
-        this.buf.push(tagName);
-        DOM.attributeMap(element).forEach(function (value, attrName) {
-            var /** @type {?} */ lower = attrName.toLowerCase();
-            if (!VALID_ATTRS.hasOwnProperty(lower)) {
-                _this.sanitizedSomething = true;
-                return;
-            }
-            // TODO(martinprobst): Special case image URIs for data:image/...
-            if (URI_ATTRS[lower])
-                value = sanitizeUrl(value);
-            if (SRCSET_ATTRS[lower])
-                value = sanitizeSrcset(value);
-            _this.buf.push(' ');
-            _this.buf.push(attrName);
-            _this.buf.push('="');
-            _this.buf.push(encodeEntities(value));
-            _this.buf.push('"');
-        });
-        this.buf.push('>');
-    };
-    /**
-     * @param {?} current
-     * @return {?}
-     */
-    SanitizingHtmlSerializer.prototype.endElement = function (current) {
-        var /** @type {?} */ tagName = DOM.nodeName(current).toLowerCase();
-        if (VALID_ELEMENTS.hasOwnProperty(tagName) && !VOID_ELEMENTS.hasOwnProperty(tagName)) {
-            this.buf.push('</');
-            this.buf.push(tagName);
-            this.buf.push('>');
-        }
-    };
-    /**
-     * @param {?} chars
-     * @return {?}
-     */
-    SanitizingHtmlSerializer.prototype.chars = function (chars /** TODO #9100 */) { this.buf.push(encodeEntities(chars)); };
-    return SanitizingHtmlSerializer;
-}());
-// Regular Expressions for parsing tags and attributes
-var SURROGATE_PAIR_REGEXP = /[\uD800-\uDBFF][\uDC00-\uDFFF]/g;
-// ! to ~ is the ASCII range.
-var NON_ALPHANUMERIC_REGEXP = /([^\#-~ |!])/g;
-/**
- * Escapes all potentially dangerous characters, so that the
- * resulting string can be safely inserted into attribute or
- * element text.
- * @param {?} value
- * @return {?}
- */
-function encodeEntities(value) {
-    return value.replace(/&/g, '&amp;')
-        .replace(SURROGATE_PAIR_REGEXP, function (match) {
-        var /** @type {?} */ hi = match.charCodeAt(0);
-        var /** @type {?} */ low = match.charCodeAt(1);
-        return '&#' + (((hi - 0xD800) * 0x400) + (low - 0xDC00) + 0x10000) + ';';
-    })
-        .replace(NON_ALPHANUMERIC_REGEXP, function (match) { return '&#' + match.charCodeAt(0) + ';'; })
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
-}
-/**
- * When IE9-11 comes across an unknown namespaced attribute e.g. 'xlink:foo' it adds 'xmlns:ns1'
- * attribute to declare ns1 namespace and prefixes the attribute with 'ns1' (e.g. 'ns1:xlink:foo').
- *
- * This is undesirable since we don't want to allow any of these custom attributes. This method
- * strips them all.
- * @param {?} el
- * @return {?}
- */
-function stripCustomNsAttrs(el) {
-    DOM.attributeMap(el).forEach(function (_, attrName) {
-        if (attrName === 'xmlns:ns1' || attrName.indexOf('ns1:') === 0) {
-            DOM.removeAttribute(el, attrName);
-        }
-    });
-    for (var _i = 0, _a = DOM.childNodesAsList(el); _i < _a.length; _i++) {
-        var n = _a[_i];
-        if (DOM.isElementNode(n))
-            stripCustomNsAttrs(/** @type {?} */ (n));
-    }
-}
-/**
- * Sanitizes the given unsafe, untrusted HTML fragment, and returns HTML text that is safe to add to
- * the DOM in a browser environment.
- * @param {?} unsafeHtmlInput
- * @return {?}
- */
-function sanitizeHtml(unsafeHtmlInput) {
-    try {
-        var /** @type {?} */ containerEl = getInertElement();
-        // Make sure unsafeHtml is actually a string (TypeScript types are not enforced at runtime).
-        var /** @type {?} */ unsafeHtml = unsafeHtmlInput ? String(unsafeHtmlInput) : '';
-        // mXSS protection. Repeatedly parse the document to make sure it stabilizes, so that a browser
-        // trying to auto-correct incorrect HTML cannot cause formerly inert HTML to become dangerous.
-        var /** @type {?} */ mXSSAttempts = 5;
-        var /** @type {?} */ parsedHtml = unsafeHtml;
-        do {
-            if (mXSSAttempts === 0) {
-                throw new Error('Failed to sanitize html because the input is unstable');
-            }
-            mXSSAttempts--;
-            unsafeHtml = parsedHtml;
-            DOM.setInnerHTML(containerEl, unsafeHtml);
-            if (((DOM.defaultDoc())).documentMode) {
-                // strip custom-namespaced attributes on IE<=11
-                stripCustomNsAttrs(containerEl);
-            }
-            parsedHtml = DOM.getInnerHTML(containerEl);
-        } while (unsafeHtml !== parsedHtml);
-        var /** @type {?} */ sanitizer = new SanitizingHtmlSerializer();
-        var /** @type {?} */ safeHtml = sanitizer.sanitizeChildren(DOM.getTemplateContent(containerEl) || containerEl);
-        // Clear out the body element.
-        var /** @type {?} */ parent_1 = DOM.getTemplateContent(containerEl) || containerEl;
-        for (var _i = 0, _a = DOM.childNodesAsList(parent_1); _i < _a.length; _i++) {
-            var child = _a[_i];
-            DOM.removeChild(parent_1, child);
-        }
-        if (isDevMode() && sanitizer.sanitizedSomething) {
-            DOM.log('WARNING: sanitizing HTML stripped some content (see http://g.co/ng/security#xss).');
-        }
-        return safeHtml;
-    }
-    catch (e) {
-        // In case anything goes wrong, clear out inertElement to reset the entire DOM structure.
-        inertElement = null;
-        throw e;
-    }
-}
-
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-/**
- * Regular expression for safe style values.
- *
- * Quotes (" and ') are allowed, but a check must be done elsewhere to ensure they're balanced.
- *
- * ',' allows multiple values to be assigned to the same property (e.g. background-attachment or
- * font-family) and hence could allow multiple values to get injected, but that should pose no risk
- * of XSS.
- *
- * The function expression checks only for XSS safety, not for CSS validity.
- *
- * This regular expression was taken from the Closure sanitization library, and augmented for
- * transformation values.
- */
-var VALUES = '[-,."\'%_!# a-zA-Z0-9]+';
-var TRANSFORMATION_FNS = '(?:matrix|translate|scale|rotate|skew|perspective)(?:X|Y|3d)?';
-var COLOR_FNS = '(?:rgb|hsl)a?';
-var GRADIENTS = '(?:repeating-)?(?:linear|radial)-gradient';
-var CSS3_FNS = '(?:calc|attr)';
-var FN_ARGS = '\\([-0-9.%, #a-zA-Z]+\\)';
-var SAFE_STYLE_VALUE = new RegExp(("^(" + VALUES + "|") +
-    ("(?:" + TRANSFORMATION_FNS + "|" + COLOR_FNS + "|" + GRADIENTS + "|" + CSS3_FNS + ")") +
-    (FN_ARGS + ")$"), 'g');
-/**
- * Matches a `url(...)` value with an arbitrary argument as long as it does
- * not contain parentheses.
- *
- * The URL value still needs to be sanitized separately.
- *
- * `url(...)` values are a very common use case, e.g. for `background-image`. With carefully crafted
- * CSS style rules, it is possible to construct an information leak with `url` values in CSS, e.g.
- * by observing whether scroll bars are displayed, or character ranges used by a font face
- * definition.
- *
- * Angular only allows binding CSS values (as opposed to entire CSS rules), so it is unlikely that
- * binding a URL value without further cooperation from the page will cause an information leak, and
- * if so, it is just a leak, not a full blown XSS vulnerability.
- *
- * Given the common use case, low likelihood of attack vector, and low impact of an attack, this
- * code is permissive and allows URLs that sanitize otherwise.
- */
-var URL_RE = /^url\(([^)]+)\)$/;
-/**
- * Checks that quotes (" and ') are properly balanced inside a string. Assumes
- * that neither escape (\) nor any other character that could result in
- * breaking out of a string parsing context are allowed;
- * see http://www.w3.org/TR/css3-syntax/#string-token-diagram.
- *
- * This code was taken from the Closure sanitization library.
- * @param {?} value
- * @return {?}
- */
-function hasBalancedQuotes(value) {
-    var /** @type {?} */ outsideSingle = true;
-    var /** @type {?} */ outsideDouble = true;
-    for (var /** @type {?} */ i = 0; i < value.length; i++) {
-        var /** @type {?} */ c = value.charAt(i);
-        if (c === '\'' && outsideDouble) {
-            outsideSingle = !outsideSingle;
-        }
-        else if (c === '"' && outsideSingle) {
-            outsideDouble = !outsideDouble;
-        }
-    }
-    return outsideSingle && outsideDouble;
-}
-/**
- * Sanitizes the given untrusted CSS style property value (i.e. not an entire object, just a single
- * value) and returns a value that is safe to use in a browser environment.
- * @param {?} value
- * @return {?}
- */
-function sanitizeStyle(value) {
-    value = String(value).trim(); // Make sure it's actually a string.
-    if (!value)
-        return '';
-    // Single url(...) values are supported, but only for URLs that sanitize cleanly. See above for
-    // reasoning behind this.
-    var /** @type {?} */ urlMatch = value.match(URL_RE);
-    if ((urlMatch && sanitizeUrl(urlMatch[1]) === urlMatch[1]) ||
-        value.match(SAFE_STYLE_VALUE) && hasBalancedQuotes(value)) {
-        return value; // Safe style values.
-    }
-    if (isDevMode()) {
-        getDOM().log("WARNING: sanitizing unsafe style value " + value + " (see http://g.co/ng/security#xss).");
-    }
-    return 'unsafe';
-}
-
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-var __extends$34 = (undefined && undefined.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-/**
- * DomSanitizer helps preventing Cross Site Scripting Security bugs (XSS) by sanitizing
- * values to be safe to use in the different DOM contexts.
- *
- * For example, when binding a URL in an `<a [href]="someValue">` hyperlink, `someValue` will be
- * sanitized so that an attacker cannot inject e.g. a `javascript:` URL that would execute code on
- * the website.
- *
- * In specific situations, it might be necessary to disable sanitization, for example if the
- * application genuinely needs to produce a `javascript:` style link with a dynamic value in it.
- * Users can bypass security by constructing a value with one of the `bypassSecurityTrust...`
- * methods, and then binding to that value from the template.
- *
- * These situations should be very rare, and extraordinary care must be taken to avoid creating a
- * Cross Site Scripting (XSS) security bug!
- *
- * When using `bypassSecurityTrust...`, make sure to call the method as early as possible and as
- * close as possible to the source of the value, to make it easy to verify no security bug is
- * created by its use.
- *
- * It is not required (and not recommended) to bypass security if the value is safe, e.g. a URL that
- * does not start with a suspicious protocol, or an HTML snippet that does not contain dangerous
- * code. The sanitizer leaves safe values intact.
- *
- * \@security Calling any of the `bypassSecurityTrust...` APIs disables Angular's built-in
- * sanitization for the value passed in. Carefully check and audit all values and code paths going
- * into this call. Make sure any user data is appropriately escaped for this security context.
- * For more detail, see the [Security Guide](http://g.co/ng/security).
- *
- * \@stable
- * @abstract
- */
-var DomSanitizer = (function () {
-    function DomSanitizer() {
-    }
-    /**
-     * Sanitizes a value for use in the given SecurityContext.
-     *
-     * If value is trusted for the context, this method will unwrap the contained safe value and use
-     * it directly. Otherwise, value will be sanitized to be safe in the given context, for example
-     * by replacing URLs that have an unsafe protocol part (such as `javascript:`). The implementation
-     * is responsible to make sure that the value can definitely be safely used in the given context.
-     * @abstract
-     * @param {?} context
-     * @param {?} value
-     * @return {?}
-     */
-    DomSanitizer.prototype.sanitize = function (context, value) { };
-    /**
-     * Bypass security and trust the given value to be safe HTML. Only use this when the bound HTML
-     * is unsafe (e.g. contains `<script>` tags) and the code should be executed. The sanitizer will
-     * leave safe HTML intact, so in most situations this method should not be used.
-     *
-     * **WARNING:** calling this method with untrusted user data exposes your application to XSS
-     * security risks!
-     * @abstract
-     * @param {?} value
-     * @return {?}
-     */
-    DomSanitizer.prototype.bypassSecurityTrustHtml = function (value) { };
-    /**
-     * Bypass security and trust the given value to be safe style value (CSS).
-     *
-     * **WARNING:** calling this method with untrusted user data exposes your application to XSS
-     * security risks!
-     * @abstract
-     * @param {?} value
-     * @return {?}
-     */
-    DomSanitizer.prototype.bypassSecurityTrustStyle = function (value) { };
-    /**
-     * Bypass security and trust the given value to be safe JavaScript.
-     *
-     * **WARNING:** calling this method with untrusted user data exposes your application to XSS
-     * security risks!
-     * @abstract
-     * @param {?} value
-     * @return {?}
-     */
-    DomSanitizer.prototype.bypassSecurityTrustScript = function (value) { };
-    /**
-     * Bypass security and trust the given value to be a safe style URL, i.e. a value that can be used
-     * in hyperlinks or `<img src>`.
-     *
-     * **WARNING:** calling this method with untrusted user data exposes your application to XSS
-     * security risks!
-     * @abstract
-     * @param {?} value
-     * @return {?}
-     */
-    DomSanitizer.prototype.bypassSecurityTrustUrl = function (value) { };
-    /**
-     * Bypass security and trust the given value to be a safe resource URL, i.e. a location that may
-     * be used to load executable code from, like `<script src>`, or `<iframe src>`.
-     *
-     * **WARNING:** calling this method with untrusted user data exposes your application to XSS
-     * security risks!
-     * @abstract
-     * @param {?} value
-     * @return {?}
-     */
-    DomSanitizer.prototype.bypassSecurityTrustResourceUrl = function (value) { };
-    return DomSanitizer;
-}());
-var DomSanitizerImpl = (function (_super) {
-    __extends$34(DomSanitizerImpl, _super);
-    function DomSanitizerImpl() {
-        _super.apply(this, arguments);
-    }
-    /**
-     * @param {?} ctx
-     * @param {?} value
-     * @return {?}
-     */
-    DomSanitizerImpl.prototype.sanitize = function (ctx, value) {
-        if (value == null)
-            return null;
-        switch (ctx) {
-            case SecurityContext.NONE:
-                return value;
-            case SecurityContext.HTML:
-                if (value instanceof SafeHtmlImpl)
-                    return value.changingThisBreaksApplicationSecurity;
-                this.checkNotSafeValue(value, 'HTML');
-                return sanitizeHtml(String(value));
-            case SecurityContext.STYLE:
-                if (value instanceof SafeStyleImpl)
-                    return value.changingThisBreaksApplicationSecurity;
-                this.checkNotSafeValue(value, 'Style');
-                return sanitizeStyle(value);
-            case SecurityContext.SCRIPT:
-                if (value instanceof SafeScriptImpl)
-                    return value.changingThisBreaksApplicationSecurity;
-                this.checkNotSafeValue(value, 'Script');
-                throw new Error('unsafe value used in a script context');
-            case SecurityContext.URL:
-                if (value instanceof SafeResourceUrlImpl || value instanceof SafeUrlImpl) {
-                    // Allow resource URLs in URL contexts, they are strictly more trusted.
-                    return value.changingThisBreaksApplicationSecurity;
-                }
-                this.checkNotSafeValue(value, 'URL');
-                return sanitizeUrl(String(value));
-            case SecurityContext.RESOURCE_URL:
-                if (value instanceof SafeResourceUrlImpl) {
-                    return value.changingThisBreaksApplicationSecurity;
-                }
-                this.checkNotSafeValue(value, 'ResourceURL');
-                throw new Error('unsafe value used in a resource URL context (see http://g.co/ng/security#xss)');
-            default:
-                throw new Error("Unexpected SecurityContext " + ctx + " (see http://g.co/ng/security#xss)");
-        }
-    };
-    /**
-     * @param {?} value
-     * @param {?} expectedType
-     * @return {?}
-     */
-    DomSanitizerImpl.prototype.checkNotSafeValue = function (value, expectedType) {
-        if (value instanceof SafeValueImpl) {
-            throw new Error(("Required a safe " + expectedType + ", got a " + value.getTypeName() + " ") +
-                "(see http://g.co/ng/security#xss)");
-        }
-    };
-    /**
-     * @param {?} value
-     * @return {?}
-     */
-    DomSanitizerImpl.prototype.bypassSecurityTrustHtml = function (value) { return new SafeHtmlImpl(value); };
-    /**
-     * @param {?} value
-     * @return {?}
-     */
-    DomSanitizerImpl.prototype.bypassSecurityTrustStyle = function (value) { return new SafeStyleImpl(value); };
-    /**
-     * @param {?} value
-     * @return {?}
-     */
-    DomSanitizerImpl.prototype.bypassSecurityTrustScript = function (value) { return new SafeScriptImpl(value); };
-    /**
-     * @param {?} value
-     * @return {?}
-     */
-    DomSanitizerImpl.prototype.bypassSecurityTrustUrl = function (value) { return new SafeUrlImpl(value); };
-    /**
-     * @param {?} value
-     * @return {?}
-     */
-    DomSanitizerImpl.prototype.bypassSecurityTrustResourceUrl = function (value) {
-        return new SafeResourceUrlImpl(value);
-    };
-    DomSanitizerImpl.decorators = [
-        { type: Injectable },
-    ];
-    /** @nocollapse */
-    DomSanitizerImpl.ctorParameters = function () { return []; };
-    return DomSanitizerImpl;
-}(DomSanitizer));
-/**
- * @abstract
- */
-var SafeValueImpl = (function () {
-    /**
-     * @param {?} changingThisBreaksApplicationSecurity
-     */
-    function SafeValueImpl(changingThisBreaksApplicationSecurity) {
-        this.changingThisBreaksApplicationSecurity = changingThisBreaksApplicationSecurity;
-        // empty
-    }
-    /**
-     * @abstract
-     * @return {?}
-     */
-    SafeValueImpl.prototype.getTypeName = function () { };
-    /**
-     * @return {?}
-     */
-    SafeValueImpl.prototype.toString = function () {
-        return ("SafeValue must use [property]=binding: " + this.changingThisBreaksApplicationSecurity) +
-            " (see http://g.co/ng/security#xss)";
-    };
-    return SafeValueImpl;
-}());
-var SafeHtmlImpl = (function (_super) {
-    __extends$34(SafeHtmlImpl, _super);
-    function SafeHtmlImpl() {
-        _super.apply(this, arguments);
-    }
-    /**
-     * @return {?}
-     */
-    SafeHtmlImpl.prototype.getTypeName = function () { return 'HTML'; };
-    return SafeHtmlImpl;
-}(SafeValueImpl));
-var SafeStyleImpl = (function (_super) {
-    __extends$34(SafeStyleImpl, _super);
-    function SafeStyleImpl() {
-        _super.apply(this, arguments);
-    }
-    /**
-     * @return {?}
-     */
-    SafeStyleImpl.prototype.getTypeName = function () { return 'Style'; };
-    return SafeStyleImpl;
-}(SafeValueImpl));
-var SafeScriptImpl = (function (_super) {
-    __extends$34(SafeScriptImpl, _super);
-    function SafeScriptImpl() {
-        _super.apply(this, arguments);
-    }
-    /**
-     * @return {?}
-     */
-    SafeScriptImpl.prototype.getTypeName = function () { return 'Script'; };
-    return SafeScriptImpl;
-}(SafeValueImpl));
-var SafeUrlImpl = (function (_super) {
-    __extends$34(SafeUrlImpl, _super);
-    function SafeUrlImpl() {
-        _super.apply(this, arguments);
-    }
-    /**
-     * @return {?}
-     */
-    SafeUrlImpl.prototype.getTypeName = function () { return 'URL'; };
-    return SafeUrlImpl;
-}(SafeValueImpl));
-var SafeResourceUrlImpl = (function (_super) {
-    __extends$34(SafeResourceUrlImpl, _super);
-    function SafeResourceUrlImpl() {
-        _super.apply(this, arguments);
-    }
-    /**
-     * @return {?}
-     */
-    SafeResourceUrlImpl.prototype.getTypeName = function () { return 'ResourceURL'; };
-    return SafeResourceUrlImpl;
-}(SafeValueImpl));
-
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-var INTERNAL_BROWSER_PLATFORM_PROVIDERS = [
-    { provide: PLATFORM_INITIALIZER, useValue: initDomAdapter, multi: true },
-    { provide: PlatformLocation, useClass: BrowserPlatformLocation }
-];
-/**
- * @security Replacing built-in sanitization providers exposes the application to XSS risks.
- * Attacker-controlled data introduced by an unsanitized provider could expose your
- * application to XSS risks. For more detail, see the [Security Guide](http://g.co/ng/security).
- * @experimental
- */
-var BROWSER_SANITIZATION_PROVIDERS = [
-    { provide: Sanitizer, useExisting: DomSanitizer },
-    { provide: DomSanitizer, useClass: DomSanitizerImpl },
-];
-/**
- * @stable
- */
-var platformBrowser = createPlatformFactory(platformCore, 'browser', INTERNAL_BROWSER_PLATFORM_PROVIDERS);
-/**
- * @return {?}
- */
-function initDomAdapter() {
-    BrowserDomAdapter.makeCurrent();
-    BrowserGetTestability.init();
-}
-/**
- * @return {?}
- */
-function errorHandler() {
-    return new ErrorHandler();
-}
-/**
- * @return {?}
- */
-function _document() {
-    return getDOM().defaultDoc();
-}
-/**
- * @return {?}
- */
-function _resolveDefaultAnimationDriver() {
-    if (getDOM().supportsWebAnimation()) {
-        return new WebAnimationsDriver();
-    }
-    return AnimationDriver.NOOP;
-}
-/**
- * The ng module for the browser.
- *
- * \@stable
- */
-var BrowserModule = (function () {
-    /**
-     * @param {?} parentModule
-     */
-    function BrowserModule(parentModule) {
-        if (parentModule) {
-            throw new Error("BrowserModule has already been loaded. If you need access to common directives such as NgIf and NgFor from a lazy loaded module, import CommonModule instead.");
-        }
-    }
-    BrowserModule.decorators = [
-        { type: NgModule, args: [{
-                    providers: [
-                        BROWSER_SANITIZATION_PROVIDERS, { provide: ErrorHandler, useFactory: errorHandler, deps: [] },
-                        { provide: DOCUMENT, useFactory: _document, deps: [] },
-                        { provide: EVENT_MANAGER_PLUGINS, useClass: DomEventsPlugin, multi: true },
-                        { provide: EVENT_MANAGER_PLUGINS, useClass: KeyEventsPlugin, multi: true },
-                        { provide: EVENT_MANAGER_PLUGINS, useClass: HammerGesturesPlugin, multi: true },
-                        { provide: HAMMER_GESTURE_CONFIG, useClass: HammerGestureConfig },
-                        { provide: DomRootRenderer, useClass: DomRootRenderer_ },
-                        { provide: RootRenderer, useExisting: DomRootRenderer },
-                        { provide: SharedStylesHost, useExisting: DomSharedStylesHost },
-                        { provide: AnimationDriver, useFactory: _resolveDefaultAnimationDriver }, DomSharedStylesHost,
-                        Testability, EventManager, ELEMENT_PROBE_PROVIDERS, Title
-                    ],
-                    exports: [CommonModule, ApplicationModule]
-                },] },
-    ];
-    /** @nocollapse */
-    BrowserModule.ctorParameters = function () { return [
-        { type: BrowserModule, decorators: [{ type: Optional }, { type: SkipSelf },] },
-    ]; };
-    return BrowserModule;
-}());
-
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-/**
- * JS version of browser APIs. This library can only run in the browser.
- */
-
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-
-/**
- * Entry point for all Angular debug tools. This object corresponds to the `ng`
- * global variable accessible in the dev console.
- */
-
-/**
- * Entry point for all Angular profiling-related debug tools. This object
- * corresponds to the `ng.profiler` in the dev console.
- */
-
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-/**
- * Enabled Angular 2 debug tools that are accessible via your browser's
- * developer console.
- *
- * Usage:
- *
- * 1. Open developer console (e.g. in Chrome Ctrl + Shift + j)
- * 1. Type `ng.` (usually the console will show auto-complete suggestion)
- * 1. Try the change detection profiler `ng.profiler.timeChangeDetection()`
- *    then hit Enter.
- *
- * \@experimental All debugging apis are currently experimental.
- * @param {?} ref
- * @return {?}
- */
-
-/**
- * Disables Angular 2 tools.
- *
- * \@experimental All debugging apis are currently experimental.
- * @return {?}
- */
-
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-/**
- * Predicates for use with {\@link DebugElement}'s query functions.
- *
- * \@experimental All debugging apis are currently experimental.
- */
-
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-/**
- * @stable
- */
-var VERSION$2 = new Version('2.4.10');
-
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-/**
- * @module
- * @description
- * Entry point for all public APIs of the platform-browser package.
- */
-
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
 /**
  * Base class for control directives.
  *
@@ -22750,7 +17980,7 @@ var AbstractControlDirective = (function () {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-var __extends$36 = (undefined && undefined.__extends) || function (d, b) {
+var __extends$27 = (undefined && undefined.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -22763,7 +17993,7 @@ var __extends$36 = (undefined && undefined.__extends) || function (d, b) {
  * \@stable
  */
 var ControlContainer = (function (_super) {
-    __extends$36(ControlContainer, _super);
+    __extends$27(ControlContainer, _super);
     function ControlContainer() {
         _super.apply(this, arguments);
     }
@@ -22795,18 +18025,18 @@ var ControlContainer = (function (_super) {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-var globalScope$3;
+var globalScope$2;
 if (typeof window === 'undefined') {
     if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope) {
         // TODO: Replace any with WorkerGlobalScope from lib.webworker.d.ts #3492
-        globalScope$3 = (self);
+        globalScope$2 = (self);
     }
     else {
-        globalScope$3 = (global);
+        globalScope$2 = (global);
     }
 }
 else {
-    globalScope$3 = (window);
+    globalScope$2 = (window);
 }
 /**
  * @param {?} fn
@@ -22815,7 +18045,7 @@ else {
 
 // Need to declare a new variable for global here since TypeScript
 // exports the original value of the symbol.
-var _global$3 = globalScope$3;
+var _global$2 = globalScope$2;
 /**
  * @param {?} type
  * @return {?}
@@ -22824,21 +18054,21 @@ var _global$3 = globalScope$3;
 // TODO: remove calls to assert in production environment
 // Note: Can't just export this and import in in other files
 // as `assert` is a reserved keyword in Dart
-_global$3.assert = function assert(condition) {
+_global$2.assert = function assert(condition) {
     // TODO: to be fixed properly via #2830, noop for now
 };
 /**
  * @param {?} obj
  * @return {?}
  */
-function isPresent$3(obj) {
+function isPresent$2(obj) {
     return obj != null;
 }
 /**
  * @param {?} obj
  * @return {?}
  */
-function isBlank$4(obj) {
+function isBlank$3(obj) {
     return obj == null;
 }
 /**
@@ -22857,14 +18087,14 @@ function isBlank$4(obj) {
  * @param {?} b
  * @return {?}
  */
-function looseIdentical$3(a, b) {
+function looseIdentical$2(a, b) {
     return a === b || typeof a === 'number' && typeof b === 'number' && isNaN(a) && isNaN(b);
 }
 /**
  * @param {?} o
  * @return {?}
  */
-function isJsObject$3(o) {
+function isJsObject$2(o) {
     return o !== null && (typeof o === 'function' || typeof o === 'object');
 }
 /**
@@ -22892,8 +18122,8 @@ function isJsObject$3(o) {
  * @param {?} obj
  * @return {?}
  */
-function isPrimitive$3(obj) {
-    return !isJsObject$3(obj);
+function isPrimitive$2(obj) {
+    return !isJsObject$2(obj);
 }
 /**
  * @param {?} s
@@ -22985,7 +18215,7 @@ var toPromise_1 = {
 /**
  * Wraps Javascript Objects
  */
-var StringMapWrapper$3 = (function () {
+var StringMapWrapper$2 = (function () {
     function StringMapWrapper() {
     }
     /**
@@ -23026,7 +18256,7 @@ var StringMapWrapper$3 = (function () {
     };
     return StringMapWrapper;
 }());
-var ListWrapper$3 = (function () {
+var ListWrapper$2 = (function () {
     function ListWrapper() {
     }
     /**
@@ -23263,7 +18493,7 @@ var Validators = (function () {
     Validators.compose = function (validators) {
         if (!validators)
             return null;
-        var /** @type {?} */ presentValidators = validators.filter(isPresent$3);
+        var /** @type {?} */ presentValidators = validators.filter(isPresent$2);
         if (presentValidators.length == 0)
             return null;
         return function (control) {
@@ -23277,7 +18507,7 @@ var Validators = (function () {
     Validators.composeAsync = function (validators) {
         if (!validators)
             return null;
-        var /** @type {?} */ presentValidators = validators.filter(isPresent$3);
+        var /** @type {?} */ presentValidators = validators.filter(isPresent$2);
         if (presentValidators.length == 0)
             return null;
         return function (control) {
@@ -23316,7 +18546,7 @@ function _executeAsyncValidators(control, validators) {
  */
 function _mergeErrors(arrayOfErrors) {
     var /** @type {?} */ res = arrayOfErrors.reduce(function (res, errors) {
-        return isPresent$3(errors) ? StringMapWrapper$3.merge(res, errors) : res;
+        return isPresent$2(errors) ? StringMapWrapper$2.merge(res, errors) : res;
     }, {});
     return Object.keys(res).length === 0 ? null : res;
 }
@@ -23603,7 +18833,7 @@ var NumberValueAccessor = (function () {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-var __extends$37 = (undefined && undefined.__extends) || function (d, b) {
+var __extends$28 = (undefined && undefined.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -23624,7 +18854,7 @@ function unimplemented$2() {
  * @abstract
  */
 var NgControl = (function (_super) {
-    __extends$37(NgControl, _super);
+    __extends$28(NgControl, _super);
     function NgControl() {
         _super.apply(this, arguments);
         /** @internal */
@@ -23958,7 +19188,7 @@ var SELECT_VALUE_ACCESSOR = {
 function _buildValueString(id, value) {
     if (id == null)
         return "" + value;
-    if (!isPrimitive$3(value))
+    if (!isPrimitive$2(value))
         value = 'Object';
     return (id + ": " + value).slice(0, 50);
 }
@@ -24071,7 +19301,7 @@ var SelectControlValueAccessor = (function () {
     SelectControlValueAccessor.prototype._getOptionId = function (value) {
         for (var _i = 0, _a = Array.from(this._optionMap.keys()); _i < _a.length; _i++) {
             var id = _a[_i];
-            if (looseIdentical$3(this._optionMap.get(id), value))
+            if (looseIdentical$2(this._optionMap.get(id), value))
                 return id;
         }
         return null;
@@ -24204,7 +19434,7 @@ function _buildValueString$1(id, value) {
         return "" + value;
     if (typeof value === 'string')
         value = "'" + value + "'";
-    if (!isPrimitive$3(value))
+    if (!isPrimitive$2(value))
         value = 'Object';
     return (id + ": " + value).slice(0, 50);
 }
@@ -24313,7 +19543,7 @@ var SelectMultipleControlValueAccessor = (function () {
     SelectMultipleControlValueAccessor.prototype._getOptionId = function (value) {
         for (var _i = 0, _a = Array.from(this._optionMap.keys()); _i < _a.length; _i++) {
             var id = _a[_i];
-            if (looseIdentical$3(this._optionMap.get(id)._value, value))
+            if (looseIdentical$2(this._optionMap.get(id)._value, value))
                 return id;
         }
         return null;
@@ -24523,7 +19753,7 @@ function cleanUpControl(control, dir) {
  * @return {?}
  */
 function setUpFormContainer(control, dir) {
-    if (isBlank$4(control))
+    if (isBlank$3(control))
         _throwError$1(dir, 'Cannot find control with');
     control.validator = Validators.compose([control.validator, dir.validator]);
     control.asyncValidator = Validators.composeAsync([control.asyncValidator, dir.asyncValidator]);
@@ -24558,14 +19788,14 @@ function _throwError$1(dir, message) {
  * @return {?}
  */
 function composeValidators(validators) {
-    return isPresent$3(validators) ? Validators.compose(validators.map(normalizeValidator)) : null;
+    return isPresent$2(validators) ? Validators.compose(validators.map(normalizeValidator)) : null;
 }
 /**
  * @param {?} validators
  * @return {?}
  */
 function composeAsyncValidators(validators) {
-    return isPresent$3(validators) ? Validators.composeAsync(validators.map(normalizeAsyncValidator)) :
+    return isPresent$2(validators) ? Validators.composeAsync(validators.map(normalizeAsyncValidator)) :
         null;
 }
 /**
@@ -24579,7 +19809,7 @@ function isPropertyUpdated(changes, viewModel) {
     var /** @type {?} */ change = changes['model'];
     if (change.isFirstChange())
         return true;
-    return !looseIdentical$3(viewModel, change.currentValue);
+    return !looseIdentical$2(viewModel, change.currentValue);
 }
 var BUILTIN_ACCESSORS = [
     CheckboxControlValueAccessor,
@@ -24639,7 +19869,7 @@ function selectValueAccessor(dir, valueAccessors) {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-var __extends$35 = (undefined && undefined.__extends) || function (d, b) {
+var __extends$26 = (undefined && undefined.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -24650,7 +19880,7 @@ var __extends$35 = (undefined && undefined.__extends) || function (d, b) {
  * \@stable
  */
 var AbstractFormGroupDirective = (function (_super) {
-    __extends$35(AbstractFormGroupDirective, _super);
+    __extends$26(AbstractFormGroupDirective, _super);
     function AbstractFormGroupDirective() {
         _super.apply(this, arguments);
     }
@@ -24727,7 +19957,7 @@ var AbstractFormGroupDirective = (function (_super) {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-var __extends$38 = (undefined && undefined.__extends) || function (d, b) {
+var __extends$29 = (undefined && undefined.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -24813,7 +20043,7 @@ var ngControlStatusHost = {
  * \@stable
  */
 var NgControlStatus = (function (_super) {
-    __extends$38(NgControlStatus, _super);
+    __extends$29(NgControlStatus, _super);
     /**
      * @param {?} cd
      */
@@ -24836,7 +20066,7 @@ var NgControlStatus = (function (_super) {
  * \@stable
  */
 var NgControlStatusGroup = (function (_super) {
-    __extends$38(NgControlStatusGroup, _super);
+    __extends$29(NgControlStatusGroup, _super);
     /**
      * @param {?} cd
      */
@@ -24863,7 +20093,7 @@ var NgControlStatusGroup = (function (_super) {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-var __extends$40 = (undefined && undefined.__extends) || function (d, b) {
+var __extends$31 = (undefined && undefined.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -24916,7 +20146,7 @@ var __extends$40 = (undefined && undefined.__extends) || function (d, b) {
  * \@stable
  */
 var EventEmitter$1 = (function (_super) {
-    __extends$40(EventEmitter, _super);
+    __extends$31(EventEmitter, _super);
     /**
      * Creates an instance of [EventEmitter], which depending on [isAsync],
      * delivers events synchronously or asynchronously.
@@ -24972,7 +20202,7 @@ var EventEmitter$1 = (function (_super) {
     return EventEmitter;
 }(Subject_2));
 
-var __extends$42 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$33 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -24985,7 +20215,7 @@ var __extends$42 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, 
  * @hide true
  */
 var PromiseObservable = (function (_super) {
-    __extends$42(PromiseObservable, _super);
+    __extends$33(PromiseObservable, _super);
     function PromiseObservable(promise, scheduler) {
         _super.call(this);
         this.promise = promise;
@@ -25111,7 +20341,7 @@ var fromPromise = {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-var __extends$41 = (undefined && undefined.__extends) || function (d, b) {
+var __extends$32 = (undefined && undefined.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -25890,7 +21120,7 @@ var AbstractControl = (function () {
  * \@stable
  */
 var FormControl = (function (_super) {
-    __extends$41(FormControl, _super);
+    __extends$32(FormControl, _super);
     /**
      * @param {?=} formState
      * @param {?=} validator
@@ -26103,7 +21333,7 @@ var FormControl = (function (_super) {
  * \@stable
  */
 var FormGroup = (function (_super) {
-    __extends$41(FormGroup, _super);
+    __extends$32(FormGroup, _super);
     /**
      * @param {?} controls
      * @param {?=} validator
@@ -26458,7 +21688,7 @@ var FormGroup = (function (_super) {
  * \@stable
  */
 var FormArray = (function (_super) {
-    __extends$41(FormArray, _super);
+    __extends$32(FormArray, _super);
     /**
      * @param {?} controls
      * @param {?=} validator
@@ -26751,7 +21981,7 @@ var FormArray = (function (_super) {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-var __extends$39 = (undefined && undefined.__extends) || function (d, b) {
+var __extends$30 = (undefined && undefined.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -26793,7 +22023,7 @@ var resolvedPromise = Promise.resolve(null);
  *  \@stable
  */
 var NgForm = (function (_super) {
-    __extends$39(NgForm, _super);
+    __extends$30(NgForm, _super);
     /**
      * @param {?} validators
      * @param {?} asyncValidators
@@ -27032,7 +22262,7 @@ var TemplateDrivenErrors = (function () {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-var __extends$44 = (undefined && undefined.__extends) || function (d, b) {
+var __extends$35 = (undefined && undefined.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -27067,7 +22297,7 @@ var modelGroupProvider = {
  * \@stable
  */
 var NgModelGroup = (function (_super) {
-    __extends$44(NgModelGroup, _super);
+    __extends$35(NgModelGroup, _super);
     /**
      * @param {?} parent
      * @param {?} validators
@@ -27110,7 +22340,7 @@ var NgModelGroup = (function (_super) {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-var __extends$43 = (undefined && undefined.__extends) || function (d, b) {
+var __extends$34 = (undefined && undefined.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -27196,7 +22426,7 @@ var resolvedPromise$1 = Promise.resolve(null);
  *  \@stable
  */
 var NgModel = (function (_super) {
-    __extends$43(NgModel, _super);
+    __extends$34(NgModel, _super);
     /**
      * @param {?} parent
      * @param {?} validators
@@ -27444,7 +22674,7 @@ var ReactiveErrors = (function () {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-var __extends$45 = (undefined && undefined.__extends) || function (d, b) {
+var __extends$36 = (undefined && undefined.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -27496,7 +22726,7 @@ var formControlBinding$1 = {
  *  \@stable
  */
 var FormControlDirective = (function (_super) {
-    __extends$45(FormControlDirective, _super);
+    __extends$36(FormControlDirective, _super);
     /**
      * @param {?} validators
      * @param {?} asyncValidators
@@ -27609,7 +22839,7 @@ var FormControlDirective = (function (_super) {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-var __extends$47 = (undefined && undefined.__extends) || function (d, b) {
+var __extends$38 = (undefined && undefined.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -27654,7 +22884,7 @@ var formDirectiveProvider$1 = {
  *  \@stable
  */
 var FormGroupDirective = (function (_super) {
-    __extends$47(FormGroupDirective, _super);
+    __extends$38(FormGroupDirective, _super);
     /**
      * @param {?} _validators
      * @param {?} _asyncValidators
@@ -27732,7 +22962,7 @@ var FormGroupDirective = (function (_super) {
      * @param {?} dir
      * @return {?}
      */
-    FormGroupDirective.prototype.removeControl = function (dir) { ListWrapper$3.remove(this.directives, dir); };
+    FormGroupDirective.prototype.removeControl = function (dir) { ListWrapper$2.remove(this.directives, dir); };
     /**
      * @param {?} dir
      * @return {?}
@@ -27873,7 +23103,7 @@ var FormGroupDirective = (function (_super) {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-var __extends$48 = (undefined && undefined.__extends) || function (d, b) {
+var __extends$39 = (undefined && undefined.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -27927,7 +23157,7 @@ var formGroupNameProvider = {
  * \@stable
  */
 var FormGroupName = (function (_super) {
-    __extends$48(FormGroupName, _super);
+    __extends$39(FormGroupName, _super);
     /**
      * @param {?} parent
      * @param {?} validators
@@ -28014,7 +23244,7 @@ var formArrayNameProvider = {
  * \@stable
  */
 var FormArrayName = (function (_super) {
-    __extends$48(FormArrayName, _super);
+    __extends$39(FormArrayName, _super);
     /**
      * @param {?} parent
      * @param {?} validators
@@ -28121,7 +23351,7 @@ function _hasInvalidParent(parent) {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-var __extends$46 = (undefined && undefined.__extends) || function (d, b) {
+var __extends$37 = (undefined && undefined.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -28182,7 +23412,7 @@ var controlNameBinding = {
  *  \@stable
  */
 var FormControlName = (function (_super) {
-    __extends$46(FormControlName, _super);
+    __extends$37(FormControlName, _super);
     /**
      * @param {?} parent
      * @param {?} validators
@@ -28320,7 +23550,7 @@ var FormControlName = (function (_super) {
     return FormControlName;
 }(NgControl));
 
-var __extends$49 = (undefined && undefined.__extends) || function (d, b) {
+var __extends$40 = (undefined && undefined.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -28406,7 +23636,7 @@ var RequiredValidator = (function () {
  * \@experimental
  */
 var CheckboxRequiredValidator = (function (_super) {
-    __extends$49(CheckboxRequiredValidator, _super);
+    __extends$40(CheckboxRequiredValidator, _super);
     function CheckboxRequiredValidator() {
         _super.apply(this, arguments);
     }
@@ -28660,8 +23890,8 @@ var FormBuilder = (function () {
     FormBuilder.prototype.group = function (controlsConfig, extra) {
         if (extra === void 0) { extra = null; }
         var /** @type {?} */ controls = this._reduceControls(controlsConfig);
-        var /** @type {?} */ validator = isPresent$3(extra) ? extra['validator'] : null;
-        var /** @type {?} */ asyncValidator = isPresent$3(extra) ? extra['asyncValidator'] : null;
+        var /** @type {?} */ validator = isPresent$2(extra) ? extra['validator'] : null;
+        var /** @type {?} */ asyncValidator = isPresent$2(extra) ? extra['asyncValidator'] : null;
         return new FormGroup(controls, validator, asyncValidator);
     };
     /**
@@ -28747,7 +23977,7 @@ var FormBuilder = (function () {
 /**
  * @stable
  */
-var VERSION$3 = new Version('2.4.10');
+var VERSION$2 = new Version('2.4.10');
 
 /**
  * @license
@@ -28995,11 +24225,11 @@ var CollapseModule = (function () {
 /**
  * JS version of browser APIs. This library can only run in the browser.
  */
-var win$1 = typeof window !== 'undefined' && window || {};
-var document$2 = win$1.document;
+var win = typeof window !== 'undefined' && window || {};
+var document$1 = win.document;
 
 function isBs3() {
-    return win$1.__theme !== 'bs4';
+    return win.__theme !== 'bs4';
 }
 
 /**
@@ -29703,7 +24933,7 @@ var Utils = (function () {
         // FF meanwhile throws on frame elements through "defaultView.getComputedStyle"
         var view = elem.ownerDocument.defaultView;
         if (!view || !view.opener) {
-            view = win$1;
+            view = win;
         }
         return view.getComputedStyle(elem);
     };
@@ -30311,7 +25541,7 @@ function compareArrays(array1, array2, dontConvert) {
     return diffs + lengthDiff;
 }
 
-function warn$4(msg) {
+function warn$3(msg) {
     if (hooks.suppressDeprecationWarnings === false &&
             (typeof console !==  'undefined') && console.warn) {
         console.warn('Deprecation warning: ' + msg);
@@ -30341,7 +25571,7 @@ function deprecate(msg, fn) {
                 }
                 args.push(arg);
             }
-            warn$4(msg + '\nArguments: ' + Array.prototype.slice.call(args).join('') + '\n' + (new Error()).stack);
+            warn$3(msg + '\nArguments: ' + Array.prototype.slice.call(args).join('') + '\n' + (new Error()).stack);
             firstTime = false;
         }
         return fn.apply(this, arguments);
@@ -30355,7 +25585,7 @@ function deprecateSimple(name, msg) {
         hooks.deprecationHandler(name, msg);
     }
     if (!deprecations[name]) {
-        warn$4(msg);
+        warn$3(msg);
         deprecations[name] = true;
     }
 }
@@ -35690,7 +30920,7 @@ var BsDropdownConfig = (function () {
     return BsDropdownConfig;
 }());
 
-var __extends$50 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$41 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -35756,7 +30986,7 @@ var FilterOperator = (function () {
  * @extends {Ignored}
  */
 var FilterSubscriber = (function (_super) {
-    __extends$50(FilterSubscriber, _super);
+    __extends$41(FilterSubscriber, _super);
     function FilterSubscriber(destination, predicate, thisArg) {
         _super.call(this, destination);
         this.predicate = predicate;
@@ -36199,8 +31429,8 @@ var ModalDirective = (function () {
         this._isShown = true;
         this.checkScrollbar();
         this.setScrollbar();
-        if (document$2 && document$2.body) {
-            this._renderer.setElementClass(document$2.body, ClassName.OPEN, true);
+        if (document$1 && document$1.body) {
+            this._renderer.setElementClass(document$1.body, ClassName.OPEN, true);
         }
         this.showBackdrop(function () {
             _this.showElement();
@@ -36246,8 +31476,8 @@ var ModalDirective = (function () {
         if (!this._element.nativeElement.parentNode ||
             (this._element.nativeElement.parentNode.nodeType !== Node.ELEMENT_NODE)) {
             // don't move modals dom position
-            if (document$2 && document$2.body) {
-                document$2.body.appendChild(this._element.nativeElement);
+            if (document$1 && document$1.body) {
+                document$1.body.appendChild(this._element.nativeElement);
             }
         }
         this._renderer.setElementAttribute(this._element.nativeElement, 'aria-hidden', 'false');
@@ -36280,8 +31510,8 @@ var ModalDirective = (function () {
         this._renderer.setElementAttribute(this._element.nativeElement, 'aria-hidden', 'true');
         this._renderer.setElementStyle(this._element.nativeElement, 'display', 'none');
         this.showBackdrop(function () {
-            if (document$2 && document$2.body) {
-                _this._renderer.setElementClass(document$2.body, ClassName.OPEN, false);
+            if (document$1 && document$1.body) {
+                _this._renderer.setElementClass(document$1.body, ClassName.OPEN, false);
             }
             _this.resetAdjustments();
             _this.resetScrollbar();
@@ -36366,32 +31596,32 @@ var ModalDirective = (function () {
     /** Scroll bar tricks */
     /** @internal */
     ModalDirective.prototype.checkScrollbar = function () {
-        this.isBodyOverflowing = document$2.body.clientWidth < win$1.innerWidth;
+        this.isBodyOverflowing = document$1.body.clientWidth < win.innerWidth;
         this.scrollbarWidth = this.getScrollbarWidth();
     };
     ModalDirective.prototype.setScrollbar = function () {
-        if (!document$2) {
+        if (!document$1) {
             return;
         }
-        var fixedEl = document$2.querySelector(Selector.FIXED_CONTENT);
+        var fixedEl = document$1.querySelector(Selector.FIXED_CONTENT);
         if (!fixedEl) {
             return;
         }
         var bodyPadding = parseInt(Utils.getStyles(fixedEl).paddingRight || 0, 10);
-        this.originalBodyPadding = parseInt(document$2.body.style.paddingRight || 0, 10);
+        this.originalBodyPadding = parseInt(document$1.body.style.paddingRight || 0, 10);
         if (this.isBodyOverflowing) {
-            document$2.body.style.paddingRight = (bodyPadding + this.scrollbarWidth) + "px";
+            document$1.body.style.paddingRight = (bodyPadding + this.scrollbarWidth) + "px";
         }
     };
     ModalDirective.prototype.resetScrollbar = function () {
-        document$2.body.style.paddingRight = this.originalBodyPadding;
+        document$1.body.style.paddingRight = this.originalBodyPadding;
     };
     // thx d.walsh
     ModalDirective.prototype.getScrollbarWidth = function () {
-        var scrollDiv = this._renderer.createElement(document$2.body, 'div', void 0);
+        var scrollDiv = this._renderer.createElement(document$1.body, 'div', void 0);
         scrollDiv.className = ClassName.SCROLLBAR_MEASURER;
         var scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
-        document$2.body.removeChild(scrollDiv);
+        document$1.body.removeChild(scrollDiv);
         return scrollbarWidth;
     };
     ModalDirective.decorators = [
@@ -39468,7 +34698,7 @@ exports.$$iterator = exports.iterator;
 
 });
 
-var __extends$52 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$43 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -39482,7 +34712,7 @@ var __extends$52 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, 
  * @hide true
  */
 var IteratorObservable = (function (_super) {
-    __extends$52(IteratorObservable, _super);
+    __extends$43(IteratorObservable, _super);
     function IteratorObservable(iterator$$1, scheduler) {
         _super.call(this);
         this.scheduler = scheduler;
@@ -39635,7 +34865,7 @@ var IteratorObservable_1 = {
 	IteratorObservable: IteratorObservable_2
 };
 
-var __extends$54 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$45 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -39647,7 +34877,7 @@ var __extends$54 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, 
  * @hide true
  */
 var ScalarObservable = (function (_super) {
-    __extends$54(ScalarObservable, _super);
+    __extends$45(ScalarObservable, _super);
     function ScalarObservable(value, scheduler) {
         _super.call(this);
         this.value = value;
@@ -39697,7 +34927,7 @@ var ScalarObservable_1 = {
 	ScalarObservable: ScalarObservable_2
 };
 
-var __extends$55 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$46 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -39709,7 +34939,7 @@ var __extends$55 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, 
  * @hide true
  */
 var EmptyObservable = (function (_super) {
-    __extends$55(EmptyObservable, _super);
+    __extends$46(EmptyObservable, _super);
     function EmptyObservable(scheduler) {
         _super.call(this);
         this.scheduler = scheduler;
@@ -39792,7 +35022,7 @@ var isScheduler_1 = {
 	isScheduler: isScheduler_2
 };
 
-var __extends$53 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$44 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -39807,7 +35037,7 @@ var __extends$53 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, 
  * @hide true
  */
 var ArrayObservable = (function (_super) {
-    __extends$53(ArrayObservable, _super);
+    __extends$44(ArrayObservable, _super);
     function ArrayObservable(array, scheduler) {
         _super.call(this);
         this.array = array;
@@ -39918,7 +35148,7 @@ var ArrayObservable_1 = {
 	ArrayObservable: ArrayObservable_2
 };
 
-var __extends$56 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$47 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -39932,7 +35162,7 @@ var __extends$56 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, 
  * @hide true
  */
 var ArrayLikeObservable = (function (_super) {
-    __extends$56(ArrayLikeObservable, _super);
+    __extends$47(ArrayLikeObservable, _super);
     function ArrayLikeObservable(arrayLike, scheduler) {
         _super.call(this);
         this.arrayLike = arrayLike;
@@ -40122,7 +35352,7 @@ var Notification_1 = {
 	Notification: Notification_2
 };
 
-var __extends$57 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$48 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -40198,7 +35428,7 @@ var ObserveOnOperator_1 = ObserveOnOperator;
  * @extends {Ignored}
  */
 var ObserveOnSubscriber = (function (_super) {
-    __extends$57(ObserveOnSubscriber, _super);
+    __extends$48(ObserveOnSubscriber, _super);
     function ObserveOnSubscriber(destination, scheduler, delay) {
         if (delay === void 0) { delay = 0; }
         _super.call(this, destination);
@@ -40242,7 +35472,7 @@ var observeOn_1 = {
 	ObserveOnMessage: ObserveOnMessage_1
 };
 
-var __extends$51 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$42 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -40264,7 +35494,7 @@ var __extends$51 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, 
  * @hide true
  */
 var FromObservable = (function (_super) {
-    __extends$51(FromObservable, _super);
+    __extends$42(FromObservable, _super);
     function FromObservable(ish, scheduler) {
         _super.call(this, null);
         this.ish = ish;
@@ -40377,7 +35607,7 @@ var from$3 = {
 
 Observable_1.Observable.from = from$3.from;
 
-var __extends$60 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$51 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -40398,7 +35628,7 @@ var __extends$60 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, 
  * @class Action<T>
  */
 var Action = (function (_super) {
-    __extends$60(Action, _super);
+    __extends$51(Action, _super);
     function Action(scheduler, work) {
         _super.call(this);
     }
@@ -40425,7 +35655,7 @@ var Action_1 = {
 	Action: Action_2
 };
 
-var __extends$59 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$50 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -40438,7 +35668,7 @@ var __extends$59 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, 
  * @extends {Ignored}
  */
 var AsyncAction = (function (_super) {
-    __extends$59(AsyncAction, _super);
+    __extends$50(AsyncAction, _super);
     function AsyncAction(scheduler, work) {
         _super.call(this, scheduler, work);
         this.scheduler = scheduler;
@@ -40624,14 +35854,14 @@ var Scheduler_1 = {
 	Scheduler: Scheduler_2
 };
 
-var __extends$61 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$52 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 
 var AsyncScheduler = (function (_super) {
-    __extends$61(AsyncScheduler, _super);
+    __extends$52(AsyncScheduler, _super);
     function AsyncScheduler() {
         _super.apply(this, arguments);
         this.actions = [];
@@ -40728,7 +35958,7 @@ var async = {
 	async: async_1
 };
 
-var __extends$58 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$49 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -40802,7 +36032,7 @@ var DebounceTimeOperator = (function () {
  * @extends {Ignored}
  */
 var DebounceTimeSubscriber = (function (_super) {
-    __extends$58(DebounceTimeSubscriber, _super);
+    __extends$49(DebounceTimeSubscriber, _super);
     function DebounceTimeSubscriber(destination, dueTime, scheduler) {
         _super.call(this, destination);
         this.dueTime = dueTime;
@@ -40850,7 +36080,7 @@ var debounceTime_1 = {
 
 Observable_1.Observable.prototype.debounceTime = debounceTime_1.debounceTime;
 
-var __extends$62 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$53 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -40913,7 +36143,7 @@ var MapOperator_1 = MapOperator;
  * @extends {Ignored}
  */
 var MapSubscriber = (function (_super) {
-    __extends$62(MapSubscriber, _super);
+    __extends$53(MapSubscriber, _super);
     function MapSubscriber(destination, project, thisArg) {
         _super.call(this, destination);
         this.project = project;
@@ -40944,7 +36174,7 @@ var map_1 = {
 
 Observable_1.Observable.prototype.map = map_1.map;
 
-var __extends$64 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$55 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -40956,7 +36186,7 @@ var __extends$64 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, 
  * @extends {Ignored}
  */
 var InnerSubscriber = (function (_super) {
-    __extends$64(InnerSubscriber, _super);
+    __extends$55(InnerSubscriber, _super);
     function InnerSubscriber(parent, outerValue, outerIndex) {
         _super.call(this);
         this.parent = parent;
@@ -41058,7 +36288,7 @@ var subscribeToResult_1 = {
 	subscribeToResult: subscribeToResult_2
 };
 
-var __extends$65 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$56 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -41070,7 +36300,7 @@ var __extends$65 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, 
  * @extends {Ignored}
  */
 var OuterSubscriber = (function (_super) {
-    __extends$65(OuterSubscriber, _super);
+    __extends$56(OuterSubscriber, _super);
     function OuterSubscriber() {
         _super.apply(this, arguments);
     }
@@ -41092,7 +36322,7 @@ var OuterSubscriber_1 = {
 	OuterSubscriber: OuterSubscriber_2
 };
 
-var __extends$63 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$54 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -41186,7 +36416,7 @@ var MergeMapOperator_1 = MergeMapOperator;
  * @extends {Ignored}
  */
 var MergeMapSubscriber = (function (_super) {
-    __extends$63(MergeMapSubscriber, _super);
+    __extends$54(MergeMapSubscriber, _super);
     function MergeMapSubscriber(destination, project, resultSelector, concurrent) {
         if (concurrent === void 0) { concurrent = Number.POSITIVE_INFINITY; }
         _super.call(this, destination);
@@ -41272,7 +36502,7 @@ var mergeMap_1 = {
 Observable_1.Observable.prototype.mergeMap = mergeMap_1.mergeMap;
 Observable_1.Observable.prototype.flatMap = mergeMap_1.mergeMap;
 
-var __extends$66 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$57 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -41301,7 +36531,7 @@ var ToArrayOperator = (function () {
  * @extends {Ignored}
  */
 var ToArraySubscriber = (function (_super) {
-    __extends$66(ToArraySubscriber, _super);
+    __extends$57(ToArraySubscriber, _super);
     function ToArraySubscriber(destination) {
         _super.call(this, destination);
         this.array = [];
@@ -41895,7 +37125,7 @@ var BsRootModule = (function () {
     return BsRootModule;
 }());
 
-var __extends$68 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$59 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -41906,7 +37136,7 @@ var __extends$68 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, 
  * @class AsyncSubject<T>
  */
 var AsyncSubject$1 = (function (_super) {
-    __extends$68(AsyncSubject, _super);
+    __extends$59(AsyncSubject, _super);
     function AsyncSubject() {
         _super.apply(this, arguments);
         this.value = null;
@@ -41952,7 +37182,7 @@ var AsyncSubject_1 = {
 	AsyncSubject: AsyncSubject_2
 };
 
-var __extends$67 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$58 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -41967,7 +37197,7 @@ var __extends$67 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, 
  * @hide true
  */
 var BoundCallbackObservable = (function (_super) {
-    __extends$67(BoundCallbackObservable, _super);
+    __extends$58(BoundCallbackObservable, _super);
     function BoundCallbackObservable(callbackFunc, selector, args, context, scheduler) {
         _super.call(this);
         this.callbackFunc = callbackFunc;
@@ -42233,7 +37463,7 @@ var bindCallback$2 = {
 
 Observable_1.Observable.bindCallback = bindCallback$2.bindCallback;
 
-var __extends$69 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$60 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -42248,7 +37478,7 @@ var __extends$69 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, 
  * @hide true
  */
 var BoundNodeCallbackObservable = (function (_super) {
-    __extends$69(BoundNodeCallbackObservable, _super);
+    __extends$60(BoundNodeCallbackObservable, _super);
     function BoundNodeCallbackObservable(callbackFunc, selector, args, context, scheduler) {
         _super.call(this);
         this.callbackFunc = callbackFunc;
@@ -42509,7 +37739,7 @@ var bindNodeCallback$2 = {
 
 Observable_1.Observable.bindNodeCallback = bindNodeCallback$2.bindNodeCallback;
 
-var __extends$70 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$61 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -42597,7 +37827,7 @@ var CombineLatestOperator_1 = CombineLatestOperator;
  * @extends {Ignored}
  */
 var CombineLatestSubscriber = (function (_super) {
-    __extends$70(CombineLatestSubscriber, _super);
+    __extends$61(CombineLatestSubscriber, _super);
     function CombineLatestSubscriber(destination, project) {
         _super.call(this, destination);
         this.project = project;
@@ -42805,7 +38035,7 @@ var combineLatest_2 = {
 
 Observable_1.Observable.combineLatest = combineLatest_2.combineLatest;
 
-var __extends$71 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$62 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -42877,7 +38107,7 @@ var MergeAllOperator_1 = MergeAllOperator;
  * @extends {Ignored}
  */
 var MergeAllSubscriber = (function (_super) {
-    __extends$71(MergeAllSubscriber, _super);
+    __extends$62(MergeAllSubscriber, _super);
     function MergeAllSubscriber(destination, concurrent) {
         _super.call(this, destination);
         this.concurrent = concurrent;
@@ -43106,7 +38336,7 @@ var concat$2 = {
 
 Observable_1.Observable.concat = concat$2.concat;
 
-var __extends$72 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$63 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -43120,7 +38350,7 @@ var __extends$72 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, 
  * @hide true
  */
 var DeferObservable = (function (_super) {
-    __extends$72(DeferObservable, _super);
+    __extends$63(DeferObservable, _super);
     function DeferObservable(observableFactory) {
         _super.call(this);
         this.observableFactory = observableFactory;
@@ -43181,7 +38411,7 @@ var DeferObservable = (function (_super) {
 }(Observable_1.Observable));
 var DeferObservable_2 = DeferObservable;
 var DeferSubscriber = (function (_super) {
-    __extends$72(DeferSubscriber, _super);
+    __extends$63(DeferSubscriber, _super);
     function DeferSubscriber(destination, factory) {
         _super.call(this, destination);
         this.factory = factory;
@@ -43227,7 +38457,7 @@ var empty$3 = {
 
 Observable_1.Observable.empty = empty$3.empty;
 
-var __extends$73 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$64 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -43243,7 +38473,7 @@ var __extends$73 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, 
  * @hide true
  */
 var ForkJoinObservable = (function (_super) {
-    __extends$73(ForkJoinObservable, _super);
+    __extends$64(ForkJoinObservable, _super);
     function ForkJoinObservable(sources, resultSelector) {
         _super.call(this);
         this.sources = sources;
@@ -43291,7 +38521,7 @@ var ForkJoinObservable_2 = ForkJoinObservable;
  * @extends {Ignored}
  */
 var ForkJoinSubscriber = (function (_super) {
-    __extends$73(ForkJoinSubscriber, _super);
+    __extends$64(ForkJoinSubscriber, _super);
     function ForkJoinSubscriber(destination, sources, resultSelector) {
         _super.call(this, destination);
         this.sources = sources;
@@ -43352,7 +38582,7 @@ var forkJoin$2 = {
 
 Observable_1.Observable.forkJoin = forkJoin$2.forkJoin;
 
-var __extends$74 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$65 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -43384,7 +38614,7 @@ function isEventTarget(sourceObj) {
  * @hide true
  */
 var FromEventObservable = (function (_super) {
-    __extends$74(FromEventObservable, _super);
+    __extends$65(FromEventObservable, _super);
     function FromEventObservable(sourceObj, eventName, selector, options) {
         _super.call(this);
         this.sourceObj = sourceObj;
@@ -43505,7 +38735,7 @@ var fromEvent$2 = {
 
 Observable_1.Observable.fromEvent = fromEvent$2.fromEvent;
 
-var __extends$75 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$66 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -43519,7 +38749,7 @@ var __extends$75 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, 
  * @hide true
  */
 var FromEventPatternObservable = (function (_super) {
-    __extends$75(FromEventPatternObservable, _super);
+    __extends$66(FromEventPatternObservable, _super);
     function FromEventPatternObservable(addHandler, removeHandler, selector) {
         _super.call(this);
         this.addHandler = addHandler;
@@ -43633,7 +38863,7 @@ Observable_1.Observable.fromEventPattern = fromEventPattern$2.fromEventPattern;
 
 Observable_1.Observable.fromPromise = fromPromise.fromPromise;
 
-var __extends$76 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$67 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -43647,7 +38877,7 @@ var selfSelector = function (value) { return value; };
  * @hide true
  */
 var GenerateObservable = (function (_super) {
-    __extends$76(GenerateObservable, _super);
+    __extends$67(GenerateObservable, _super);
     function GenerateObservable(initialState, condition, iterate, resultSelector, scheduler) {
         _super.call(this);
         this.initialState = initialState;
@@ -43774,7 +39004,7 @@ var GenerateObservable_1 = {
 
 Observable_1.Observable.generate = GenerateObservable_1.GenerateObservable.create;
 
-var __extends$77 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$68 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -43788,7 +39018,7 @@ var __extends$77 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, 
  * @hide true
  */
 var IfObservable = (function (_super) {
-    __extends$77(IfObservable, _super);
+    __extends$68(IfObservable, _super);
     function IfObservable(condition, thenSource, elseSource) {
         _super.call(this);
         this.condition = condition;
@@ -43806,7 +39036,7 @@ var IfObservable = (function (_super) {
 }(Observable_1.Observable));
 var IfObservable_2 = IfObservable;
 var IfSubscriber = (function (_super) {
-    __extends$77(IfSubscriber, _super);
+    __extends$68(IfSubscriber, _super);
     function IfSubscriber(destination, condition, thenSource, elseSource) {
         _super.call(this, destination);
         this.condition = condition;
@@ -43863,7 +39093,7 @@ var isNumeric_1 = {
 	isNumeric: isNumeric_2
 };
 
-var __extends$78 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$69 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -43877,7 +39107,7 @@ var __extends$78 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, 
  * @hide true
  */
 var IntervalObservable = (function (_super) {
-    __extends$78(IntervalObservable, _super);
+    __extends$69(IntervalObservable, _super);
     function IntervalObservable(period, scheduler) {
         if (period === void 0) { period = 0; }
         if (scheduler === void 0) { scheduler = async.async; }
@@ -44011,14 +39241,14 @@ Observable_1.Observable.interval = interval$2.interval;
  * @method merge
  * @owner Observable
  */
-function merge$5() {
+function merge$4() {
     var observables = [];
     for (var _i = 0; _i < arguments.length; _i++) {
         observables[_i - 0] = arguments[_i];
     }
     return this.lift.call(mergeStatic.apply(void 0, [this].concat(observables)));
 }
-var merge_2$1 = merge$5;
+var merge_2$1 = merge$4;
 /* tslint:enable:max-line-length */
 /**
  * Creates an output Observable which concurrently emits all values from every
@@ -44113,13 +39343,13 @@ var merge_1 = {
 var merge_2 = merge_1.mergeStatic;
 
 
-var merge$3 = {
+var merge$2 = {
 	merge: merge_2
 };
 
-Observable_1.Observable.merge = merge$3.merge;
+Observable_1.Observable.merge = merge$2.merge;
 
-var __extends$79 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$70 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -44183,7 +39413,7 @@ var RaceOperator_1 = RaceOperator;
  * @extends {Ignored}
  */
 var RaceSubscriber = (function (_super) {
-    __extends$79(RaceSubscriber, _super);
+    __extends$70(RaceSubscriber, _super);
     function RaceSubscriber(destination) {
         _super.call(this, destination);
         this.hasFirst = false;
@@ -44248,7 +39478,7 @@ var noop_1 = {
 	noop: noop_2
 };
 
-var __extends$80 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$71 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -44261,7 +39491,7 @@ var __extends$80 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, 
  * @hide true
  */
 var NeverObservable = (function (_super) {
-    __extends$80(NeverObservable, _super);
+    __extends$71(NeverObservable, _super);
     function NeverObservable() {
         _super.call(this);
     }
@@ -44329,7 +39559,7 @@ var of$2 = {
 
 Observable_1.Observable.of = of$2.of;
 
-var __extends$81 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$72 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -44435,7 +39665,7 @@ var OnErrorResumeNextOperator = (function () {
     return OnErrorResumeNextOperator;
 }());
 var OnErrorResumeNextSubscriber = (function (_super) {
-    __extends$81(OnErrorResumeNextSubscriber, _super);
+    __extends$72(OnErrorResumeNextSubscriber, _super);
     function OnErrorResumeNextSubscriber(destination, nextSources) {
         _super.call(this, destination);
         this.destination = destination;
@@ -44473,7 +39703,7 @@ var onErrorResumeNext_1 = {
 
 Observable_1.Observable.onErrorResumeNext = onErrorResumeNext_1.onErrorResumeNextStatic;
 
-var __extends$82 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$73 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -44496,7 +39726,7 @@ function dispatch$1(state) {
  * @hide true
  */
 var PairsObservable = (function (_super) {
-    __extends$82(PairsObservable, _super);
+    __extends$73(PairsObservable, _super);
     function PairsObservable(obj, scheduler) {
         _super.call(this);
         this.obj = obj;
@@ -44571,7 +39801,7 @@ var pairs$2 = {
 
 Observable_1.Observable.pairs = pairs$2.pairs;
 
-var __extends$83 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$74 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -44583,7 +39813,7 @@ var __extends$83 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, 
  * @hide true
  */
 var RangeObservable = (function (_super) {
-    __extends$83(RangeObservable, _super);
+    __extends$74(RangeObservable, _super);
     function RangeObservable(start, count, scheduler) {
         _super.call(this);
         this.start = start;
@@ -44680,7 +39910,7 @@ var range$2 = {
 
 Observable_1.Observable.range = range$2.range;
 
-var __extends$84 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$75 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -44694,7 +39924,7 @@ var __extends$84 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, 
  * @hide true
  */
 var UsingObservable = (function (_super) {
-    __extends$84(UsingObservable, _super);
+    __extends$75(UsingObservable, _super);
     function UsingObservable(resourceFactory, observableFactory) {
         _super.call(this);
         this.resourceFactory = resourceFactory;
@@ -44718,7 +39948,7 @@ var UsingObservable = (function (_super) {
 }(Observable_1.Observable));
 var UsingObservable_2 = UsingObservable;
 var UsingSubscriber = (function (_super) {
-    __extends$84(UsingSubscriber, _super);
+    __extends$75(UsingSubscriber, _super);
     function UsingSubscriber(destination, resource, observableFactory) {
         _super.call(this, destination);
         this.resource = resource;
@@ -44754,7 +39984,7 @@ var using$2 = {
 
 Observable_1.Observable.using = using$2.using;
 
-var __extends$85 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$76 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -44766,7 +39996,7 @@ var __extends$85 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, 
  * @hide true
  */
 var ErrorObservable = (function (_super) {
-    __extends$85(ErrorObservable, _super);
+    __extends$76(ErrorObservable, _super);
     function ErrorObservable(error, scheduler) {
         _super.call(this);
         this.error = error;
@@ -44860,7 +40090,7 @@ var isDate_1 = {
 	isDate: isDate_2
 };
 
-var __extends$86 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$77 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -44876,7 +40106,7 @@ var __extends$86 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, 
  * @hide true
  */
 var TimerObservable = (function (_super) {
-    __extends$86(TimerObservable, _super);
+    __extends$77(TimerObservable, _super);
     function TimerObservable(dueTime, period, scheduler) {
         if (dueTime === void 0) { dueTime = 0; }
         _super.call(this);
@@ -44980,7 +40210,7 @@ var timer$2 = {
 
 Observable_1.Observable.timer = timer$2.timer;
 
-var __extends$87 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$78 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -45066,7 +40296,7 @@ var ZipOperator_1 = ZipOperator;
  * @extends {Ignored}
  */
 var ZipSubscriber = (function (_super) {
-    __extends$87(ZipSubscriber, _super);
+    __extends$78(ZipSubscriber, _super);
     function ZipSubscriber(destination, project, values) {
         if (values === void 0) { values = Object.create(null); }
         _super.call(this, destination);
@@ -45210,7 +40440,7 @@ var StaticArrayIterator = (function () {
  * @extends {Ignored}
  */
 var ZipBufferIterator = (function (_super) {
-    __extends$87(ZipBufferIterator, _super);
+    __extends$78(ZipBufferIterator, _super);
     function ZipBufferIterator(destination, parent, observable) {
         _super.call(this, destination);
         this.parent = parent;
@@ -45275,7 +40505,7 @@ var zip$2 = {
 
 Observable_1.Observable.zip = zip$2.zip;
 
-var __extends$88 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$79 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -45360,7 +40590,7 @@ var ajaxGetJSON_1 = ajaxGetJSON;
  * @hide true
  */
 var AjaxObservable = (function (_super) {
-    __extends$88(AjaxObservable, _super);
+    __extends$79(AjaxObservable, _super);
     function AjaxObservable(urlOrRequest) {
         _super.call(this);
         var request = {
@@ -45437,7 +40667,7 @@ var AjaxObservable_2 = AjaxObservable;
  * @extends {Ignored}
  */
 var AjaxSubscriber = (function (_super) {
-    __extends$88(AjaxSubscriber, _super);
+    __extends$79(AjaxSubscriber, _super);
     function AjaxSubscriber(destination, request) {
         _super.call(this, destination);
         this.request = request;
@@ -45664,7 +40894,7 @@ var AjaxResponse_1 = AjaxResponse$1;
  * @class AjaxError
  */
 var AjaxError$1 = (function (_super) {
-    __extends$88(AjaxError, _super);
+    __extends$79(AjaxError, _super);
     function AjaxError(message, xhr, request) {
         _super.call(this, message);
         this.message = message;
@@ -45681,7 +40911,7 @@ var AjaxError_1 = AjaxError$1;
  * @class AjaxTimeoutError
  */
 var AjaxTimeoutError$1 = (function (_super) {
-    __extends$88(AjaxTimeoutError, _super);
+    __extends$79(AjaxTimeoutError, _super);
     function AjaxTimeoutError(xhr, request) {
         _super.call(this, 'ajax timeout', xhr, request);
     }
@@ -45713,7 +40943,7 @@ var ajax$2 = {
 
 Observable_1.Observable.ajax = ajax$2.ajax;
 
-var __extends$91 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$82 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -45725,7 +40955,7 @@ var __extends$91 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, 
  * @extends {Ignored}
  */
 var QueueAction = (function (_super) {
-    __extends$91(QueueAction, _super);
+    __extends$82(QueueAction, _super);
     function QueueAction(scheduler, work) {
         _super.call(this, scheduler, work);
         this.scheduler = scheduler;
@@ -45766,14 +40996,14 @@ var QueueAction_1 = {
 	QueueAction: QueueAction_2
 };
 
-var __extends$92 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$83 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 
 var QueueScheduler = (function (_super) {
-    __extends$92(QueueScheduler, _super);
+    __extends$83(QueueScheduler, _super);
     function QueueScheduler() {
         _super.apply(this, arguments);
     }
@@ -45854,7 +41084,7 @@ var queue = {
 	queue: queue_1
 };
 
-var __extends$90 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$81 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -45869,7 +41099,7 @@ var __extends$90 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, 
  * @class ReplaySubject<T>
  */
 var ReplaySubject$1 = (function (_super) {
-    __extends$90(ReplaySubject, _super);
+    __extends$81(ReplaySubject, _super);
     function ReplaySubject(bufferSize, windowTime, scheduler) {
         if (bufferSize === void 0) { bufferSize = Number.POSITIVE_INFINITY; }
         if (windowTime === void 0) { windowTime = Number.POSITIVE_INFINITY; }
@@ -45991,7 +41221,7 @@ var assign = {
 	assign: assign_1
 };
 
-var __extends$89 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$80 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -46011,7 +41241,7 @@ var __extends$89 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, 
  * @hide true
  */
 var WebSocketSubject = (function (_super) {
-    __extends$89(WebSocketSubject, _super);
+    __extends$80(WebSocketSubject, _super);
     function WebSocketSubject(urlConfigOrSource, destination) {
         if (urlConfigOrSource instanceof Observable_1.Observable) {
             _super.call(this, destination, urlConfigOrSource);
@@ -46254,7 +41484,7 @@ var webSocket$2 = {
 
 Observable_1.Observable.webSocket = webSocket$2.webSocket;
 
-var __extends$93 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$84 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -46312,7 +41542,7 @@ var BufferOperator = (function () {
  * @extends {Ignored}
  */
 var BufferSubscriber = (function (_super) {
-    __extends$93(BufferSubscriber, _super);
+    __extends$84(BufferSubscriber, _super);
     function BufferSubscriber(destination, closingNotifier) {
         _super.call(this, destination);
         this.buffer = [];
@@ -46336,7 +41566,7 @@ var buffer_1 = {
 
 Observable_1.Observable.prototype.buffer = buffer_1.buffer;
 
-var __extends$94 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$85 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -46410,7 +41640,7 @@ var BufferCountOperator = (function () {
  * @extends {Ignored}
  */
 var BufferCountSubscriber = (function (_super) {
-    __extends$94(BufferCountSubscriber, _super);
+    __extends$85(BufferCountSubscriber, _super);
     function BufferCountSubscriber(destination, bufferSize) {
         _super.call(this, destination);
         this.bufferSize = bufferSize;
@@ -46439,7 +41669,7 @@ var BufferCountSubscriber = (function (_super) {
  * @extends {Ignored}
  */
 var BufferSkipCountSubscriber = (function (_super) {
-    __extends$94(BufferSkipCountSubscriber, _super);
+    __extends$85(BufferSkipCountSubscriber, _super);
     function BufferSkipCountSubscriber(destination, bufferSize, startBufferEvery) {
         _super.call(this, destination);
         this.bufferSize = bufferSize;
@@ -46482,7 +41712,7 @@ var bufferCount_1 = {
 
 Observable_1.Observable.prototype.bufferCount = bufferCount_1.bufferCount;
 
-var __extends$95 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$86 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -46576,7 +41806,7 @@ var Context = (function () {
  * @extends {Ignored}
  */
 var BufferTimeSubscriber = (function (_super) {
-    __extends$95(BufferTimeSubscriber, _super);
+    __extends$86(BufferTimeSubscriber, _super);
     function BufferTimeSubscriber(destination, bufferTimeSpan, bufferCreationInterval, maxBufferSize, scheduler) {
         _super.call(this, destination);
         this.bufferTimeSpan = bufferTimeSpan;
@@ -46687,7 +41917,7 @@ var bufferTime_1 = {
 
 Observable_1.Observable.prototype.bufferTime = bufferTime_1.bufferTime;
 
-var __extends$96 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$87 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -46753,7 +41983,7 @@ var BufferToggleOperator = (function () {
  * @extends {Ignored}
  */
 var BufferToggleSubscriber = (function (_super) {
-    __extends$96(BufferToggleSubscriber, _super);
+    __extends$87(BufferToggleSubscriber, _super);
     function BufferToggleSubscriber(destination, openings, closingSelector) {
         _super.call(this, destination);
         this.openings = openings;
@@ -46845,7 +42075,7 @@ var bufferToggle_1 = {
 
 Observable_1.Observable.prototype.bufferToggle = bufferToggle_1.bufferToggle;
 
-var __extends$97 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$88 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -46907,7 +42137,7 @@ var BufferWhenOperator = (function () {
  * @extends {Ignored}
  */
 var BufferWhenSubscriber = (function (_super) {
-    __extends$97(BufferWhenSubscriber, _super);
+    __extends$88(BufferWhenSubscriber, _super);
     function BufferWhenSubscriber(destination, closingSelector) {
         _super.call(this, destination);
         this.closingSelector = closingSelector;
@@ -46973,7 +42203,7 @@ var bufferWhen_1 = {
 
 Observable_1.Observable.prototype.bufferWhen = bufferWhen_1.bufferWhen;
 
-var __extends$98 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$89 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -47060,7 +42290,7 @@ var CatchOperator = (function () {
  * @extends {Ignored}
  */
 var CatchSubscriber = (function (_super) {
-    __extends$98(CatchSubscriber, _super);
+    __extends$89(CatchSubscriber, _super);
     function CatchSubscriber(destination, selector, caught) {
         _super.call(this, destination);
         this.selector = selector;
@@ -47285,7 +42515,7 @@ var concatMap_1 = {
 
 Observable_1.Observable.prototype.concatMap = concatMap_1.concatMap;
 
-var __extends$99 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$90 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -47366,7 +42596,7 @@ var MergeMapToOperator_1 = MergeMapToOperator;
  * @extends {Ignored}
  */
 var MergeMapToSubscriber = (function (_super) {
-    __extends$99(MergeMapToSubscriber, _super);
+    __extends$90(MergeMapToSubscriber, _super);
     function MergeMapToSubscriber(destination, ish, resultSelector, concurrent) {
         if (concurrent === void 0) { concurrent = Number.POSITIVE_INFINITY; }
         _super.call(this, destination);
@@ -47515,7 +42745,7 @@ var concatMapTo_1 = {
 
 Observable_1.Observable.prototype.concatMapTo = concatMapTo_1.concatMapTo;
 
-var __extends$100 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$91 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -47589,7 +42819,7 @@ var CountOperator = (function () {
  * @extends {Ignored}
  */
 var CountSubscriber = (function (_super) {
-    __extends$100(CountSubscriber, _super);
+    __extends$91(CountSubscriber, _super);
     function CountSubscriber(destination, predicate, source) {
         _super.call(this, destination);
         this.predicate = predicate;
@@ -47632,7 +42862,7 @@ var count_1 = {
 
 Observable_1.Observable.prototype.count = count_1.count;
 
-var __extends$101 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$92 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -47696,7 +42926,7 @@ var DeMaterializeOperator = (function () {
  * @extends {Ignored}
  */
 var DeMaterializeSubscriber = (function (_super) {
-    __extends$101(DeMaterializeSubscriber, _super);
+    __extends$92(DeMaterializeSubscriber, _super);
     function DeMaterializeSubscriber(destination) {
         _super.call(this, destination);
     }
@@ -47713,7 +42943,7 @@ var dematerialize_1 = {
 
 Observable_1.Observable.prototype.dematerialize = dematerialize_1.dematerialize;
 
-var __extends$102 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$93 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -47781,7 +43011,7 @@ var DebounceOperator = (function () {
  * @extends {Ignored}
  */
 var DebounceSubscriber = (function (_super) {
-    __extends$102(DebounceSubscriber, _super);
+    __extends$93(DebounceSubscriber, _super);
     function DebounceSubscriber(destination, durationSelector) {
         _super.call(this, destination);
         this.durationSelector = durationSelector;
@@ -47846,7 +43076,7 @@ var debounce_1 = {
 
 Observable_1.Observable.prototype.debounce = debounce_1.debounce;
 
-var __extends$103 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$94 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -47903,7 +43133,7 @@ var DefaultIfEmptyOperator = (function () {
  * @extends {Ignored}
  */
 var DefaultIfEmptySubscriber = (function (_super) {
-    __extends$103(DefaultIfEmptySubscriber, _super);
+    __extends$94(DefaultIfEmptySubscriber, _super);
     function DefaultIfEmptySubscriber(destination, defaultValue) {
         _super.call(this, destination);
         this.defaultValue = defaultValue;
@@ -47929,7 +43159,7 @@ var defaultIfEmpty_1 = {
 
 Observable_1.Observable.prototype.defaultIfEmpty = defaultIfEmpty_1.defaultIfEmpty;
 
-var __extends$104 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$95 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -48000,7 +43230,7 @@ var DelayOperator = (function () {
  * @extends {Ignored}
  */
 var DelaySubscriber = (function (_super) {
-    __extends$104(DelaySubscriber, _super);
+    __extends$95(DelaySubscriber, _super);
     function DelaySubscriber(destination, delay, scheduler) {
         _super.call(this, destination);
         this.delay = delay;
@@ -48070,7 +43300,7 @@ var delay_1 = {
 
 Observable_1.Observable.prototype.delay = delay_1.delay;
 
-var __extends$105 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$96 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -48147,7 +43377,7 @@ var DelayWhenOperator = (function () {
  * @extends {Ignored}
  */
 var DelayWhenSubscriber = (function (_super) {
-    __extends$105(DelayWhenSubscriber, _super);
+    __extends$96(DelayWhenSubscriber, _super);
     function DelayWhenSubscriber(destination, delayDurationSelector) {
         _super.call(this, destination);
         this.delayDurationSelector = delayDurationSelector;
@@ -48217,7 +43447,7 @@ var DelayWhenSubscriber = (function (_super) {
  * @extends {Ignored}
  */
 var SubscriptionDelayObservable = (function (_super) {
-    __extends$105(SubscriptionDelayObservable, _super);
+    __extends$96(SubscriptionDelayObservable, _super);
     function SubscriptionDelayObservable(source, subscriptionDelay) {
         _super.call(this);
         this.source = source;
@@ -48234,7 +43464,7 @@ var SubscriptionDelayObservable = (function (_super) {
  * @extends {Ignored}
  */
 var SubscriptionDelaySubscriber = (function (_super) {
-    __extends$105(SubscriptionDelaySubscriber, _super);
+    __extends$96(SubscriptionDelaySubscriber, _super);
     function SubscriptionDelaySubscriber(parent, source) {
         _super.call(this);
         this.parent = parent;
@@ -48305,7 +43535,7 @@ var _Set = {
 	Set: Set$1
 };
 
-var __extends$106 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$97 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -48378,7 +43608,7 @@ var DistinctOperator = (function () {
  * @extends {Ignored}
  */
 var DistinctSubscriber = (function (_super) {
-    __extends$106(DistinctSubscriber, _super);
+    __extends$97(DistinctSubscriber, _super);
     function DistinctSubscriber(destination, keySelector, flushes) {
         _super.call(this, destination);
         this.keySelector = keySelector;
@@ -48432,7 +43662,7 @@ var distinct_1 = {
 
 Observable_1.Observable.prototype.distinct = distinct_1.distinct;
 
-var __extends$107 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$98 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -48500,7 +43730,7 @@ var DistinctUntilChangedOperator = (function () {
  * @extends {Ignored}
  */
 var DistinctUntilChangedSubscriber = (function (_super) {
-    __extends$107(DistinctUntilChangedSubscriber, _super);
+    __extends$98(DistinctUntilChangedSubscriber, _super);
     function DistinctUntilChangedSubscriber(destination, compare, keySelector) {
         _super.call(this, destination);
         this.keySelector = keySelector;
@@ -48621,7 +43851,7 @@ var distinctUntilKeyChanged_1 = {
 
 Observable_1.Observable.prototype.distinctUntilKeyChanged = distinctUntilKeyChanged_1.distinctUntilKeyChanged;
 
-var __extends$108 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$99 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -48692,7 +43922,7 @@ var DoOperator = (function () {
  * @extends {Ignored}
  */
 var DoSubscriber = (function (_super) {
-    __extends$108(DoSubscriber, _super);
+    __extends$99(DoSubscriber, _super);
     function DoSubscriber(destination, nextOrObserver, error, complete) {
         _super.call(this, destination);
         var safeSubscriber = new Subscriber_1.Subscriber(nextOrObserver, error, complete);
@@ -48741,7 +43971,7 @@ var _do_1 = {
 Observable_1.Observable.prototype.do = _do_1._do;
 Observable_1.Observable.prototype._do = _do_1._do;
 
-var __extends$109 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$100 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -48801,7 +44031,7 @@ var SwitchFirstOperator = (function () {
  * @extends {Ignored}
  */
 var SwitchFirstSubscriber = (function (_super) {
-    __extends$109(SwitchFirstSubscriber, _super);
+    __extends$100(SwitchFirstSubscriber, _super);
     function SwitchFirstSubscriber(destination) {
         _super.call(this, destination);
         this.hasCompleted = false;
@@ -48836,7 +44066,7 @@ var exhaust_1 = {
 
 Observable_1.Observable.prototype.exhaust = exhaust_1.exhaust;
 
-var __extends$110 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$101 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -48909,7 +44139,7 @@ var SwitchFirstMapOperator = (function () {
  * @extends {Ignored}
  */
 var SwitchFirstMapSubscriber = (function (_super) {
-    __extends$110(SwitchFirstMapSubscriber, _super);
+    __extends$101(SwitchFirstMapSubscriber, _super);
     function SwitchFirstMapSubscriber(destination, project, resultSelector) {
         _super.call(this, destination);
         this.project = project;
@@ -48980,7 +44210,7 @@ var exhaustMap_1 = {
 
 Observable_1.Observable.prototype.exhaustMap = exhaustMap_1.exhaustMap;
 
-var __extends$111 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$102 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -49060,7 +44290,7 @@ var ExpandOperator_1 = ExpandOperator;
  * @extends {Ignored}
  */
 var ExpandSubscriber = (function (_super) {
-    __extends$111(ExpandSubscriber, _super);
+    __extends$102(ExpandSubscriber, _super);
     function ExpandSubscriber(destination, project, concurrent, scheduler) {
         _super.call(this, destination);
         this.project = project;
@@ -49139,7 +44369,7 @@ var expand_1 = {
 
 Observable_1.Observable.prototype.expand = expand_1.expand;
 
-var __extends$113 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$104 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -49155,7 +44385,7 @@ var __extends$113 = (commonjsGlobal && commonjsGlobal.__extends) || function (d,
  * @class ArgumentOutOfRangeError
  */
 var ArgumentOutOfRangeError$1 = (function (_super) {
-    __extends$113(ArgumentOutOfRangeError, _super);
+    __extends$104(ArgumentOutOfRangeError, _super);
     function ArgumentOutOfRangeError() {
         var err = _super.call(this, 'argument out of range');
         this.name = err.name = 'ArgumentOutOfRangeError';
@@ -49171,7 +44401,7 @@ var ArgumentOutOfRangeError_1 = {
 	ArgumentOutOfRangeError: ArgumentOutOfRangeError_2
 };
 
-var __extends$112 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$103 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -49243,7 +44473,7 @@ var ElementAtOperator = (function () {
  * @extends {Ignored}
  */
 var ElementAtSubscriber = (function (_super) {
-    __extends$112(ElementAtSubscriber, _super);
+    __extends$103(ElementAtSubscriber, _super);
     function ElementAtSubscriber(destination, index, defaultValue) {
         _super.call(this, destination);
         this.index = index;
@@ -49277,7 +44507,7 @@ var elementAt_1 = {
 
 Observable_1.Observable.prototype.elementAt = elementAt_1.elementAt;
 
-var __extends$114 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$105 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -49311,7 +44541,7 @@ var FinallyOperator = (function () {
  * @extends {Ignored}
  */
 var FinallySubscriber = (function (_super) {
-    __extends$114(FinallySubscriber, _super);
+    __extends$105(FinallySubscriber, _super);
     function FinallySubscriber(destination, callback) {
         _super.call(this, destination);
         this.add(new Subscription_1.Subscription(callback));
@@ -49327,7 +44557,7 @@ var _finally_1 = {
 Observable_1.Observable.prototype.finally = _finally_1._finally;
 Observable_1.Observable.prototype._finally = _finally_1._finally;
 
-var __extends$115 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$106 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -49393,7 +44623,7 @@ var FindValueOperator_1 = FindValueOperator;
  * @extends {Ignored}
  */
 var FindValueSubscriber = (function (_super) {
-    __extends$115(FindValueSubscriber, _super);
+    __extends$106(FindValueSubscriber, _super);
     function FindValueSubscriber(destination, predicate, source, yieldIndex, thisArg) {
         _super.call(this, destination);
         this.predicate = predicate;
@@ -49482,7 +44712,7 @@ var findIndex_1 = {
 
 Observable_1.Observable.prototype.findIndex = findIndex_1.findIndex;
 
-var __extends$117 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$108 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -49498,7 +44728,7 @@ var __extends$117 = (commonjsGlobal && commonjsGlobal.__extends) || function (d,
  * @class EmptyError
  */
 var EmptyError$1 = (function (_super) {
-    __extends$117(EmptyError, _super);
+    __extends$108(EmptyError, _super);
     function EmptyError() {
         var err = _super.call(this, 'no elements in sequence');
         this.name = err.name = 'EmptyError';
@@ -49514,7 +44744,7 @@ var EmptyError_1 = {
 	EmptyError: EmptyError_2
 };
 
-var __extends$116 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$107 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -49592,7 +44822,7 @@ var FirstOperator = (function () {
  * @extends {Ignored}
  */
 var FirstSubscriber = (function (_super) {
-    __extends$116(FirstSubscriber, _super);
+    __extends$107(FirstSubscriber, _super);
     function FirstSubscriber(destination, predicate, resultSelector, defaultValue, source) {
         _super.call(this, destination);
         this.predicate = predicate;
@@ -49765,7 +44995,7 @@ var FastMap_1 = {
 	FastMap: FastMap_2
 };
 
-var __extends$118 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$109 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -49866,7 +45096,7 @@ var GroupByOperator = (function () {
  * @extends {Ignored}
  */
 var GroupBySubscriber = (function (_super) {
-    __extends$118(GroupBySubscriber, _super);
+    __extends$109(GroupBySubscriber, _super);
     function GroupBySubscriber(destination, keySelector, elementSelector, durationSelector, subjectSelector) {
         _super.call(this, destination);
         this.keySelector = keySelector;
@@ -49966,7 +45196,7 @@ var GroupBySubscriber = (function (_super) {
  * @extends {Ignored}
  */
 var GroupDurationSubscriber = (function (_super) {
-    __extends$118(GroupDurationSubscriber, _super);
+    __extends$109(GroupDurationSubscriber, _super);
     function GroupDurationSubscriber(key, group, parent) {
         _super.call(this, group);
         this.key = key;
@@ -49994,7 +45224,7 @@ var GroupDurationSubscriber = (function (_super) {
  * @class GroupedObservable<K, T>
  */
 var GroupedObservable = (function (_super) {
-    __extends$118(GroupedObservable, _super);
+    __extends$109(GroupedObservable, _super);
     function GroupedObservable(key, groupSubject, refCountSubscription) {
         _super.call(this);
         this.key = key;
@@ -50019,7 +45249,7 @@ var GroupedObservable_1 = GroupedObservable;
  * @extends {Ignored}
  */
 var InnerRefCountSubscription = (function (_super) {
-    __extends$118(InnerRefCountSubscription, _super);
+    __extends$109(InnerRefCountSubscription, _super);
     function InnerRefCountSubscription(parent) {
         _super.call(this);
         this.parent = parent;
@@ -50046,7 +45276,7 @@ var groupBy_1 = {
 
 Observable_1.Observable.prototype.groupBy = groupBy_1.groupBy;
 
-var __extends$119 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$110 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -50082,7 +45312,7 @@ var IgnoreElementsOperator = (function () {
  * @extends {Ignored}
  */
 var IgnoreElementsSubscriber = (function (_super) {
-    __extends$119(IgnoreElementsSubscriber, _super);
+    __extends$110(IgnoreElementsSubscriber, _super);
     function IgnoreElementsSubscriber() {
         _super.apply(this, arguments);
     }
@@ -50099,7 +45329,7 @@ var ignoreElements_1 = {
 
 Observable_1.Observable.prototype.ignoreElements = ignoreElements_1.ignoreElements;
 
-var __extends$120 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$111 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -50132,7 +45362,7 @@ var IsEmptyOperator = (function () {
  * @extends {Ignored}
  */
 var IsEmptySubscriber = (function (_super) {
-    __extends$120(IsEmptySubscriber, _super);
+    __extends$111(IsEmptySubscriber, _super);
     function IsEmptySubscriber(destination) {
         _super.call(this, destination);
     }
@@ -50157,7 +45387,7 @@ var isEmpty_1 = {
 
 Observable_1.Observable.prototype.isEmpty = isEmpty_1.isEmpty;
 
-var __extends$121 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$112 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -50225,7 +45455,7 @@ var AuditOperator = (function () {
  * @extends {Ignored}
  */
 var AuditSubscriber = (function (_super) {
-    __extends$121(AuditSubscriber, _super);
+    __extends$112(AuditSubscriber, _super);
     function AuditSubscriber(destination, durationSelector) {
         _super.call(this, destination);
         this.durationSelector = durationSelector;
@@ -50279,7 +45509,7 @@ var audit_1 = {
 
 Observable_1.Observable.prototype.audit = audit_1.audit;
 
-var __extends$122 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$113 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -50349,7 +45579,7 @@ var AuditTimeOperator = (function () {
  * @extends {Ignored}
  */
 var AuditTimeSubscriber = (function (_super) {
-    __extends$122(AuditTimeSubscriber, _super);
+    __extends$113(AuditTimeSubscriber, _super);
     function AuditTimeSubscriber(destination, duration, scheduler) {
         _super.call(this, destination);
         this.duration = duration;
@@ -50389,7 +45619,7 @@ var auditTime_1 = {
 
 Observable_1.Observable.prototype.auditTime = auditTime_1.auditTime;
 
-var __extends$123 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$114 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -50436,7 +45666,7 @@ var LastOperator = (function () {
  * @extends {Ignored}
  */
 var LastSubscriber = (function (_super) {
-    __extends$123(LastSubscriber, _super);
+    __extends$114(LastSubscriber, _super);
     function LastSubscriber(destination, predicate, resultSelector, defaultValue, source) {
         _super.call(this, destination);
         this.predicate = predicate;
@@ -50533,7 +45763,7 @@ var _let$2 = {
 Observable_1.Observable.prototype.let = _let$2.letProto;
 Observable_1.Observable.prototype.letBind = _let$2.letProto;
 
-var __extends$124 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$115 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -50574,7 +45804,7 @@ var EveryOperator = (function () {
  * @extends {Ignored}
  */
 var EverySubscriber = (function (_super) {
-    __extends$124(EverySubscriber, _super);
+    __extends$115(EverySubscriber, _super);
     function EverySubscriber(destination, predicate, thisArg, source) {
         _super.call(this, destination);
         this.predicate = predicate;
@@ -50613,7 +45843,7 @@ var every_1 = {
 
 Observable_1.Observable.prototype.every = every_1.every;
 
-var __extends$125 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$116 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -50664,7 +45894,7 @@ var MapToOperator = (function () {
  * @extends {Ignored}
  */
 var MapToSubscriber = (function (_super) {
-    __extends$125(MapToSubscriber, _super);
+    __extends$116(MapToSubscriber, _super);
     function MapToSubscriber(destination, value) {
         _super.call(this, destination);
         this.value = value;
@@ -50682,7 +45912,7 @@ var mapTo_1 = {
 
 Observable_1.Observable.prototype.mapTo = mapTo_1.mapTo;
 
-var __extends$126 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$117 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -50751,7 +45981,7 @@ var MaterializeOperator = (function () {
  * @extends {Ignored}
  */
 var MaterializeSubscriber = (function (_super) {
-    __extends$126(MaterializeSubscriber, _super);
+    __extends$117(MaterializeSubscriber, _super);
     function MaterializeSubscriber(destination) {
         _super.call(this, destination);
     }
@@ -50778,7 +46008,7 @@ var materialize_1 = {
 
 Observable_1.Observable.prototype.materialize = materialize_1.materialize;
 
-var __extends$127 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$118 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -50861,7 +46091,7 @@ var ReduceOperator_1 = ReduceOperator;
  * @extends {Ignored}
  */
 var ReduceSubscriber = (function (_super) {
-    __extends$127(ReduceSubscriber, _super);
+    __extends$118(ReduceSubscriber, _super);
     function ReduceSubscriber(destination, accumulator, seed, hasSeed) {
         _super.call(this, destination);
         this.accumulator = accumulator;
@@ -50963,7 +46193,7 @@ Observable_1.Observable.prototype.mergeAll = mergeAll_1.mergeAll;
 Observable_1.Observable.prototype.flatMapTo = mergeMapTo_1.mergeMapTo;
 Observable_1.Observable.prototype.mergeMapTo = mergeMapTo_1.mergeMapTo;
 
-var __extends$128 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$119 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -51026,7 +46256,7 @@ var MergeScanOperator_1 = MergeScanOperator;
  * @extends {Ignored}
  */
 var MergeScanSubscriber = (function (_super) {
-    __extends$128(MergeScanSubscriber, _super);
+    __extends$119(MergeScanSubscriber, _super);
     function MergeScanSubscriber(destination, accumulator, acc, concurrent) {
         _super.call(this, destination);
         this.accumulator = accumulator;
@@ -51146,7 +46376,7 @@ var min_1 = {
 
 Observable_1.Observable.prototype.min = min_1.min;
 
-var __extends$129 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$120 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -51159,7 +46389,7 @@ var __extends$129 = (commonjsGlobal && commonjsGlobal.__extends) || function (d,
  * @class ConnectableObservable<T>
  */
 var ConnectableObservable$1 = (function (_super) {
-    __extends$129(ConnectableObservable, _super);
+    __extends$120(ConnectableObservable, _super);
     function ConnectableObservable(source, subjectFactory) {
         _super.call(this);
         this.source = source;
@@ -51213,7 +46443,7 @@ var connectableObservableDescriptor = {
     refCount: { value: connectableProto.refCount }
 };
 var ConnectableSubscriber = (function (_super) {
-    __extends$129(ConnectableSubscriber, _super);
+    __extends$120(ConnectableSubscriber, _super);
     function ConnectableSubscriber(destination, connectable) {
         _super.call(this, destination);
         this.connectable = connectable;
@@ -51259,7 +46489,7 @@ var RefCountOperator = (function () {
     return RefCountOperator;
 }());
 var RefCountSubscriber = (function (_super) {
-    __extends$129(RefCountSubscriber, _super);
+    __extends$120(RefCountSubscriber, _super);
     function RefCountSubscriber(destination, connectable) {
         _super.call(this, destination);
         this.connectable = connectable;
@@ -51387,7 +46617,7 @@ Observable_1.Observable.prototype.observeOn = observeOn_1.observeOn;
 
 Observable_1.Observable.prototype.onErrorResumeNext = onErrorResumeNext_1.onErrorResumeNext;
 
-var __extends$130 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$121 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -51446,7 +46676,7 @@ var PairwiseOperator = (function () {
  * @extends {Ignored}
  */
 var PairwiseSubscriber = (function (_super) {
-    __extends$130(PairwiseSubscriber, _super);
+    __extends$121(PairwiseSubscriber, _super);
     function PairwiseSubscriber(destination) {
         _super.call(this, destination);
         this.hasPrev = false;
@@ -51630,7 +46860,7 @@ var publish_1 = {
 
 Observable_1.Observable.prototype.publish = publish_1.publish;
 
-var __extends$131 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$122 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -51641,7 +46871,7 @@ var __extends$131 = (commonjsGlobal && commonjsGlobal.__extends) || function (d,
  * @class BehaviorSubject<T>
  */
 var BehaviorSubject$1 = (function (_super) {
-    __extends$131(BehaviorSubject, _super);
+    __extends$122(BehaviorSubject, _super);
     function BehaviorSubject(_value) {
         _super.call(this);
         this._value = _value;
@@ -51744,7 +46974,7 @@ Observable_1.Observable.prototype.race = race_1.race;
 
 Observable_1.Observable.prototype.reduce = reduce_1.reduce;
 
-var __extends$132 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$123 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -51792,7 +47022,7 @@ var RepeatOperator = (function () {
  * @extends {Ignored}
  */
 var RepeatSubscriber = (function (_super) {
-    __extends$132(RepeatSubscriber, _super);
+    __extends$123(RepeatSubscriber, _super);
     function RepeatSubscriber(destination, count, source) {
         _super.call(this, destination);
         this.count = count;
@@ -51820,7 +47050,7 @@ var repeat_1 = {
 
 Observable_1.Observable.prototype.repeat = repeat_1.repeat;
 
-var __extends$133 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$124 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -51863,7 +47093,7 @@ var RepeatWhenOperator = (function () {
  * @extends {Ignored}
  */
 var RepeatWhenSubscriber = (function (_super) {
-    __extends$133(RepeatWhenSubscriber, _super);
+    __extends$124(RepeatWhenSubscriber, _super);
     function RepeatWhenSubscriber(destination, notifier, source) {
         _super.call(this, destination);
         this.notifier = notifier;
@@ -51934,7 +47164,7 @@ var repeatWhen_1 = {
 
 Observable_1.Observable.prototype.repeatWhen = repeatWhen_1.repeatWhen;
 
-var __extends$134 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$125 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -51977,7 +47207,7 @@ var RetryOperator = (function () {
  * @extends {Ignored}
  */
 var RetrySubscriber = (function (_super) {
-    __extends$134(RetrySubscriber, _super);
+    __extends$125(RetrySubscriber, _super);
     function RetrySubscriber(destination, count, source) {
         _super.call(this, destination);
         this.count = count;
@@ -52005,7 +47235,7 @@ var retry_1 = {
 
 Observable_1.Observable.prototype.retry = retry_1.retry;
 
-var __extends$135 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$126 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -52049,7 +47279,7 @@ var RetryWhenOperator = (function () {
  * @extends {Ignored}
  */
 var RetryWhenSubscriber = (function (_super) {
-    __extends$135(RetryWhenSubscriber, _super);
+    __extends$126(RetryWhenSubscriber, _super);
     function RetryWhenSubscriber(destination, notifier, source) {
         _super.call(this, destination);
         this.notifier = notifier;
@@ -52112,7 +47342,7 @@ var retryWhen_1 = {
 
 Observable_1.Observable.prototype.retryWhen = retryWhen_1.retryWhen;
 
-var __extends$136 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$127 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -52175,7 +47405,7 @@ var SampleOperator = (function () {
  * @extends {Ignored}
  */
 var SampleSubscriber = (function (_super) {
-    __extends$136(SampleSubscriber, _super);
+    __extends$127(SampleSubscriber, _super);
     function SampleSubscriber() {
         _super.apply(this, arguments);
         this.hasValue = false;
@@ -52206,7 +47436,7 @@ var sample_1 = {
 
 Observable_1.Observable.prototype.sample = sample_1.sample;
 
-var __extends$137 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$128 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -52270,7 +47500,7 @@ var SampleTimeOperator = (function () {
  * @extends {Ignored}
  */
 var SampleTimeSubscriber = (function (_super) {
-    __extends$137(SampleTimeSubscriber, _super);
+    __extends$128(SampleTimeSubscriber, _super);
     function SampleTimeSubscriber(destination, period, scheduler) {
         _super.call(this, destination);
         this.period = period;
@@ -52303,7 +47533,7 @@ var sampleTime_1 = {
 
 Observable_1.Observable.prototype.sampleTime = sampleTime_1.sampleTime;
 
-var __extends$138 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$129 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -52378,7 +47608,7 @@ var ScanOperator = (function () {
  * @extends {Ignored}
  */
 var ScanSubscriber = (function (_super) {
-    __extends$138(ScanSubscriber, _super);
+    __extends$129(ScanSubscriber, _super);
     function ScanSubscriber(destination, accumulator, _seed, hasSeed) {
         _super.call(this, destination);
         this.accumulator = accumulator;
@@ -52428,7 +47658,7 @@ var scan_1 = {
 
 Observable_1.Observable.prototype.scan = scan_1.scan;
 
-var __extends$139 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$130 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -52509,7 +47739,7 @@ var SequenceEqualOperator_1 = SequenceEqualOperator;
  * @extends {Ignored}
  */
 var SequenceEqualSubscriber = (function (_super) {
-    __extends$139(SequenceEqualSubscriber, _super);
+    __extends$130(SequenceEqualSubscriber, _super);
     function SequenceEqualSubscriber(destination, compareTo, comparor) {
         _super.call(this, destination);
         this.compareTo = compareTo;
@@ -52574,7 +47804,7 @@ var SequenceEqualSubscriber = (function (_super) {
 }(Subscriber_1.Subscriber));
 var SequenceEqualSubscriber_1 = SequenceEqualSubscriber;
 var SequenceEqualCompareToSubscriber = (function (_super) {
-    __extends$139(SequenceEqualCompareToSubscriber, _super);
+    __extends$130(SequenceEqualCompareToSubscriber, _super);
     function SequenceEqualCompareToSubscriber(destination, parent) {
         _super.call(this, destination);
         this.parent = parent;
@@ -52654,7 +47884,7 @@ var shareReplay_1 = {
 
 Observable_1.Observable.prototype.shareReplay = shareReplay_1.shareReplay;
 
-var __extends$140 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$131 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -52697,7 +47927,7 @@ var SingleOperator = (function () {
  * @extends {Ignored}
  */
 var SingleSubscriber = (function (_super) {
-    __extends$140(SingleSubscriber, _super);
+    __extends$131(SingleSubscriber, _super);
     function SingleSubscriber(destination, predicate, source) {
         _super.call(this, destination);
         this.predicate = predicate;
@@ -52753,7 +47983,7 @@ var single_1 = {
 
 Observable_1.Observable.prototype.single = single_1.single;
 
-var __extends$141 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$132 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -52789,7 +48019,7 @@ var SkipOperator = (function () {
  * @extends {Ignored}
  */
 var SkipSubscriber = (function (_super) {
-    __extends$141(SkipSubscriber, _super);
+    __extends$132(SkipSubscriber, _super);
     function SkipSubscriber(destination, total) {
         _super.call(this, destination);
         this.total = total;
@@ -52810,7 +48040,7 @@ var skip_1 = {
 
 Observable_1.Observable.prototype.skip = skip_1.skip;
 
-var __extends$142 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$133 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -52878,7 +48108,7 @@ var SkipLastOperator = (function () {
  * @extends {Ignored}
  */
 var SkipLastSubscriber = (function (_super) {
-    __extends$142(SkipLastSubscriber, _super);
+    __extends$133(SkipLastSubscriber, _super);
     function SkipLastSubscriber(destination, _skipCount) {
         _super.call(this, destination);
         this._skipCount = _skipCount;
@@ -52909,7 +48139,7 @@ var skipLast_1 = {
 
 Observable_1.Observable.prototype.skipLast = skipLast_1.skipLast;
 
-var __extends$143 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$134 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -52947,7 +48177,7 @@ var SkipUntilOperator = (function () {
  * @extends {Ignored}
  */
 var SkipUntilSubscriber = (function (_super) {
-    __extends$143(SkipUntilSubscriber, _super);
+    __extends$134(SkipUntilSubscriber, _super);
     function SkipUntilSubscriber(destination, notifier) {
         _super.call(this, destination);
         this.hasValue = false;
@@ -52986,7 +48216,7 @@ var skipUntil_1 = {
 
 Observable_1.Observable.prototype.skipUntil = skipUntil_1.skipUntil;
 
-var __extends$144 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$135 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -53023,7 +48253,7 @@ var SkipWhileOperator = (function () {
  * @extends {Ignored}
  */
 var SkipWhileSubscriber = (function (_super) {
-    __extends$144(SkipWhileSubscriber, _super);
+    __extends$135(SkipWhileSubscriber, _super);
     function SkipWhileSubscriber(destination, predicate) {
         _super.call(this, destination);
         this.predicate = predicate;
@@ -53315,7 +48545,7 @@ var Immediate = {
 	Immediate: Immediate_1
 };
 
-var __extends$146 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$137 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -53328,7 +48558,7 @@ var __extends$146 = (commonjsGlobal && commonjsGlobal.__extends) || function (d,
  * @extends {Ignored}
  */
 var AsapAction = (function (_super) {
-    __extends$146(AsapAction, _super);
+    __extends$137(AsapAction, _super);
     function AsapAction(scheduler, work) {
         _super.call(this, scheduler, work);
         this.scheduler = scheduler;
@@ -53374,14 +48604,14 @@ var AsapAction_1 = {
 	AsapAction: AsapAction_2
 };
 
-var __extends$147 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$138 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 
 var AsapScheduler = (function (_super) {
-    __extends$147(AsapScheduler, _super);
+    __extends$138(AsapScheduler, _super);
     function AsapScheduler() {
         _super.apply(this, arguments);
     }
@@ -53456,7 +48686,7 @@ var asap = {
 	asap: asap_1
 };
 
-var __extends$145 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$136 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -53470,7 +48700,7 @@ var __extends$145 = (commonjsGlobal && commonjsGlobal.__extends) || function (d,
  * @hide true
  */
 var SubscribeOnObservable = (function (_super) {
-    __extends$145(SubscribeOnObservable, _super);
+    __extends$136(SubscribeOnObservable, _super);
     function SubscribeOnObservable(source, delayTime, scheduler) {
         if (delayTime === void 0) { delayTime = 0; }
         if (scheduler === void 0) { scheduler = asap.asap; }
@@ -53545,7 +48775,7 @@ var subscribeOn_1 = {
 
 Observable_1.Observable.prototype.subscribeOn = subscribeOn_1.subscribeOn;
 
-var __extends$148 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$139 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -53612,7 +48842,7 @@ var SwitchOperator = (function () {
  * @extends {Ignored}
  */
 var SwitchSubscriber = (function (_super) {
-    __extends$148(SwitchSubscriber, _super);
+    __extends$139(SwitchSubscriber, _super);
     function SwitchSubscriber(destination) {
         _super.call(this, destination);
         this.active = 0;
@@ -53660,7 +48890,7 @@ var _switch_1 = {
 Observable_1.Observable.prototype.switch = _switch_1._switch;
 Observable_1.Observable.prototype._switch = _switch_1._switch;
 
-var __extends$149 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$140 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -53735,7 +48965,7 @@ var SwitchMapOperator = (function () {
  * @extends {Ignored}
  */
 var SwitchMapSubscriber = (function (_super) {
-    __extends$149(SwitchMapSubscriber, _super);
+    __extends$140(SwitchMapSubscriber, _super);
     function SwitchMapSubscriber(destination, project, resultSelector) {
         _super.call(this, destination);
         this.project = project;
@@ -53806,7 +49036,7 @@ var switchMap_1 = {
 
 Observable_1.Observable.prototype.switchMap = switchMap_1.switchMap;
 
-var __extends$150 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$141 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -53876,7 +49106,7 @@ var SwitchMapToOperator = (function () {
  * @extends {Ignored}
  */
 var SwitchMapToSubscriber = (function (_super) {
-    __extends$150(SwitchMapToSubscriber, _super);
+    __extends$141(SwitchMapToSubscriber, _super);
     function SwitchMapToSubscriber(destination, inner, resultSelector) {
         _super.call(this, destination);
         this.inner = inner;
@@ -53937,7 +49167,7 @@ var switchMapTo_1 = {
 
 Observable_1.Observable.prototype.switchMapTo = switchMapTo_1.switchMapTo;
 
-var __extends$151 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$142 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -54005,7 +49235,7 @@ var TakeOperator = (function () {
  * @extends {Ignored}
  */
 var TakeSubscriber = (function (_super) {
-    __extends$151(TakeSubscriber, _super);
+    __extends$142(TakeSubscriber, _super);
     function TakeSubscriber(destination, total) {
         _super.call(this, destination);
         this.total = total;
@@ -54032,7 +49262,7 @@ var take_1 = {
 
 Observable_1.Observable.prototype.take = take_1.take;
 
-var __extends$152 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$143 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -54103,7 +49333,7 @@ var TakeLastOperator = (function () {
  * @extends {Ignored}
  */
 var TakeLastSubscriber = (function (_super) {
-    __extends$152(TakeLastSubscriber, _super);
+    __extends$143(TakeLastSubscriber, _super);
     function TakeLastSubscriber(destination, total) {
         _super.call(this, destination);
         this.total = total;
@@ -54145,7 +49375,7 @@ var takeLast_1 = {
 
 Observable_1.Observable.prototype.takeLast = takeLast_1.takeLast;
 
-var __extends$153 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$144 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -54204,7 +49434,7 @@ var TakeUntilOperator = (function () {
  * @extends {Ignored}
  */
 var TakeUntilSubscriber = (function (_super) {
-    __extends$153(TakeUntilSubscriber, _super);
+    __extends$144(TakeUntilSubscriber, _super);
     function TakeUntilSubscriber(destination, notifier) {
         _super.call(this, destination);
         this.notifier = notifier;
@@ -54226,7 +49456,7 @@ var takeUntil_1 = {
 
 Observable_1.Observable.prototype.takeUntil = takeUntil_1.takeUntil;
 
-var __extends$154 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$145 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -54287,7 +49517,7 @@ var TakeWhileOperator = (function () {
  * @extends {Ignored}
  */
 var TakeWhileSubscriber = (function (_super) {
-    __extends$154(TakeWhileSubscriber, _super);
+    __extends$145(TakeWhileSubscriber, _super);
     function TakeWhileSubscriber(destination, predicate) {
         _super.call(this, destination);
         this.predicate = predicate;
@@ -54471,7 +49701,7 @@ var ThrottleSubscriber = (function (_super) {
 
 Observable_1.Observable.prototype.throttle = throttle_1.throttle;
 
-var __extends$155 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$146 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -54542,7 +49772,7 @@ var ThrottleTimeOperator = (function () {
  * @extends {Ignored}
  */
 var ThrottleTimeSubscriber = (function (_super) {
-    __extends$155(ThrottleTimeSubscriber, _super);
+    __extends$146(ThrottleTimeSubscriber, _super);
     function ThrottleTimeSubscriber(destination, duration, scheduler, leading, trailing) {
         _super.call(this, destination);
         this.duration = duration;
@@ -54593,7 +49823,7 @@ var throttleTime_1 = {
 
 Observable_1.Observable.prototype.throttleTime = throttleTime_1.throttleTime;
 
-var __extends$156 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$147 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -54635,7 +49865,7 @@ var TimeIntervalOperator = (function () {
  * @extends {Ignored}
  */
 var TimeIntervalSubscriber = (function (_super) {
-    __extends$156(TimeIntervalSubscriber, _super);
+    __extends$147(TimeIntervalSubscriber, _super);
     function TimeIntervalSubscriber(destination, scheduler) {
         _super.call(this, destination);
         this.scheduler = scheduler;
@@ -54659,7 +49889,7 @@ var timeInterval_1 = {
 
 Observable_1.Observable.prototype.timeInterval = timeInterval_1.timeInterval;
 
-var __extends$158 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$149 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -54672,7 +49902,7 @@ var __extends$158 = (commonjsGlobal && commonjsGlobal.__extends) || function (d,
  * @class TimeoutError
  */
 var TimeoutError$1 = (function (_super) {
-    __extends$158(TimeoutError, _super);
+    __extends$149(TimeoutError, _super);
     function TimeoutError() {
         var err = _super.call(this, 'Timeout has occurred');
         this.name = err.name = 'TimeoutError';
@@ -54688,7 +49918,7 @@ var TimeoutError_1 = {
 	TimeoutError: TimeoutError_2
 };
 
-var __extends$157 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$148 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -54729,7 +49959,7 @@ var TimeoutOperator = (function () {
  * @extends {Ignored}
  */
 var TimeoutSubscriber = (function (_super) {
-    __extends$157(TimeoutSubscriber, _super);
+    __extends$148(TimeoutSubscriber, _super);
     function TimeoutSubscriber(destination, absoluteTimeout, waitFor, scheduler, errorInstance) {
         _super.call(this, destination);
         this.absoluteTimeout = absoluteTimeout;
@@ -54777,7 +50007,7 @@ var timeout_1 = {
 
 Observable_1.Observable.prototype.timeout = timeout_1.timeout;
 
-var __extends$159 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$150 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -54820,7 +50050,7 @@ var TimeoutWithOperator = (function () {
  * @extends {Ignored}
  */
 var TimeoutWithSubscriber = (function (_super) {
-    __extends$159(TimeoutWithSubscriber, _super);
+    __extends$150(TimeoutWithSubscriber, _super);
     function TimeoutWithSubscriber(destination, absoluteTimeout, waitFor, withObservable, scheduler) {
         _super.call(this, destination);
         this.absoluteTimeout = absoluteTimeout;
@@ -54870,7 +50100,7 @@ var timeoutWith_1 = {
 
 Observable_1.Observable.prototype.timeoutWith = timeoutWith_1.timeoutWith;
 
-var __extends$160 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$151 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -54907,7 +50137,7 @@ var TimestampOperator = (function () {
     return TimestampOperator;
 }());
 var TimestampSubscriber = (function (_super) {
-    __extends$160(TimestampSubscriber, _super);
+    __extends$151(TimestampSubscriber, _super);
     function TimestampSubscriber(destination, scheduler) {
         _super.call(this, destination);
         this.scheduler = scheduler;
@@ -54929,7 +50159,7 @@ Observable_1.Observable.prototype.timestamp = timestamp_1.timestamp;
 
 Observable_1.Observable.prototype.toPromise = toPromise_1.toPromise;
 
-var __extends$161 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$152 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -54997,7 +50227,7 @@ var WindowOperator = (function () {
  * @extends {Ignored}
  */
 var WindowSubscriber = (function (_super) {
-    __extends$161(WindowSubscriber, _super);
+    __extends$152(WindowSubscriber, _super);
     function WindowSubscriber(destination) {
         _super.call(this, destination);
         this.window = new Subject_1.Subject();
@@ -55045,7 +50275,7 @@ var window_1 = {
 
 Observable_1.Observable.prototype.window = window_1.window;
 
-var __extends$162 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$153 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -55121,7 +50351,7 @@ var WindowCountOperator = (function () {
  * @extends {Ignored}
  */
 var WindowCountSubscriber = (function (_super) {
-    __extends$162(WindowCountSubscriber, _super);
+    __extends$153(WindowCountSubscriber, _super);
     function WindowCountSubscriber(destination, windowSize, startWindowEvery) {
         _super.call(this, destination);
         this.destination = destination;
@@ -55182,7 +50412,7 @@ var windowCount_1 = {
 
 Observable_1.Observable.prototype.windowCount = windowCount_1.windowCount;
 
-var __extends$163 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$154 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -55227,7 +50457,7 @@ var WindowTimeOperator = (function () {
     return WindowTimeOperator;
 }());
 var CountedSubject = (function (_super) {
-    __extends$163(CountedSubject, _super);
+    __extends$154(CountedSubject, _super);
     function CountedSubject() {
         _super.apply(this, arguments);
         this._numberOfNextedValues = 0;
@@ -55251,7 +50481,7 @@ var CountedSubject = (function (_super) {
  * @extends {Ignored}
  */
 var WindowTimeSubscriber = (function (_super) {
-    __extends$163(WindowTimeSubscriber, _super);
+    __extends$154(WindowTimeSubscriber, _super);
     function WindowTimeSubscriber(destination, windowTimeSpan, windowCreationInterval, maxWindowSize, scheduler) {
         _super.call(this, destination);
         this.destination = destination;
@@ -55349,7 +50579,7 @@ var windowTime_1 = {
 
 Observable_1.Observable.prototype.windowTime = windowTime_1.windowTime;
 
-var __extends$164 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$155 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -55421,7 +50651,7 @@ var WindowToggleOperator = (function () {
  * @extends {Ignored}
  */
 var WindowToggleSubscriber = (function (_super) {
-    __extends$164(WindowToggleSubscriber, _super);
+    __extends$155(WindowToggleSubscriber, _super);
     function WindowToggleSubscriber(destination, openings, closingSelector) {
         _super.call(this, destination);
         this.openings = openings;
@@ -55535,7 +50765,7 @@ var windowToggle_1 = {
 
 Observable_1.Observable.prototype.windowToggle = windowToggle_1.windowToggle;
 
-var __extends$165 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$156 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -55602,7 +50832,7 @@ var WindowOperator$1 = (function () {
  * @extends {Ignored}
  */
 var WindowSubscriber$1 = (function (_super) {
-    __extends$165(WindowSubscriber, _super);
+    __extends$156(WindowSubscriber, _super);
     function WindowSubscriber(destination, closingSelector) {
         _super.call(this, destination);
         this.destination = destination;
@@ -55668,7 +50898,7 @@ var windowWhen_1 = {
 
 Observable_1.Observable.prototype.windowWhen = windowWhen_1.windowWhen;
 
-var __extends$166 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$157 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -55743,7 +50973,7 @@ var WithLatestFromOperator = (function () {
  * @extends {Ignored}
  */
 var WithLatestFromSubscriber = (function (_super) {
-    __extends$166(WithLatestFromSubscriber, _super);
+    __extends$157(WithLatestFromSubscriber, _super);
     function WithLatestFromSubscriber(destination, observables, project) {
         _super.call(this, destination);
         this.observables = observables;
@@ -55878,7 +51108,7 @@ var applyMixins_1 = {
 	applyMixins: applyMixins_2
 };
 
-var __extends$168 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$159 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -55893,7 +51123,7 @@ var __extends$168 = (commonjsGlobal && commonjsGlobal.__extends) || function (d,
  * @extends {Ignored}
  */
 var ColdObservable = (function (_super) {
-    __extends$168(ColdObservable, _super);
+    __extends$159(ColdObservable, _super);
     function ColdObservable(messages, scheduler) {
         _super.call(this, function (subscriber) {
             var observable = this;
@@ -55928,7 +51158,7 @@ var ColdObservable_1 = {
 	ColdObservable: ColdObservable_2
 };
 
-var __extends$169 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$160 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -55943,7 +51173,7 @@ var __extends$169 = (commonjsGlobal && commonjsGlobal.__extends) || function (d,
  * @extends {Ignored}
  */
 var HotObservable = (function (_super) {
-    __extends$169(HotObservable, _super);
+    __extends$160(HotObservable, _super);
     function HotObservable(messages, scheduler) {
         _super.call(this);
         this.messages = messages;
@@ -55980,7 +51210,7 @@ var HotObservable_1 = {
 	HotObservable: HotObservable_2
 };
 
-var __extends$170 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$161 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -55988,7 +51218,7 @@ var __extends$170 = (commonjsGlobal && commonjsGlobal.__extends) || function (d,
 
 
 var VirtualTimeScheduler$1 = (function (_super) {
-    __extends$170(VirtualTimeScheduler, _super);
+    __extends$161(VirtualTimeScheduler, _super);
     function VirtualTimeScheduler(SchedulerAction, maxFrames) {
         var _this = this;
         if (SchedulerAction === void 0) { SchedulerAction = VirtualAction; }
@@ -56028,7 +51258,7 @@ var VirtualTimeScheduler_2 = VirtualTimeScheduler$1;
  * @extends {Ignored}
  */
 var VirtualAction = (function (_super) {
-    __extends$170(VirtualAction, _super);
+    __extends$161(VirtualAction, _super);
     function VirtualAction(scheduler, work, index) {
         if (index === void 0) { index = scheduler.index += 1; }
         _super.call(this, scheduler, work);
@@ -56098,7 +51328,7 @@ var VirtualTimeScheduler_1 = {
 	VirtualAction: VirtualAction_1
 };
 
-var __extends$167 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$158 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -56111,7 +51341,7 @@ var __extends$167 = (commonjsGlobal && commonjsGlobal.__extends) || function (d,
 
 var defaultMaxFrame = 750;
 var TestScheduler$1 = (function (_super) {
-    __extends$167(TestScheduler, _super);
+    __extends$158(TestScheduler, _super);
     function TestScheduler(assertDeepEqual) {
         _super.call(this, VirtualTimeScheduler_1.VirtualAction, defaultMaxFrame);
         this.assertDeepEqual = assertDeepEqual;
@@ -56357,7 +51587,7 @@ var AnimationFrame = {
 	AnimationFrame: AnimationFrame_1
 };
 
-var __extends$171 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$162 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -56370,7 +51600,7 @@ var __extends$171 = (commonjsGlobal && commonjsGlobal.__extends) || function (d,
  * @extends {Ignored}
  */
 var AnimationFrameAction = (function (_super) {
-    __extends$171(AnimationFrameAction, _super);
+    __extends$162(AnimationFrameAction, _super);
     function AnimationFrameAction(scheduler, work) {
         _super.call(this, scheduler, work);
         this.scheduler = scheduler;
@@ -56416,14 +51646,14 @@ var AnimationFrameAction_1 = {
 	AnimationFrameAction: AnimationFrameAction_2
 };
 
-var __extends$172 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$163 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 
 var AnimationFrameScheduler = (function (_super) {
-    __extends$172(AnimationFrameScheduler, _super);
+    __extends$163(AnimationFrameScheduler, _super);
     function AnimationFrameScheduler() {
         _super.apply(this, arguments);
     }
@@ -57876,7 +53106,7 @@ var UserAdminModule = (function () {
     UserAdminModule = UserAdminModule_1 = __decorate([
         NgModule({
             imports: [
-                BrowserModule,
+                CommonModule,
                 _angular_http.HttpModule,
                 FormsModule,
                 _angular_router.RouterModule,
@@ -57924,53 +53154,50 @@ var UserAdminModule = (function () {
  *
  */
 // clang-format off
-var userAdminRoutes = [{
+var userAdminRoutes = [
+    {
+        path: 'list',
+        canActivate: [
+            AuthGuard
+        ],
+        component: UserListComponent
+    },
+    {
+        path: 'events',
+        canActivate: [
+            AuthGuard
+        ],
+        component: UsersEventLogComponent
+    },
+    {
+        path: 'user',
+        canActivate: [
+            AuthGuard
+        ],
+        component: UserEditComponent
+    },
+    {
+        path: 'user/:id',
+        component: UserEditComponent,
+        canActivate: [
+            AuthGuard
+        ],
+        resolve: {
+            user: UserResolve
+        }
+    },
+    {
         path: '',
-        children: [
-            {
-                path: 'list',
-                canActivate: [
-                    AuthGuard
-                ],
-                component: UserListComponent
-            },
-            {
-                path: 'events',
-                canActivate: [
-                    AuthGuard
-                ],
-                component: UsersEventLogComponent
-            },
-            {
-                path: 'user',
-                canActivate: [
-                    AuthGuard
-                ],
-                component: UserEditComponent
-            },
-            {
-                path: 'user/:id',
-                component: UserEditComponent,
-                canActivate: [
-                    AuthGuard
-                ],
-                resolve: {
-                    user: UserResolve
-                }
-            },
-            {
-                path: '',
-                canActivate: [
-                    AuthGuard
-                ],
-                component: HomeComponent
-            },
-            {
-                path: 'login',
-                component: LoginComponent
-            }
-        ]
-    }];
+        canActivate: [
+            AuthGuard
+        ],
+        component: HomeComponent
+    },
+    {
+        path: 'login',
+        component: LoginComponent
+    }
+];
 // clang-format on
 var UserAdminRouting = _angular_router.RouterModule.forChild(userAdminRoutes);
 

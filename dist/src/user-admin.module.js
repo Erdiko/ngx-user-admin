@@ -5,7 +5,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -40,7 +40,7 @@ var UserAdminModule = (function () {
     UserAdminModule = UserAdminModule_1 = __decorate([
         NgModule({
             imports: [
-                BrowserModule,
+                CommonModule,
                 HttpModule,
                 FormsModule,
                 RouterModule,

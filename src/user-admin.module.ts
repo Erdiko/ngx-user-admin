@@ -1,6 +1,7 @@
-import { NgModule, ModuleWithProviders }             from '@angular/core';
+import { NgModule, 
+         ModuleWithProviders }      from '@angular/core';
 
-import { BrowserModule }            from '@angular/platform-browser';
+import { CommonModule }             from '@angular/common';
 import { HttpModule }               from '@angular/http';
 
 import { RouterModule, Routes }     from '@angular/router';
@@ -37,7 +38,7 @@ import { MessageComponent }         from './message/message.component';
  */
 @NgModule({
     imports: [ 
-        BrowserModule,
+        CommonModule,
         HttpModule,
         FormsModule,
         RouterModule,
