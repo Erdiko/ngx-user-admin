@@ -1,4 +1,4 @@
-System.register(["./src/user-admin.module", "./src/login/login.component", "./src/header/header.component", "./src/home/home.component", "./src/user-list/user-list.component", "./src/user-event-log/user-event-log.component", "./src/users-event-log/users-event-log.component", "./src/user-edit/user-edit.component", "./src/message/message.component", "./src/auth.service", "./src/user-resolve.service", "./src/users.service", "./src/message.service"], function (exports_1, context_1) {
+System.register(["./src/user-admin.module", "./src/login/login.component", "./src/header/header.component", "./src/home/home.component", "./src/user-list/user-list.component", "./src/user-event-log/user-event-log.component", "./src/users-event-log/users-event-log.component", "./src/user-edit/user-edit.component", "./src/message/message.component", "./src/auth.service", "./src/user-resolve.service", "./src/users.service", "./src/message.service", "./src/user-admin.routing"], function (exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     return {
@@ -66,6 +66,11 @@ System.register(["./src/user-admin.module", "./src/login/login.component", "./sr
             function (message_service_1_1) {
                 exports_1({
                     "MessageService": message_service_1_1["MessageService"]
+                });
+            },
+            function (user_admin_routing_1_1) {
+                exports_1({
+                    "UserAdminRouting": user_admin_routing_1_1["UserAdminRouting"]
                 });
             }
         ],
